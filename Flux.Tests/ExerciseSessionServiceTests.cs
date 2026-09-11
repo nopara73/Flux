@@ -1705,6 +1705,59 @@ public sealed class ExerciseSessionServiceTests
         Assert.Equal(rounds[0].SelectionKey, rounds[1].SelectionKey);
         Assert.True(service.IsIntermediateSequenceBlock(restored, rounds[0]));
         Assert.False(service.IsIntermediateSequenceBlock(restored, rounds[1]));
+
+        service.AdvanceSequence(restored, rounds[0]);
+        long restDeadline = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 15_000;
+        service.BeginRest(restored, rounds[1], restDeadline);
+        Assert.Equal(rounds[1].Id, service.GetPendingRestGroup(restored)?.Id);
+        Assert.Equal(10_000, service.GetPendingRestMillisecondsRemaining(restored, restDeadline - 10_000));
+        Assert.True(service.KeepPendingRest(restored));
+
+        store.Save(restored);
+        WorkoutState resumedRest = store.Load();
+        service.Initialize(resumedRest);
+        Assert.Equal(rounds[1].Id, service.GetPendingRestGroup(resumedRest)?.Id);
+        Assert.True(resumedRest.PendingRestKept);
+    }
+
+    [Fact]
+    public void IntegrationMemberKeepsRestWhenOnlySequenceTargetsSelectedMuscle()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise root = CloneWithLinkedSequenceMember(
+            ExerciseWithCoverage(1, CanonicalMuscleGroup.ShoulderAbductors, 30, 1,
+                score: 100, additionalSecondaries: [CanonicalMuscleGroup.RotatorCuff],
+                sideSequence: ExerciseSideSequence.ScreenRightThenLeft), 2);
+        Exercise member = CloneWithLinkedSequenceMember(
+            ExerciseWithCoverage(2, CanonicalMuscleGroup.Chest, 30, 1,
+                score: 100, additionalSecondaries: [CanonicalMuscleGroup.ShoulderAbductors]), 1);
+        Exercise[] exercises = [root, member, .. groups.Select((group, index) => QualifiedForGroup(index + 100, group))];
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            SelectedExerciseIds = new Dictionary<string, int> { ["r30.rotator-cuff"] = root.Id },
+            KeptExerciseRootIdsBySelectionGroupId = new Dictionary<string, HashSet<int>>
+            {
+                ["r30.rotator-cuff"] = [root.Id],
+            },
+        };
+        service.StartWorkout(state, 60, WorkoutModifiers.None);
+        WorkoutGroup target = service.GetActiveGroups(state).Last(group =>
+            service.GetSelectedExercise(state, group).Id == member.Id &&
+            !group.CanonicalGroups.Contains(member.PrimaryCanonicalGroup));
+        CompleteRoundsBefore(service, state, target);
+        long restDeadline = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 15_000;
+        service.BeginRest(state, target, restDeadline);
+        Assert.Equal(target.Id, service.GetPendingRestGroup(state)?.Id);
+        Assert.Equal(10_000, service.GetPendingRestMillisecondsRemaining(state, restDeadline - 10_000));
+        Assert.True(service.KeepPendingRest(state));
+        var store = new FakeWorkoutStateStore();
+        store.Save(state);
+        WorkoutState resumed = store.Load();
+        service.Initialize(resumed);
+        Assert.Equal(target.Id, service.GetPendingRestGroup(resumed)?.Id);
+        Assert.True(resumed.PendingRestKept);
     }
 
     [Fact]

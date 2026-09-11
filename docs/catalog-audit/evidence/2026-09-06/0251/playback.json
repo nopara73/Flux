@@ -1,0 +1,879 @@
+{
+  "id": 251,
+  "fixture": {
+    "name": "Forward Fold to Overhead Reach",
+    "group": {
+      "id": "r30.spinal-extensors.set1.block1",
+      "displayName": "Spinal extensors",
+      "order": 18,
+      "canonicalGroups": [
+        "SpinalExtensors"
+      ],
+      "selectionGroupId": "r30.spinal-extensors",
+      "exerciseOverrideId": 251,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 561,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0,
+        "duration": 4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 752,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0,
+        "duration": 4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1001,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0,
+        "duration": 4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1231,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0.181372,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1517,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0.465996,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1723,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0.672861,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1930,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0.878844,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2132,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 1.081822,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2337,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 1.286214,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2542,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 1.491035,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2745,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 1.694264,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2954,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 1.903968,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3158,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 2.107609,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3362,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 2.312098,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3366,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 2.315271,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3634,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 2.584214,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3843,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 2.792657,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4051,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 3.002516,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4260,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 3.211075,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4469,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 3.418415,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4671,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 3.621195,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4874,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 3.823371,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5076,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0.013491,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5284,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0.222059,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5491,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0.427648,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5694,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0.634334,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5901,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0.860326,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5930,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0.868879,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6176,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 1.11755,
+        "duration": 4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6418,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.spinal-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 1.218503,
+        "duration": 4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6875,
+      "name": "Forward Fold to Overhead Reach",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.spinal-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 1.218503,
+        "duration": 4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7279,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0251.mp4?v=3c06f0bb6bf119a0d0d001716c8d7eb22eb408a4dfa3d477efded3a5107bb051",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 752
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1001
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1231
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 3366
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 5930
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 6176
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 6418
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 6875
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 7279
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 822,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1047,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 6003,
+      "milliseconds": 38500
+    },
+    {
+      "realElapsedMs": 6229,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 6681,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6931,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 4,
+      "realPlaybackMs": 4621,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

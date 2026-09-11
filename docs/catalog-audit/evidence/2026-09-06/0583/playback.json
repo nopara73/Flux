@@ -1,0 +1,1398 @@
+{
+  "id": 583,
+  "fixture": {
+    "name": "Bounce-Step Cross",
+    "group": {
+      "id": "r30.elbow-extensors.set1.block1",
+      "displayName": "Elbow extensors",
+      "order": 49,
+      "canonicalGroups": [
+        "ElbowExtensors"
+      ],
+      "selectionGroupId": "r30.elbow-extensors",
+      "exerciseOverrideId": 583,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ShownLeadStance",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 2038,
+      "name": "Bounce-Step Cross",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3145,
+      "name": "Bounce-Step Cross",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3786,
+      "name": "Bounce-Step Cross",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4575,
+      "name": "Bounce-Step Cross",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.472828,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5129,
+      "name": "Bounce-Step Cross",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.015737,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5358,
+      "name": "Bounce-Step Cross",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.231697,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5567,
+      "name": "Bounce-Step Cross",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.444806,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5788,
+      "name": "Bounce-Step Cross",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.663034,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5999,
+      "name": "Bounce-Step Cross",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.878145,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6218,
+      "name": "Bounce-Step Cross",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 2.099149,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6444,
+      "name": "Bounce-Step Cross",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 2.318036,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6671,
+      "name": "Bounce-Step Cross",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 2.569017,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6741,
+      "name": "Bounce-Step Cross",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 2.632143,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7195,
+      "name": "Bounce-Step Cross",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 3.068375,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7408,
+      "name": "Bounce-Step Cross",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.128267,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7614,
+      "name": "Bounce-Step Cross",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.355532,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7846,
+      "name": "Bounce-Step Cross",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.571079,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8060,
+      "name": "Bounce-Step Cross",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.779937,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8265,
+      "name": "Bounce-Step Cross",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.991452,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8493,
+      "name": "Bounce-Step Cross",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.216948,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8708,
+      "name": "Bounce-Step Cross",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.444652,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8748,
+      "name": "Bounce-Step Cross",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.470901,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9096,
+      "name": "Bounce-Step Cross",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.817958,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9585,
+      "name": "Bounce-Step Cross",
+      "countdown": "0",
+      "rest": "14",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.elbow-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.190194,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9900,
+      "name": "Bounce-Step Cross",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.elbow-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.510169,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10618,
+      "name": "Bounce-Step Cross",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.187765,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10785,
+      "name": "Bounce-Step Cross",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.353797,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10941,
+      "name": "Bounce-Step Cross",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.510787,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11335,
+      "name": "Bounce-Step Cross",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.905781,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11546,
+      "name": "Bounce-Step Cross",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.132983,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11799,
+      "name": "Bounce-Step Cross",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.369948,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12055,
+      "name": "Bounce-Step Cross",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.632921,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12287,
+      "name": "Bounce-Step Cross",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.856202,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12497,
+      "name": "Bounce-Step Cross",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 2.063676,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12709,
+      "name": "Bounce-Step Cross",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 2.279664,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12717,
+      "name": "Bounce-Step Cross",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 2.286034,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13058,
+      "name": "Bounce-Step Cross",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 2.629412,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13266,
+      "name": "Bounce-Step Cross",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 2.841,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13486,
+      "name": "Bounce-Step Cross",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 3.05318,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13700,
+      "name": "Bounce-Step Cross",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.147221,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13912,
+      "name": "Bounce-Step Cross",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.359131,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14118,
+      "name": "Bounce-Step Cross",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.564463,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14329,
+      "name": "Bounce-Step Cross",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.776096,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14536,
+      "name": "Bounce-Step Cross",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0.984432,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14744,
+      "name": "Bounce-Step Cross",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.191128,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14958,
+      "name": "Bounce-Step Cross",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.406373,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14965,
+      "name": "Bounce-Step Cross",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.412231,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15314,
+      "name": "Bounce-Step Cross",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.761712,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15650,
+      "name": "Bounce-Step Cross",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.elbow-extensors.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.950036,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15999,
+      "name": "Bounce-Step Cross",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.elbow-extensors.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 1.950036,
+        "duration": 3.1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16395,
+      "name": "Mirror Front Lat-Spread Posing",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0583.mp4?v=4c0b8f7e1975e384814087c9980c15496ad07da54bbad9f76eef1a3aaddc791a",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0525.png?v=b1b8b5214d1bd3e2892db99c9c552d96cd3772c79a6182726a20fcd5115d0932",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 3145
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 3786
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 4575
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 6741
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 8748
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 9096
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 9585
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 9900
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 10618
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 10785
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 10941
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 12717
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 14965
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 15314
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 15650
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 15999
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 16395
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 3550,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 4295,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 8907,
+      "milliseconds": 38500
+    },
+    {
+      "realElapsedMs": 9381,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 9718,
+      "milliseconds": 12900
+    },
+    {
+      "realElapsedMs": 10047,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 15121,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 15449,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 15804,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 16127,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 3.1,
+      "realPlaybackMs": 3823,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 3.1,
+      "realPlaybackMs": 3832,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

@@ -1,0 +1,894 @@
+{
+  "id": 431,
+  "fixture": {
+    "name": "Bodyweight Jump Squats",
+    "group": {
+      "id": "r30.medial-deep-knee-extensors.set1.block1",
+      "displayName": "Medial and deep knee extensors",
+      "order": 38,
+      "canonicalGroups": [
+        "MedialAndDeepKneeExtensors"
+      ],
+      "selectionGroupId": "r30.medial-deep-knee-extensors",
+      "exerciseOverrideId": 431,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 6774,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8847,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11759,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0.196687,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14632,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0.445599,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16259,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 2.054015,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16506,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 2.26994,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16739,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 2.548365,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17314,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0.450334,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17657,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0.826783,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18433,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 1.75293,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18912,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 2.105542,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19280,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 2.412845,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19341,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 2.525553,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20638,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22173,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "0",
+      "rest": "14",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0.661305,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23768,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26814,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "28",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0.207422,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27651,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "27",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 1.077594,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28920,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "25",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 2.348385,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30570,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "24",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 1.36209,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30914,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "24",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 1.74803,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 31291,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "23",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 2.071605,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 31609,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "23",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 2.391723,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 31789,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "23",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0.0162,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 33480,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "21",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 1.610897,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 33622,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "21",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 1.760412,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 35292,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0.670106,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 36551,
+      "name": "Bodyweight Jump Squats",
+      "countdown": "0",
+      "rest": "14",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0.670106,
+        "duration": 2.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 37353,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0431.mp4?v=60684687399ecb24ab296590314906615041cc92afabe96bb62beda878732553",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 39160,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 0.961497,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 8847
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 11759
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 14632
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 17657
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 19341
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 20638
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 22173
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 23768
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 26814
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 27651
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 28920
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 31789
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 33622
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 35292
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 36551
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 37353
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 39160
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 11522,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 13861,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 20417,
+      "milliseconds": 32500
+    },
+    {
+      "realElapsedMs": 21813,
+      "milliseconds": 100
+    },
+    {
+      "realElapsedMs": 23030,
+      "milliseconds": 12900
+    },
+    {
+      "realElapsedMs": 25163,
+      "milliseconds": 15150
+    },
+    {
+      "realElapsedMs": 35088,
+      "milliseconds": 19500
+    },
+    {
+      "realElapsedMs": 36266,
+      "milliseconds": 100
+    },
+    {
+      "realElapsedMs": 37102,
+      "milliseconds": 12900
+    },
+    {
+      "realElapsedMs": 38402,
+      "milliseconds": 15150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 2.55,
+      "realPlaybackMs": 3289,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 2.55,
+      "realPlaybackMs": 3264,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

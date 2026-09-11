@@ -1,0 +1,471 @@
+{
+  "id": 683,
+  "fixture": {
+    "name": "Alternating Palm-Up Shoulder Rotations",
+    "group": {
+      "id": "r30.rotator-cuff.set1.block1",
+      "displayName": "Rotator cuff",
+      "order": 43,
+      "canonicalGroups": [
+        "RotatorCuff"
+      ],
+      "selectionGroupId": "r30.rotator-cuff",
+      "exerciseOverrideId": 683,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 7395,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 0,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8645,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 0,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10324,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 0.316989,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14246,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 4.142244,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16082,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 1.112131,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16993,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 2.352446,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17625,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 2.619571,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17915,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 2.921852,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18229,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 3.50885,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18690,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 3.646239,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21283,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 1.216113,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23169,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.rotator-cuff.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 2.874934,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25246,
+      "name": "Alternating Palm-Up Shoulder Rotations",
+      "countdown": "0",
+      "rest": "13",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.rotator-cuff.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 2.874934,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26708,
+      "name": "Standing Roll-Down with Halfway Lift",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0683.mp4?v=1d869708e4d6d3dd1d9687dcecdb5653b9731ddc24b5358350f5c78e050da3eb",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29419,
+      "name": "Standing Roll-Down with Halfway Lift",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0625.mp4?v=1be5b79549447078d1eafbd30cf884ebcd834f76a8bae1a58f12ad9db7ba99ee",
+        "time": 2.200702,
+        "duration": 20.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 8645
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 10324
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 14246
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 18690
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 21283
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 23169
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 25246
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 26708
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 29419
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 9996,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 13942,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 22890,
+      "milliseconds": 33500
+    },
+    {
+      "realElapsedMs": 24649,
+      "milliseconds": 100
+    },
+    {
+      "realElapsedMs": 26409,
+      "milliseconds": 11900
+    },
+    {
+      "realElapsedMs": 28611,
+      "milliseconds": 15150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 4.8,
+      "realPlaybackMs": 5403,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

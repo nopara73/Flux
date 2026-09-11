@@ -1,0 +1,932 @@
+{
+  "id": 572,
+  "fixture": {
+    "name": "Standing Side-Lunge Adductor Stretch",
+    "group": {
+      "id": "r30.major-hip-adductors.set1.block1",
+      "displayName": "Major hip adductors",
+      "order": 23,
+      "canonicalGroups": [
+        "MajorHipAdductors"
+      ],
+      "selectionGroupId": "r30.major-hip-adductors",
+      "exerciseOverrideId": 572,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 506,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 640,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 888,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1100,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1332,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1544,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1752,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1958,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2167,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2382,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2590,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2800,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2807,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3082,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3331,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3559,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4159,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4226,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4283,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4527,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4731,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4936,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5149,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5359,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5566,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5782,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6005,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6016,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6268,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6521,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6756,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7358,
+      "name": "Self-Resisted Neck Flexion Isometric",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0307.mp4?v=b6be490ba7edb55fb7c01ea620e720124314a1303c7fbb27e929b884da99253c",
+        "time": 0.391005,
+        "duration": 13.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 640
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 888
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1100
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 2807
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 3082
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 3331
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 3559
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 4159
+    },
+    {
+      "phase": "block2-start",
+      "file": "08-block2-start.png",
+      "elapsedMs": 4226
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "09-block2-work-start.png",
+      "elapsedMs": 4283
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "10-block2-loop-end.png",
+      "elapsedMs": 6016
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "11-block2-work-end.png",
+      "elapsedMs": 6268
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "12-block2-rest-start.png",
+      "elapsedMs": 6521
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "13-block2-rest-end.png",
+      "elapsedMs": 6756
+    },
+    {
+      "phase": "block2-next",
+      "file": "14-block2-next.png",
+      "elapsedMs": 7358
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 714,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 927,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 2897,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 3147,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 3382,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 3620,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 6095,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 6337,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 6580,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6827,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1,
+      "realPlaybackMs": 1675,
+      "wrapped": false,
+      "still": true
+    },
+    {
+      "block": 2,
+      "duration": 1,
+      "realPlaybackMs": 1689,
+      "wrapped": false,
+      "still": true
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

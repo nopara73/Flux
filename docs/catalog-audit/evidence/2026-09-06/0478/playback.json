@@ -1,0 +1,1398 @@
+{
+  "id": 478,
+  "fixture": {
+    "name": "Step-Out Pivot with Thumb Tracking",
+    "group": {
+      "id": "r30.cranial-muscles.set1.block1",
+      "displayName": "Cranial muscles",
+      "order": 41,
+      "canonicalGroups": [
+        "CranialMuscles"
+      ],
+      "selectionGroupId": "r30.cranial-muscles",
+      "exerciseOverrideId": 478,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 631,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 768,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1023,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1265,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.085893,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1564,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.386001,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1772,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.592758,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1978,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.799639,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2182,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.002241,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2393,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.212813,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2596,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.427543,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2824,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.643858,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2826,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.649371,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3104,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.92463,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3306,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 2.126103,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3511,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 2.330495,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3719,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 2.540349,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3930,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 2.75199,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4134,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.149307,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4341,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.354055,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4542,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.555459,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4746,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.759401,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4955,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.969236,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4957,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.970825,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5189,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.204217,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5443,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.082731,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5680,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.313831,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5928,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.043656,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6024,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.140222,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6078,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.194288,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6344,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.460539,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6554,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.670419,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6760,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.87537,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6964,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.079598,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7171,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.290279,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7379,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.517408,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7614,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.749544,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7640,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.756472,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7904,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 2.020932,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8109,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 2.231124,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8322,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 2.49646,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8610,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 2.725968,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8822,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.128233,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9026,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.331142,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9228,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.572212,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9478,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.785576,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9683,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.988334,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9685,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0.99007,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9934,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.240561,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10179,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.321546,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10401,
+      "name": "Step-Out Pivot with Thumb Tracking",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 1.321546,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10642,
+      "name": "Isometric Shoulder External Rotation Against Wall",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0478.mp4?v=e519e4515aee12f9e5fa944fd5463ba54141621e40cfbb75dfba09792b4d8bad",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0587.png?v=ada3c41d80a7c5659ed21cf106113939291a4833aff8c8073c2590354adbc33b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 768
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1023
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1265
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 2826
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 4957
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 5189
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 5443
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 5680
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 5928
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 6024
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 6078
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 7640
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 9685
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 9934
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 10179
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 10401
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 10642
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 844,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1086,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 5011,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 5261,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 5507,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 5733,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 9750,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 10002,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 10228,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 10457,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 2.8,
+      "realPlaybackMs": 3606,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 2.8,
+      "realPlaybackMs": 3552,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

@@ -1,0 +1,3061 @@
+{
+  "id": 194,
+  "fixture": {
+    "name": "Heel Walks",
+    "group": {
+      "id": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "displayName": "Anterior/lateral lower leg and dorsal foot",
+      "order": 42,
+      "canonicalGroups": [
+        "AnteriorLateralLowerLegAndDorsalFoot"
+      ],
+      "selectionGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot",
+      "exerciseOverrideId": 194,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "none; production application logic unchanged",
+    "appSourceSha256": "5f68829e533e1ee5b753ea92f04651460ae61832517661fb60861bc983c5e64c",
+    "workoutSourceSha256": "3c72d89f2a31ee092c274f37c5c15ac053bfca8d3b8b5fbc555a3ee98bb0a046",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 1311,
+      "name": "Heel Walks",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1466,
+      "name": "Heel Walks",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1694,
+      "name": "Heel Walks",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1909,
+      "name": "Heel Walks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.144489,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2160,
+      "name": "Heel Walks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.395329,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2372,
+      "name": "Heel Walks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.606454,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2578,
+      "name": "Heel Walks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.81353,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2787,
+      "name": "Heel Walks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.022264,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3002,
+      "name": "Heel Walks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.237086,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3206,
+      "name": "Heel Walks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.441025,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3416,
+      "name": "Heel Walks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.654519,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3627,
+      "name": "Heel Walks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.861876,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3843,
+      "name": "Heel Walks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 2.078374,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4053,
+      "name": "Heel Walks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 2.288362,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4269,
+      "name": "Heel Walks",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 2.506778,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4483,
+      "name": "Heel Walks",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 2.71747,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4695,
+      "name": "Heel Walks",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 2.930716,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4912,
+      "name": "Heel Walks",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 3.14779,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5121,
+      "name": "Heel Walks",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 3.355755,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5327,
+      "name": "Heel Walks",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 3.562526,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5536,
+      "name": "Heel Walks",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 3.771325,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5752,
+      "name": "Heel Walks",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 3.987999,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5959,
+      "name": "Heel Walks",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 4.197829,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6174,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 4.408504,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6380,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 4.614753,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6594,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 4.829049,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6812,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.046973,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7021,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.255467,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7225,
+      "name": "Heel Walks",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.461006,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7231,
+      "name": "Heel Walks",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.465535,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7511,
+      "name": "Heel Walks",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.74705,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7727,
+      "name": "Heel Walks",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.962657,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7936,
+      "name": "Heel Walks",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 6.171252,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8145,
+      "name": "Heel Walks",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 6.380219,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8362,
+      "name": "Heel Walks",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 6.599427,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8571,
+      "name": "Heel Walks",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 6.806938,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8779,
+      "name": "Heel Walks",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 7.013077,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8995,
+      "name": "Heel Walks",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 7.229466,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9201,
+      "name": "Heel Walks",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 7.436163,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9408,
+      "name": "Heel Walks",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 7.643232,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9625,
+      "name": "Heel Walks",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 7.860469,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9843,
+      "name": "Heel Walks",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 8.078764,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10053,
+      "name": "Heel Walks",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 8.287174,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10261,
+      "name": "Heel Walks",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 8.498541,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10470,
+      "name": "Heel Walks",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 8.705543,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10679,
+      "name": "Heel Walks",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 8.91353,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10897,
+      "name": "Heel Walks",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 9.132042,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11110,
+      "name": "Heel Walks",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 9.344082,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11326,
+      "name": "Heel Walks",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 9.561391,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11531,
+      "name": "Heel Walks",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 9.76632,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11745,
+      "name": "Heel Walks",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 9.979735,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11951,
+      "name": "Heel Walks",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.017319,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12162,
+      "name": "Heel Walks",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.229584,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12378,
+      "name": "Heel Walks",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.445973,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12595,
+      "name": "Heel Walks",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.662877,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12812,
+      "name": "Heel Walks",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.879731,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12816,
+      "name": "Heel Walks",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.883397,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13069,
+      "name": "Heel Walks",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.136073,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13309,
+      "name": "Heel Walks",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.094833,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13554,
+      "name": "Heel Walks",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.339491,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13814,
+      "name": "Heel Walks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.01174,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13913,
+      "name": "Heel Walks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.112868,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13972,
+      "name": "Heel Walks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.169645,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14243,
+      "name": "Heel Walks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.443184,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14460,
+      "name": "Heel Walks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.65933,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14671,
+      "name": "Heel Walks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.869848,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14879,
+      "name": "Heel Walks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.077587,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15086,
+      "name": "Heel Walks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.284523,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15295,
+      "name": "Heel Walks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.494243,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15505,
+      "name": "Heel Walks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.703343,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15713,
+      "name": "Heel Walks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.911975,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15920,
+      "name": "Heel Walks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 2.121356,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16140,
+      "name": "Heel Walks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 2.33868,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16346,
+      "name": "Heel Walks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 2.544665,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16554,
+      "name": "Heel Walks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 2.757205,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16764,
+      "name": "Heel Walks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 2.96214,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16975,
+      "name": "Heel Walks",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 3.174201,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17192,
+      "name": "Heel Walks",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 3.390182,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17404,
+      "name": "Heel Walks",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 3.603377,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17609,
+      "name": "Heel Walks",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 3.809049,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17818,
+      "name": "Heel Walks",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 4.021567,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18029,
+      "name": "Heel Walks",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 4.228487,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18235,
+      "name": "Heel Walks",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 4.436186,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18442,
+      "name": "Heel Walks",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 4.640761,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18659,
+      "name": "Heel Walks",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 4.857953,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18863,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.061745,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19076,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.276098,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19284,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.482077,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19287,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.485349,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19609,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 5.808043,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19813,
+      "name": "Heel Walks",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 6.011876,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20027,
+      "name": "Heel Walks",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 6.225266,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20237,
+      "name": "Heel Walks",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 6.434506,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20447,
+      "name": "Heel Walks",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 6.64504,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20660,
+      "name": "Heel Walks",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 6.859033,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20864,
+      "name": "Heel Walks",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 7.062408,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21076,
+      "name": "Heel Walks",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 7.274726,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21294,
+      "name": "Heel Walks",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 7.491789,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21499,
+      "name": "Heel Walks",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 7.700923,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21716,
+      "name": "Heel Walks",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 7.915153,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21927,
+      "name": "Heel Walks",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 8.126549,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22133,
+      "name": "Heel Walks",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 8.3316,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22343,
+      "name": "Heel Walks",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 8.541679,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22549,
+      "name": "Heel Walks",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 8.749568,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22761,
+      "name": "Heel Walks",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 8.960438,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22977,
+      "name": "Heel Walks",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 9.175831,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23189,
+      "name": "Heel Walks",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 9.387001,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23393,
+      "name": "Heel Walks",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 9.592144,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23609,
+      "name": "Heel Walks",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 9.808391,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23828,
+      "name": "Heel Walks",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 10.026822,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24039,
+      "name": "Heel Walks",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.071599,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24256,
+      "name": "Heel Walks",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.288819,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24461,
+      "name": "Heel Walks",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.494569,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24675,
+      "name": "Heel Walks",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.707202,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24892,
+      "name": "Heel Walks",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.92463,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24895,
+      "name": "Heel Walks",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 0.926939,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25121,
+      "name": "Heel Walks",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.153283,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25365,
+      "name": "Heel Walks",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.226953,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25580,
+      "name": "Heel Walks",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0194.mp4?v=75f820d4eccaf042b06e4698c81a7d6b701985348c7b128d2c9d4c13fe688a72",
+        "time": 1.226953,
+        "duration": 10.15,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25820,
+      "name": "Standing Pilates Knee-Lift Twist",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0910.mp4?v=5416793ee24b891304e020663477ca4e35252172c1fb094588803e1c003e3d6b",
+        "time": 0.031787,
+        "duration": 3.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1466
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1694
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1909
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 7231
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 12816
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 13069
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 13309
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 13554
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 13814
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 13913
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 13972
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 19287
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 24895
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 25121
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 25365
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 25580
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 25820
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1517,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1737,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 12896,
+      "milliseconds": 32500
+    },
+    {
+      "realElapsedMs": 13122,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 13381,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 13603,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 24946,
+      "milliseconds": 32500
+    },
+    {
+      "realElapsedMs": 25188,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 25406,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 25634,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 10.15,
+      "realPlaybackMs": 10863,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 10.15,
+      "realPlaybackMs": 10860,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

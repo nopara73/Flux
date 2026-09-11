@@ -1,0 +1,530 @@
+{
+  "id": 534,
+  "fixture": {
+    "name": "Alternating Standing Front Snap Kicks",
+    "group": {
+      "id": "r30.hip-flexors.set1.block3",
+      "displayName": "Hip flexors",
+      "order": 52,
+      "canonicalGroups": [
+        "HipFlexors"
+      ],
+      "selectionGroupId": "r30.hip-flexors",
+      "exerciseOverrideId": 534,
+      "sequenceBlockIndex": 2,
+      "sequenceBlockCount": 3,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 657,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 851,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.009739,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 943,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.101003,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1228,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.386567,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1438,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.597068,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1653,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.812094,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1655,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.813945,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1916,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 1.076269,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2120,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.014188,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2340,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.233735,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2547,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.440434,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2762,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.655654,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2978,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.873091,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2983,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.87632,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3247,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 1.140674,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3521,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.hip-flexors.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.006274,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3754,
+      "name": "Alternating Standing Front Snap Kicks",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.hip-flexors.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0534.mp4?v=39259cc6e7e135ef86d61f514b0199d66e4ecc9a3bf882cbc68463031c372d49",
+        "time": 0.006274,
+        "duration": 1.25,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4044,
+      "name": "Single-Arm Backfist",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0556.mp4?v=45cf86e9852d403f4aab208d9a490a08892a5f56b6c699f7a59817cf5df4687d",
+        "time": 0.087151,
+        "duration": 1.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 851
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "01-block1-work-start.png",
+      "elapsedMs": 943
+    },
+    {
+      "phase": "block1-action",
+      "file": "02-block1-action.png",
+      "elapsedMs": 1655
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 2983
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 3247
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 3521
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 3754
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 4044
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 3065,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 3343,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 3580,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 3852,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1.25,
+      "realPlaybackMs": 1963,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

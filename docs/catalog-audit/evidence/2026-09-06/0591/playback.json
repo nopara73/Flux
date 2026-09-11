@@ -1,0 +1,1518 @@
+{
+  "id": 591,
+  "fixture": {
+    "name": "Shadow Boxing",
+    "group": {
+      "id": "r30.shoulder-abductors.set1.block1",
+      "displayName": "Shoulder abductors",
+      "order": 47,
+      "canonicalGroups": [
+        "ShoulderAbductors"
+      ],
+      "selectionGroupId": "r30.shoulder-abductors",
+      "exerciseOverrideId": 591,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ShownLeadStance",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 1870,
+      "name": "Shadow Boxing",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2136,
+      "name": "Shadow Boxing",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2381,
+      "name": "Shadow Boxing",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2611,
+      "name": "Shadow Boxing",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.18395,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2879,
+      "name": "Shadow Boxing",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.451739,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3131,
+      "name": "Shadow Boxing",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.703429,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3345,
+      "name": "Shadow Boxing",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.917814,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3553,
+      "name": "Shadow Boxing",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.126041,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3764,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.336465,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3978,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.550828,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4194,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.767521,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4412,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.986581,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4418,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.993953,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4684,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 2.257058,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4898,
+      "name": "Shadow Boxing",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 2.471166,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5108,
+      "name": "Shadow Boxing",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 2.691576,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5328,
+      "name": "Shadow Boxing",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 2.900151,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5536,
+      "name": "Shadow Boxing",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 3.108198,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5760,
+      "name": "Shadow Boxing",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 3.333932,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5978,
+      "name": "Shadow Boxing",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.12264,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6192,
+      "name": "Shadow Boxing",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.337904,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6406,
+      "name": "Shadow Boxing",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.551475,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6633,
+      "name": "Shadow Boxing",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.77766,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6843,
+      "name": "Shadow Boxing",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.9888,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6847,
+      "name": "Shadow Boxing",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.992257,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7070,
+      "name": "Shadow Boxing",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.214651,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7300,
+      "name": "Shadow Boxing",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.107548,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7526,
+      "name": "Shadow Boxing",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.333447,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7758,
+      "name": "Shadow Boxing",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.119622,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7912,
+      "name": "Shadow Boxing",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.274099,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7954,
+      "name": "Shadow Boxing",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.315774,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8192,
+      "name": "Shadow Boxing",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.555204,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8398,
+      "name": "Shadow Boxing",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.760513,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8613,
+      "name": "Shadow Boxing",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.975539,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8827,
+      "name": "Shadow Boxing",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.190317,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9046,
+      "name": "Shadow Boxing",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.408979,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9266,
+      "name": "Shadow Boxing",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.627629,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9474,
+      "name": "Shadow Boxing",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.835607,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9681,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 2.042737,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9896,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 2.257956,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9898,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 2.259972,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10139,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 2.501749,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10361,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 2.723497,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10565,
+      "name": "Shadow Boxing",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 2.927118,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10777,
+      "name": "Shadow Boxing",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 3.139189,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10985,
+      "name": "Shadow Boxing",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 3.3473,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11214,
+      "name": "Shadow Boxing",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.150625,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11534,
+      "name": "Shadow Boxing",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.463849,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11738,
+      "name": "Shadow Boxing",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.667824,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11951,
+      "name": "Shadow Boxing",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 0.881157,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12159,
+      "name": "Shadow Boxing",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.088885,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12162,
+      "name": "Shadow Boxing",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.091679,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12392,
+      "name": "Shadow Boxing",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.321156,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12609,
+      "name": "Shadow Boxing",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.412515,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12842,
+      "name": "Shadow Boxing",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0591.mp4?v=1b36e60d45f0332eb86eed4457b57489c873d3ed08ea67ca68a62dc1e7765a1b",
+        "time": 1.412515,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13169,
+      "name": "Split-Stance Knee-to-Hand Crunch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0939.mp4?v=d5ce5be5090e34a7a91b88d170489ecc29c851240b5370880e7345877a6449b7",
+        "time": 0.056065,
+        "duration": 4.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 2136
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 2381
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 2611
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 4418
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 6847
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 7070
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 7300
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 7526
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 7758
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 7912
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 7954
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 9898
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 12162
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 12392
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 12609
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 12842
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 13169
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 2198,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 2424,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 6891,
+      "milliseconds": 38500
+    },
+    {
+      "realElapsedMs": 7119,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 7352,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 7563,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 12209,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 12435,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 12665,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 12923,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 3.4,
+      "realPlaybackMs": 4169,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 3.4,
+      "realPlaybackMs": 4176,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

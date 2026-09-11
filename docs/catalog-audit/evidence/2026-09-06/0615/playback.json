@@ -1,0 +1,702 @@
+{
+  "id": 615,
+  "fixture": {
+    "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+    "group": {
+      "id": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "displayName": "Posterior thigh and knee flexors",
+      "order": 56,
+      "canonicalGroups": [
+        "PosteriorThighAndKneeFlexors"
+      ],
+      "selectionGroupId": "r30.posterior-thigh-knee-flexors",
+      "exerciseOverrideId": 615,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 8566,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10128,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11820,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0.254453,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14300,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 1.116971,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16587,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0.276651,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17023,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 1.036743,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17583,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 1.228138,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19293,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 1.345362,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21577,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24191,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "0",
+      "rest": "13",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-thigh-knee-flexors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0.00669,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25587,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28561,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "28",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0.822595,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30570,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "26",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 1.350687,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 32202,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "25",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 1.398104,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 34483,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "22",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0.640942,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 34834,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "22",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 1.075281,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 35315,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "22",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 37786,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "19",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0.858371,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 39823,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-thigh-knee-flexors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 1.128732,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 41984,
+      "name": "Alternating Hamstring Curl with Prayer-to-Open Arms",
+      "countdown": "0",
+      "rest": "13",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-thigh-knee-flexors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 1.128732,
+        "duration": 1.45,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 42983,
+      "name": "Outside Crescent Kick",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0615.mp4?v=771b24892c836ddbfc5af495937044f2d6f96041be3c3bbab07e9a099bf385d5",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 47133,
+      "name": "Outside Crescent Kick",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0178.mp4?v=3ee2f82832a4616020cc1249dcda7fe525a768c6c759173ba3793025adce8122",
+        "time": 0.888022,
+        "duration": 2.6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 10128
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 11820
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 14300
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 17583
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 19293
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 21577
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 24191
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 25587
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 28561
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 30570
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 32202
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 35315
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 37786
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 39823
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 41984
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 42983
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 47133
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 11577,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 13976,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 21041,
+      "milliseconds": 36500
+    },
+    {
+      "realElapsedMs": 23402,
+      "milliseconds": 100
+    },
+    {
+      "realElapsedMs": 25068,
+      "milliseconds": 11900
+    },
+    {
+      "realElapsedMs": 28184,
+      "milliseconds": 15150
+    },
+    {
+      "realElapsedMs": 39482,
+      "milliseconds": 20500
+    },
+    {
+      "realElapsedMs": 41425,
+      "milliseconds": 100
+    },
+    {
+      "realElapsedMs": 42684,
+      "milliseconds": 11900
+    },
+    {
+      "realElapsedMs": 45451,
+      "milliseconds": 15150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1.45,
+      "realPlaybackMs": 2908,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 1.45,
+      "realPlaybackMs": 3508,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

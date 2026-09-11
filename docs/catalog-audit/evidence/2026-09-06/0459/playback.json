@@ -1,0 +1,543 @@
+{
+  "id": 459,
+  "fixture": {
+    "name": "Goal Post Jacks",
+    "group": {
+      "id": "r30.shoulder-abductors.set1.block1",
+      "displayName": "Shoulder abductors",
+      "order": 39,
+      "canonicalGroups": [
+        "ShoulderAbductors"
+      ],
+      "selectionGroupId": "r30.shoulder-abductors",
+      "exerciseOverrideId": 459,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 3,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 996,
+      "name": "Goal Post Jacks",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1167,
+      "name": "Goal Post Jacks",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1526,
+      "name": "Goal Post Jacks",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1803,
+      "name": "Goal Post Jacks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.140549,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2120,
+      "name": "Goal Post Jacks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.455894,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2329,
+      "name": "Goal Post Jacks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.666568,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2544,
+      "name": "Goal Post Jacks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.884303,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2552,
+      "name": "Goal Post Jacks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.890078,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2834,
+      "name": "Goal Post Jacks",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.210858,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3038,
+      "name": "Goal Post Jacks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.4205,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3253,
+      "name": "Goal Post Jacks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.631577,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3457,
+      "name": "Goal Post Jacks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.835094,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3668,
+      "name": "Goal Post Jacks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.068397,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3671,
+      "name": "Goal Post Jacks",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.071674,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3955,
+      "name": "Goal Post Jacks",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0459.mp4?v=545a805684f727eed40110106c3ed3bbfb79e562cb053e02db8965c0adbcd9c6",
+        "time": 0.358987,
+        "duration": 0.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4422,
+      "name": "Scarecrow Jacks",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0468.mp4?v=736eabdac39b4d0c36f5f0f300e8343e51daf9065d96ceda6130cc16b2740d16",
+        "time": 0.194422,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5680,
+      "name": "Scarecrow Jacks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0468.mp4?v=736eabdac39b4d0c36f5f0f300e8343e51daf9065d96ceda6130cc16b2740d16",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7706,
+      "name": "Scarecrow Jacks",
+      "countdown": "29",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0468.mp4?v=736eabdac39b4d0c36f5f0f300e8343e51daf9065d96ceda6130cc16b2740d16",
+        "time": 1.694686,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1167
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1526
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1803
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 2552
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 3671
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 3955
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 4422
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 5680
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 7706
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1333,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1629,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 3775,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 4101,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 5431,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6825,
+      "milliseconds": 15150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 0.95,
+      "realPlaybackMs": 1752,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

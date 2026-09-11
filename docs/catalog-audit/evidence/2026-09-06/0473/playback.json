@@ -1,0 +1,1422 @@
+{
+  "id": 473,
+  "fixture": {
+    "name": "Boxing Lead-Hand Parry",
+    "group": {
+      "id": "r30.shoulder-abductors.set1.block1",
+      "displayName": "Shoulder abductors",
+      "order": 39,
+      "canonicalGroups": [
+        "ShoulderAbductors"
+      ],
+      "selectionGroupId": "r30.shoulder-abductors",
+      "exerciseOverrideId": 473,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ShownLeadStance",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 1908,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2328,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3035,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3357,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.128009,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3701,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.47701,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3926,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.70003,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4172,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.947035,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4402,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.172435,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4626,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.39825,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4843,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.612895,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5052,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.822013,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5055,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.824608,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5327,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.097076,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5550,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.3203,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5767,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.537527,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5976,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.745655,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6183,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.952564,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6393,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.096546,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6604,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.306932,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6825,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.529739,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7034,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.736392,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7248,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.952038,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7261,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.963798,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7529,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.233495,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7787,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.128659,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8017,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.359482,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8314,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.087189,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8420,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.196493,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8508,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.281106,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8798,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.571823,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9006,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.779694,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9217,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.990962,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9427,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.199985,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9648,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.420719,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9856,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.629836,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10066,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.839196,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10275,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.051976,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10285,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.057759,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10558,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.330782,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10768,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.541889,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10979,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.753374,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11191,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 2.965691,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11398,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.086934,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11620,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.308066,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11844,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.531699,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12051,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.739333,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12262,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.951115,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12270,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 0.957902,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12551,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.2391,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12826,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.407745,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13102,
+      "name": "Boxing Lead-Hand Parry",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0473.mp4?v=0716d4b6dea87730ac551ce97e84aed197720dbcce16a66c583d83960b3dac7d",
+        "time": 1.407745,
+        "duration": 3.05,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13398,
+      "name": "Unsupported Standing Toe Raises",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0191.mp4?v=eeaffb546758e0d93609819a3e8f9a07328059b74a79a58d532cc744ef74eecd",
+        "time": 0.087583,
+        "duration": 2.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 2328
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 3035
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 3357
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 5055
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 7261
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 7529
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 7787
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 8017
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 8314
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 8420
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 8508
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 10285
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 12270
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 12551
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 12826
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 13102
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 13398
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 2809,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 3170,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 7348,
+      "milliseconds": 38500
+    },
+    {
+      "realElapsedMs": 7600,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 7846,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 8108,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 12367,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 12621,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 12917,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 13209,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 3.05,
+      "realPlaybackMs": 3766,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 3.05,
+      "realPlaybackMs": 3675,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

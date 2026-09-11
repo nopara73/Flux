@@ -1,0 +1,2149 @@
+{
+  "id": 557,
+  "fixture": {
+    "name": "Calf Raise with Double Forward Punch",
+    "group": {
+      "id": "r30.shoulder-abductors.set1.block1",
+      "displayName": "Shoulder abductors",
+      "order": 45,
+      "canonicalGroups": [
+        "ShoulderAbductors"
+      ],
+      "selectionGroupId": "r30.shoulder-abductors",
+      "exerciseOverrideId": 557,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "none; production application logic unchanged",
+    "appSourceSha256": "5f68829e533e1ee5b753ea92f04651460ae61832517661fb60861bc983c5e64c",
+    "workoutSourceSha256": "3c72d89f2a31ee092c274f37c5c15ac053bfca8d3b8b5fbc555a3ee98bb0a046",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 705,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0,
+        "duration": 6,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 843,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0,
+        "duration": 6,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1075,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0,
+        "duration": 6,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1312,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.165986,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1556,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.410209,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1765,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.61837,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1969,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.822714,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2178,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.031844,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2386,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.240074,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2592,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.446367,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2798,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.652003,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3003,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.856888,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3221,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 2.076054,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3439,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 2.295317,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3645,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 2.499395,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3849,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 2.70285,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4055,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 2.908769,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4270,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.123796,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4473,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.326845,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4476,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.329362,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4738,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.595076,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4947,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.800066,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5149,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 4.003451,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5369,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 4.223597,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5573,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 4.427018,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5788,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 4.642755,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5999,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 4.853379,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6205,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 5.060063,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6414,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 5.268547,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6630,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 5.484118,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6839,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 5.698667,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7049,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 5.903198,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7260,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.106145,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7474,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.322249,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7692,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.537642,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7897,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.742558,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8101,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.948651,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8106,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.952218,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8390,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.236653,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8668,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.028529,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8933,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.298522,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9258,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.024801,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9337,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.104002,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9448,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.215542,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9726,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.497433,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9939,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.706125,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10143,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.909208,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10356,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.127162,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10573,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.340161,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10778,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.54603,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10987,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.753584,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11203,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.970739,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11421,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 2.187974,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11628,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 2.397213,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11844,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 2.6101,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12060,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 2.829488,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12270,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.037406,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12478,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.245678,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12684,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.45151,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12688,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.454282,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12947,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.713813,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13163,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 3.931798,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13370,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 4.13822,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13577,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 4.34579,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13790,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 4.556258,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14000,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 4.766984,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14215,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 4.98178,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14419,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 5.191292,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14633,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 5.399495,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14851,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 5.618832,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15070,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 5.837348,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15274,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.029643,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15479,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.235317,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15682,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.438572,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15887,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.645908,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16093,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 0.85015,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16303,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.059751,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16306,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.06272,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16591,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.347584,
+        "duration": 6,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16815,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.429519,
+        "duration": 6,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17042,
+      "name": "Calf Raise with Double Forward Punch",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0557.mp4?v=d6d9f5c73e96e1dde16c3d04f3810e7b75bf387fbedb54a06608183c3fcec8e4",
+        "time": 1.429519,
+        "duration": 6,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17340,
+      "name": "Standing Pilates Knee-Lift Twist",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0910.mp4?v=5416793ee24b891304e020663477ca4e35252172c1fb094588803e1c003e3d6b",
+        "time": 0.059208,
+        "duration": 3.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 843
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1075
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1312
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 4476
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 8106
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 8390
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 8668
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 8933
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 9258
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 9337
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 9448
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 12688
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 16306
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 16591
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 16815
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 17042
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 17340
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 901,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1132,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 8210,
+      "milliseconds": 36500
+    },
+    {
+      "realElapsedMs": 8493,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 8754,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 9047,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 16416,
+      "milliseconds": 36500
+    },
+    {
+      "realElapsedMs": 16635,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 16861,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 17160,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 6,
+      "realPlaybackMs": 6755,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 6,
+      "realPlaybackMs": 6781,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

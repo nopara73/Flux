@@ -1,0 +1,2533 @@
+{
+  "id": 570,
+  "fixture": {
+    "name": "Calf Raise with Arm Reach and Fist Close",
+    "group": {
+      "id": "r30.shoulder-abductors.set1.block1",
+      "displayName": "Shoulder abductors",
+      "order": 45,
+      "canonicalGroups": [
+        "ShoulderAbductors"
+      ],
+      "selectionGroupId": "r30.shoulder-abductors",
+      "exerciseOverrideId": 570,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "none; production application logic unchanged",
+    "appSourceSha256": "5f68829e533e1ee5b753ea92f04651460ae61832517661fb60861bc983c5e64c",
+    "workoutSourceSha256": "3c72d89f2a31ee092c274f37c5c15ac053bfca8d3b8b5fbc555a3ee98bb0a046",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 794,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 940,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1238,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1492,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.138275,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1760,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.406531,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1965,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.613173,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2173,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.821105,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2380,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.026054,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2588,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.235213,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2802,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.448588,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3008,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.653562,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3223,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.869029,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3428,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 2.073417,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3642,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 2.289465,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3847,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 2.493846,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4053,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 2.698587,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4256,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 2.901644,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4461,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 3.106821,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4676,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 3.321333,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4879,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 3.524926,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5092,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 3.737801,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5295,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 3.940808,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5503,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 4.149224,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5506,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 4.152995,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5782,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 4.428324,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5991,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 4.636436,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6208,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 4.855455,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6418,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 5.064679,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6633,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 5.279633,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6850,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 5.500994,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7060,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 5.706497,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7279,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 5.925181,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7494,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 6.140694,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7699,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 6.347423,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7910,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 6.556369,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8119,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 6.765636,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8327,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 6.973376,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8542,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 7.192846,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8759,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 7.40578,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8978,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 7.624889,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9193,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.076616,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9397,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.280027,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9609,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.492747,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9820,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.703149,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10025,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.908618,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10029,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.911049,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10274,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.159026,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10552,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.04923,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10812,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.308182,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11085,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.117356,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11190,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.221124,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11260,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.290082,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11534,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.56512,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11752,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.782683,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11960,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.991699,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12165,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.198835,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12377,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.408185,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12584,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.621724,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12795,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.826185,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13000,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 2.031176,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13219,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 2.253288,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13427,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 2.457661,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13631,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 2.663524,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13845,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 2.875624,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14060,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 3.090828,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14268,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 3.299452,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14475,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 3.50633,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14692,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 3.726446,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14905,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 3.935852,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15113,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 4.1436,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15323,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 4.35381,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15327,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 4.356956,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15609,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 4.640659,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15815,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 4.845932,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16019,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 5.049429,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16224,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 5.255851,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16430,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 5.461021,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16637,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 5.66802,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16847,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 5.878423,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17053,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 6.084165,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17260,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 6.291384,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17471,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 6.501399,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17682,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 6.713073,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17893,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 6.92384,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18104,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 7.133729,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18311,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 7.342623,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18521,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 7.551319,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18733,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.008282,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18941,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.217592,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19159,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.433102,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19366,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.638888,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19572,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 0.845536,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19780,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.052139,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19783,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.056035,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20058,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-abductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.331562,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20324,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.525897,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20587,
+      "name": "Calf Raise with Arm Reach and Fist Close",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-abductors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0570.mp4?v=da4c358c67629139b3b990599a1f74a009ed2fe0fdf98cbb7336edf4846eeab9",
+        "time": 1.525897,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20864,
+      "name": "Standing Pilates Knee-Lift Twist",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0910.mp4?v=5416793ee24b891304e020663477ca4e35252172c1fb094588803e1c003e3d6b",
+        "time": 0.086354,
+        "duration": 3.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 940
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1238
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1492
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 5506
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 10029
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 10274
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 10552
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 10812
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 11085
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 11190
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 11260
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 15327
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 19783
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 20058
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 20324
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 20587
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 20864
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1054,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1321,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 10097,
+      "milliseconds": 34500
+    },
+    {
+      "realElapsedMs": 10365,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 10639,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 10888,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 19874,
+      "milliseconds": 35500
+    },
+    {
+      "realElapsedMs": 20143,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 20404,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 20683,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 7.75,
+      "realPlaybackMs": 8480,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 7.75,
+      "realPlaybackMs": 8450,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

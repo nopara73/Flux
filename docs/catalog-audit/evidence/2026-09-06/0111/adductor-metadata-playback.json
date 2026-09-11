@@ -1,0 +1,1189 @@
+{
+  "id": 111,
+  "fixture": {
+    "name": "Squat with Overhead Reach and Arm Sweep",
+    "group": {
+      "id": "r30.medial-deep-knee-extensors.set1.block1",
+      "displayName": "Medial and deep knee extensors",
+      "order": 33,
+      "canonicalGroups": [
+        "MedialAndDeepKneeExtensors"
+      ],
+      "selectionGroupId": "r30.medial-deep-knee-extensors",
+      "exerciseOverrideId": 111,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "none; production application logic unchanged",
+    "appSourceSha256": "5f68829e533e1ee5b753ea92f04651460ae61832517661fb60861bc983c5e64c",
+    "workoutSourceSha256": "3c72d89f2a31ee092c274f37c5c15ac053bfca8d3b8b5fbc555a3ee98bb0a046",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 718,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 881,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1171,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1396,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.116637,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1668,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.387965,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1874,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.594228,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2089,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.812064,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2299,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.020574,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2504,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.224029,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2506,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.226675,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2813,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.53324,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3018,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.738324,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3222,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.032992,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3447,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.25526,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3669,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.469191,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3885,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.684913,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4097,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.89763,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4102,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.901317,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4345,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.146096,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4598,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.098467,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4844,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.345022,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5120,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.05084,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5202,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.134214,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5290,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.221489,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5551,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.482219,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5759,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.69005,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5968,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.898961,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6173,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.104471,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6388,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.3191,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6391,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.322354,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6658,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.58898,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6865,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.795899,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7072,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.07959,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7284,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.291516,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7487,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.494703,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7691,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.699046,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7900,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.908175,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7906,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 0.913286,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8173,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.181336,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8412,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.32032,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8669,
+      "name": "Squat with Overhead Reach and Arm Sweep",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0111.mp4?v=a9c32815a539c54f34545fb1ce715bc73a46baf21859644e626ef1f476ead8f7",
+        "time": 1.32032,
+        "duration": 1.9,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8930,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 0.02082,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 881
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1171
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1396
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 2506
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 4102
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 4345
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 4598
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 4844
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 5120
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 5202
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 5290
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 6391
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 7906
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 8173
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 8412
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 8669
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 8930
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 990,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1217,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 4162,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 4419,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 4670,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 4924,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 7994,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 8224,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 8493,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 8736,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1.9,
+      "realPlaybackMs": 2638,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 1.9,
+      "realPlaybackMs": 2561,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

@@ -1,0 +1,942 @@
+{
+  "id": 224,
+  "fixture": {
+    "name": "Qigong Interlaced Wrist Rolls",
+    "group": {
+      "id": "r30.forearm-extensors-supinators.set1.block1",
+      "displayName": "Forearm extensors and supinators",
+      "order": 5,
+      "canonicalGroups": [
+        "ForearmExtensorsAndSupinators"
+      ],
+      "selectionGroupId": "r30.forearm-extensors-supinators",
+      "exerciseOverrideId": 224,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 607,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0,
+        "duration": 1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 766,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0,
+        "duration": 1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1024,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0,
+        "duration": 1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1272,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.104179,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1548,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.378506,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1765,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.597733,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1971,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.870711,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2066,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.907639,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2435,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.256305,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2637,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.458337,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2840,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.69449,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3089,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.928903,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3112,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.935584,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3343,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.163223,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3623,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.073454,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3894,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.forearm-extensors-supinators.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.350044,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4194,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.063719,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4280,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.149991,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4338,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.214569,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4605,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.475012,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4815,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.695906,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5032,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.905687,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5042,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.915618,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5382,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.233003,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5590,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.438462,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5793,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.643366,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6004,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.853667,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6012,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.860104,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6286,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.122088,
+        "duration": 1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6593,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.221508,
+        "duration": 1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6827,
+      "name": "Qigong Interlaced Wrist Rolls",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.forearm-extensors-supinators.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0224.mp4?v=6ed4ebf4818443d0b202a725ffe20f2b3d7af03d2f242bb38a2ae3b379aa3bcf",
+        "time": 0.221508,
+        "duration": 1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7120,
+      "name": "Inhale Arms Open, Exhale Self-Hug and Fold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0398.mp4?v=7133044e669f027b9730cf03b9bacee134dcb6156554b135bfb9d9de497bc0d4",
+        "time": 0.031422,
+        "duration": 22,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 766
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1024
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1272
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 2066
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 3112
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 3343
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 3623
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 3894
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 4194
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 4280
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 4338
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 5042
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 6012
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 6286
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 6593
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 6827
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 7120
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 845,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1097,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 3169,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 3412,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 3720,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 3985,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 6110,
+      "milliseconds": 42500
+    },
+    {
+      "realElapsedMs": 6362,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 6653,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6933,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1,
+      "realPlaybackMs": 1770,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 1,
+      "realPlaybackMs": 1609,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

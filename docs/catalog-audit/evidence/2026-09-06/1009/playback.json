@@ -1,0 +1,1957 @@
+{
+  "id": 1009,
+  "fixture": {
+    "name": "Lunge Sideways and Reach Both Arms Overhead",
+    "group": {
+      "id": "r30.major-hip-adductors.set1.block1",
+      "displayName": "Major hip adductors",
+      "order": 59,
+      "canonicalGroups": [
+        "MajorHipAdductors"
+      ],
+      "selectionGroupId": "r30.major-hip-adductors",
+      "exerciseOverrideId": 1009,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "bootstrap mirror category only",
+    "appSourceSha256": "3f73bd238d12751e07a71d1811dd5622e4b28444776930e3c584af7532ac2b0e",
+    "workoutSourceSha256": "91dad6a5d5d25ac8f685266d7057c2247d0d046b95935d3bb34d456ae3a69843",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 2332,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2596,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2993,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3225,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.135938,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3572,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.48249,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3777,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.68621,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3999,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.908999,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4207,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.116369,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4417,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.32618,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4623,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.532819,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4837,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.746871,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5043,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.951997,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5258,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 2.168564,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5474,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 2.384903,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5685,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 2.594854,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5908,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 2.817246,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6125,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.035752,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6138,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.049119,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6424,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.334619,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6634,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.544267,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6859,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.769397,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7067,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.976475,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7274,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 4.184062,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7487,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 4.397408,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7703,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 4.612582,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7913,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 4.824346,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8131,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 5.040952,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8337,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 5.247902,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8557,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.082156,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8768,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.292977,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8977,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.50272,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9185,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.709452,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9406,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.931254,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9410,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.93907,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9660,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.185425,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9943,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.086281,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10218,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.356961,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10660,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.235306,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10757,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.323984,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10810,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.375961,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11090,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.656908,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11306,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.872755,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11522,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.089681,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11737,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.304864,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11958,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.524249,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12165,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.734135,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12382,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.947909,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12591,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 2.157647,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12813,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 2.379408,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13029,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 2.595108,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13233,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 2.800164,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13448,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.01455,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13657,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.223,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13659,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.225307,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13934,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.50082,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14161,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.726828,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14373,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 3.93893,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14581,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 4.147302,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14788,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 4.355016,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15003,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 4.569498,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15212,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 4.778049,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15419,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 4.985546,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15651,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 5.218342,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15878,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.075897,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16087,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.286578,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16301,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.499686,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16509,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.706957,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16728,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0.925813,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16938,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.136723,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16942,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.139723,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17201,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.39897,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17469,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.529945,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17737,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 1.529945,
+        "duration": 5.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18035,
+      "name": "Lunge Sideways and Reach Both Arms Overhead",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1009.mp4?v=42473e414cfd11fe6d924bbe417d26fa654904293886ccc4d036fa8cb2c1a88a",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 2596
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 2993
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 3225
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 6138
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 9410
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 9660
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 9943
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 10218
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 10660
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 10757
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 10810
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 13659
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 16942
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 17201
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 17469
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 17737
+    },
+    {
+      "phase": "block2-completion",
+      "file": "16-block2-completion.png",
+      "elapsedMs": 18035
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 2766,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 3048,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 9475,
+      "milliseconds": 36500
+    },
+    {
+      "realElapsedMs": 9750,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 10037,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 10322,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 17025,
+      "milliseconds": 37500
+    },
+    {
+      "realElapsedMs": 17280,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 17556,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 17839,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 5.35,
+      "realPlaybackMs": 6038,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 5.35,
+      "realPlaybackMs": 6067,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

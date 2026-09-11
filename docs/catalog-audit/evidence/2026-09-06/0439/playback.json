@@ -1,0 +1,1446 @@
+{
+  "id": 439,
+  "fixture": {
+    "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+    "group": {
+      "id": "r30.cranial-muscles.set1.block1",
+      "displayName": "Cranial muscles",
+      "order": 41,
+      "canonicalGroups": [
+        "CranialMuscles"
+      ],
+      "selectionGroupId": "r30.cranial-muscles",
+      "exerciseOverrideId": 439,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 709,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 838,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1095,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1329,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.094356,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1613,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.380037,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1822,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.587665,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2033,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.801367,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2238,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.002888,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2447,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.21492,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2652,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.418175,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2858,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.623074,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3064,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.829997,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3067,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.832699,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3342,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 2.111299,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3564,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 2.332354,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3774,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 2.540956,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3981,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 2.765014,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4214,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 2.981801,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4424,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 3.192436,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4633,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.178654,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4840,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.383834,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5049,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.593819,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5258,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.801345,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5261,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.804787,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5520,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.063488,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5755,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.024257,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6032,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.299637,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6272,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.084357,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6354,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.167544,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6414,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.227503,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6678,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.491835,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6882,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.698345,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7089,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.905808,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7304,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.122453,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7513,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.326599,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7718,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.532122,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7921,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.734981,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8130,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.961512,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8160,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 2.095544,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8642,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 2.456125,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8850,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 2.664492,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9054,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 2.871705,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9279,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 3.100943,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9497,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.103539,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9708,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.311829,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9912,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.518815,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10153,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.755789,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10356,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.959387,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10360,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0.963061,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10590,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.19323,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10825,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.321837,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11082,
+      "name": "Pogo Bounces with Fixed-Gaze Head Turns",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 1.321837,
+        "duration": 3.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11339,
+      "name": "Isometric Shoulder External Rotation Against Wall",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0439.mp4?v=82f567eacb3b283767514d637337fa21ffda74b07332adc06eb358806e3189a4",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0587.png?v=ada3c41d80a7c5659ed21cf106113939291a4833aff8c8073c2590354adbc33b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 838
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1095
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1329
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 3067
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 5261
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 5520
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 5755
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 6032
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 6272
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 6354
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 6414
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 8160
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 10360
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 10590
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 10825
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 11082
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 11339
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 922,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1154,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 5342,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 5579,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 5848,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6089,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 10416,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 10646,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 10903,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 11148,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 3.2,
+      "realPlaybackMs": 3849,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 3.2,
+      "realPlaybackMs": 3883,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

@@ -1,0 +1,2420 @@
+{
+  "id": 192,
+  "fixture": {
+    "name": "Alternating Lateral Lunge with Knee Drive",
+    "group": {
+      "id": "r30.medial-deep-knee-extensors.set1.block1",
+      "displayName": "Medial and deep knee extensors",
+      "order": 41,
+      "canonicalGroups": [
+        "MedialAndDeepKneeExtensors"
+      ],
+      "selectionGroupId": "r30.medial-deep-knee-extensors",
+      "exerciseOverrideId": 192,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 981,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1158,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1502,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1794,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.13916,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2098,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.445133,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2303,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.648712,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2509,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.855781,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2726,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.071599,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2934,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.279879,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3144,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.491671,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3354,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.706238,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3569,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.916247,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3778,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 2.125032,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3984,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 2.329885,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4194,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 2.541001,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4403,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 2.750705,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4609,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 2.955473,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4822,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 3.16916,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5030,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 3.375605,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5234,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 3.579568,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5442,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 3.792027,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5651,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 4.002064,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5863,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 4.208966,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6067,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 4.412468,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6273,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 4.626189,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6491,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 4.840357,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6703,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 5.047899,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6906,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 5.251153,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7108,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 5.453943,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7314,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 5.681214,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7544,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 5.891211,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7751,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 6.103503,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7963,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 6.309237,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8168,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 6.514083,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8378,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 6.722608,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8585,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 6.930888,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8793,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 7.138109,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9000,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 7.348295,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9212,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.101115,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9418,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.310166,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9626,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.516022,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9833,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.719829,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10036,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.924652,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10040,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.928071,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10304,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.191451,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10562,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.096931,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10794,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.322634,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11369,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.372555,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11473,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.477617,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11535,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.537759,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11834,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.838353,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12038,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.041793,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12246,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.248398,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12451,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.455363,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12659,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.66312,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12863,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.871369,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13079,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 2.105532,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13325,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 2.329094,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13530,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 2.532852,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13736,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 2.738451,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13939,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 2.942004,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14142,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 3.144432,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14345,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 3.347365,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14549,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 3.55156,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14753,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 3.7559,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14960,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 3.962379,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15163,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 4.165746,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15368,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 4.371911,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15576,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 4.579914,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15784,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 4.789852,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15993,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 5.000089,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16203,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 5.212207,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16413,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 5.478271,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16685,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 5.691705,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16899,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 5.903306,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17106,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 6.10963,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17313,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 6.335877,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17554,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 6.556025,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17759,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 6.762071,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17968,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 6.970775,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18176,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 7.179045,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18392,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 7.397653,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18599,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.139534,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18812,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.348086,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19017,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.554088,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19226,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.765113,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19434,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 0.970265,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19643,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.179407,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19850,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.38969,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19857,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.393459,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20143,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.680239,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20391,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.840688,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20669,
+      "name": "Alternating Lateral Lunge with Knee Drive",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0192.mp4?v=cafa25dae676aa81441d4b4fcf22e2135d00079ee3e33e16981cd06cf80732ef",
+        "time": 1.840688,
+        "duration": 7.45,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21268,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 0.378665,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1158
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1502
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1794
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 10040
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 10304
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 10562
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 10794
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 11369
+    },
+    {
+      "phase": "block2-start",
+      "file": "08-block2-start.png",
+      "elapsedMs": 11473
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "09-block2-work-start.png",
+      "elapsedMs": 11535
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "10-block2-loop-end.png",
+      "elapsedMs": 19857
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "11-block2-work-end.png",
+      "elapsedMs": 20143
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "12-block2-rest-start.png",
+      "elapsedMs": 20391
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "13-block2-rest-end.png",
+      "elapsedMs": 20669
+    },
+    {
+      "phase": "block2-next",
+      "file": "14-block2-next.png",
+      "elapsedMs": 21268
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1319,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1622,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 10124,
+      "milliseconds": 34500
+    },
+    {
+      "realElapsedMs": 10381,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 10622,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 10841,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 19956,
+      "milliseconds": 35500
+    },
+    {
+      "realElapsedMs": 20215,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 20492,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 20738,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 7.45,
+      "realPlaybackMs": 8142,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 7.45,
+      "realPlaybackMs": 8223,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

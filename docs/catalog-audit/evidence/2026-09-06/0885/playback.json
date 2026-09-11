@@ -1,0 +1,1134 @@
+{
+  "id": 885,
+  "fixture": {
+    "name": "Boxing Roll",
+    "group": {
+      "id": "r30.abdominal-wall.set1.block1",
+      "displayName": "Abdominal wall",
+      "order": 51,
+      "canonicalGroups": [
+        "AbdominalWall"
+      ],
+      "selectionGroupId": "r30.abdominal-wall",
+      "exerciseOverrideId": 885,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ShownLeadStance",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 718,
+      "name": "Boxing Roll",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1062,
+      "name": "Boxing Roll",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1309,
+      "name": "Boxing Roll",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1556,
+      "name": "Boxing Roll",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.099814,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1858,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.401013,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2084,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.655859,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2327,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.865626,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2531,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.068937,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2534,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.070735,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2801,
+      "name": "Boxing Roll",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.338351,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3005,
+      "name": "Boxing Roll",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.543321,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3209,
+      "name": "Boxing Roll",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.086263,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3419,
+      "name": "Boxing Roll",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.296449,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3628,
+      "name": "Boxing Roll",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.506152,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3836,
+      "name": "Boxing Roll",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.717931,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4047,
+      "name": "Boxing Roll",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.926854,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4053,
+      "name": "Boxing Roll",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.93097,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4346,
+      "name": "Boxing Roll",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.22385,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4653,
+      "name": "Boxing Roll",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.056987,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4898,
+      "name": "Boxing Roll",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.302823,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5213,
+      "name": "Boxing Roll",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.031173,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5318,
+      "name": "Boxing Roll",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.137187,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5364,
+      "name": "Boxing Roll",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.18092,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5638,
+      "name": "Boxing Roll",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.456074,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5841,
+      "name": "Boxing Roll",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.659531,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6045,
+      "name": "Boxing Roll",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.863015,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6253,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.071379,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6461,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.279843,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6465,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.282318,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6770,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.625241,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7025,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.185302,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7235,
+      "name": "Boxing Roll",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.396211,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7447,
+      "name": "Boxing Roll",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.607373,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7653,
+      "name": "Boxing Roll",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0.815305,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7861,
+      "name": "Boxing Roll",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.021935,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7865,
+      "name": "Boxing Roll",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.024702,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8120,
+      "name": "Boxing Roll",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.280239,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8442,
+      "name": "Boxing Roll",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.5252,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8697,
+      "name": "Boxing Roll",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 1.5252,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9005,
+      "name": "Mirror Front Lat-Spread Posing",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0885.mp4?v=2d48bb88bbccb9a9bd22facf18fbd7a4cee0307d527725efbc0a2676670ba11a",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0525.png?v=b1b8b5214d1bd3e2892db99c9c552d96cd3772c79a6182726a20fcd5115d0932",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1062
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1309
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1556
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 2534
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 4053
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 4346
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 4653
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 4898
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 5213
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 5318
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 5364
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 6465
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 7865
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 8120
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 8442
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 8697
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 9005
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1133,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1381,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 4165,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 4466,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 4722,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 5014,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 7944,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 8259,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 8523,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 8793,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1.65,
+      "realPlaybackMs": 2403,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 1.65,
+      "realPlaybackMs": 2432,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

@@ -1,0 +1,2766 @@
+{
+  "id": 185,
+  "fixture": {
+    "name": "Shibashi Side-to-Side Cloud Hands",
+    "group": {
+      "id": "r30.deep-hip-rotators.set1.block1",
+      "displayName": "Deep hip rotators",
+      "order": 14,
+      "canonicalGroups": [
+        "DeepHipRotators"
+      ],
+      "selectionGroupId": "r30.deep-hip-rotators",
+      "exerciseOverrideId": 185,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 858,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1053,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1386,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1655,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.102825,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1931,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.37784,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2137,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.584366,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2343,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.789292,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2545,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.992485,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2751,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.1993,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2959,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.408848,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3168,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.617221,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3377,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.824868,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3591,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 2.038408,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3795,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 2.242163,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3998,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 2.446329,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4210,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 2.65841,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4418,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 2.865853,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4626,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 3.103786,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4868,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 3.315857,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5083,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 3.532425,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5290,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 3.736897,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5494,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 3.942007,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5698,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 4.14442,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5909,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 4.356082,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6118,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 4.565338,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6326,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 4.774523,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6330,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 4.777068,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6601,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 5.049474,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6809,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 5.255977,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7011,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 5.458495,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7217,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 5.664643,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7427,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 5.874058,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7634,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 6.081247,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7842,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 6.291054,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8051,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 6.524638,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8285,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 6.733123,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8493,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 6.940288,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8734,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 7.181099,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8939,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 7.38605,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9143,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 7.591611,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9349,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 7.796949,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9552,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 7.999949,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9756,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 8.20588,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9968,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 8.415443,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10172,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 8.618966,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10383,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 8.82993,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10600,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.188197,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10816,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.404526,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11019,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.607849,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11222,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.814298,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11229,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.817664,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11461,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.058253,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11751,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.08579,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11994,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.327324,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12246,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.112838,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12309,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.175686,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12356,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.223776,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12620,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.487227,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12826,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.693873,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13034,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.900953,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13238,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.105646,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13451,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.320986,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13659,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.528538,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13865,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.73296,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14068,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.935778,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14272,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 2.142126,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14502,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 2.370271,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14743,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 2.614043,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14954,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 2.836552,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15175,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 3.068354,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15434,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 3.304087,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15642,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 3.5088,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15846,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 3.714285,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16054,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 3.927983,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16270,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 4.139639,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16480,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 4.349878,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16689,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 4.564371,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16912,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 4.782461,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16921,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 4.793352,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17228,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 5.102307,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17453,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 5.331824,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17677,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 5.562572,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17901,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 5.768343,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18108,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 5.975637,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18311,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 6.178881,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18520,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 6.387596,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18723,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 6.591058,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18935,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 6.802592,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19144,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 7.011938,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19349,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 7.216566,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19553,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 7.421178,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19760,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 7.627808,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19971,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 7.838355,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20177,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 8.044517,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20391,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 8.26025,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20597,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 8.466356,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20802,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 8.669983,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21011,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.022633,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21224,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.236059,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21435,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.445777,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21643,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.655287,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21851,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0.861728,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22054,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.064551,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22056,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.066285,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22286,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.296801,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22517,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.417457,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22751,
+      "name": "Shibashi Side-to-Side Cloud Hands",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 1.417457,
+        "duration": 8.85,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23004,
+      "name": "Wall Pectoral Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0185.mp4?v=c051de95240432742c3efa8819454ca7dfbc8b65b7f1777bcc2b19ce722342fd",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0704.png?v=75029b2c036accb54575c8d142c827ad65085d9bdb357d272b58de69f8caf8ec",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1053
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1386
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1655
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 6330
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 11229
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 11461
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 11751
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 11994
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 12246
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 12309
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 12356
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 16921
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 22056
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 22286
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 22517
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 22751
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 23004
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1199,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1479,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 11288,
+      "milliseconds": 33500
+    },
+    {
+      "realElapsedMs": 11549,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 11815,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 12048,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 22111,
+      "milliseconds": 34500
+    },
+    {
+      "realElapsedMs": 22334,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 22579,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 22812,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 8.85,
+      "realPlaybackMs": 9499,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 8.85,
+      "realPlaybackMs": 9636,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

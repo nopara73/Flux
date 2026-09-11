@@ -1,0 +1,1916 @@
+{
+  "id": 116,
+  "fixture": {
+    "name": "Alternating Lateral Squat",
+    "group": {
+      "id": "r30.medial-deep-knee-extensors.set1.block1",
+      "displayName": "Medial and deep knee extensors",
+      "order": 40,
+      "canonicalGroups": [
+        "MedialAndDeepKneeExtensors"
+      ],
+      "selectionGroupId": "r30.medial-deep-knee-extensors",
+      "exerciseOverrideId": 116,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 963,
+      "name": "Alternating Lateral Squat",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1147,
+      "name": "Alternating Lateral Squat",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1502,
+      "name": "Alternating Lateral Squat",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1794,
+      "name": "Alternating Lateral Squat",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.1509,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2099,
+      "name": "Alternating Lateral Squat",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.456757,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2305,
+      "name": "Alternating Lateral Squat",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.661892,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2511,
+      "name": "Alternating Lateral Squat",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.866608,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2726,
+      "name": "Alternating Lateral Squat",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.083263,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2934,
+      "name": "Alternating Lateral Squat",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.291561,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3144,
+      "name": "Alternating Lateral Squat",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.507615,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3359,
+      "name": "Alternating Lateral Squat",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.716113,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3566,
+      "name": "Alternating Lateral Squat",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.922672,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3774,
+      "name": "Alternating Lateral Squat",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 2.13247,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3984,
+      "name": "Alternating Lateral Squat",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 2.340964,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4194,
+      "name": "Alternating Lateral Squat",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 2.552646,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4404,
+      "name": "Alternating Lateral Squat",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 2.762458,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4611,
+      "name": "Alternating Lateral Squat",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 2.968413,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4824,
+      "name": "Alternating Lateral Squat",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 3.180971,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5031,
+      "name": "Alternating Lateral Squat",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 3.387378,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5235,
+      "name": "Alternating Lateral Squat",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 3.591308,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5443,
+      "name": "Alternating Lateral Squat",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 3.806581,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5657,
+      "name": "Alternating Lateral Squat",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 4.015057,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5863,
+      "name": "Alternating Lateral Squat",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 4.220706,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6068,
+      "name": "Alternating Lateral Squat",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 4.423589,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6274,
+      "name": "Alternating Lateral Squat",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 4.637846,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6490,
+      "name": "Alternating Lateral Squat",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 4.847947,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6701,
+      "name": "Alternating Lateral Squat",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 5.057126,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6904,
+      "name": "Alternating Lateral Squat",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 5.260168,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7108,
+      "name": "Alternating Lateral Squat",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.151958,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7315,
+      "name": "Alternating Lateral Squat",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.379296,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7544,
+      "name": "Alternating Lateral Squat",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.589259,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7753,
+      "name": "Alternating Lateral Squat",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.796741,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7960,
+      "name": "Alternating Lateral Squat",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.004737,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7967,
+      "name": "Alternating Lateral Squat",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.012947,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8236,
+      "name": "Alternating Lateral Squat",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.280921,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8472,
+      "name": "Alternating Lateral Squat",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.056379,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8704,
+      "name": "Alternating Lateral Squat",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.288329,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9280,
+      "name": "Alternating Lateral Squat",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.406283,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9372,
+      "name": "Alternating Lateral Squat",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.497276,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9428,
+      "name": "Alternating Lateral Squat",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.553304,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9722,
+      "name": "Alternating Lateral Squat",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.846965,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9927,
+      "name": "Alternating Lateral Squat",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.051536,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10131,
+      "name": "Alternating Lateral Squat",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.256867,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10335,
+      "name": "Alternating Lateral Squat",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.493606,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10580,
+      "name": "Alternating Lateral Squat",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.705419,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10785,
+      "name": "Alternating Lateral Squat",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.913457,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10994,
+      "name": "Alternating Lateral Squat",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 2.121724,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11201,
+      "name": "Alternating Lateral Squat",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 2.327788,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11411,
+      "name": "Alternating Lateral Squat",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 2.573202,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11669,
+      "name": "Alternating Lateral Squat",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 2.802195,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11886,
+      "name": "Alternating Lateral Squat",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 3.026715,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12123,
+      "name": "Alternating Lateral Squat",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 3.304227,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12392,
+      "name": "Alternating Lateral Squat",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 3.516313,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12598,
+      "name": "Alternating Lateral Squat",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 3.723449,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12802,
+      "name": "Alternating Lateral Squat",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 3.964998,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13052,
+      "name": "Alternating Lateral Squat",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 4.225978,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13326,
+      "name": "Alternating Lateral Squat",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 4.452719,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13531,
+      "name": "Alternating Lateral Squat",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 4.656331,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13737,
+      "name": "Alternating Lateral Squat",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 4.861835,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13941,
+      "name": "Alternating Lateral Squat",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 5.065416,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14143,
+      "name": "Alternating Lateral Squat",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 5.268021,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14346,
+      "name": "Alternating Lateral Squat",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.164782,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14550,
+      "name": "Alternating Lateral Squat",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.368978,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14754,
+      "name": "Alternating Lateral Squat",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.573315,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14960,
+      "name": "Alternating Lateral Squat",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.779741,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15163,
+      "name": "Alternating Lateral Squat",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 0.983232,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15370,
+      "name": "Alternating Lateral Squat",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.189366,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15577,
+      "name": "Alternating Lateral Squat",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.397504,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15582,
+      "name": "Alternating Lateral Squat",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.401016,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15851,
+      "name": "Alternating Lateral Squat",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.672133,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16110,
+      "name": "Alternating Lateral Squat",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.827165,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16385,
+      "name": "Alternating Lateral Squat",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.medial-deep-knee-extensors.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0116.mp4?v=e5fd1bb8c2d3ce756d2841b81393a4fe0a32ba4fcebfa390b098e6a60f49ac0d",
+        "time": 1.827165,
+        "duration": 5.3,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17026,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 0.433611,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1147
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1502
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1794
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 7967
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 8236
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 8472
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 8704
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 9280
+    },
+    {
+      "phase": "block2-start",
+      "file": "08-block2-start.png",
+      "elapsedMs": 9372
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "09-block2-work-start.png",
+      "elapsedMs": 9428
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "10-block2-loop-end.png",
+      "elapsedMs": 15582
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "11-block2-work-end.png",
+      "elapsedMs": 15851
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "12-block2-rest-start.png",
+      "elapsedMs": 16110
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "13-block2-rest-end.png",
+      "elapsedMs": 16385
+    },
+    {
+      "phase": "block2-next",
+      "file": "14-block2-next.png",
+      "elapsedMs": 17026
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1312,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1621,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 8059,
+      "milliseconds": 36500
+    },
+    {
+      "realElapsedMs": 8296,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 8528,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 8757,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 15675,
+      "milliseconds": 37500
+    },
+    {
+      "realElapsedMs": 15916,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 16203,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 16491,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 5.3,
+      "realPlaybackMs": 6068,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 5.3,
+      "realPlaybackMs": 6069,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

@@ -1,0 +1,990 @@
+{
+  "id": 614,
+  "fixture": {
+    "name": "Push Forearm Down Against Other Hand",
+    "group": {
+      "id": "r30.elbow-extensors.set1.block1",
+      "displayName": "Elbow extensors",
+      "order": 29,
+      "canonicalGroups": [
+        "ElbowExtensors"
+      ],
+      "selectionGroupId": "r30.elbow-extensors",
+      "exerciseOverrideId": 614,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 791,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 944,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1205,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1429,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1757,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1970,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2196,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2199,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2472,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2697,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2903,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3112,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3326,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3329,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3556,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3805,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.elbow-extensors.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4027,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.elbow-extensors.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4417,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4473,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4510,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4766,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4973,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5178,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5183,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5455,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5666,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5876,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6083,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6296,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6300,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6545,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.elbow-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6783,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.elbow-extensors.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7034,
+      "name": "Push Forearm Down Against Other Hand",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.elbow-extensors.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0614.png?v=aeae25395c89bbe9c2da11553a3c8cbdf203d09da2c2778a6fbaaa68b54a964b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7282,
+      "name": "Isometric Palm Press Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0241.png?v=eebdfe21111aa45200bc729cd329db5c1991ace8ded27563e0d0a6dd405517b1",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 944
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1205
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1429
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 2199
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 3329
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 3556
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 3805
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 4027
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 4417
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 4473
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 4510
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 5183
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 6300
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 6545
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 6783
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 7034
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 7282
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1009,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1257,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 3380,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 3610,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 3844,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 4088,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 6365,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 6597,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 6861,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 7087,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1,
+      "realPlaybackMs": 1779,
+      "wrapped": false,
+      "still": true
+    },
+    {
+      "block": 2,
+      "duration": 1,
+      "realPlaybackMs": 1745,
+      "wrapped": false,
+      "still": true
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

@@ -1,0 +1,990 @@
+{
+  "id": 217,
+  "fixture": {
+    "name": "Tree Pose Hold",
+    "group": {
+      "id": "r30.deep-hip-rotators.set1.block1",
+      "displayName": "Deep hip rotators",
+      "order": 44,
+      "canonicalGroups": [
+        "DeepHipRotators"
+      ],
+      "selectionGroupId": "r30.deep-hip-rotators",
+      "exerciseOverrideId": 217,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 804,
+      "name": "Tree Pose Hold",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1037,
+      "name": "Tree Pose Hold",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1339,
+      "name": "Tree Pose Hold",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1565,
+      "name": "Tree Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1859,
+      "name": "Tree Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2062,
+      "name": "Tree Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2283,
+      "name": "Tree Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2288,
+      "name": "Tree Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2543,
+      "name": "Tree Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2753,
+      "name": "Tree Pose Hold",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2959,
+      "name": "Tree Pose Hold",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3165,
+      "name": "Tree Pose Hold",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3373,
+      "name": "Tree Pose Hold",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3375,
+      "name": "Tree Pose Hold",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3599,
+      "name": "Tree Pose Hold",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3826,
+      "name": "Tree Pose Hold",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4060,
+      "name": "Tree Pose Hold",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4299,
+      "name": "Tree Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4423,
+      "name": "Tree Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4482,
+      "name": "Tree Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4735,
+      "name": "Tree Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4951,
+      "name": "Tree Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5159,
+      "name": "Tree Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5165,
+      "name": "Tree Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5436,
+      "name": "Tree Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5641,
+      "name": "Tree Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5855,
+      "name": "Tree Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6061,
+      "name": "Tree Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6265,
+      "name": "Tree Pose Hold",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6271,
+      "name": "Tree Pose Hold",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6522,
+      "name": "Tree Pose Hold",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6768,
+      "name": "Tree Pose Hold",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7004,
+      "name": "Tree Pose Hold",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0217.png?v=4970f65517fea148ade7fac90d62f9d4286b9d7fb42c6c65950378a49060f760",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7274,
+      "name": "Forward Knee-and-Ankle Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=8dc68b54322450bb2d51b129a765db9ba8d7915a487001ed0b71d7cefaae6bef",
+        "time": 0.019549,
+        "duration": 27.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1037
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1339
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1565
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 2288
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 3375
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 3599
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 3826
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 4060
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 4299
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 4423
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 4482
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 5165
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 6271
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 6522
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 6768
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 7004
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 7274
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1165,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1392,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 3423,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 3650,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 3882,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 4112,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 6340,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 6578,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 6832,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 7073,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1,
+      "realPlaybackMs": 1725,
+      "wrapped": false,
+      "still": true
+    },
+    {
+      "block": 2,
+      "duration": 1,
+      "realPlaybackMs": 1738,
+      "wrapped": false,
+      "still": true
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

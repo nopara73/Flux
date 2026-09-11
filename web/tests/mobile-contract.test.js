@@ -30,7 +30,6 @@ import {
   MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
-  MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
   MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
   MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
   MINIMUM_MODIFIER_MATERIALITY_EXERCISES,
@@ -599,10 +598,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     modifierPolicy,
     /MinimumExercisesPerMuscularDemandCategoryPerGroup\s*=\s*1[\s\S]*FindMuscularDemandCoverageDeficiencies[\s\S]*Exercise\.MinimumMuscularDemand[\s\S]*Exercise\.MaximumMuscularDemand/,
   );
-  assert.match(
-    modifierPolicy,
-    /requiresMirrorRelevance[\s\S]*IsMirrorRelevant\(exercise\)/,
-  );
+  assert.doesNotMatch(modifierPolicy, /requiresMirrorRelevance/);
   assert.match(
     modifierPolicy,
     /GetRuleStateProfiles[\s\S]*WorkoutModifiers\.Mirror \| WorkoutModifiers\.TallMirror/,
@@ -625,10 +621,6 @@ test("web and mobile persist one combined duration and modifier selection contex
       modifierPolicy,
       "MinimumExercisesPerMuscularDemandCategoryPerGroup",
     ),
-  );
-  assert.equal(
-    MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
-    integerConstant(modifierPolicy, "MinimumExercisesPerMirrorCategory"),
   );
   assert.equal(
     MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
@@ -657,10 +649,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     modifierPolicy,
     /FindSoleWallContactRequiredCatalogDeficiencies[\s\S]*SoleWallContactRequired[\s\S]*GetSessionMovementId[\s\S]*Distinct/,
   );
-  assert.match(
-    modifierPolicy,
-    /FindMirrorCategoryDeficiencies[\s\S]*MirrorOnly[\s\S]*UpperBody[\s\S]*FullBody[\s\S]*BenefitsGreatly/,
-  );
+  assert.match(modifierPolicy, /IsMirrorMetadataReviewed/);
   assert.equal(
     MINIMUM_MODIFIER_MATERIALITY_EXERCISES,
     integerConstant(modifierPolicy, "MinimumMaterialExercises"),
@@ -689,10 +678,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     workoutModule,
     /matchingExerciseCount:[\s\S]*MODIFIER_RULES\.every\(\(rule\)\s*=>\s*rule\.isReviewed\(exercise\)\)/,
   );
-  assert.match(
-    workoutModule,
-    /getModifierRuleStateProfiles[\s\S]*WORKOUT_MODIFIERS\.TallMirror[\s\S]*requiresMirrorRelevance[\s\S]*isMirrorRelevant\(exercise\)/,
-  );
+  assert.doesNotMatch(workoutModule, /requiresMirrorRelevance/);
   assert.doesNotMatch(modifierPolicy, /1\s*<<\s*Rules\.Length/);
   assert.doesNotMatch(workoutModule, /1\s*<<\s*MODIFIER_RULES\.length/);
   assert.match(
@@ -721,9 +707,11 @@ test("web and mobile persist one combined duration and modifier selection contex
     webBuild,
     /broad muscular-demand coverage"\s*,\s*muscularDemandDeficiencies\.length === 0/,
   );
-  assert.match(webApp, /findMirrorCategoryDeficiencies/);
+  assert.doesNotMatch(webApp, /findMirrorCategoryDeficiencies/);
   assert.match(webApp, /findWallRequiredCatalogDeficiencies/);
   assert.match(webApp, /isModifierMetadataComplete/);
+  assert.match(webBuild, /"modifier materiality", materialityDeficiencies.length === 0/);
+  assert.match(webBuild, /"distinct workout lineups", distinctLineupDeficiencies.length === 0/);
   assert.match(webApp, /isSessionMovementMetadataValid/);
   for (const heavyCatalogInvariant of [
     "FindPairwiseCoverageDeficiencies",
@@ -738,7 +726,7 @@ test("web and mobile persist one combined duration and modifier selection contex
     catalogInvariantTests,
     /Assert\.Empty\(pairwiseDeficiencies\)[\s\S]*Assert\.Empty\(hardFloorCategoryDeficiencies\)[\s\S]*Assert\.Empty\(muscularDemandDeficiencies\)/,
   );
-  assert.match(exerciseDatabase, /FindMirrorCategoryDeficiencies/);
+  assert.doesNotMatch(exerciseDatabase, /FindMirrorCategoryDeficiencies/);
   assert.match(exerciseDatabase, /FindWallRequiredCatalogDeficiencies/);
   assert.match(
     exerciseDatabase,
@@ -759,13 +747,13 @@ test("web and mobile persist one combined duration and modifier selection contex
     typeof exercise.soleWallContactRequired === "boolean"));
   assert.ok(catalog.every((exercise) =>
     !exercise.soleWallContactRequired || exercise.wallRequired));
-  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 32);
+  assert.equal(catalog.filter((exercise) => exercise.wallRequired).length, 35);
   assert.equal(catalog.filter((exercise) =>
-    exercise.wallRequired && !exercise.soleWallContactRequired).length, 27);
+    exercise.wallRequired && !exercise.soleWallContactRequired).length, 29);
   assert.deepEqual(
     new Set(catalog.filter((exercise) => exercise.soleWallContactRequired)
       .map((exercise) => exercise.id)),
-    new Set([563, 564, 567, 568, 574]),
+    new Set([563, 564, 567, 568, 574, 633]),
   );
   assert.ok(catalog.every((exercise) =>
     exercise.insectCompatibility === EXERCISE_INSECT_COMPATIBILITY.Compatible ||
@@ -795,20 +783,20 @@ test("web and mobile persist one combined duration and modifier selection contex
     exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible ||
     exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible));
   assert.equal(catalog.filter((exercise) =>
-    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 401);
+    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Compatible).length, 416);
   assert.equal(catalog.filter((exercise) =>
-    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible).length, 116);
+    exercise.shyCompatibility === EXERCISE_SHY_COMPATIBILITY.Incompatible).length, 118);
   assert.deepEqual(
     new Set(catalog.filter((exercise) =>
       exercise.upperBodyClothingRequirement === "ClothingRequired")
       .map((exercise) => exercise.id)),
-    new Set([134, 137, 175, 579, 580, 801, 913]),
+    new Set([134, 137, 165, 175, 579, 580, 801, 913]),
   );
   assert.deepEqual(
     new Set(catalog.filter((exercise) =>
       exercise.upperBodyClothingRequirement === "BareUpperBodyRequired")
       .map((exercise) => exercise.id)),
-    new Set([524, 525, 526, 527, 528, 790, 993]),
+    new Set([524, 525, 526, 527, 528, 790]),
   );
   assert.match(
     webApp,
@@ -1940,10 +1928,10 @@ test("active movement checkpoints and invalid media recovery match across platfo
     "private void StartCountdownTimer(long millisecondsRemaining)",
     "private void UpdateMoveCountdown(long millisecondsRemaining)",
   );
-  const mobileDirectionGuard = methodBody(
+  const mobilePlaybackGuard = methodBody(
     mainActivity,
-    "private void EnforceDirectionMediaSegment(MovementPhase phase)",
-    "private int GetCurrentMediaSegmentStartMilliseconds()",
+    "private void PlayHoldOnce()",
+    "private void FreezeHoldOnFinalFrame()",
   );
   assert.match(
     mobileCreate,
@@ -1964,9 +1952,15 @@ test("active movement checkpoints and invalid media recovery match across platfo
     /BeginMovement[\s\S]*_stateStore\.SaveDeferred\(_state\)/,
   );
   assert.match(
-    mobileDirectionGuard,
-    /CurrentPosition[\s\S]*catch \(Java\.Lang\.IllegalStateException\)[\s\S]*RecoverInvalidMediaPlayerState/,
+    mobilePlaybackGuard,
+    /Looping = false[\s\S]*catch \(Java\.Lang\.IllegalStateException\)[\s\S]*RecoverInvalidMediaPlayerState/,
   );
+  const mobilePhaseRestart = methodBody(mainActivity,
+    "private void RestartExerciseMediaForPhase(MovementPhase phase)",
+    "private void RecoverInvalidMediaPlayerState()");
+  assert.match(mobilePhaseRestart, /positionMilliseconds = 0[\s\S]*SeekTo\(positionMilliseconds\)/);
+  assert.match(webApp, /const segmentStart = 0[\s\S]*elements\.video\.currentTime = segmentStart/);
+  assert.doesNotMatch(mainActivity, /EnforceDirectionMediaSegment/);
 
   assert.match(
     workoutModule,
@@ -2051,7 +2045,7 @@ test("backgrounding pauses movement and rest until playback is resumed", () => {
 
 test("lead-stance exercises use the same two-block sequence cues on mobile and web", () => {
   const expectedLeadStanceIds = [
-    204, 205, 265, 274, 280, 473, 528, 575, 578, 583, 591,
+    204, 205, 245, 265, 279, 473, 528, 538, 575, 578, 583, 591,
     884, 885, 886, 887,
   ];
   assert.deepEqual(
@@ -2090,7 +2084,7 @@ test("lead-stance exercises use the same two-block sequence cues on mobile and w
 test("uppercut replacement is a clear one-block alternating floor-safe contract", () => {
   const uppercuts = catalog.find((exercise) => exercise.id === 287);
   assert.equal(uppercuts.name, "Wide-Stance Alternating Uppercuts");
-  assert.equal(uppercuts.primaryCanonicalGroup, "ElbowFlexors");
+  assert.equal(uppercuts.primaryCanonicalGroup, "ShoulderAbductors");
   assert.equal(uppercuts.sideSequence, "Alternating");
   assert.equal(uppercuts.sequenceBlocks.length, 1);
   assert.equal(uppercuts.hardFloorCompatibility, "Incompatible");
@@ -2228,7 +2222,7 @@ test("all bilateral, directional, linked, and repeated work uses one sequence mo
     catalog
       .filter((exercise) => exercise.directionSequence !== "None")
       .map((exercise) => exercise.id),
-    [264, 275, 406, 409, 460, 561, 588, 608, 611, 743],
+    [406, 409, 561, 608, 611, 1018],
   );
   assert.ok(catalog.every((exercise) =>
     !Object.hasOwn(exercise, "directionPartnerExerciseId")));
@@ -2245,9 +2239,9 @@ test("all bilateral, directional, linked, and repeated work uses one sequence mo
       .filter((root) => new Set(root.sequenceBlocks.map((block) => block.exerciseId)).size > 1)
       .map((root) => root.id),
     [
-      96, 115, 143, 160, 178, 179, 180, 181,
-      211, 214, 220, 223, 252, 264, 285, 286, 288, 291, 292, 302, 307, 327, 329,
-      367, 392, 393, 414, 415, 420, 459, 465, 491, 500, 502, 566, 610, 612,
+      96, 115, 178, 179, 180, 181,
+      211, 214, 220, 223, 252, 264, 285, 288, 291, 302, 307,
+      367, 392, 393, 415, 420, 459, 465, 491, 500, 502, 566, 610, 612,
       617, 742, 784, 834, 910, 948,
     ],
   );

@@ -1,0 +1,818 @@
+{
+  "id": 445,
+  "fixture": {
+    "name": "Imaginary Jump Rope with Changing Feet",
+    "group": {
+      "id": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "displayName": "Calf, deep posterior leg and plantar foot",
+      "order": 41,
+      "canonicalGroups": [
+        "CalfDeepPosteriorLegAndPlantarFoot"
+      ],
+      "selectionGroupId": "r30.calf-deep-posterior-leg-plantar-foot",
+      "exerciseOverrideId": 445,
+      "sequenceBlockIndex": 2,
+      "sequenceBlockCount": 3,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 674,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1087,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.05218,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1255,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.217056,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1530,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.48987,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1732,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.693378,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1940,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.900252,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2142,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 1.103393,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2346,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 1.306848,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2553,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 1.520218,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2782,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 1.744356,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2988,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 1.948922,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3193,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 2.160906,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3414,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 2.375272,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3417,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 2.378435,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3690,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 2.652155,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3894,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 2.857284,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4100,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 3.060885,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4306,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 3.266536,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4520,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 3.480266,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4730,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 3.690224,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4940,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.085553,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5146,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.289566,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5352,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.495694,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5564,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.708273,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5773,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.921056,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5781,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0.925178,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6048,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 1.193651,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6321,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 1.327231,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6614,
+      "name": "Imaginary Jump Rope with Changing Feet",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 1.327231,
+        "duration": 3.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6919,
+      "name": "Side-Lunge Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0445.mp4?v=c45fad22b990342c9c1a90504c600acb60004c5e404169c85d33b62fed3d638a",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0117.png?v=08be4a7ba60913734735c66caa06cccdfb212cfbe7fe97db13913b0042bca918",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1087
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "01-block1-work-start.png",
+      "elapsedMs": 1255
+    },
+    {
+      "phase": "block1-action",
+      "file": "02-block1-action.png",
+      "elapsedMs": 3417
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 5781
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 6048
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 6321
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 6614
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 6919
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 5866,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 6130,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 6436,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6688,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 3.8,
+      "realPlaybackMs": 4459,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

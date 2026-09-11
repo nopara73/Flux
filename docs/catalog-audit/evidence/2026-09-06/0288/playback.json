@@ -1,0 +1,918 @@
+{
+  "id": 288,
+  "fixture": {
+    "name": "Standing Knee-and-Ankle Circles",
+    "group": {
+      "id": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "displayName": "Anterior/lateral lower leg and dorsal foot",
+      "order": 18,
+      "canonicalGroups": [
+        "AnteriorLateralLowerLegAndDorsalFoot"
+      ],
+      "selectionGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot",
+      "exerciseOverrideId": 288,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 4,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 3681,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4329,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4851,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5350,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.270752,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5709,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.674006,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6044,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.95971,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6251,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.054635,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6342,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.108761,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6855,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.600532,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7073,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.823703,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7288,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 1.034251,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7295,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 1.04551,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7696,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.156623,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8329,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.130704,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8663,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.463865,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9368,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.043623,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9873,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.560748,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10189,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.876446,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10573,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.109848,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10838,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.345007,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11067,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.564892,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11082,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.578263,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11525,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 1.019377,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11729,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.07627,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11963,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.288255,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12187,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.619523,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12328,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.666347,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12905,
+      "name": "Standing Knee-and-Ankle Circles",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0288.mp4?v=148c6118aedaf674e500c86b69f3ba3d98e26008db4bb2112981a9dceb2dfbc3",
+        "time": 0.023291,
+        "duration": 1.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13386,
+      "name": "Backward Knee-and-Ankle Circles",
+      "countdown": "0",
+      "rest": "14",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0758.mp4?v=9e4e256c4bbedf18c0a674c54e0183877d338a288eb04c771c4cb54d3a7ba72c",
+        "time": 0,
+        "duration": 1.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13845,
+      "name": "Backward Knee-and-Ankle Circles",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0758.mp4?v=9e4e256c4bbedf18c0a674c54e0183877d338a288eb04c771c4cb54d3a7ba72c",
+        "time": 0.009175,
+        "duration": 1.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14613,
+      "name": "Backward Knee-and-Ankle Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.anterior-lateral-lower-leg-dorsal-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0758.mp4?v=9e4e256c4bbedf18c0a674c54e0183877d338a288eb04c771c4cb54d3a7ba72c",
+        "time": 0.305031,
+        "duration": 1.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 4329
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 4851
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 5350
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 6342
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 7295
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 7696
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 8329
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 8663
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 9368
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 9873
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 10189
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 11082
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 12328
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 12905
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 13386
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 13845
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 14613
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 4653,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 5049,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 7508,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 8065,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 8483,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 8851,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 12717,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 13168,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 13662,
+      "milliseconds": 12900
+    },
+    {
+      "realElapsedMs": 14373,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1.15,
+      "realPlaybackMs": 1794,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 1.15,
+      "realPlaybackMs": 1959,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

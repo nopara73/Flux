@@ -1,0 +1,866 @@
+{
+  "id": 530,
+  "fixture": {
+    "name": "Alternating Standing Lateral Leg Raises",
+    "group": {
+      "id": "r30.hip-abductors.set1.block3",
+      "displayName": "Hip abductors",
+      "order": 56,
+      "canonicalGroups": [
+        "HipAbductors"
+      ],
+      "selectionGroupId": "r30.hip-abductors",
+      "exerciseOverrideId": 530,
+      "sequenceBlockIndex": 2,
+      "sequenceBlockCount": 3,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 661,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 836,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.007428,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 923,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.094971,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1186,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.357785,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1396,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.568998,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1612,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.787989,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1821,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.995012,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2028,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 1.201993,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2239,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 1.415385,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2455,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 1.627816,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2668,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 1.841992,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2874,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 2.046007,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3076,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 2.24883,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3281,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 2.453071,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3283,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 2.45501,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3559,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 2.73147,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3763,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 2.935562,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3969,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 3.141054,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4171,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 3.344843,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4378,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 3.551615,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4585,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 3.757587,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4790,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 3.962816,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4996,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 4.168706,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5201,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.143799,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5407,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.35166,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5623,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.566397,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5832,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.775244,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5837,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 0.780877,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6078,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.hip-abductors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 1.03516,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6324,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.hip-abductors.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 1.130899,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6554,
+      "name": "Alternating Standing Lateral Leg Raises",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.hip-abductors.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0530.mp4?v=0ac8cc283a6a56a3e2aaa66c05ee49fb265c041877718b7ddb375bfaf7a44acf",
+        "time": 1.130899,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6845,
+      "name": "Wall Scapular Push-Up",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0584.mp4?v=0bc895b2aafe7b369e8282cc77b7a1fa57378612255f69f0077b923446c99704",
+        "time": 0.012486,
+        "duration": 25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 836
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "01-block1-work-start.png",
+      "elapsedMs": 923
+    },
+    {
+      "phase": "block1-action",
+      "file": "02-block1-action.png",
+      "elapsedMs": 3283
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 5837
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 6078
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 6324
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 6554
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 6845
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 5899,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 6140,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 6383,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6640,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 4.2,
+      "realPlaybackMs": 4851,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

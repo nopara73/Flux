@@ -1,0 +1,3020 @@
+{
+  "id": 292,
+  "fixture": {
+    "name": "Standing Bird Dog",
+    "group": {
+      "id": "r30.shoulder-abductors.set1.block1",
+      "displayName": "Shoulder abductors",
+      "order": 45,
+      "canonicalGroups": [
+        "ShoulderAbductors"
+      ],
+      "selectionGroupId": "r30.shoulder-abductors",
+      "exerciseOverrideId": 292,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenRight",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 4,
+      "name": "Standing Bird Dog",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1097,
+      "name": "Standing Bird Dog",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2106,
+      "name": "Standing Bird Dog",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3120,
+      "name": "Standing Bird Dog",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4132,
+      "name": "Standing Bird Dog",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5141,
+      "name": "Standing Bird Dog",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.129477,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6215,
+      "name": "Standing Bird Dog",
+      "countdown": "44",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.201392,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7227,
+      "name": "Standing Bird Dog",
+      "countdown": "43",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.214999,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8241,
+      "name": "Standing Bird Dog",
+      "countdown": "42",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.230085,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9253,
+      "name": "Standing Bird Dog",
+      "countdown": "41",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.241351,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10272,
+      "name": "Standing Bird Dog",
+      "countdown": "40",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.26058,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11340,
+      "name": "Standing Bird Dog",
+      "countdown": "39",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.328955,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12350,
+      "name": "Standing Bird Dog",
+      "countdown": "38",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 7.338825,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13364,
+      "name": "Standing Bird Dog",
+      "countdown": "37",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.980103,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14380,
+      "name": "Standing Bird Dog",
+      "countdown": "36",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.995491,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15391,
+      "name": "Standing Bird Dog",
+      "countdown": "35",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.005945,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16481,
+      "name": "Standing Bird Dog",
+      "countdown": "34",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.096906,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17493,
+      "name": "Standing Bird Dog",
+      "countdown": "33",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.10669,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18503,
+      "name": "Standing Bird Dog",
+      "countdown": "32",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.117132,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19520,
+      "name": "Standing Bird Dog",
+      "countdown": "31",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 7.134865,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20531,
+      "name": "Standing Bird Dog",
+      "countdown": "30",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.781349,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21623,
+      "name": "Standing Bird Dog",
+      "countdown": "29",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.873038,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22635,
+      "name": "Standing Bird Dog",
+      "countdown": "28",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.884385,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23648,
+      "name": "Standing Bird Dog",
+      "countdown": "27",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.898682,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24663,
+      "name": "Standing Bird Dog",
+      "countdown": "26",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.911986,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25685,
+      "name": "Standing Bird Dog",
+      "countdown": "25",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.934844,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26751,
+      "name": "Standing Bird Dog",
+      "countdown": "24",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 7.000597,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27755,
+      "name": "Standing Bird Dog",
+      "countdown": "23",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.645861,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28765,
+      "name": "Standing Bird Dog",
+      "countdown": "22",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.655616,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29768,
+      "name": "Standing Bird Dog",
+      "countdown": "21",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.658548,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30777,
+      "name": "Standing Bird Dog",
+      "countdown": "20",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.666133,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 31858,
+      "name": "Standing Bird Dog",
+      "countdown": "19",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.748624,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 32869,
+      "name": "Standing Bird Dog",
+      "countdown": "18",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.759116,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 33882,
+      "name": "Standing Bird Dog",
+      "countdown": "17",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.772394,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 34891,
+      "name": "Standing Bird Dog",
+      "countdown": "16",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.425576,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 35906,
+      "name": "Standing Bird Dog",
+      "countdown": "15",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.44049,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 36959,
+      "name": "Standing Bird Dog",
+      "countdown": "14",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.492282,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 37964,
+      "name": "Standing Bird Dog",
+      "countdown": "13",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.498339,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 38972,
+      "name": "Standing Bird Dog",
+      "countdown": "12",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.507017,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 39984,
+      "name": "Standing Bird Dog",
+      "countdown": "11",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.518524,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 40989,
+      "name": "Standing Bird Dog",
+      "countdown": "10",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.522925,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 42063,
+      "name": "Standing Bird Dog",
+      "countdown": "9",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.237199,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 43075,
+      "name": "Standing Bird Dog",
+      "countdown": "8",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.249287,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 44083,
+      "name": "Standing Bird Dog",
+      "countdown": "7",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.257279,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 45087,
+      "name": "Standing Bird Dog",
+      "countdown": "6",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.2624,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 46122,
+      "name": "Standing Bird Dog",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.295993,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 47221,
+      "name": "Standing Bird Dog",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.39454,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 48236,
+      "name": "Standing Bird Dog",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.409786,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 49249,
+      "name": "Standing Bird Dog",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.058099,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 50260,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "15",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.093196,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 51340,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "14",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.173841,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 52456,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "13",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.289636,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 53483,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "12",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.316488,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 54496,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "11",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.328054,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 55509,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "10",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.342137,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 56523,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "9",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.35469,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 57640,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "8",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.114209,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 58646,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "7",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.123591,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 59673,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "6",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.149331,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 60680,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "5",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.160188,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 61689,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "4",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.168914,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 62794,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "3",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.274466,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 63801,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "2",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.281321,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 64811,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "1",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 7.291714,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 65818,
+      "name": "Standing Bird Dog",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.556658,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 66864,
+      "name": "Standing Bird Dog",
+      "countdown": "44",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.60241,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 67959,
+      "name": "Standing Bird Dog",
+      "countdown": "43",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.698139,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 68966,
+      "name": "Standing Bird Dog",
+      "countdown": "42",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.705913,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 69974,
+      "name": "Standing Bird Dog",
+      "countdown": "41",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.711899,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 70987,
+      "name": "Standing Bird Dog",
+      "countdown": "40",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.725925,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 71995,
+      "name": "Standing Bird Dog",
+      "countdown": "39",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.733429,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 73069,
+      "name": "Standing Bird Dog",
+      "countdown": "38",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.438368,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 74084,
+      "name": "Standing Bird Dog",
+      "countdown": "37",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.449981,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 75095,
+      "name": "Standing Bird Dog",
+      "countdown": "36",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.462214,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 76121,
+      "name": "Standing Bird Dog",
+      "countdown": "35",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.489655,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 77137,
+      "name": "Standing Bird Dog",
+      "countdown": "34",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.505033,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 78203,
+      "name": "Standing Bird Dog",
+      "countdown": "33",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.571807,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 79217,
+      "name": "Standing Bird Dog",
+      "countdown": "32",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.586682,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 80226,
+      "name": "Standing Bird Dog",
+      "countdown": "31",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.235627,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 81236,
+      "name": "Standing Bird Dog",
+      "countdown": "30",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.244765,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 82252,
+      "name": "Standing Bird Dog",
+      "countdown": "29",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.259531,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 83331,
+      "name": "Standing Bird Dog",
+      "countdown": "27",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.33921,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 84341,
+      "name": "Standing Bird Dog",
+      "countdown": "26",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.349189,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 85348,
+      "name": "Standing Bird Dog",
+      "countdown": "25",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.356802,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 86354,
+      "name": "Standing Bird Dog",
+      "countdown": "24",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.362273,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 87376,
+      "name": "Standing Bird Dog",
+      "countdown": "23",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.017927,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 88441,
+      "name": "Standing Bird Dog",
+      "countdown": "22",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.084919,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 89465,
+      "name": "Standing Bird Dog",
+      "countdown": "21",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.107571,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 90472,
+      "name": "Standing Bird Dog",
+      "countdown": "20",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.115016,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 91482,
+      "name": "Standing Bird Dog",
+      "countdown": "19",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.124113,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 92489,
+      "name": "Standing Bird Dog",
+      "countdown": "18",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.132856,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 93589,
+      "name": "Standing Bird Dog",
+      "countdown": "17",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.231618,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 94607,
+      "name": "Standing Bird Dog",
+      "countdown": "16",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 7.250107,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 95624,
+      "name": "Standing Bird Dog",
+      "countdown": "15",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.907291,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 96630,
+      "name": "Standing Bird Dog",
+      "countdown": "14",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.913418,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 97634,
+      "name": "Standing Bird Dog",
+      "countdown": "13",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.917936,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 98700,
+      "name": "Standing Bird Dog",
+      "countdown": "12",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.984307,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 99723,
+      "name": "Standing Bird Dog",
+      "countdown": "11",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.005598,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 100727,
+      "name": "Standing Bird Dog",
+      "countdown": "10",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.011009,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 101738,
+      "name": "Standing Bird Dog",
+      "countdown": "9",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 7.021234,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 102746,
+      "name": "Standing Bird Dog",
+      "countdown": "8",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.669373,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 103813,
+      "name": "Standing Bird Dog",
+      "countdown": "7",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 1.737508,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 104822,
+      "name": "Standing Bird Dog",
+      "countdown": "6",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 2.745168,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 105836,
+      "name": "Standing Bird Dog",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 3.757585,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 106846,
+      "name": "Standing Bird Dog",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 4.769124,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 107852,
+      "name": "Standing Bird Dog",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 5.775789,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 108911,
+      "name": "Standing Bird Dog",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 6.834563,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 109928,
+      "name": "Standing Bird Dog",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.484274,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 110941,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "15",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 112026,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "14",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 113037,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "13",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 114110,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "12",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 115130,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "11",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 116139,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "10",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 117146,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "9",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 118151,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "8",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 119199,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "7",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 120210,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "6",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 121240,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "5",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 122250,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "4",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 123261,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "3",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 124340,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "2",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 125349,
+      "name": "Standing Bird Dog",
+      "countdown": "0",
+      "rest": "1",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0292.mp4?v=a16d644fa9907514f5a78495d3f9edef1fb4b3f3ec8ddc51296d9d504a206653",
+        "time": 0.940907,
+        "duration": 7.35,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 126356,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 0.843179,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 127417,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 0.392686,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 128435,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 1.410672,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 129519,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 0.988117,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 130535,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 0.494139,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 131556,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 0.007811,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 132570,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 1.022185,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 133594,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 0.537999,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 134682,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 0.115173,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 135695,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 1.127688,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 136711,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 0.637781,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 137725,
+      "name": "Ski Twists",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0453.mp4?v=56c10d13857e25b1b852c38fb50c4a6904d34f36e7eb01f1bf7b4a52348d1a18",
+        "time": 0.142287,
+        "duration": 1.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "00.png",
+      "elapsedMs": 89
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "05.png",
+      "elapsedMs": 5200
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "10.png",
+      "elapsedMs": 10334
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "15.png",
+      "elapsedMs": 15470
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "20.png",
+      "elapsedMs": 20615
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "25.png",
+      "elapsedMs": 25742
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "30.png",
+      "elapsedMs": 30851
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "35.png",
+      "elapsedMs": 35948
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "40.png",
+      "elapsedMs": 41049
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "45.png",
+      "elapsedMs": 46213
+    },
+    {
+      "phase": "Standing Bird Dog|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "49.png",
+      "elapsedMs": 50331
+    },
+    {
+      "phase": "Standing Bird Dog|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "50.png",
+      "elapsedMs": 51447
+    },
+    {
+      "phase": "Standing Bird Dog|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "55.png",
+      "elapsedMs": 56620
+    },
+    {
+      "phase": "Standing Bird Dog|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "60.png",
+      "elapsedMs": 61786
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "64.png",
+      "elapsedMs": 65860
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "65.png",
+      "elapsedMs": 66940
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "70.png",
+      "elapsedMs": 72063
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "75.png",
+      "elapsedMs": 77194
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "80.png",
+      "elapsedMs": 82319
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "85.png",
+      "elapsedMs": 87436
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "90.png",
+      "elapsedMs": 92573
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "95.png",
+      "elapsedMs": 97679
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "100.png",
+      "elapsedMs": 102810
+    },
+    {
+      "phase": "Standing Bird Dog|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "105.png",
+      "elapsedMs": 107902
+    },
+    {
+      "phase": "Standing Bird Dog|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "108.png",
+      "elapsedMs": 110998
+    },
+    {
+      "phase": "Standing Bird Dog|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "110.png",
+      "elapsedMs": 113102
+    },
+    {
+      "phase": "Standing Bird Dog|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "115.png",
+      "elapsedMs": 118193
+    },
+    {
+      "phase": "Standing Bird Dog|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "120.png",
+      "elapsedMs": 123315
+    },
+    {
+      "phase": "Ski Twists|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "123.png",
+      "elapsedMs": 126409
+    },
+    {
+      "phase": "Ski Twists|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "125.png",
+      "elapsedMs": 128496
+    },
+    {
+      "phase": "Ski Twists|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "130.png",
+      "elapsedMs": 133660
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

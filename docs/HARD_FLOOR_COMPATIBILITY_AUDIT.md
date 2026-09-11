@@ -23,8 +23,9 @@ An exercise is `Incompatible` when its demonstrated execution makes a rigid,
 slippery floor meaningfully less ergonomic or requires dependable traction
 through one of these audited mechanisms:
 
-- concentrated heel or forefoot loading, including sustained or repeated
-  calf-raise and tiptoe work;
+- heel or forefoot loading that actually requires cushioning or dependable
+  traction in the demonstrated execution; ordinary controlled vertical calf
+  raises do not become incompatible merely because the heel lifts;
 - repeated jumping or landing;
 - running or rapid foot impact;
 - deliberate stomping;
@@ -34,7 +35,7 @@ through one of these audited mechanisms:
 - wall or balance loading that depends on reliable floor traction.
 
 Ordinary planted standing, controlled straight-line stepping, vertical
-squatting, static single-leg balance, mobility, and upper-body work remains
+squatting and calf raises, static single-leg balance, mobility, and upper-body work remains
 `Compatible` unless the actual demonstration meets one of those mechanisms.
 The slippery-floor review does not assume a wet, oily, or otherwise acutely
 unsafe surface on which nobody should exercise. Classification follows the
@@ -43,9 +44,11 @@ sequence must use one consistent floor classification across all of its blocks.
 
 ## Current result
 
-- `Compatible`: 306 exercises
-- `Incompatible`: 202 exercises
+- `Compatible`: 312 exercises
+- `Incompatible`: 222 exercises
 - `Unreviewed`: 0 exercises
+
+## Earlier migrations
 
 Catalog revision 53 rebuilds cached placements for the 97 reclassified
 exercise IDs only when the saved profile has Hard Floor enabled. Soft Floor
@@ -72,31 +75,31 @@ jack, or bound if it is marked Hard Floor compatible. This guards the entire
 current airborne-impact catalog rather than relying only on the three corrected
 IDs.
 
-These counts are audit results, not quotas. Pairwise availability and
-materiality are validated separately against the real Hard Floor, Insect,
-Silence, and Mirror UI states. Of the 30 wall-required movements, ten are
-incompatible: the repeated wall calf raise and wall tibialis raise under the
-same concentrated forefoot/heel rule as equivalent unsupported work; the wall
-soleus and calf stretches because their split stance requires dependable
-traction; fingertip wall push-ups because a low-traction floor can let the feet
-slide under pressing force; and all five sole-contact movements because their
-support, balance, or traction depends on reliable foot placement. The remaining
-20 are compatible. Because Wall off
-excludes them and Wall is not a pairwise quota dimension, they do not hide or
-alter floor-coverage accounting. The validation remains quadratic in the number of
-quota-bearing modifiers; it does not require every state in the full modifier
-power set.
+## Coverage requirements
 
-In addition to ordinary pairwise viability, the three broad 3-minute regions
-must retain at least five session movements from each exact floor
-category—`Compatible` and `Incompatible`—with Insect off/on, Silence off/on,
-and Mirror off. Every finer 5- through 30-minute bucket must retain at least one
-from each category. Turning Hard Floor off still admits both categories at
-runtime; the category-specific audit exists so the larger combined pool cannot
-conceal a missing soft-floor-only or hard-floor-suitable side of a pair. The
-current Android and web validators report zero deficits and fail CI on any
-regression. The diagnostic
-[`current deficit ledger`](catalog-audit/modifier_coverage_deficits_current.json)
-cannot authorize a nonzero result. The
-[`2026-08-29 deficit report`](catalog-audit/modifier_coverage_deficits_2026-08-29.json)
-is intentionally retained as the pre-slipperiness baseline.
+The counts above are audit results. Wall remains outside pairwise quotas;
+equipment gating excludes WallRequired exercises when no wall is available.
+Physical floor classifications and modifier materiality are unchanged.
+
+Under the user-authorized 2026-09-10 policy, the separate category audit requires
+five `Compatible` session movements in each broad 3-minute region and one in
+each finer 5- through 30-minute bucket, across the existing Insect/Silence
+profiles. There is no minimum for an `Incompatible` region or fine bucket.
+Hard Floor off still admits both truthful categories at runtime. Ordinary
+pairwise availability, equipment restrictions, materiality, and the two exact
+Insect structural exceptions remain in force.
+
+Two mixed-floor mandatory sequences were separated during the current audit:
+327/546 (pivoting and planted elbow strikes) and 414/418 (tiptoe and flat-footed
+gaze tasks). Their media and truthful floor classifications are unchanged.
+All four revised placements passed actual-workout review. Revision 73 discards
+obsolete cached rounds for those IDs while preserving scores and valid Keeps
+on Android and web. The two elbow variants retain one session-movement identity.
+
+The current category audit reports **49 Compatible coverage deficits**.
+The [current deficit ledger](catalog-audit/modifier_coverage_deficits_current.json)
+records every failing profile and group. CI must reject every live deficit;
+refreshing this diagnostic ledger never waives the rule. Validation remains
+quadratic, without an all-modifier power set. The
+[2026-08-29 deficit report](catalog-audit/modifier_coverage_deficits_2026-08-29.json)
+remains the historical pre-slipperiness baseline.

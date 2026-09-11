@@ -1,0 +1,1254 @@
+{
+  "id": 954,
+  "fixture": {
+    "name": "Alternating Torso Rotation with Side Reach",
+    "group": {
+      "id": "r30.abdominal-wall.set1.block1",
+      "displayName": "Abdominal wall",
+      "order": 51,
+      "canonicalGroups": [
+        "AbdominalWall"
+      ],
+      "selectionGroupId": "r30.abdominal-wall",
+      "exerciseOverrideId": 954,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 636,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 738,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 986,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1231,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.107044,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1509,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.374833,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1718,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.585472,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1923,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.788978,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2132,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.052773,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2398,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.262807,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2607,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.47281,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2611,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.47601,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2887,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.751729,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3090,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.981635,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3328,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 2.206075,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3551,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.157166,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3760,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.365225,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3963,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.567632,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4171,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.776206,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4173,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.77828,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4403,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.008416,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4772,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.211009,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5035,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.470975,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5286,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.092206,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5381,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.180989,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5431,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.231514,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5684,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.485533,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5888,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.688577,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6101,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.918796,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6326,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.126604,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6529,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.328941,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6731,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.532419,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6736,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.536587,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6990,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.790044,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7199,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.999138,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7409,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 2.212693,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7618,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.153593,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7823,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.357825,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8027,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.561831,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8239,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.773871,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8451,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.985367,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8454,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 0.987414,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8672,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.205539,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8911,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.331211,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9174,
+      "name": "Alternating Torso Rotation with Side Reach",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0954.mp4?v=a248a14f2fe4e8a01dedfb6c5eb568ee34e0c502c539ac8a67098a9798f74094",
+        "time": 1.331211,
+        "duration": 2.25,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9606,
+      "name": "Side-to-Side Ankle Rocks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0284.mp4?v=d2208a4bf5bdeee011f8559935d54e762f735da3650250c11dd08e0a98300031",
+        "time": 0.034583,
+        "duration": 2.15,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 738
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 986
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1231
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 2611
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 4173
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 4403
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 4772
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 5035
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 5286
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 5381
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 5431
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 6736
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 8454
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 8672
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 8911
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 9174
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 9606
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 812,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1046,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 4231,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 4458,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 4852,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 5083,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 8499,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 8734,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 9001,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 9341,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 2.25,
+      "realPlaybackMs": 2867,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 2.25,
+      "realPlaybackMs": 2976,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

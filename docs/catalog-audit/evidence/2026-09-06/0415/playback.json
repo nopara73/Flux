@@ -1,0 +1,2389 @@
+{
+  "id": 415,
+  "fixture": {
+    "name": "Tiptoe Fixed-Thumb Head Nods",
+    "group": {
+      "id": "r30.cranial-muscles.set1.block1",
+      "displayName": "Cranial muscles",
+      "order": 36,
+      "canonicalGroups": [
+        "CranialMuscles"
+      ],
+      "selectionGroupId": "r30.cranial-muscles",
+      "exerciseOverrideId": 415,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 4,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenRight",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "none; production application logic unchanged",
+    "appSourceSha256": "5f68829e533e1ee5b753ea92f04651460ae61832517661fb60861bc983c5e64c",
+    "workoutSourceSha256": "3c72d89f2a31ee092c274f37c5c15ac053bfca8d3b8b5fbc555a3ee98bb0a046",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 541,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 684,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 965,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1243,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.0631,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1509,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.324313,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1724,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.540255,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1933,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.747712,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2146,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.96112,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2361,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.176623,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2575,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.397767,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2792,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.607709,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3007,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.823304,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3212,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 2.027464,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3421,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 2.236719,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3627,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 2.442536,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3833,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 2.648742,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4041,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 2.857052,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4258,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.073569,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4464,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.279778,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4673,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.492431,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4885,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.700396,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5089,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.905295,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5094,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.909575,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5391,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 4.206575,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5600,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 4.414723,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5811,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 4.62557,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6015,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 4.83006,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6220,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 5.035528,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6425,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 5.241304,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6638,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 5.453573,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6848,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 5.663988,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7058,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 5.874116,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7264,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 6.078988,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7475,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 6.293768,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7693,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 6.509215,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7908,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 6.723919,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8122,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 6.937629,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8331,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 7.145042,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8535,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.143758,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8743,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.351355,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8947,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.55688,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9163,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.771398,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9166,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.774986,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9436,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.044919,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9671,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.134564,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9910,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.373751,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10143,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.057625,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10207,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.122979,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10266,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.180996,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10515,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.430732,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10727,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.64163,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10929,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.843753,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11137,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.052867,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11343,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.258875,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11559,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.475037,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11771,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.686643,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11979,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.894462,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12191,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 2.107465,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12401,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 2.321021,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12623,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 2.538357,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12828,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 2.74362,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13039,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 2.955166,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13246,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.16109,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13456,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.372256,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13663,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.57809,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13869,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.784813,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14077,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.992405,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14080,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 3.997402,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14408,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 4.327799,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14621,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 4.535486,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14829,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 4.745215,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15041,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 4.957929,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15247,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 5.162776,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15462,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 5.377929,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15675,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 5.59151,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15883,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 5.798615,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16094,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 6.01063,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16305,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 6.220887,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16510,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 6.424492,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16716,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 6.63052,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16923,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 6.837478,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17127,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 7.043327,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17337,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.038067,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17541,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.243301,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17750,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.454381,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17959,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.661503,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18165,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.86722,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18170,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 0.870957,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18425,
+      "name": "Tiptoe Fixed-Thumb Head Nods",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0415.mp4?v=9d0ca8ebf767b7771c5824e3f362d5daae4f00b61a491bf8d6ea99e5b807f74c",
+        "time": 1.126757,
+        "duration": 7.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18663,
+      "name": "Tiptoe Fixed-Thumb Head Tilts",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0416.mp4?v=ccfc56dc750fc117d33b754598e1f8f824181c7bb35338af6495ff90f96902a9",
+        "time": 0.109847,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18873,
+      "name": "Tiptoe Fixed-Thumb Head Tilts",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.cranial-muscles.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0416.mp4?v=ccfc56dc750fc117d33b754598e1f8f824181c7bb35338af6495ff90f96902a9",
+        "time": 0.321168,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19101,
+      "name": "Tiptoe Fixed-Thumb Head Tilts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.cranial-muscles.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0416.mp4?v=ccfc56dc750fc117d33b754598e1f8f824181c7bb35338af6495ff90f96902a9",
+        "time": 0.10725,
+        "duration": 4.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 684
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 965
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1243
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 5094
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 9166
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 9436
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 9671
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 9910
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 10143
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 10207
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 10266
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 14080
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 18170
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 18425
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 18663
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 18873
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 19101
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 778,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1064,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 9259,
+      "milliseconds": 35500
+    },
+    {
+      "realElapsedMs": 9492,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 9731,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 9954,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 18247,
+      "milliseconds": 35500
+    },
+    {
+      "realElapsedMs": 18483,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 18700,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 18920,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 7.2,
+      "realPlaybackMs": 7863,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 7.2,
+      "realPlaybackMs": 7866,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

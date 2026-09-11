@@ -5,7 +5,6 @@ import { fileURLToPath } from "node:url";
 
 import {
   findHardFloorCategoryCoverageDeficiencies,
-  findMirrorCategoryDeficiencies,
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
   findWorkoutProfileLineupDeficiencies,
@@ -27,7 +26,6 @@ const catalog = JSON.parse(catalogBytes.toString("utf8"));
 const pairwise = findWorkoutModifierPairCoverageDeficiencies(catalog);
 const hardFloorCategory = findHardFloorCategoryCoverageDeficiencies(catalog);
 const materiality = findWorkoutModifierMaterialityDeficiencies(catalog);
-const mirrorCategory = findMirrorCategoryDeficiencies(catalog);
 const distinctLineup = findWorkoutProfileLineupDeficiencies(catalog);
 
 const report = {
@@ -48,13 +46,11 @@ const report = {
       hardFloorCategory.map((item) => item.groupId),
     ).size,
     materialityDeficiencyCount: materiality.length,
-    mirrorCategoryDeficiencyCount: mirrorCategory.length,
     distinctLineupDeficiencyCount: distinctLineup.length,
   },
   pairwise,
   hardFloorCategory,
   materiality,
-  mirrorCategory,
   distinctLineup,
 };
 

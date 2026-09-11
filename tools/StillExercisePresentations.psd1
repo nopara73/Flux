@@ -1,7 +1,14 @@
 @{
+    308 = $true
+    845 = $true
+    958 = $true
+    636 = $false
+    790 = $true
+    686 = $true
+    271 = $true
+    748 = $true
     # A curated human frame is clearer than motion for these static postures.
     # Timed-side stills are mirrored after the five-second change phase.
-    21 = $true
     136 = $true
     145 = $true
     220 = $true
@@ -25,7 +32,6 @@
     746 = $true
     747 = $true
     750 = $true
-    751 = $true
     752 = $true
     784 = $true
     969 = $true
@@ -41,4 +47,5 @@
     633 = $true
     704 = $true
     835 = $true
+    1004 = $true
 }

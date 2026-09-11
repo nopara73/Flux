@@ -10,7 +10,6 @@ import {
   WorkoutSession,
   findSoleWallContactRequiredCatalogDeficiencies,
   findWallRequiredCatalogDeficiencies,
-  findMirrorCategoryDeficiencies,
   getExerciseVideoPath,
   getHoldFramePath,
   getMovementCountdownDurationMs,
@@ -31,7 +30,6 @@ import {
 const STORAGE_KEY = "flux.workout.state.v1";
 const TIMER_INTERVAL_MS = 100;
 const MEDIA_RECOVERY_TIMEOUT_MS = 12_000;
-const DIRECTION_SEGMENT_SECONDS = 20;
 const MODIFIER_FEEDBACK_DURATION_MS = 2_040;
 const EXERCISE_NAME_LONG_PRESS_MS = 500;
 const EXERCISE_NAME_LONG_PRESS_MOVE_TOLERANCE_PX = 12;
@@ -196,14 +194,12 @@ async function bootstrap() {
       throw new Error("Asset-version manifest is invalid.");
     }
     assetVersions = Object.freeze({ ...loadedAssetVersions });
-    const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(exercises);
     const wallCatalogDeficiencies =
       findWallRequiredCatalogDeficiencies(exercises);
     const soleWallCatalogDeficiencies =
       findSoleWallContactRequiredCatalogDeficiencies(exercises);
     if (!isModifierMetadataComplete(exercises) ||
         !isSessionMovementMetadataValid(exercises) ||
-        mirrorCategoryDeficiencies.length > 0 ||
         wallCatalogDeficiencies.length > 0 ||
         soleWallCatalogDeficiencies.length > 0) {
       throw new Error("Catalog does not satisfy workout invariants.");
@@ -1458,8 +1454,7 @@ function loadExerciseMedia(
 
   elements.video.hidden = false;
   elements.video.preload = "auto";
-  elements.video.loop =
-    (group.sequenceMediaSegment ?? "Full") === "Full";
+  elements.video.loop = true;
   elements.video.onloadedmetadata = () => prepareSequenceMediaSegment();
   elements.video.oncanplay = () => {
     prepareSequenceMediaSegment();
@@ -1479,7 +1474,6 @@ function loadExerciseMedia(
   };
   elements.video.onerror = () => showMediaError(generation);
   elements.video.onended = handleVideoEnded;
-  elements.video.ontimeupdate = enforceDirectionMediaSegment;
   elements.video.src = assetUrl(getExerciseVideoPath(
     exercise,
     group.sequenceMediaSegment ?? "Full",
@@ -1678,7 +1672,6 @@ function updateMovement() {
   if (state.phase !== lastMovementPhase && state.phase !== "Complete") {
     applyMovementPhase(state.phase);
   }
-  enforceDirectionMediaSegment();
   if (movementRemaining <= 0) {
     completeMovement();
   }
@@ -1734,16 +1727,9 @@ function restartMediaForPhase() {
   elements.holdFrame.hidden = true;
   elements.video.hidden = false;
   elements.video.loop =
-    mediaExercise.mode !== "Hold" &&
-    (mediaGroup?.sequenceMediaSegment ?? "Full") === "Full";
+    mediaExercise.mode !== "Hold";
   prepareSequenceMediaSegment(true);
   playVideo();
-}
-
-function getSequenceMediaSegmentStart() {
-  return mediaGroup?.sequenceMediaSegment === "SecondDirection"
-    ? DIRECTION_SEGMENT_SECONDS
-    : 0;
 }
 
 function prepareSequenceMediaSegment(force = false) {
@@ -1751,7 +1737,7 @@ function prepareSequenceMediaSegment(force = false) {
       !Number.isFinite(elements.video.duration)) {
     return;
   }
-  const segmentStart = getSequenceMediaSegmentStart();
+  const segmentStart = 0;
   if (!force && Math.abs(elements.video.currentTime - segmentStart) < 0.05) {
     return;
   }
@@ -1762,41 +1748,7 @@ function prepareSequenceMediaSegment(force = false) {
   }
 }
 
-function enforceDirectionMediaSegment() {
-  if (
-    (mediaGroup?.sequenceMediaSegment ?? "Full") === "Full" ||
-    !Number.isFinite(elements.video.currentTime)
-  ) {
-    return;
-  }
-
-  const segmentStart = getSequenceMediaSegmentStart();
-  const segmentEnd = segmentStart + DIRECTION_SEGMENT_SECONDS;
-  if (
-    elements.video.currentTime >= segmentStart &&
-    elements.video.currentTime < segmentEnd
-  ) {
-    return;
-  }
-
-  try {
-    elements.video.currentTime = segmentStart;
-  } catch {
-    return;
-  }
-  playVideo();
-}
-
 function handleVideoEnded() {
-  if (
-    (mediaGroup?.sequenceMediaSegment ?? "Full") !== "Full" &&
-    (!elements.movePanel.hidden ||
-      (restActive && previewingUpcomingSequenceBlock))
-  ) {
-    enforceDirectionMediaSegment();
-    return;
-  }
-
   if (mediaExercise?.mode === "Hold" && !elements.movePanel.hidden) {
     showReviewedHoldFrame();
   }

@@ -1,0 +1,3157 @@
+{
+  "id": 520,
+  "fixture": {
+    "name": "Raise Arms, Exhale Choo as Hips Sink",
+    "group": {
+      "id": "r30.breathing-muscles.set1.block1",
+      "displayName": "Breathing muscles",
+      "order": 40,
+      "canonicalGroups": [
+        "BreathingMuscles"
+      ],
+      "selectionGroupId": "r30.breathing-muscles",
+      "exerciseOverrideId": 520,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "bootstrap mirror category only",
+    "appSourceSha256": "3f73bd238d12751e07a71d1811dd5622e4b28444776930e3c584af7532ac2b0e",
+    "workoutSourceSha256": "ab59d80010fb64b3dac8fafafa0090fe83a9544804424c5542f47cc3467191d3",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 948,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1114,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1427,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1681,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.160283,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1963,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.441875,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2176,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.655233,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2401,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.880515,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2623,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.103847,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2835,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.314384,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3045,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.523263,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3248,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.726362,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3452,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.93084,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3663,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 2.144847,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3872,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 2.350679,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4082,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 2.561451,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4304,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 2.783232,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4522,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 3.006951,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4739,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 3.218009,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4942,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 3.420408,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5149,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 3.627408,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5365,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 3.844825,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5575,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 4.053509,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5789,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 4.268373,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5997,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 4.475814,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6218,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 4.701966,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6432,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 4.911602,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6643,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.122026,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6849,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.327439,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7067,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.546802,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7277,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.756636,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7289,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.768226,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7550,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 6.028595,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7761,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 6.240168,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7966,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 6.445253,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8178,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 6.656344,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8382,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 6.860783,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8596,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 7.075319,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8819,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 7.29983,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9024,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 7.502859,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9234,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 7.712843,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9448,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 7.928115,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9667,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 8.146833,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9878,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 8.35754,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10098,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 8.577711,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10321,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 8.813327,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10541,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 9.0251,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10758,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 9.236356,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10964,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 9.443139,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11179,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 9.660043,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11423,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 9.906262,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11638,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 10.1178,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11853,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 10.331868,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12064,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 10.542969,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12278,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.007044,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12499,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.223698,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12703,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.428953,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12948,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.673179,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13161,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.886119,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13166,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.890901,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13425,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.150202,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13693,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.breathing-muscles.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.060281,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13995,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.breathing-muscles.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.36507,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14272,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.0843,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14367,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.179166,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14432,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.243724,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14734,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.549781,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14953,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.765185,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15170,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.983786,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15396,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.211948,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15610,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.425159,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15822,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.633844,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16030,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.842927,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16238,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 2.049997,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16446,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 2.259356,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16665,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 2.477546,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16871,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 2.683662,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17085,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 2.89772,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17314,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 3.126597,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17531,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 3.3436,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17737,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 3.549534,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17944,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 3.756328,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18155,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 3.967772,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18370,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 4.182049,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18588,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 4.400417,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18794,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 4.606997,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19015,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 4.827483,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19231,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.044599,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19440,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.252688,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19653,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.465383,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19857,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.670094,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20067,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.880122,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20071,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 5.882924,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20331,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 6.143638,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20541,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 6.353131,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20747,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 6.559671,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20952,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 6.764271,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21168,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 6.980735,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21375,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 7.187338,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21588,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 7.411204,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21816,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 7.627904,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22032,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 7.845679,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22242,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 8.054901,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22453,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 8.265276,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22664,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 8.475951,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22868,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 8.681341,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23079,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 8.902339,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23309,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 9.121677,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23514,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 9.326938,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23731,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 9.543757,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23942,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 9.754385,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24151,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 9.963702,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24370,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 10.183735,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24577,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 10.391207,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24799,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 10.612352,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25013,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.089068,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25224,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.299083,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25437,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.512757,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25648,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.722728,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25863,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.938865,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25867,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0.941949,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26115,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.189864,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26385,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.breathing-muscles.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.308151,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26625,
+      "name": "Raise Arms, Exhale Choo as Hips Sink",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.breathing-muscles.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 1.308151,
+        "duration": 10.7,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26889,
+      "name": "Side-Chest Posing",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0520.mp4?v=b6810df8398cff660f15063d18ed6bfdcf1657de0902a46635d95c2821e76cf3",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0526.png?v=47618865ab146b836696483ffd85d863e2e9a5fc0b70c24b80263628b32c0990",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1114
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1427
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1681
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 7289
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 13166
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 13425
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 13693
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 13995
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 14272
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 14367
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 14432
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 20071
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 25867
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 26115
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 26385
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 26625
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 26889
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1238,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1501,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 13248,
+      "milliseconds": 31500
+    },
+    {
+      "realElapsedMs": 13510,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 13818,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 14076,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 25936,
+      "milliseconds": 32500
+    },
+    {
+      "realElapsedMs": 26198,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 26445,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 26700,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 10.7,
+      "realPlaybackMs": 11412,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 10.7,
+      "realPlaybackMs": 11350,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

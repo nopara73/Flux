@@ -1,0 +1,990 @@
+{
+  "id": 835,
+  "fixture": {
+    "name": "Wall Lat Stretch",
+    "group": {
+      "id": "r30.shoulder-adductors-extensors.set1.block1",
+      "displayName": "Shoulder adductors and extensors",
+      "order": 25,
+      "canonicalGroups": [
+        "ShoulderAdductorsAndExtensors"
+      ],
+      "selectionGroupId": "r30.shoulder-adductors-extensors",
+      "exerciseOverrideId": 835,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 887,
+      "name": "Wall Lat Stretch",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1092,
+      "name": "Wall Lat Stretch",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1325,
+      "name": "Wall Lat Stretch",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1533,
+      "name": "Wall Lat Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1768,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1972,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2177,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2180,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2416,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2620,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2825,
+      "name": "Wall Lat Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3051,
+      "name": "Wall Lat Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3259,
+      "name": "Wall Lat Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3262,
+      "name": "Wall Lat Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3482,
+      "name": "Wall Lat Stretch",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3712,
+      "name": "Wall Lat Stretch",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3923,
+      "name": "Wall Lat Stretch",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-adductors-extensors.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4173,
+      "name": "Wall Lat Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4217,
+      "name": "Wall Lat Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4266,
+      "name": "Wall Lat Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4499,
+      "name": "Wall Lat Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4714,
+      "name": "Wall Lat Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4917,
+      "name": "Wall Lat Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4924,
+      "name": "Wall Lat Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5195,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5399,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5608,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5819,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6024,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6031,
+      "name": "Wall Lat Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6273,
+      "name": "Wall Lat Stretch",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6514,
+      "name": "Wall Lat Stretch",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6728,
+      "name": "Wall Lat Stretch",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.shoulder-adductors-extensors.set2.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0835.png?v=fa39029d52f192d5854dab5fa349922f5318ce1b95034f84e3495242e0455734",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6975,
+      "name": "Standing Spinal Wave",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0917.mp4?v=6974221e7eccb49d860df65730ef94501cec0963e2b1cfa2aa952e94c363bc8e",
+        "time": 0.047299,
+        "duration": 13.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1092
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1325
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1533
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 2180
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 3262
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 3482
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 3712
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 3923
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 4173
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 4217
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 4266
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 4924
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 6031
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 6273
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 6514
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 6728
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 6975
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1149,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1360,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 3308,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 3532,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 3748,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 3956,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 6096,
+      "milliseconds": 42500
+    },
+    {
+      "realElapsedMs": 6339,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 6556,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6785,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1,
+      "realPlaybackMs": 1699,
+      "wrapped": false,
+      "still": true
+    },
+    {
+      "block": 2,
+      "duration": 1,
+      "realPlaybackMs": 1733,
+      "wrapped": false,
+      "still": true
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

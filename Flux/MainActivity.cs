@@ -23,8 +23,6 @@ namespace Flux;
 public class MainActivity : Activity
 {
     private const int CountdownSeconds = 45;
-    private const int DirectionSecondPhaseOffsetMilliseconds = 20_000;
-    private const int DirectionSegmentDurationMilliseconds = 20_000;
     private const int RestSeconds = 15;
     private const long PhaseMotionDurationMilliseconds = 160L;
     private const long HueMotionDurationMilliseconds = 120L;
@@ -2846,7 +2844,7 @@ public class MainActivity : Activity
                     (_workoutPhase == WorkoutPhase.Rest &&
                         _previewingUpcomingSequenceBlock))
                 {
-                    _exerciseVideo.SeekTo(GetCurrentMediaSegmentStartMilliseconds());
+                    _exerciseVideo.SeekTo(0);
                     ApplyCurrentMediaPlaybackState();
                     return;
                 }
@@ -2886,9 +2884,7 @@ public class MainActivity : Activity
         _mediaReady = false;
         _loopExerciseVideo =
             !holdDuringMove &&
-            !holdDuringRest &&
-            workoutGroup.SequenceMediaSegment ==
-                ExerciseSequenceMediaSegment.Full;
+            !holdDuringRest;
         _freezeHoldAtEnd = holdDuringMove || holdDuringRest;
         _activeMediaPlayer = null;
 
@@ -3089,10 +3085,9 @@ public class MainActivity : Activity
 
     private string GetExerciseVideoAssetPath(Exercise exercise)
     {
-        return _mediaWorkoutGroup?.SequenceMediaSegment ==
-                ExerciseSequenceMediaSegment.Full
-            ? exercise.Video
-            : $"exercise_direction_videos/exercise_{exercise.Id:D4}.mp4";
+        return exercise.GetVideoAssetPath(
+            _mediaWorkoutGroup?.SequenceMediaSegment ??
+                ExerciseSequenceMediaSegment.Full);
     }
 
     private void SetStartAvailability(bool available)
@@ -3869,7 +3864,6 @@ public class MainActivity : Activity
         }
         _countdownProgress.Progress = (int)boundedMilliseconds;
         ApplyMovementPhase(state);
-        EnforceDirectionMediaSegment(state.Phase);
     }
 
     private int GetCurrentMovementDurationMilliseconds() =>
@@ -3974,56 +3968,10 @@ public class MainActivity : Activity
 
         ClearHoldFrame();
         _exerciseVideo.Pause();
-        int positionMilliseconds = GetCurrentMediaSegmentStartMilliseconds();
+        int positionMilliseconds = 0;
         _exerciseVideo.SeekTo(positionMilliseconds);
         RestartHoldOrResumeRepetition();
     }
-
-    private void EnforceDirectionMediaSegment(MovementPhase phase)
-    {
-        if (_mediaWorkoutGroup?.SequenceMediaSegment ==
-                ExerciseSequenceMediaSegment.Full ||
-            _activeMediaPlayer is null ||
-            !_mediaReady ||
-            phase != MovementPhase.Continuous)
-        {
-            return;
-        }
-
-        int segmentStartMilliseconds = GetCurrentMediaSegmentStartMilliseconds();
-        int segmentEndMilliseconds =
-            segmentStartMilliseconds + DirectionSegmentDurationMilliseconds;
-        int positionMilliseconds;
-        try
-        {
-            positionMilliseconds = _activeMediaPlayer.CurrentPosition;
-        }
-        catch (Java.Lang.IllegalStateException)
-        {
-            RecoverInvalidMediaPlayerState();
-            return;
-        }
-        catch (ObjectDisposedException)
-        {
-            RecoverInvalidMediaPlayerState();
-            return;
-        }
-        if (positionMilliseconds >= segmentStartMilliseconds &&
-            positionMilliseconds < segmentEndMilliseconds)
-        {
-            return;
-        }
-
-        _exerciseVideo.Pause();
-        _exerciseVideo.SeekTo(segmentStartMilliseconds);
-        ApplyCurrentMediaPlaybackState();
-    }
-
-    private int GetCurrentMediaSegmentStartMilliseconds() =>
-        _mediaWorkoutGroup?.SequenceMediaSegment ==
-            ExerciseSequenceMediaSegment.SecondDirection
-            ? DirectionSecondPhaseOffsetMilliseconds
-            : 0;
 
     private void RecoverInvalidMediaPlayerState()
     {

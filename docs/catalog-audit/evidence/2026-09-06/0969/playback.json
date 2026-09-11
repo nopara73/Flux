@@ -1,0 +1,506 @@
+{
+  "id": 969,
+  "fixture": {
+    "name": "Chair-Pose Hold",
+    "group": {
+      "id": "r30.spinal-extensors.set1.block2",
+      "displayName": "Spinal extensors",
+      "order": 35,
+      "canonicalGroups": [
+        "SpinalExtensors"
+      ],
+      "selectionGroupId": "r30.spinal-extensors",
+      "exerciseOverrideId": 969,
+      "sequenceBlockIndex": 1,
+      "sequenceBlockCount": 3,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 571,
+      "name": "Chair-Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 700,
+      "name": "Chair-Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 759,
+      "name": "Chair-Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1011,
+      "name": "Chair-Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1224,
+      "name": "Chair-Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1428,
+      "name": "Chair-Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1435,
+      "name": "Chair-Pose Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1703,
+      "name": "Chair-Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 1917,
+      "name": "Chair-Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2125,
+      "name": "Chair-Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2341,
+      "name": "Chair-Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2545,
+      "name": "Chair-Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2548,
+      "name": "Chair-Pose Hold",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2805,
+      "name": "Chair-Pose Hold",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0969.png?v=73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3068,
+      "name": "Standing Forward-Fold Hold",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.spinal-extensors.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_1000.png?v=7073e424d3cd076c6ad1df4162a2a74fa2cabfaa9cfcfb00574cd7563b43e7a0",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3298,
+      "name": "Standing Forward-Fold Hold",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.spinal-extensors.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_1000.png?v=7073e424d3cd076c6ad1df4162a2a74fa2cabfaa9cfcfb00574cd7563b43e7a0",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3642,
+      "name": "Standing Forward-Fold Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_1000.png?v=7073e424d3cd076c6ad1df4162a2a74fa2cabfaa9cfcfb00574cd7563b43e7a0",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 700
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "01-block1-work-start.png",
+      "elapsedMs": 759
+    },
+    {
+      "phase": "block1-action",
+      "file": "02-block1-action.png",
+      "elapsedMs": 1435
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 2548
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 2805
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 3068
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 3298
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 3642
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 2626,
+      "milliseconds": 42500
+    },
+    {
+      "realElapsedMs": 2888,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 3127,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 3345,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1,
+      "realPlaybackMs": 1746,
+      "wrapped": false,
+      "still": true
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

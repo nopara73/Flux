@@ -1,0 +1,1086 @@
+{
+  "id": 919,
+  "fixture": {
+    "name": "Marching in Place with Head Turns",
+    "group": {
+      "id": "r30.posterior-neck-suboccipital.set1.block1",
+      "displayName": "Posterior neck and suboccipital muscles",
+      "order": 7,
+      "canonicalGroups": [
+        "PosteriorNeckAndSuboccipitalMuscles"
+      ],
+      "selectionGroupId": "r30.posterior-neck-suboccipital",
+      "exerciseOverrideId": 919,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 503,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 651,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 992,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1209,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.156755,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1507,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.455697,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1723,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.672577,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1940,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.888995,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2153,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 1.108834,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2174,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 1.122147,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2439,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 1.387549,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2648,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.021847,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2859,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.232502,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3071,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.444969,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3280,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.653824,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3492,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.865785,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3494,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.867404,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3733,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 1.106322,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4077,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.102894,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4309,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.339165,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4600,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.074529,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4702,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.176779,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4782,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.25624,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5045,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.52041,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5257,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.732556,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5461,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.935318,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5669,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 1.144078,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5677,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 1.151548,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5939,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 1.414043,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6144,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.04032,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6356,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.253187,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6572,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.469432,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6789,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.685664,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6994,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.890913,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7002,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 0.898847,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7258,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 1.15529,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7543,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 1.325655,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7790,
+      "name": "Marching in Place with Head Turns",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-neck-suboccipital.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0919.mp4?v=b402fc722f4324d9c4cd54ceef7576b8893d1b37c950b4a3d16ac40275d998b7",
+        "time": 1.325655,
+        "duration": 1.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8124,
+      "name": "Single-Arm Bent-Elbow External Rotation",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0228.mp4?v=d12247d2dd412ebca1a512513cd2748163833c6e765ed9d15c2ec081dbdf5d2a",
+        "time": 0.067099,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 651
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 992
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1209
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 2174
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 3494
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 3733
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 4077
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 4309
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 4600
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 4702
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 4782
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 5677
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 7002
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 7258
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 7543
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 7790
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 8124
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 805,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1036,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 3550,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 3866,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 4123,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 4392,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 7083,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 7353,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 7617,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 7882,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1.55,
+      "realPlaybackMs": 2191,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 1.55,
+      "realPlaybackMs": 2165,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

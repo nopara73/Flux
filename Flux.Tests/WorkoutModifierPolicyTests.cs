@@ -547,92 +547,18 @@ public sealed class WorkoutModifierPolicyTests
                 MirrorEquipment.None));
     }
 
-    [Fact]
-    public void MirrorCategoryFloorRequiresFiveInEveryRelationshipCoverageCell()
+    [Theory]
+    [InlineData(ExerciseMirrorRelationship.Agnostic, ExerciseMirrorCoverage.None)]
+    [InlineData(ExerciseMirrorRelationship.MirrorOnly, ExerciseMirrorCoverage.UpperBody)]
+    [InlineData(ExerciseMirrorRelationship.MirrorOnly, ExerciseMirrorCoverage.FullBody)]
+    [InlineData(ExerciseMirrorRelationship.BenefitsGreatly, ExerciseMirrorCoverage.UpperBody)]
+    [InlineData(ExerciseMirrorRelationship.BenefitsGreatly, ExerciseMirrorCoverage.FullBody)]
+    public void MirrorMetadataAllowsEmptyOtherRelationshipCells(
+        ExerciseMirrorRelationship relationship, ExerciseMirrorCoverage coverage)
     {
-        CanonicalMuscleGroup group =
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
-        var exercises = new List<Exercise>();
-        int id = 1;
-        foreach ((ExerciseMirrorRelationship relationship,
-                 ExerciseMirrorCoverage coverage) in new[]
-        {
-            (ExerciseMirrorRelationship.MirrorOnly,
-                ExerciseMirrorCoverage.UpperBody),
-            (ExerciseMirrorRelationship.MirrorOnly,
-                ExerciseMirrorCoverage.FullBody),
-            (ExerciseMirrorRelationship.BenefitsGreatly,
-                ExerciseMirrorCoverage.UpperBody),
-            (ExerciseMirrorRelationship.BenefitsGreatly,
-                ExerciseMirrorCoverage.FullBody),
-            (ExerciseMirrorRelationship.Agnostic,
-                ExerciseMirrorCoverage.None),
-        })
-        {
-            for (int index = 0;
-                 index < WorkoutModifierPolicy.MinimumExercisesPerMirrorCategory;
-                 index++)
-            {
-                exercises.Add(Exercise(
-                    id++,
-                    group,
-                    mirrorRelationship: relationship,
-                    minimumMirrorCoverage: coverage));
-            }
-        }
-
-        Assert.Empty(
-            WorkoutModifierPolicy.FindMirrorCategoryDeficiencies(exercises));
-
-        exercises.Remove(exercises.First(exercise =>
-            exercise.MirrorRelationship ==
-                ExerciseMirrorRelationship.MirrorOnly &&
-            exercise.MinimumMirrorCoverage ==
-                ExerciseMirrorCoverage.FullBody));
-        WorkoutMirrorCategoryDeficiency deficiency = Assert.Single(
-            WorkoutModifierPolicy.FindMirrorCategoryDeficiencies(exercises));
-        Assert.Equal(ExerciseMirrorRelationship.MirrorOnly,
-            deficiency.Relationship);
-        Assert.Equal(ExerciseMirrorCoverage.FullBody,
-            deficiency.MinimumCoverage);
-        Assert.Equal(4, deficiency.MatchingExerciseCount);
-        Assert.Equal(5, deficiency.RequiredExerciseCount);
-    }
-
-    [Fact]
-    public void MirrorCategoryFloorDoesNotDoubleCountMovementAliases()
-    {
-        CanonicalMuscleGroup group =
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors;
-        Exercise[] exercises =
-        [
-            Exercise(
-                1,
-                group,
-                mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
-                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody,
-                sessionMovementId: 1),
-            Exercise(
-                2,
-                group,
-                mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
-                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody,
-                sessionMovementId: 1),
-            .. Enumerable.Range(3, 3).Select(id => Exercise(
-                id,
-                group,
-                mirrorRelationship: ExerciseMirrorRelationship.BenefitsGreatly,
-                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody)),
-        ];
-
-        WorkoutMirrorCategoryDeficiency deficiency =
-            WorkoutModifierPolicy.FindMirrorCategoryDeficiencies(exercises)
-                .Single(result =>
-                    result.Relationship ==
-                        ExerciseMirrorRelationship.BenefitsGreatly &&
-                    result.MinimumCoverage == ExerciseMirrorCoverage.UpperBody);
-
-        Assert.Equal(4, deficiency.MatchingExerciseCount);
+        Exercise single = Exercise(1, CanonicalMuscleGroup.ShoulderAbductors,
+            mirrorRelationship: relationship, minimumMirrorCoverage: coverage);
+        Assert.True(WorkoutModifierPolicy.IsCatalogMetadataComplete([single]));
     }
 
     [Fact]
@@ -688,7 +614,7 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
-    public void BroadPairwiseBucketsRequireMirrorRelevantMovements()
+    public void BroadPairwiseBucketsCountSelectableAgnosticMovements()
     {
         WorkoutGroup group = MassGroupingTaxonomy
             .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
@@ -735,51 +661,18 @@ public sealed class WorkoutModifierPolicyTests
                     result.SecondModifierEnabled)
                 .ToArray();
 
-        Assert.Equal(4, deficiencies.Length);
-        Assert.All(deficiencies, deficiency =>
-            Assert.Equal(0, deficiency.MatchingExerciseCount));
-
-        var mirrorRelevantCatalog = new List<Exercise>();
-        for (int index = 0; index < 5; index++)
-        {
-            int rootId = index * 2 + 11;
-            int memberId = rootId + 1;
-            mirrorRelevantCatalog.Add(Exercise(
-                rootId,
-                canonicalGroups[0],
-                canonicalGroups[1],
-                canonicalGroups[2],
-                mirrorRelationship:
-                    ExerciseMirrorRelationship.BenefitsGreatly,
-                minimumMirrorCoverage: ExerciseMirrorCoverage.UpperBody,
-                sequenceBlocks:
-                [
-                    new ExerciseSequenceBlock
-                    {
-                        ExerciseId = rootId,
-                        MirrorMedia = false,
-                    },
-                    new ExerciseSequenceBlock
-                    {
-                        ExerciseId = memberId,
-                        MirrorMedia = false,
-                    },
-                ]));
-            mirrorRelevantCatalog.Add(Exercise(
-                memberId,
-                canonicalGroups[3],
-                canonicalGroups[4],
-                canonicalGroups[5],
-                sequenceBlocks: []));
-        }
-        Assert.DoesNotContain(
-            WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
-                mirrorRelevantCatalog),
-            result => result.Minutes ==
-                    WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
-                result.GroupId == group.Id &&
+        Assert.Empty(deficiencies);
+        var shortage = WorkoutModifierPolicy.FindPairwiseCoverageDeficiencies(
+                catalog.Take(8).ToArray())
+            .Where(result => result.Minutes == 3 && result.GroupId == group.Id &&
                 result.FirstModifier == WorkoutModifiers.Insect &&
-                result.SecondModifier == WorkoutModifiers.Mirror);
+                result.SecondModifier == WorkoutModifiers.Mirror &&
+                result.SecondModifierEnabled).ToArray();
+        Assert.Equal(4, shortage.Length);
+        Assert.All(shortage, result => Assert.Equal(4, result.MatchingExerciseCount));
+        Assert.Contains(WorkoutModifierPolicy.FindMaterialityDeficiencies(catalog),
+            result => result.Modifier == WorkoutModifiers.Mirror &&
+                result.ContextProfile == WorkoutModifiers.None);
     }
 
     [Fact]
@@ -915,7 +808,7 @@ public sealed class WorkoutModifierPolicyTests
     }
 
     [Fact]
-    public void HardFloorCategoryCoverageDoesNotLetCompatibleExercisesHideTheReleasedSet()
+    public void HardFloorCoverageRequiresSafeChoicesWithoutSoftOnlyCounterparts()
     {
         WorkoutGroup group = MassGroupingTaxonomy
             .GetResolution(WorkoutModifierPolicy.BroadCoverageResolutionMinutes)
@@ -940,36 +833,29 @@ public sealed class WorkoutModifierPolicyTests
                     ExerciseHardFloorCompatibility.Incompatible))
             .ToArray();
 
-        WorkoutHardFloorCategoryCoverageDeficiency[] deficiencies =
-            WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(
-                    compatible.Concat(incompatible).ToArray())
-                .Where(result => result.Minutes ==
-                        WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
-                    result.GroupId == group.Id)
-                .ToArray();
-
-        Assert.Equal(5, deficiencies.Length);
-        Assert.All(deficiencies, deficiency =>
-        {
-            Assert.Equal(
-                ExerciseHardFloorCompatibility.Incompatible,
-                deficiency.HardFloorCompatibility);
-            Assert.Equal(4, deficiency.MatchingExerciseCount);
-        });
-
-        Exercise fifthIncompatible = Exercise(
-            10,
-            canonicalGroups[0],
-            canonicalGroups[1],
-            canonicalGroups[2],
-            hardFloorCompatibility:
-                ExerciseHardFloorCompatibility.Incompatible);
         Assert.DoesNotContain(
-            WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(
-                [.. compatible, .. incompatible, fifthIncompatible]),
-            result => result.Minutes ==
-                    WorkoutModifierPolicy.BroadCoverageResolutionMinutes &&
-                result.GroupId == group.Id);
+            WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(compatible),
+            result => result.Minutes == 3 && result.GroupId == group.Id);
+        var deficiencies = WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(
+                [.. compatible.Take(4), .. incompatible])
+            .Where(result => result.Minutes == 3 && result.GroupId == group.Id).ToArray();
+        Assert.Equal(5, deficiencies.Length);
+        Assert.All(deficiencies, result =>
+        {
+            Assert.Equal(ExerciseHardFloorCompatibility.Compatible, result.HardFloorCompatibility);
+            Assert.Equal(4, result.MatchingExerciseCount);
+        });
+        WorkoutGroup fine = MassGroupingTaxonomy.GetGroup(30, canonicalGroups[0]);
+        Assert.DoesNotContain(
+            WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(compatible),
+            result => result.Minutes == 30 && result.GroupId == fine.Id);
+        Assert.Contains(
+            WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies(incompatible),
+            result => result.Minutes == 30 && result.GroupId == fine.Id &&
+                result.MatchingExerciseCount == 0 && result.RequiredExerciseCount == 1);
+        Assert.All(
+            WorkoutModifierPolicy.FindHardFloorCategoryCoverageDeficiencies([.. compatible, .. incompatible]),
+            result => Assert.Equal(ExerciseHardFloorCompatibility.Compatible, result.HardFloorCompatibility));
     }
 
     [Fact]

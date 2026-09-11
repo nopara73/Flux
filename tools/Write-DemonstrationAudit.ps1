@@ -4,6 +4,8 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'ExerciseCatalogDefinitions.ps1')
+$definedExerciseIds = @(Get-ExerciseCatalogDefinitions | ForEach-Object { [int]$_.Id })
 
 $catalog = @(Get-Content -LiteralPath $CatalogPath -Raw | ConvertFrom-Json)
 $review = Import-PowerShellDataFile -LiteralPath (
@@ -133,9 +135,9 @@ if ($invalidAssignments.Count -gt 0) {
 }
 
 $catalogIds = @($catalog.id | ForEach-Object { [int]$_ })
-if (@($catalogIds | Where-Object { $_ -lt 1 -or $_ -gt 1000 }).Count -gt 0 -or
+if (@($catalogIds | Where-Object { $_ -notin $definedExerciseIds }).Count -gt 0 -or
     @($catalogIds | Sort-Object -Unique).Count -ne $catalog.Count) {
-    throw 'Catalog exercise IDs must be unique stable IDs from 1 through 1000.'
+    throw 'Catalog exercise IDs must be unique declared stable IDs.'
 }
 
 $sourceAssignmentIds = @(

@@ -1,0 +1,2214 @@
+{
+  "id": 611,
+  "fixture": {
+    "name": "Wide-Stance Hip Circles",
+    "group": {
+      "id": "r30.major-hip-adductors.set1.block1",
+      "displayName": "Major hip adductors",
+      "order": 33,
+      "canonicalGroups": [
+        "MajorHipAdductors"
+      ],
+      "selectionGroupId": "r30.major-hip-adductors",
+      "exerciseOverrideId": 611,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "Counterclockwise",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "FirstDirection"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 595,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 760,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1041,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1271,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0.125163,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1553,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0.408172,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1849,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0.703384,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2071,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0.925031,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2275,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 1.129227,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2482,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 1.33676,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2688,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 1.542879,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2892,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 1.745859,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3098,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 1.952118,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3326,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 2.181185,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3548,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 2.403095,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3756,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 2.609295,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3965,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 2.818725,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4167,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 3.02041,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4382,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 3.236328,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4591,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 3.444581,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4804,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 3.658631,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4816,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 3.670077,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5091,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 3.944823,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5299,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 4.152506,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5501,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 4.354914,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5724,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 4.578144,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5927,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 4.782086,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6139,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 4.992965,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6349,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 5.20262,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6552,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 5.406907,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6767,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 5.620774,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6987,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 5.840648,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7194,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 6.048175,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7405,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 6.259479,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7619,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 6.473605,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7822,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0.152343,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8026,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0.356109,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8228,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0.55853,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8433,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0.763366,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8638,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0.968277,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8640,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 0.970361,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8872,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0611.mp4?v=194477d29d5d84b73dc9f33f7c6659e4d5154e6e839b8c2c517fbcee2f5bd5e5",
+        "time": 1.202571,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9170,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.110538,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9473,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.412879,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9823,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.116053,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9897,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.190501,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9967,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.25966,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10233,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.5303,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10452,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.745548,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10672,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.966487,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10885,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 1.179009,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11094,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 1.387461,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11315,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 1.603689,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11530,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 1.818804,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11742,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 2.031249,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11945,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 2.23394,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12158,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 2.447017,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12381,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 2.670716,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12587,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 2.876265,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12799,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 3.08848,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13012,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 3.300302,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13215,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 3.503644,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13426,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 3.715051,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13429,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 3.734922,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13769,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 4.057351,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13974,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 4.264221,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14190,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 4.479676,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14404,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 4.692912,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14615,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 4.904739,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14835,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 5.123967,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15043,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 5.332538,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15254,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 5.542284,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15475,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 5.764064,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15689,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 5.981617,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15904,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 6.194829,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16138,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 6.432309,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16355,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.122336,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16562,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.327719,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16812,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.576346,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17023,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.786991,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17228,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.990506,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17231,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0.993783,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17469,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.major-hip-adductors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 1.232327,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17718,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 1.323395,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17962,
+      "name": "Wide-Stance Hip Circles",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.major-hip-adductors.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 1.323395,
+        "duration": 6.5,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18270,
+      "name": "Self-Resisted Neck Flexion Isometric",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0611.mp4?v=3759bc88590dd1b3cf4373b1548f2f700a9d74d3d7ef5f284cc8d9d8a8aa33dd",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0307.png?v=9673939c68c5a352f44ad03645b9e232a213e7e4524c167684a6a5b1c52aa848",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 760
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1041
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1271
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 4816
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 8640
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 8872
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 9170
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 9473
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 9823
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 9897
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 9967
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 13429
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 17231
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 17469
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 17718
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 17962
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 18270
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 856,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1094,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 8696,
+      "milliseconds": 35500
+    },
+    {
+      "realElapsedMs": 8944,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 9300,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 9553,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 17298,
+      "milliseconds": 36500
+    },
+    {
+      "realElapsedMs": 17532,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 17780,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 18038,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 6.5,
+      "realPlaybackMs": 7290,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 6.5,
+      "realPlaybackMs": 7200,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

@@ -1,0 +1,1025 @@
+{
+  "id": 949,
+  "fixture": {
+    "name": "Standing Low-to-High Wood Chop",
+    "group": {
+      "id": "r30.abdominal-wall.set1.block3",
+      "displayName": "Abdominal wall",
+      "order": 53,
+      "canonicalGroups": [
+        "AbdominalWall"
+      ],
+      "selectionGroupId": "r30.abdominal-wall",
+      "exerciseOverrideId": 949,
+      "sequenceBlockIndex": 2,
+      "sequenceBlockCount": 4,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 572,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 717,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.006514,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 824,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.114822,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1147,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.436282,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1361,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.64993,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1564,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.852192,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1766,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 1.058144,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1773,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 1.061893,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2038,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 1.32927,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2250,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.11979,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2467,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.347275,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2695,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.555689,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2901,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.759786,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3106,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.981375,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3133,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.997934,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3434,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 1.292813,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3679,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.075654,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3933,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.353575,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4224,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.069785,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4284,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.129609,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4346,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.193947,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4619,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.465323,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4822,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.668838,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5034,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.880275,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5249,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 1.096626,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5254,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 1.101677,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5571,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.007782,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5780,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.211863,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5983,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.418703,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6193,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.625458,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6401,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.838609,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6425,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 0.8611,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6708,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block4",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 1.140936,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6951,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block4",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 1.214541,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7193,
+      "name": "Standing Low-to-High Wood Chop",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block4",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0949.mp4?v=7feef910b18a3c92c6b3913fb7d43ba343213cc201fc9fd7a95842ba9f1edc22",
+        "time": 1.214541,
+        "duration": 1.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7474,
+      "name": "Wall Scapular Push-Up",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0584.mp4?v=0bc895b2aafe7b369e8282cc77b7a1fa57378612255f69f0077b923446c99704",
+        "time": 0.114085,
+        "duration": 25,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 717
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "01-block1-work-start.png",
+      "elapsedMs": 824
+    },
+    {
+      "phase": "block1-action",
+      "file": "02-block1-action.png",
+      "elapsedMs": 1773
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 3133
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 3434
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 3679
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 3933
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 4224
+    },
+    {
+      "phase": "block2-start",
+      "file": "08-block2-start.png",
+      "elapsedMs": 4284
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "09-block2-work-start.png",
+      "elapsedMs": 4346
+    },
+    {
+      "phase": "block2-action",
+      "file": "10-block2-action.png",
+      "elapsedMs": 5254
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "11-block2-loop-end.png",
+      "elapsedMs": 6425
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "12-block2-work-end.png",
+      "elapsedMs": 6708
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "13-block2-rest-start.png",
+      "elapsedMs": 6951
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "14-block2-rest-end.png",
+      "elapsedMs": 7193
+    },
+    {
+      "phase": "block2-next",
+      "file": "15-block2-next.png",
+      "elapsedMs": 7474
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 3256,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 3495,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 3756,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 4031,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 6530,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 6773,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 7019,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 7284,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1.4,
+      "realPlaybackMs": 2187,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 1.4,
+      "realPlaybackMs": 2006,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

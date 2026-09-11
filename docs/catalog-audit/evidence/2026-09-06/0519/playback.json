@@ -1,0 +1,990 @@
+{
+  "id": 519,
+  "fixture": {
+    "name": "Push Forearm Outward Against Other Hand",
+    "group": {
+      "id": "r30.rotator-cuff.set1.block1",
+      "displayName": "Rotator cuff",
+      "order": 31,
+      "canonicalGroups": [
+        "RotatorCuff"
+      ],
+      "selectionGroupId": "r30.rotator-cuff",
+      "exerciseOverrideId": 519,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 2795,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2969,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3307,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3533,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3856,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4071,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4275,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4277,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4528,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4742,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4963,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5171,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5383,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5390,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5629,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5883,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.rotator-cuff.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6162,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.rotator-cuff.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6483,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6579,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6628,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6905,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7123,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7328,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7332,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7627,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7841,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 8056,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 8274,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 8489,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 8492,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 8731,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.rotator-cuff.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 9002,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.rotator-cuff.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 9270,
+      "name": "Push Forearm Outward Against Other Hand",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.rotator-cuff.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0519.png?v=d4090d4a3ae2f038d89ed95db2dc5375ec908b4c20ee0b284f49a726f60d0e77",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 9551,
+      "name": "One-Arm Curl Against Other Hand",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0745.mp4?v=0d23a656a3a147e186d9735ca46eb0d18187485f286e1784e49c37f777e2fc92",
+        "time": 0.071821,
+        "duration": 7.95,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 2969
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 3307
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 3533
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 4277
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 5390
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 5629
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 5883
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 6162
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 6483
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 6579
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 6628
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 7332
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 8492
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 8731
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 9002
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 9270
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 9551
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 3125,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 3361,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 5444,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 5703,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 5979,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6275,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 8555,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 8811,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 9094,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 9345,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1,
+      "realPlaybackMs": 1740,
+      "wrapped": false,
+      "still": true
+    },
+    {
+      "block": 2,
+      "duration": 1,
+      "realPlaybackMs": 1796,
+      "wrapped": false,
+      "still": true
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

@@ -1,0 +1,3486 @@
+{
+  "id": 401,
+  "fixture": {
+    "name": "Alternating Inhale-Twist, Exhale-Push",
+    "group": {
+      "id": "r30.abdominal-wall.set1.block1",
+      "displayName": "Abdominal wall",
+      "order": 12,
+      "canonicalGroups": [
+        "AbdominalWall"
+      ],
+      "selectionGroupId": "r30.abdominal-wall",
+      "exerciseOverrideId": 401,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 785,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1143,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1475,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1727,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.078879,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2032,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.384936,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2243,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.603019,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2469,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.82059,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2685,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.036992,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2891,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.244613,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3096,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.44826,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3304,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.655676,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3515,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.86713,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3719,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 2.070915,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3924,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 2.309026,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4165,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 2.540529,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4408,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 2.760805,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4631,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 2.983179,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4843,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 3.201173,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5054,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 3.410092,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5267,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 3.618775,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5473,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 3.851656,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5799,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 4.152868,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6007,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 4.359539,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6221,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 4.573079,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6426,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 4.781174,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6648,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 5.026717,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6892,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 5.272846,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7128,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 5.507774,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7367,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 5.719292,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7577,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 5.928898,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7780,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 6.13372,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7993,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 6.345121,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7996,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 6.348292,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8265,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 6.616418,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8475,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 6.827039,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8681,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 7.03295,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8890,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 7.242405,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9096,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 7.447762,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9301,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 7.65339,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9513,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 7.865614,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9721,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 8.073056,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9925,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 8.277249,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10132,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 8.488972,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10346,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 8.711689,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10564,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 8.916133,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10771,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 9.123033,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10973,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 9.325655,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11177,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 9.528733,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11380,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 9.819617,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11727,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 10.07935,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11930,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 10.282711,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12134,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 10.494576,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12361,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 10.722909,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12575,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 10.92708,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12779,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 11.145035,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13016,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 11.392785,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13251,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 11.602449,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13464,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 11.815129,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13679,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 12.031055,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13893,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.139212,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14101,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.34672,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14310,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.5551,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14512,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.758645,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14717,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.963489,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14721,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.966789,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14943,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.187862,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15181,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.052558,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15440,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.310972,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15697,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.10915,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15784,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.199909,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15852,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.263957,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16136,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.550483,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16345,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.757884,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16554,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.965036,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16770,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.18134,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16980,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.392885,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17188,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.598932,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17395,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.806507,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17600,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 2.011827,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17806,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 2.219663,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18023,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 2.435261,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18234,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 2.646067,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18437,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 2.85524,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18651,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 3.064455,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18861,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 3.272315,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19074,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 3.485789,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19288,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 3.700685,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19492,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 3.907675,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19718,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 4.130768,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19926,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 4.337742,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20136,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 4.547945,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20345,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 4.756362,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20548,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 4.958877,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20753,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 5.164028,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20958,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 5.370814,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21172,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 5.583499,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21381,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 5.793371,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21586,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 5.997399,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21796,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 6.207487,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22001,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 6.412454,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22003,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 6.415786,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22261,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 6.672328,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22465,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 6.877622,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22674,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 7.085737,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22884,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 7.295137,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23090,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 7.501421,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23302,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 7.716493,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23516,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 7.946281,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23739,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 8.151904,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23946,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 8.358116,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24152,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 8.564206,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24358,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 8.769669,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24566,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 8.978677,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24780,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 9.194532,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24986,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 9.397376,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25191,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 9.603565,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25400,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 9.820319,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25618,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 10.033814,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25830,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 10.244364,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26037,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 10.448746,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26241,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 10.652923,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26445,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 10.85747,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26651,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 11.063143,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26858,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 11.269484,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27066,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 11.478081,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27275,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 11.687217,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27479,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 11.895841,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27687,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 12.099142,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27894,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.192168,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28115,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.413291,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28323,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.620877,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28533,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 0.838752,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28750,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.044986,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28753,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.047906,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29000,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.abdominal-wall.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.294837,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29284,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.429758,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29576,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.abdominal-wall.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=c4249ff44bb492b8b5d882938ea160cbb020c2066244cb3d5a2edb2b526ff77e",
+        "time": 1.429758,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29844,
+      "name": "Standing Pelvic-Tilt Repetitions",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0916.mp4?v=ac26f8caadca6ed5f5b2368fd37392fc598f9e9d80d3956992d5bed5a78c949f",
+        "time": 0.057156,
+        "duration": 18,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1143
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1475
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1727
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 7996
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 14721
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 14943
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 15181
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 15440
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 15697
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 15784
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 15852
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 22003
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 28753
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 29000
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 29284
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 29576
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 29844
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1302,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1555,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 14771,
+      "milliseconds": 30500
+    },
+    {
+      "realElapsedMs": 15002,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 15266,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 15502,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 28822,
+      "milliseconds": 30500
+    },
+    {
+      "realElapsedMs": 29101,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 29395,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 29656,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 12.1,
+      "realPlaybackMs": 12893,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 12.1,
+      "realPlaybackMs": 12824,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

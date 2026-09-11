@@ -1,0 +1,585 @@
+{
+  "id": 254,
+  "fixture": {
+    "name": "Turned-Out Double Calf Raise",
+    "group": {
+      "id": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "displayName": "Calf, deep posterior leg and plantar foot",
+      "order": 52,
+      "canonicalGroups": [
+        "CalfDeepPosteriorLegAndPlantarFoot"
+      ],
+      "selectionGroupId": "r30.calf-deep-posterior-leg-plantar-foot",
+      "exerciseOverrideId": 254,
+      "sequenceBlockIndex": 2,
+      "sequenceBlockCount": 3,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "none; production application logic unchanged",
+    "appSourceSha256": "5f68829e533e1ee5b753ea92f04651460ae61832517661fb60861bc983c5e64c",
+    "workoutSourceSha256": "3c72d89f2a31ee092c274f37c5c15ac053bfca8d3b8b5fbc555a3ee98bb0a046",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 891,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1148,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.013734,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1265,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.132283,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1586,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.452099,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1793,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.658993,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1999,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.865001,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2203,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 1.069794,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2408,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 1.274432,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2413,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 1.278597,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2717,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 1.584506,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2930,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.13282,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3147,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.345747,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3361,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.559975,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3568,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.766019,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3774,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.972437,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3779,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 0.977349,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4056,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 1.255875,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4350,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 1.446423,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4613,
+      "name": "Turned-Out Double Calf Raise",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0254.mp4?v=55cee9de839828f7c4d5f13e439f833542fc0860ace52bc36dc041cb5feed00c",
+        "time": 1.446423,
+        "duration": 1.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5198,
+      "name": "Bodyweight Good Morning",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0146.mp4?v=de9dc4bee0f617d79999312f8b41085c9ce6bdfde496e45d7a9de3cbd15ae9b1",
+        "time": 0.018779,
+        "duration": 3.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1148
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "01-block1-work-start.png",
+      "elapsedMs": 1265
+    },
+    {
+      "phase": "block1-action",
+      "file": "02-block1-action.png",
+      "elapsedMs": 2413
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 3779
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 4056
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 4350
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 4613
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 5198
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 3880,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 4157,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 4433,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 4705,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1.65,
+      "realPlaybackMs": 2393,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

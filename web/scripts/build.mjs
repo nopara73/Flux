@@ -7,7 +7,6 @@ import {
   CURRENT_CATALOG_REVISION,
   MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   findHardFloorCategoryCoverageDeficiencies,
-  findMirrorCategoryDeficiencies,
   findMuscularDemandCoverageDeficiencies,
   findSoleWallContactRequiredCatalogDeficiencies,
   findWallRequiredCatalogDeficiencies,
@@ -183,8 +182,8 @@ const catalog = JSON.parse(
   await readFile(path.join(outputRoot, "data", "exercises.json"), "utf8"),
 );
 
-if (!Array.isArray(catalog) || catalog.length !== 517) {
-  throw new Error(`Expected 517 exercises, found ${catalog?.length ?? "invalid data"}.`);
+if (!Array.isArray(catalog) || catalog.length !== 534) {
+  throw new Error(`Expected 534 exercises, found ${catalog?.length ?? "invalid data"}.`);
 }
 
 const pairwiseDeficiencies =
@@ -195,7 +194,6 @@ const muscularDemandDeficiencies =
   findMuscularDemandCoverageDeficiencies(catalog);
 const materialityDeficiencies =
   findWorkoutModifierMaterialityDeficiencies(catalog);
-const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(catalog);
 const wallCatalogDeficiencies = findWallRequiredCatalogDeficiencies(catalog);
 const soleWallCatalogDeficiencies =
   findSoleWallContactRequiredCatalogDeficiencies(catalog);
@@ -233,7 +231,6 @@ const expectedIntegritySummary = {
     muscularDemandDeficiencies.filter((item) => item.muscularDemand === 2),
   ),
   materialityDeficiencyCount: materialityDeficiencies.length,
-  mirrorCategoryDeficiencyCount: mirrorCategoryDeficiencies.length,
   distinctLineupDeficiencyCount: distinctLineupDeficiencies.length,
 };
 const integrityDebtMatches =
@@ -254,7 +251,6 @@ const integrityDebtMatches =
     muscularDemandDeficiencies,
   ) &&
   exactlyEqual(integrityDeficitReport.materiality, materialityDeficiencies) &&
-  exactlyEqual(integrityDeficitReport.mirrorCategory, mirrorCategoryDeficiencies) &&
   exactlyEqual(integrityDeficitReport.distinctLineup, distinctLineupDeficiencies);
 
 const catalogInvariantChecks = [
@@ -264,6 +260,8 @@ const catalogInvariantChecks = [
   ["hierarchical hard-floor category coverage",
     hardFloorCategoryDeficiencies.length === 0],
   ["broad muscular-demand coverage", muscularDemandDeficiencies.length === 0],
+  ["modifier materiality", materialityDeficiencies.length === 0],
+  ["distinct workout lineups", distinctLineupDeficiencies.length === 0],
   ["wall-required session-movement floor", wallCatalogDeficiencies.length === 0],
   ["sole-wall session-movement floor", soleWallCatalogDeficiencies.length === 0],
   ["explicit catalog-integrity deficit ledger", integrityDebtMatches],

@@ -1,0 +1,2773 @@
+{
+  "id": 1012,
+  "fixture": {
+    "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+    "group": {
+      "id": "r30.scapular-girdle.set1.block1",
+      "displayName": "Scapular girdle",
+      "order": 30,
+      "canonicalGroups": [
+        "ScapularGirdle"
+      ],
+      "selectionGroupId": "r30.scapular-girdle",
+      "exerciseOverrideId": 1012,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "bootstrap mirror category only",
+    "appSourceSha256": "3f73bd238d12751e07a71d1811dd5622e4b28444776930e3c584af7532ac2b0e",
+    "workoutSourceSha256": "91dad6a5d5d25ac8f685266d7057c2247d0d046b95935d3bb34d456ae3a69843",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 747,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 883,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1106,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1341,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.153737,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1639,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.453199,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1847,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.662066,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2054,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.868989,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2261,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.077582,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2475,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.314602,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2727,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.541809,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2939,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.823957,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3240,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 2.062269,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3462,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 2.285988,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3698,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 2.526345,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3948,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 2.821584,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4267,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 3.092038,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4502,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 3.323893,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4752,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 3.569677,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4987,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 3.814502,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5225,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 4.066397,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5466,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 4.283501,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5752,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 4.614552,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6028,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 4.853351,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6264,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 5.095415,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6559,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 5.37688,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6780,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 5.678175,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6872,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 5.712373,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7428,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 6.248712,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7665,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 6.584235,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8128,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 7.064141,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8658,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 7.474761,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8873,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 7.696316,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9138,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 8.139001,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9663,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 8.485742,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9887,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 8.717064,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10121,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 8.949886,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10351,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 9.168475,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10568,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 9.38453,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10829,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 9.831444,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11225,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 10.040654,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11445,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 10.265931,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11668,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 10.484346,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11879,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 10.704602,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12117,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.086608,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12327,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.300916,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12550,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.519558,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12761,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.730853,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12979,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.957126,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12994,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.964234,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13345,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.314528,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13724,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.scapular-girdle.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.037969,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14095,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.scapular-girdle.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.409587,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14503,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.049697,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14742,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.285466,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14892,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.508285,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15447,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.993203,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15663,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.207862,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15873,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.417401,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16094,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.645186,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16318,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.862002,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16531,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 2.074933,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16748,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 2.291652,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16962,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 2.505709,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17170,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 2.713413,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17386,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 2.92916,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17595,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 3.143938,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17814,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 3.357278,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18029,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 3.572389,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18246,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 3.789768,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18465,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 4.008727,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18676,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 4.219203,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18891,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 4.443379,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19125,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 4.675844,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19353,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 4.90069,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19603,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 5.165751,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19861,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 5.407076,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20075,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 5.621104,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20300,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 5.902042,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20588,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 6.136395,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20808,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 6.575488,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21270,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 6.82346,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21767,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 7.311571,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22050,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 7.595966,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22268,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 7.831986,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22546,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 8.128844,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22854,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 8.411474,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23085,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 8.629807,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23301,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 8.86796,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23536,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 9.081966,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23755,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 9.303557,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23971,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 9.518246,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24198,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 9.758023,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24439,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 9.984908,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24668,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 10.214129,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24884,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 10.42999,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25104,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 10.680059,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25369,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.086993,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25581,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.299048,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25803,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.520873,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26017,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.734424,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26226,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0.949634,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26449,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.166374,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26659,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.376854,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26665,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.382606,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27057,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.777004,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27347,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.scapular-girdle.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.967952,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27735,
+      "name": "Squeeze Shoulder Blades with Hands Clasped Behind",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.scapular-girdle.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 1.967952,
+        "duration": 10.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28141,
+      "name": "Standing Lumbar Extension Hold",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1012.mp4?v=dc802c2864720259ad0631727a560a6a3382b982a74be56a64cef4e89511d2c9",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0271.png?v=a55b395317c10dc58c70d23d2a556bef723a6e5d6eef54ad09015e66caab04fa",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 883
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1106
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1341
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 6872
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 12994
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 13345
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 13724
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 14095
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 14503
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 14742
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 14892
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 21270
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 26665
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 27057
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 27347
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 27735
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 28141
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 935,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1161,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 13168,
+      "milliseconds": 31500
+    },
+    {
+      "realElapsedMs": 13521,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 13905,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 14224,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 26869,
+      "milliseconds": 31500
+    },
+    {
+      "realElapsedMs": 27144,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 27553,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 27886,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 10.8,
+      "realPlaybackMs": 11562,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 10.8,
+      "realPlaybackMs": 11418,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

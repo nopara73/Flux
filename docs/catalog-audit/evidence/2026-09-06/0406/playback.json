@@ -1,0 +1,2465 @@
+{
+  "id": 406,
+  "fixture": {
+    "name": "Standing Wheel Arm Circles",
+    "group": {
+      "id": "r30.spinal-extensors.set1.block2",
+      "displayName": "Spinal extensors",
+      "order": 54,
+      "canonicalGroups": [
+        "SpinalExtensors"
+      ],
+      "selectionGroupId": "r30.spinal-extensors",
+      "exerciseOverrideId": 406,
+      "sequenceBlockIndex": 1,
+      "sequenceBlockCount": 3,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "Clockwise",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "FirstDirection"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 1284,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1719,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0.015591,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1879,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0.164345,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2273,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0.559092,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2491,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0.776832,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2707,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0.992522,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2922,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 1.207642,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3133,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 1.422559,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3365,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 1.650656,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3589,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 1.875588,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3804,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 2.091197,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4011,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 2.296956,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4220,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 2.506382,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4433,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 2.718454,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4640,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 2.925636,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4862,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 3.150642,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5087,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 3.373308,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5295,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 3.582053,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5585,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 3.871828,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5792,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 4.07809,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6007,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 4.293156,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6014,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 4.299739,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6303,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 4.588557,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6516,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 4.802068,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6753,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 5.044958,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6962,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 5.247021,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7168,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 5.453862,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7378,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 5.663937,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7585,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 5.870535,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7794,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 6.079953,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7996,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 6.281811,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8209,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 6.494725,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8420,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 6.705761,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8643,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 6.928449,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8857,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 7.143185,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9060,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 7.345605,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9271,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 7.556987,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9498,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0.017404,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9712,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0.233433,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9970,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0.490983,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10179,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0.698502,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10396,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 0.914732,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10603,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 1.122326,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10605,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 1.123841,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10838,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0406.mp4?v=e51ca6cf3efb239c6f3732dc8422bfa76a6da4c1cf8d43f03b038980bc8f1224",
+        "time": 1.357319,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11145,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.spinal-extensors.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.200044,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11369,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.spinal-extensors.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.424043,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11752,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.142253,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11827,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.217247,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11883,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.273492,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12159,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.550098,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12374,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.764374,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12588,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.981101,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12806,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 1.197039,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13025,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 1.416658,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13244,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 1.635447,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13457,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 1.847362,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13663,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 2.053849,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13867,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 2.257812,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14088,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 2.47942,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14307,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 2.699615,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14529,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 2.919946,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14754,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 3.144884,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14960,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 3.351717,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15174,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 3.564443,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15377,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 3.767886,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15584,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 3.975053,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15800,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 4.190888,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16010,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 4.400959,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16024,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 4.414935,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16273,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 4.664566,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16485,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 4.877577,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16692,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 5.083375,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16907,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 5.298051,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17122,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 5.512739,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17335,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 5.728312,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17543,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 5.933777,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17753,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 6.143813,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17957,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 6.347882,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18164,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 6.555168,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18372,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 6.762968,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18588,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 6.979593,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18808,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 7.206241,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19034,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 7.424229,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19237,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 7.627816,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19443,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.051729,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19655,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.26412,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19859,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.467683,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20062,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.670553,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20273,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 0.882512,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20490,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 1.099032,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20497,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 1.106313,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20736,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.spinal-extensors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 1.346329,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21064,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.spinal-extensors.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 1.518385,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21297,
+      "name": "Standing Wheel Arm Circles",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.spinal-extensors.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0406.mp4?v=b2c59d5bd64cbede126f89dddf78cf0b5e604a0ea142627f042790f3eed3f443",
+        "time": 1.518385,
+        "duration": 7.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21648,
+      "name": "Bodyweight Good Morning",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0146.mp4?v=de9dc4bee0f617d79999312f8b41085c9ce6bdfde496e45d7a9de3cbd15ae9b1",
+        "time": 0.075625,
+        "duration": 3.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1719
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "01-block1-work-start.png",
+      "elapsedMs": 1879
+    },
+    {
+      "phase": "block1-action",
+      "file": "02-block1-action.png",
+      "elapsedMs": 6014
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 10605
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 10838
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 11145
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 11369
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 11752
+    },
+    {
+      "phase": "block2-start",
+      "file": "08-block2-start.png",
+      "elapsedMs": 11827
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "09-block2-work-start.png",
+      "elapsedMs": 11883
+    },
+    {
+      "phase": "block2-action",
+      "file": "10-block2-action.png",
+      "elapsedMs": 16024
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "11-block2-loop-end.png",
+      "elapsedMs": 20497
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "12-block2-work-end.png",
+      "elapsedMs": 20736
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "13-block2-rest-start.png",
+      "elapsedMs": 21064
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "14-block2-rest-end.png",
+      "elapsedMs": 21297
+    },
+    {
+      "phase": "block2-next",
+      "file": "15-block2-next.png",
+      "elapsedMs": 21648
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 10659,
+      "milliseconds": 35500
+    },
+    {
+      "realElapsedMs": 10893,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 11198,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 11472,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 20550,
+      "milliseconds": 35500
+    },
+    {
+      "realElapsedMs": 20804,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 21118,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 21376,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 7.75,
+      "realPlaybackMs": 8536,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 7.75,
+      "realPlaybackMs": 8551,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

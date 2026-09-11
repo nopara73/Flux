@@ -1,0 +1,966 @@
+{
+  "id": 686,
+  "fixture": {
+    "name": "Standing Knee-to-Chest Glute Stretch",
+    "group": {
+      "id": "r30.gluteal-extensors.set1.block1",
+      "displayName": "Gluteal extensors",
+      "order": 25,
+      "canonicalGroups": [
+        "GlutealExtensors"
+      ],
+      "selectionGroupId": "r30.gluteal-extensors",
+      "exerciseOverrideId": 686,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 1732,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2083,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2512,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 2860,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3279,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3496,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3706,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 3712,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4016,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4227,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4437,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4648,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4871,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 4877,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5173,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5499,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.gluteal-extensors.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 5929,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.gluteal-extensors.set1.block1",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6232,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6429,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6600,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 6975,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7201,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7413,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7416,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7755,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 7971,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 8191,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 8417,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 8422,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 8691,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.gluteal-extensors.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 9017,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.gluteal-extensors.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 9393,
+      "name": "Standing Knee-to-Chest Glute Stretch",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.gluteal-extensors.set1.block2",
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0686.png?v=d2e62606d7776f0c47e549f4b05bf7f7ed22cf9151e367c9e9ee2aba77099204",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 9825,
+      "name": "Standing Side-Lunge Adductor Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0572.png?v=7f8ec66a81f283f5c5fcf087412f657520825c4eb49c51477c4432123918d6da",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 2083
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 2512
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 2860
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 3712
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 4877
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 5173
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 5499
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 5929
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 6232
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 6429
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 6600
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 7416
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 8422
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 8691
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 9017
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 9393
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 9825
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 2330,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 2685,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 4991,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 5291,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 5739,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6028,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 8518,
+      "milliseconds": 41500
+    },
+    {
+      "realElapsedMs": 8816,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 9197,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 9615,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 1,
+      "realPlaybackMs": 1798,
+      "wrapped": false,
+      "still": true
+    },
+    {
+      "block": 2,
+      "duration": 1,
+      "realPlaybackMs": 1650,
+      "wrapped": false,
+      "still": true
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

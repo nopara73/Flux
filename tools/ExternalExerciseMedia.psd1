@@ -3,29 +3,39 @@
     # Entries without Url use the hasaneyldrm/exercises-dataset source.
     8 = @{ File = '1373-bJYHBIN.gif'; MirrorForAlternation = $false }
     32 = @{
+        PingPong = $false
+        LocalSourceSha256 = '1f5ee21dc5ade762e9d09e1aee83918654894ac9afa6ac302ce0623ca7975671'
+        LocalSourceFile = 'catalog-audit-0032-10.3-21.1.mp4'
+        SourceHeight = 480
+        SourceWidth = 854
         File = 'tandem-walk-bsr.mp4'
         Url = 'https://www.youtube.com/watch?v=MuueTXaBJ3k'
         SourcePage = 'https://www.youtube.com/watch?v=MuueTXaBJ3k'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 8.0
-        DurationSeconds = 20.0
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 21.1
+        FramesPerSecond = 20
+        Crop = 'crop=480:480:187:0'
         MirrorForAlternation = $false
     }
     37 = @{
+        PingPong = $false
+        LocalSourceSha256 = '9bcb49e670a2fae363fe949a89e4a41701a0db7fcdbc3ccddef0a11fd009d390'
+        LocalSourceFile = 'catalog-audit-0037-39.8-4.3.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'side-shuffle-get-healthy-u.mp4'
         Url = 'https://www.youtube.com/watch?v=mziPKITnPeQ'
         SourcePage = 'https://www.youtube.com/watch?v=mziPKITnPeQ'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 38.0
-        DurationSeconds = 16.0
-        FramesPerSecond = 10
-        Crop = 'crop=iw*0.75:ih:iw*0.125:0'
+        StartSeconds = 0
+        DurationSeconds = 4.3
+        FramesPerSecond = 20
+        Crop = 'crop=480:360:80:0,pad=480:480:0:60'
         MirrorForAlternation = $false
     }
     41 = @{
@@ -68,16 +78,21 @@
         MirrorForAlternation = $false
     }
     58 = @{
+        PingPong = $false
+        LocalSourceSha256 = '2c3f130d9e184a2ac2a2e03e21b395ed20d1f761f7eff261da674ab44442b2fd'
+        LocalSourceFile = 'catalog-audit-0058-231.8-2.15.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'bhangra-chaal.mp4'
         Url = 'https://www.youtube.com/watch?v=DnJ-VgJG_5I'
         SourcePage = 'https://www.youtube.com/watch?v=DnJ-VgJG_5I'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 230.0
-        DurationSeconds = 7.0
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0,delogo=x=297:y=1:w=59:h=31,delogo=x=312:y=312:w=47:h=42'
+        StartSeconds = 0
+        DurationSeconds = 2.15
+        FramesPerSecond = 20
+        Crop = 'crop=480:360:80:0,pad=480:480:0:60'
         MirrorForAlternation = $false
     }
     59 = @{
@@ -94,6 +109,11 @@
         MirrorForAlternation = $false
     }
     60 = @{
+        PingPong = $false
+        LocalSourceSha256 = '3ea0e475ea6c1c70fdb3b90b1b4af275c38171b4c9a6b325d613df2258fd074e'
+        LocalSourceFile = 'catalog-audit-0060-3.25-3.25.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'low-impact-skaters-emily.mp4'
         Url = 'https://www.youtube.com/watch?v=zVe2WPPCHAQ'
         SourcePage = 'https://www.youtube.com/watch?v=zVe2WPPCHAQ'
@@ -101,9 +121,9 @@
         Youtube = $true
         Video = $true
         StartSeconds = 0
-        DurationSeconds = 10.5
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        DurationSeconds = 3.25
+        FramesPerSecond = 20
+        Crop = 'crop=480:360:80:0,pad=480:480:0:60'
         MirrorForAlternation = $false
     }
     55 = @{
@@ -177,6 +197,15 @@
         MirrorForAlternation = $false
     }
     92 = @{
+        PingPong = $false
+        Crop = 'crop=360:240:0:0,pad=360:360:0:60'
+        FramesPerSecond = 20
+        DurationSeconds = 2.94
+        StartSeconds = 0
+        SourceHeight = 240
+        SourceWidth = 360
+        LocalSourceSha256 = '32536acae8685479aed8fddf3f929db069be6372256490bdc127fa55d19306d9'
+        LocalSourceFile = 'catalog-audit-0092-0-2.94.mp4'
         File = 'ginga-de-dos.gif'
         Url = 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Ginga_de_dos.gif'
         SourcePage = 'https://commons.wikimedia.org/wiki/File:Ginga_de_dos.gif'
@@ -185,6 +214,12 @@
         MirrorForAlternation = $false
     }
     93 = @{
+        PingPong = $false
+        Crop = 'crop=500:360:60:0,pad=500:500:0:70'
+        LocalSourceSha256 = '28e3179402e5ca53b4b10dd16979b99ee2ed85afe01ccd3566d0decfd19171ee'
+        LocalSourceFile = 'catalog-audit-0093-0.62-3.13.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'capoeira-esquiva-lateral.mp4'
         Url = 'https://www.youtube.com/watch?v=vZRHFWFKlKI'
         SourcePage = 'https://www.lalaue.com/moves/esquiva-lateral/'
@@ -192,99 +227,133 @@
         Youtube = $true
         Video = $true
         StartSeconds = 0
-        DurationSeconds = 5.94
-        FramesPerSecond = 10
+        DurationSeconds = 3.13
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     105 = @{
+        PingPong = $false
+        LocalSourceSha256 = '3e64a9fa118c89c0cfa6fa74df21513222f6d0abee6788ce3b6196efa61ceaa9'
+        LocalSourceFile = 'catalog-audit-0105-49.05-4.35.mp4'
+        SourceHeight = 360
+        SourceWidth = 450
         File = 'wide-turned-out-squat.mp4'
         Url = 'https://www.youtube.com/watch?v=ch9NjW5wHOw'
         SourcePage = 'https://www.youtube.com/watch?v=ch9NjW5wHOw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 49.0
-        DurationSeconds = 6.5
-        FramesPerSecond = 12
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 4.35
+        FramesPerSecond = 20
+        Crop = 'pad=450:450:0:45:color=black'
         MirrorForAlternation = $false
     }
     111 = @{
+        PingPong = $false
+        LocalSourceSha256 = '1c681dc41552fc0ab1fac0841122c0db4651af87d24da235c1d16d7559d7bf98'
+        LocalSourceFile = 'catalog-audit-0111-201.45-1.9.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 200
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.9
+        FramesPerSecond = 20
+        Crop = 'crop=420:360:100:0,pad=420:420:0:30:color=black'
         MirrorForAlternation = $false
     }
     112 = @{
-        File = 'growing-nojump.mp4'
-        Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
-        SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
+        SourceHeight = 1080
+        SourceWidth = 1920
+        PingPong = $false
+        File = 'programme-wide-squat.mp4'
+        Url = 'https://p001.nyc3.digitaloceanspaces.com/movements/wide_squat_with_overhead_reach.mp4'
+        SourcePage = 'https://programme.app/exercises/wide-squat-with-overhead-reach/1114'
         Human = $true
-        Youtube = $true
+        Youtube = $false
         Video = $true
-        StartSeconds = 270
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0.7
+        DurationSeconds = 4.3
+        FramesPerSecond = 20
+        Crop = 'crop=1000:1080:460:0'
         MirrorForAlternation = $false
     }
     121 = @{
-        File = 'forward-lunge.mp4'
-        Url = 'https://www.youtube.com/watch?v=Z2n58m2i4jg'
-        SourcePage = 'https://howcast.com/videos/437100-how-to-do-lunges/'
+        PingPong = $false
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40:color=black'
+        LocalSourceSha256 = 'abaa3657fb9d14e11c9cfddf39f9d2a17cd883e6ee901502730bfe4263263ebc'
+        LocalSourceFile = 'catalog-audit-0121-0.02-6.5.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/forward-lunge-puregym.mp4'
+        Url = 'https://www.youtube.com/watch?v=g8-Ge9S0aUw'
+        SourcePage = 'https://www.puregym.com/exercises/legs/quad-exercises/lunges/forward-lunges/'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 43.3
-        DurationSeconds = 3.2
-        FramesPerSecond = 10
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 6.5
+        FramesPerSecond = 20
+        MirrorForAlternation = $false
     }
     123 = @{
-        File = 'lateral-lunge.mp4'
-        Url = 'https://www.youtube.com/watch?v=Jky9kOx0L84'
-        SourcePage = 'https://howcast.com/videos/513679-how-to-do-a-side-lunge-warrior-fitness/'
+        Crop = 'crop=1080:1080:340:0'
+        LocalSourceSha256 = 'ee08044a0a202f050bff23a87dda1af7cb50796e3d0098fa242d0a2824995572'
+        LocalSourceFile = 'catalog-audit-0123-0.95-4.4.mp4'
+        SourceHeight = 1080
+        SourceWidth = 1920
+        File = 'lateral-lunge-programme.mp4'
+        Url = 'https://p001.nyc3.digitaloceanspaces.com/movements/lateral_lunge.mp4'
+        SourcePage = 'https://programme.app/exercises/lateral-lunge/572'
         Human = $true
-        Youtube = $true
+        Youtube = $false
         Video = $true
-        StartSeconds = 68.0
-        DurationSeconds = 4.0
-        FramesPerSecond = 10
-        PingPong = $true
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 4.4
+        FramesPerSecond = 20
+        PingPong = $false
+        MirrorForAlternation = $false
     }
     124 = @{
+        PingPong = $false
+        LocalSourceSha256 = '6e9bdf0d139f803335307c67857eb62db3ad3c58e83bc3470856f4ea75659ff4'
+        LocalSourceFile = 'catalog-audit-0124-410.8-7.15.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 410
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 7.15
+        FramesPerSecond = 20
+        Crop = 'crop=680:680:300:0'
         MirrorForAlternation = $false
     }
     125 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'd35adceee45d271a63bd94abe9b02aa2bb621a619030aa550bb745f70213d3de'
+        LocalSourceFile = 'catalog-audit-0125-1128.3-4.95.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1127
-        DurationSeconds = 6
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 4.95
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:100:0,pad=400:400:0:20:color=black'
+        MirrorForAlternation = $false
     }
     126 = @{
         File = 'mizi-standing.mp4'
@@ -300,45 +369,66 @@
         MirrorForAlternation = $false
     }
     127 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'f0901fc368d40ba5fcf21febed3cb0974dae3ebd020494cdf5c1f543ff8aba70'
+        LocalSourceFile = 'catalog-audit-0127-82.2-12.15.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 82.2
-        DurationSeconds = 5
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 12.15
+        FramesPerSecond = 20
+        Crop = 'crop=440:360:100:0,pad=440:440:0:40:color=black'
+        MirrorForAlternation = $false
     }
     136 = @{
+        PingPong = $false
+        Crop = 'crop=400:360:120:0,pad=400:400:0:20:color=black'
+        LocalSourceSha256 = '992f12f65bf3da8b5a89d75a9c67a6a74bf76c925f527b99decbce5ef0986058'
+        LocalSourceFile = 'catalog-audit-0136-221.3-2.2.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'yoga-pose-sequence.mp4'
         Url = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
         SourcePage = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 215.0
-        DurationSeconds = 9.5
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 2.2
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     143 = @{
+        PingPong = $false
+        LocalSourceSha256 = '9948b44866714b02f488a468393b24d354dfd748c8ac5de10193cb684835a528'
+        LocalSourceFile = 'catalog-audit-0143-335.03-2.48.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 330
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 2.48
+        FramesPerSecond = 20
+        Crop = 'crop=440:360:120:0,pad=440:440:0:40:black'
+        MirrorForAlternation = $false
     }
     157 = @{ File = '0257-X7jbxra.gif'; MirrorForAlternation = $true }
     167 = @{
+        PingPong = $false
+        LocalSourceSha256 = '98bc8304bf0f5268970e342aca87ae6f6a64d55602efab5ec007be3778ef71db'
+        LocalSourceFile = 'catalog-audit-0167-1.84-3.94.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'high-knee-march.mp4'
         Url = 'https://www.youtube.com/watch?v=0U_Gi19HiGo'
         SourcePage = 'https://www.youtube.com/watch?v=0U_Gi19HiGo'
@@ -346,9 +436,9 @@
         Youtube = $true
         Video = $true
         StartSeconds = 0
-        DurationSeconds = 13.2
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        DurationSeconds = 3.94
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:120:0'
         MirrorForAlternation = $false
     }
     176 = @{
@@ -364,16 +454,22 @@
         MirrorForAlternation = $true
     }
     181 = @{
+        PingPong = $false
+        Crop = 'crop=480:360:60:0,pad=480:480:0:60:black'
+        LocalSourceSha256 = 'd845e3f72b35bec0262f125bafc57ead5a1cafa1752771e47c31c962ed47aa3e'
+        LocalSourceFile = 'catalog-audit-0181-128.35-3.68.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'karate-side-thrust-kick.mp4'
         Url = 'https://www.youtube.com/watch?v=YWovIwq2YAg'
         SourcePage = 'https://howcast.com/videos/500295-how-to-do-side-kicks-karate-lessons/'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 129.7
-        DurationSeconds = 2.2
-        FramesPerSecond = 10
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 3.68
+        FramesPerSecond = 20
+        MirrorForAlternation = $false
     }
     187 = @{
         File = 'ballet-second-position-releve.webm'
@@ -530,16 +626,21 @@
     }
     235 = @{ File = '1428-2zNKRUB.gif'; MirrorForAlternation = $false }
     238 = @{
+        Crop = 'crop=480:360:80:0,pad=480:480:0:60:black'
+        SourceHeight = 360
+        SourceWidth = 640
+        LocalSourceSha256 = '47c171f4e3d564d8c6d7d814006639cacce5575150b58fbac62fc94f6622b9d0'
+        LocalSourceFile = 'catalog-audit-0238-15-1.6.mp4'
         File = 'prayer-hand-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=vYU_washb7I'
         SourcePage = 'https://www.youtube.com/watch?v=vYU_washb7I'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 11.75
-        DurationSeconds = 3.5
-        FramesPerSecond = 10
-        PingPong = $true
+        StartSeconds = 0
+        DurationSeconds = 1.6
+        FramesPerSecond = 20
+        PingPong = $false
         MirrorForAlternation = $false
     }
     327 = @{
@@ -764,15 +865,20 @@
         MirrorForAlternation = $false
     }
     626 = @{
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = 'a145e5200114b7c0fdbae06850dde9a109a9c61f125bdd7355cc5ad3e25b20c1'
+        LocalSourceFile = 'catalog-audit-0626-3-1.mp4'
         File = 'sumo-squat-hold-bodyweight.mp4'
         Url = 'https://www.youtube.com/watch?v=eoGaQ9PRhXc'
         SourcePage = 'https://www.youtube.com/watch?v=eoGaQ9PRhXc'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.25
-        DurationSeconds = 5.5
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
@@ -790,17 +896,22 @@
         MirrorForAlternation = $false
     }
     666 = @{
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '7d64d5ec2ce85c50f1937a26178c2bc0aa6ae564c251315c302d773856973d87'
+        LocalSourceFile = 'catalog-audit-0666-57.1-3.95.mp4'
         File = 'ballet-arabesque.mp4'
         Url = 'https://www.youtube.com/watch?v=Kw2hLM2PY3Q'
         SourcePage = 'https://howcast.com/videos/497194-how-to-do-an-arabesque-ballet-dance/'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 55.0
-        DurationSeconds = 6.3
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 3.95
+        FramesPerSecond = 20
         Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     677 = @{
         File = 'belly-dance-hip-drop.mp4'
@@ -926,15 +1037,21 @@
         MirrorForAlternation = $false
     }
     784 = @{
-        File = 'yoga-pose-sequence.mp4'
-        Url = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
-        SourcePage = 'https://www.youtube.com/watch?v=KW3j6P6RGLo'
+        PingPong = $false
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        LocalSourceSha256 = '45d5b5d1d112278978d1a294414d715f4798d758feb290486f2088fe6e4e2add'
+        LocalSourceFile = 'catalog-audit-0784-101-3.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'yogarenew-upward-salute.mp4'
+        Url = 'https://www.youtube.com/watch?v=OsyUir_3R1c'
+        SourcePage = 'https://www.yogarenewteachertraining.com/yoga-poses/upward-salute/'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 602.0
-        DurationSeconds = 5.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 3
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     816 = @{
@@ -951,15 +1068,21 @@
         MirrorForAlternation = $false
     }
     818 = @{
-        File = 'standing-cat-cow.mp4'
-        Url = 'https://www.youtube.com/watch?v=PUfWMHERcvA'
-        SourcePage = 'https://www.youtube.com/watch?v=PUfWMHERcvA'
+        PingPong = $false
+        Crop = 'crop=720:720:300:0'
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '82a9a1730d9be97111495510d2cdee1a179f716babe591b01f0ae72d7c635d99'
+        LocalSourceFile = 'catalog-audit-0818-22.28-5.8.mp4'
+        File = 'catalog-audit-native/catcow-pilates-consultant.mp4'
+        Url = 'https://www.youtube.com/watch?v=rmQT0XnzSIM'
+        SourcePage = 'https://www.youtube.com/watch?v=rmQT0XnzSIM'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1.0
-        DurationSeconds = 4.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 5.8
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     843 = @{
@@ -978,54 +1101,93 @@
     849 = @{ File = '3215-yq3GAJX.gif'; MirrorForAlternation = $false }
     850 = @{ File = '3218-B5xca8s.gif'; MirrorForAlternation = $false }
     884 = @{
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '3a1c0b66cbc071021cd234cef268bf5afa2a5ddba7f5e13ba7bd7f9c454744cd'
+        LocalSourceFile = 'catalog-audit-0884-55.5-1.55.mp4'
         File = 'boxing-slip-roll.mp4'
         Url = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
         SourcePage = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 54.0
-        DurationSeconds = 10.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 1.55
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     885 = @{
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '6ef0b292cd07d5ab68a154c8d74ce2e593ed9abbdc08a2592019ccfceb050fb3'
+        LocalSourceFile = 'catalog-audit-0885-111.65-1.7.mp4'
         File = 'boxing-slip-roll.mp4'
         Url = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
         SourcePage = 'https://www.youtube.com/watch?v=zvI2qR6cTq4'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 111.5
-        DurationSeconds = 8.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 1.7
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     948 = @{
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = 'edde320da7d72ebe911afc5a894b964ebbc13531b012b4739be33c7ef794e234'
+        LocalSourceFile = 'catalog-audit-0948-6.3-1.25.mp4'
         File = 'bodyweight-wood-chop.mp4'
         Url = 'https://www.youtube.com/watch?v=zuYmYoQxcDQ'
         SourcePage = 'https://www.youtube.com/watch?v=zuYmYoQxcDQ'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 4.0
-        DurationSeconds = 15.0
-        FramesPerSecond = 10
-        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 1.25
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    949 = @{
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '4f2534641c0e64b4f1be0c636c9e5f7268a49a51a12d35ffc9c0aa82762abd3a'
+        LocalSourceFile = 'catalog-audit-0949-6.75-1.4.mp4'
+        File = 'bodyweight-wood-chop.mp4'
+        Url = 'https://www.youtube.com/watch?v=zuYmYoQxcDQ'
+        SourcePage = 'https://www.youtube.com/watch?v=zuYmYoQxcDQ'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 1.4
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
     }
     969 = @{
+        PingPong = $false
+        Crop = 'crop=iw:ih:0:0'
+        SourceHeight = 1280
+        SourceWidth = 720
+        LocalSourceSha256 = 'a4c22ef1adde3969c5babd0091b4bccc2bd23df788023b8ecc6af9b6481c484c'
+        LocalSourceFile = 'catalog-audit-0969-89-1.mp4'
         File = 'chair-pose-core-hold.mp4'
         Url = 'https://www.youtube.com/watch?v=7ODQ2H35X10'
         SourcePage = 'https://www.youtube.com/watch?v=7ODQ2H35X10'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 84.5
-        DurationSeconds = 6.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     971 = @{
@@ -1077,15 +1239,21 @@
         MirrorForAlternation = $false
     }
     104 = @{
+        PingPong = $false
+        Crop = 'crop=420:360:100:0,pad=420:420:0:30:color=black'
+        LocalSourceSha256 = '73e162fe6a47d81e207998ce3f7e368b54e4a225af9fea0d71dca3448ad6c538'
+        LocalSourceFile = 'catalog-audit-0104-24.6-7.2.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'bodyweight-sumo-squat.mp4'
         Url = 'https://www.youtube.com/watch?v=d8AkcODKBH0'
         SourcePage = 'https://www.youtube.com/watch?v=d8AkcODKBH0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 23.0
-        DurationSeconds = 10.5
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 7.2
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     107 = @{
@@ -1101,27 +1269,39 @@
         MirrorForAlternation = $false
     }
     113 = @{
-        File = 'bodyweight-overhead-squat.mp4'
-        Url = 'https://www.youtube.com/watch?v=bRSDiH7cAiM'
-        SourcePage = 'https://www.youtube.com/watch?v=bRSDiH7cAiM'
+        PingPong = $false
+        Crop = 'crop=720:720:280:0'
+        LocalSourceSha256 = '2f69b246a29590ac3f4c15d0c07b73fb94f8ecb20ed5a7a0276fd48b681051f7'
+        LocalSourceFile = 'catalog-audit-0113-4.1-3.65.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/overhead-squat-functional.mp4'
+        Url = 'https://www.youtube.com/watch?v=FzL9CBZ2RpE'
+        SourcePage = 'https://www.youtube.com/watch?v=FzL9CBZ2RpE'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2.0
-        DurationSeconds = 21.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 3.65
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     114 = @{
-        File = 'hindu-squat.mp4'
-        Url = 'https://www.youtube.com/watch?v=DXvIzLtN-qY'
-        SourcePage = 'https://www.youtube.com/watch?v=DXvIzLtN-qY'
+        PingPong = $false
+        Crop = 'crop=720:720:260:0'
+        LocalSourceSha256 = '6e0802d0d231e0afdf409e35c64da350df616e2c9f45f968a7b7196311addec4'
+        LocalSourceFile = 'catalog-audit-0114-22.1-2.7.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/hindu-shapecon.mp4'
+        Url = 'https://www.youtube.com/watch?v=tVsrGi1qyD0'
+        SourcePage = 'https://www.youtube.com/watch?v=tVsrGi1qyD0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 14.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 2.7
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     116 = @{
@@ -1149,28 +1329,39 @@
         MirrorForAlternation = $false
     }
     118 = @{
-        File = 'squat-to-alternating-knee-drive.mp4'
-        Url = 'https://www.youtube.com/watch?v=o2MA2ZehGZ8'
-        SourcePage = 'https://www.youtube.com/watch?v=o2MA2ZehGZ8'
+        PingPong = $false
+        Crop = 'crop=500:500:430:60'
+        LocalSourceSha256 = '7fcdb27192565daf0c88dab8452fd3d7640f33b62c44dcfca73e6002819a905f'
+        LocalSourceFile = 'catalog-audit-0118-0.65-9.3.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'squat-knee-vitality.mp4'
+        Url = 'https://www.youtube.com/watch?v=frfCPzw-KaM'
+        SourcePage = 'https://www.youtube.com/watch?v=frfCPzw-KaM'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 12.5
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 9.3
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     119 = @{
-        File = 'tiptoe-walk.mp4'
-        Url = 'https://www.youtube.com/watch?v=YlC805YW-pw'
-        SourcePage = 'https://www.youtube.com/watch?v=YlC805YW-pw'
+        PingPong = $false
+        LocalSourceSha256 = '2ac913a4f31178d7a56883ea62b8dbb204b7e98725fee22e936d647e9d16edb7'
+        LocalSourceFile = 'catalog-audit-0119-10.1-9.5.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/toe-walk-doctorjo.mp4'
+        Url = 'https://www.youtube.com/watch?v=BTrDSCZZei4'
+        SourcePage = 'https://www.youtube.com/watch?v=BTrDSCZZei4'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2.25
-        DurationSeconds = 5.75
-        FramesPerSecond = 12
-        Crop = 'crop=480:360:80:0'
+        StartSeconds = 0
+        DurationSeconds = 9.5
+        FramesPerSecond = 20
+        Crop = 'crop=960:720:160:0,pad=960:960:0:120:color=black'
         MirrorForAlternation = $false
     }
     120 = @{
@@ -1186,65 +1377,93 @@
         MirrorForAlternation = $false
     }
     122 = @{
-        File = 'alternating-reverse-lunge.mp4'
-        Url = 'https://www.youtube.com/watch?v=Mfg4aM6y5Gs'
-        SourcePage = 'https://www.youtube.com/watch?v=Mfg4aM6y5Gs'
+        PingPong = $false
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40:color=black'
+        LocalSourceSha256 = '55fc3f403c52495d0696a99b5a7468f2da32465d4c58ad9ca58a5f85429573e4'
+        LocalSourceFile = 'catalog-audit-0122-0.02-5.9.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/reverse-lunge-puregym.mp4'
+        Url = 'https://www.youtube.com/watch?v=xrPteyQLGAo'
+        SourcePage = 'https://www.youtube.com/watch?v=xrPteyQLGAo'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2.0
-        DurationSeconds = 5.0
-        FramesPerSecond = 10
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 5.9
+        FramesPerSecond = 20
+        MirrorForAlternation = $false
     }
     129 = @{
+        PingPong = $false
+        Crop = 'crop=420:360:120:0,pad=420:420:0:30:color=black'
+        LocalSourceSha256 = 'f958c19f224849fc0c4100433f6bc62f5200f30325be05a77b7f235463bcd9ab'
+        LocalSourceFile = 'catalog-audit-0129-7.76-2.02.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'squat-to-alternating-front-kick.mp4'
         Url = 'https://www.youtube.com/watch?v=B7wTCQHAOC4'
         SourcePage = 'https://www.youtube.com/watch?v=B7wTCQHAOC4'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 10.5
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 2.02
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     130 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'fe6b9a5432c83aa4edb802c84d42ff80ad7978bcd63e35976e7a8e1afb223bc6'
+        LocalSourceFile = 'catalog-audit-0130-5.6-6.55.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'squat-to-side-leg-lift.mp4'
         Url = 'https://www.youtube.com/watch?v=cZq6TqoOHYU'
         SourcePage = 'https://www.youtube.com/watch?v=cZq6TqoOHYU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 4.0
-        DurationSeconds = 11.0
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 6.55
+        FramesPerSecond = 20
+        Crop = 'crop=500:360:90:0,pad=500:500:0:70:color=black'
         MirrorForAlternation = $false
     }
     131 = @{
-        File = 'squat-to-alternating-back-leg-lift.mp4'
-        Url = 'https://www.youtube.com/watch?v=X3jWpcsqq94'
-        SourcePage = 'https://www.youtube.com/watch?v=X3jWpcsqq94'
+        PingPong = $false
+        LocalSourceSha256 = '93bdae069f121f4c38ef6fb05f3d761d922d2bc8b4f1bf2c0ca3b4b0137fe199'
+        LocalSourceFile = 'catalog-audit-0131-104.85-2.9.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/squat-kickback-howcast.mp4'
+        Url = 'https://www.youtube.com/watch?v=qFLp1zxUpeU'
+        SourcePage = 'https://www.youtube.com/watch?v=qFLp1zxUpeU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 18.0
-        FramesPerSecond = 8
-        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2.9
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0'
         MirrorForAlternation = $false
     }
     132 = @{
+        PingPong = $false
+        Crop = 'crop=400:360:140:0,pad=400:400:0:20:color=black'
+        LocalSourceSha256 = 'e7f9bdb57656fad7f2301fad5041db1bc75de305c05fbe7b77d3b9745aa6164e'
+        LocalSourceFile = 'catalog-audit-0132-6.1-3.25.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'squat-to-alternating-oblique-crunch.mp4'
         Url = 'https://www.youtube.com/watch?v=VKpQ4FU1TLE'
         SourcePage = 'https://www.youtube.com/watch?v=VKpQ4FU1TLE'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 4.0
-        DurationSeconds = 10.5
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 3.25
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     133 = @{
@@ -1273,6 +1492,8 @@
         MirrorForAlternation = $false
     }
     140 = @{
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'sumo-squat-calf-raise-exact.mp4'
         Url = 'https://www.youtube.com/watch?v=Ca6XoQfOJ04'
         SourcePage = 'https://www.youtube.com/watch?v=Ca6XoQfOJ04'
@@ -1312,91 +1533,127 @@
         MirrorForAlternation = $false
     }
     145 = @{
-        File = 'alternating-standing-knee-extension.mp4'
+        PingPong = $false
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40:black'
+        LocalSourceSha256 = '4fd669f0acf6a20f357558a88874d64709fdde1c031d154bf0fca47314b5fa33'
+        LocalSourceFile = 'catalog-audit-0145-18-2.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/knee-extension-ftw.mp4'
         Url = 'https://www.youtube.com/watch?v=EKyfDtlhKuE'
         SourcePage = 'https://www.youtube.com/watch?v=EKyfDtlhKuE'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 3.5
-        DurationSeconds = 3.5
-        FramesPerSecond = 10
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 2
+        FramesPerSecond = 20
+        MirrorForAlternation = $false
     }
     151 = @{
+        PingPong = $false
+        Crop = 'crop=400:360:100:0,pad=400:400:0:20:black'
+        LocalSourceSha256 = '9bcf287e5651dfd5ec1a38455cbcbc519cb7aea969ec6347dd5856928c4ad190'
+        LocalSourceFile = 'catalog-audit-0151-1.25-1.7.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'alternating-straight-leg-front-raise.mp4'
         Url = 'https://www.youtube.com/watch?v=HCMJ79uu0bE'
         SourcePage = 'https://www.youtube.com/watch?v=HCMJ79uu0bE'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.5
-        DurationSeconds = 4.0
-        FramesPerSecond = 10
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 1.7
+        FramesPerSecond = 20
+        MirrorForAlternation = $false
     }
     160 = @{
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'alternating-standing-donkey-kick.mp4'
         Url = 'https://www.youtube.com/watch?v=4Snbp4BIPPw'
         SourcePage = 'https://www.youtube.com/watch?v=4Snbp4BIPPw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 3.0
-        FramesPerSecond = 10
-        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+        StartSeconds = 2.85
+        DurationSeconds = 2.7
+        FramesPerSecond = 20
+        Crop = 'crop=350:300:170:0'
         MirrorForAlternation = $true
     }
     168 = @{
+        PingPong = $false
+        LocalSourceSha256 = '8031d6e4e7f9123a8015ab51684a5eb4f89841a44fa67e5ac596e03fbc314b97'
+        LocalSourceFile = 'catalog-audit-0168-0.76-2.82.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'quickcoach-toy-soldier.mp4'
         Url = 'https://www.youtube.com/watch?v=P1r5d8YxRkw'
         SourcePage = 'https://www.youtube.com/watch?v=P1r5d8YxRkw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.7
-        DurationSeconds = 7.7
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2.82
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:120:0,pad=400:400:0:20:black'
         MirrorForAlternation = $false
     }
     142 = @{
-        File = 'lateral-squat-walk-no-band.mp4'
-        Url = 'https://www.youtube.com/watch?v=pvpKMYhWSX4'
-        SourcePage = 'https://www.youtube.com/watch?v=pvpKMYhWSX4'
+        PingPong = $false
+        Crop = 'crop=720:720:40:0'
+        LocalSourceSha256 = '7c3c962a3f5535a6eac7e379290d38d51ae1f23f0b79b2a152f9f7469cba08d2'
+        LocalSourceFile = 'catalog-audit-0142-3.84-2.48.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/squatwalk-blacktusk.mp4'
+        Url = 'https://www.youtube.com/watch?v=_hSGQ52pLOQ'
+        SourcePage = 'https://www.youtube.com/watch?v=_hSGQ52pLOQ'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 6.2
-        FramesPerSecond = 12
+        StartSeconds = 0
+        DurationSeconds = 2.48
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     148 = @{
+        PingPong = $false
+        Crop = 'crop=600:360:20:0,pad=600:600:0:120:black'
+        LocalSourceSha256 = '6fe8a5b1a2dd76fbeaab21dace017eba6b87d42d9753f19856e1c0eabdd84711'
+        LocalSourceFile = 'catalog-audit-0148-38.7-4.4.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-straight-leg-hip-extension.mp4'
         Url = 'https://www.youtube.com/watch?v=PPRp0EDr9_8'
         SourcePage = 'https://www.youtube.com/watch?v=PPRp0EDr9_8'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 30.5
-        DurationSeconds = 18.5
-        FramesPerSecond = 8
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 4.4
+        FramesPerSecond = 20
+        MirrorForAlternation = $false
     }
     154 = @{
-        File = 'standing-diagonal-leg-raise.mp4'
-        Url = 'https://www.youtube.com/watch?v=r12ipdGbU8U'
-        SourcePage = 'https://www.youtube.com/watch?v=r12ipdGbU8U'
+        PingPong = $false
+        LocalSourceSha256 = 'd5392940ac3ee31bbe543aead27c85693f8c17b789b76b2827e2351085bdf816'
+        LocalSourceFile = 'catalog-audit-0154-15.2-2.32.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/hydrant-grit.mp4'
+        Url = 'https://www.youtube.com/watch?v=NYUgAfK5Qmc'
+        SourcePage = 'https://www.youtube.com/watch?v=NYUgAfK5Qmc'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 30.5
-        DurationSeconds = 18.0
-        FramesPerSecond = 8
-        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 2.32
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40:black'
+        MirrorForAlternation = $false
     }
     159 = @{
         File = 'standing-fire-hydrant-no-equipment.mp4'
@@ -1411,27 +1668,39 @@
         MirrorForAlternation = $true
     }
     170 = @{
-        File = 'alternating-cross-body-knee-drive.mp4'
-        Url = 'https://www.youtube.com/watch?v=0pc-YvTIXtU'
-        SourcePage = 'https://www.youtube.com/watch?v=0pc-YvTIXtU'
+        PingPong = $false
+        Crop = 'crop=720:720:280:0'
+        LocalSourceSha256 = 'fd38cd1ff1693e9c86181929b098ed9818e73fe5730c9a98111b72fb7a6f1cc9'
+        LocalSourceFile = 'catalog-audit-0170-4.02-1.43.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/crossknee-newengland.mp4'
+        Url = 'https://www.youtube.com/watch?v=lWEFqyNLlEM'
+        SourcePage = 'https://www.youtube.com/watch?v=lWEFqyNLlEM'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 11.5
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 1.43
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     173 = @{
+        PingPong = $false
+        Crop = 'crop=400:360:130:0,pad=400:400:0:20:black'
+        LocalSourceSha256 = '6fd55c342cf96e193833f0de875abfc53d4802d1ba61c77ef6ebfd9374c9123b'
+        LocalSourceFile = 'catalog-audit-0173-0.23-1.3.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'alternating-standing-side-knee-lift.mp4'
         Url = 'https://www.youtube.com/watch?v=SrUS5xUIApQ'
         SourcePage = 'https://www.youtube.com/watch?v=SrUS5xUIApQ'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 12.3
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 1.3
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     180 = @{
@@ -1472,27 +1741,38 @@
         MirrorForAlternation = $true
     }
     190 = @{
+        PingPong = $false
+        Crop = 'crop=560:360:40:0,pad=560:560:0:100:black'
+        LocalSourceSha256 = 'bfdbb48a3c5e73c56ce2a84a3f618b2ce0637411bc7dc5232c12c456e8b94f54'
+        LocalSourceFile = 'catalog-audit-0190-27.95-6.82.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'ballet-grand-plie.mp4'
         Url = 'https://www.youtube.com/watch?v=q7bddKp4KHU'
         SourcePage = 'https://www.youtube.com/watch?v=q7bddKp4KHU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 27.0
-        DurationSeconds = 8.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 6.82
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     198 = @{
+        PingPong = $false
+        LocalSourceSha256 = '9d88d63716279bfed4a7dd87fc24b52ad848710df397dd235ce6413217fb9187'
+        LocalSourceFile = 'catalog-audit-0198-13.18-2.34.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wide-turned-out-squat-to-calf-raise.mp4'
         Url = 'https://www.youtube.com/watch?v=x0G3kn_A2lw'
         SourcePage = 'https://www.youtube.com/watch?v=x0G3kn_A2lw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 13.0
-        DurationSeconds = 5.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 2.34
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
@@ -1583,40 +1863,57 @@
         MirrorForAlternation = $false
     }
     138 = @{
+        PingPong = $false
+        LocalSourceSha256 = '49537c8e4123394bd6c3bc8801af173f3976a7b079e5bde7a73605189196e078'
+        LocalSourceFile = 'catalog-audit-0138-2.32-2.9.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'narrow-squat-calf-raise.mp4'
         Url = 'https://www.youtube.com/watch?v=kTbeCCTGXVs'
         SourcePage = 'https://www.youtube.com/watch?v=kTbeCCTGXVs'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 3.17
+        StartSeconds = 0
+        DurationSeconds = 2.9
         FramesPerSecond = 20
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        Crop = 'crop=380:360:120:0,pad=380:380:0:10:black'
         MirrorForAlternation = $false
     }
     139 = @{
+        PingPong = $false
+        Crop = 'crop=360:360:120:0'
+        LocalSourceSha256 = 'f1c3d342767b614d07ec36e012e5c0dc1a91b95d69043a8f7d43b39ec98c8ef1'
+        LocalSourceFile = 'catalog-audit-0139-6.4-2.25.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wide-squat-alternating-heel-raises.mp4'
         Url = 'https://www.youtube.com/watch?v=wYoE11arXIw'
         SourcePage = 'https://www.youtube.com/watch?v=wYoE11arXIw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 10.5
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 2.25
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     141 = @{
+        PingPong = $false
+        Crop = 'crop=400:360:100:0,pad=400:400:0:20:black'
+        LocalSourceSha256 = '690e810111fbf7d77e7f39cdc7b1999ca8986bfac54fbb3a072036b51654849e'
+        LocalSourceFile = 'catalog-audit-0141-5.95-1.8.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'squat-hold-alternating-heel-raise.mp4'
         Url = 'https://www.youtube.com/watch?v=wu9-ezZTfCY'
         SourcePage = 'https://www.youtube.com/watch?v=wu9-ezZTfCY'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 15.5
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 1.8
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     150 = @{
@@ -1633,16 +1930,21 @@
         MirrorForAlternation = $false
     }
     161 = @{
-        File = 'standing-alternating-gate-openers.mp4'
-        Url = 'https://www.youtube.com/watch?v=ZxTwldGPeRc'
-        SourcePage = 'https://www.youtube.com/watch?v=ZxTwldGPeRc'
+        PingPong = $false
+        LocalSourceSha256 = '374a0e652757e84ed42f8112b810a472c3014729a02868fbe2332e1a51625325'
+        LocalSourceFile = 'catalog-audit-0161-6.05-1.63.mp4'
+        SourceHeight = 720
+        SourceWidth = 842
+        File = 'catalog-audit-native/gate-amy.mp4'
+        Url = 'https://www.youtube.com/watch?v=xt0q3-ukGAc'
+        SourcePage = 'https://www.youtube.com/watch?v=xt0q3-ukGAc'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 37.5
-        FramesPerSecond = 10
-        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.63
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:60:0'
         MirrorForAlternation = $false
     }
     169 = @{
@@ -1658,18 +1960,22 @@
         MirrorForAlternation = $true
     }
     171 = @{
+        LocalSourceSha256 = '9468d23f92f3a22d8a1218cd4fff5222e72f41cda1a995d9733f5e83b37f1700'
+        LocalSourceFile = 'catalog-audit-0171-0.1-4.7.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'hamstring-sweeps.mp4'
         Url = 'https://www.youtube.com/watch?v=rABXCyRn_ng'
         SourcePage = 'https://www.youtube.com/watch?v=rABXCyRn_ng'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.0
-        DurationSeconds = 4.8
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 4.7
+        FramesPerSecond = 20
+        Crop = 'crop=250:340:245:5,pad=340:340:45:0:color=black'
+        PingPong = $false
+        MirrorForAlternation = $false
     }
     177 = @{
         File = 'front-side-round-kick-chambers.mp4'
@@ -1684,16 +1990,21 @@
         MirrorForAlternation = $true
     }
     178 = @{
-        File = 'crescent-kicks.mp4'
-        Url = 'https://www.youtube.com/watch?v=RPIwSeu6QkY'
-        SourcePage = 'https://www.youtube.com/watch?v=RPIwSeu6QkY'
+        PingPong = $false
+        LocalSourceSha256 = '78ac25dc4c8c4988d6af7ce464eef9dccd3a6d13669a0fc93e912af7ce43a7b7'
+        LocalSourceFile = 'catalog-audit-0178-15.23-2.62.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/crescent-challenger.mp4'
+        Url = 'https://www.youtube.com/watch?v=dys4oEhD91w'
+        SourcePage = 'https://www.youtube.com/watch?v=dys4oEhD91w'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 8.0
-        DurationSeconds = 30.0
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2.62
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:200:0,pad=800:800:0:40:black'
         MirrorForAlternation = $false
     }
     179 = @{
@@ -1746,16 +2057,21 @@
         MirrorForAlternation = $true
     }
     188 = @{
+        PingPong = $false
+        LocalSourceSha256 = '74e5aeefc41a1150cd25b8dd89bd10e88003db8b8d05e59a0b7da482a3fc692c'
+        LocalSourceFile = 'catalog-audit-0188-16.55-7.75.mp4'
+        SourceHeight = 360
+        SourceWidth = 450
         File = 'narrow-turned-out-shallow-squat.mp4'
         Url = 'https://www.youtube.com/watch?v=ch9NjW5wHOw'
         SourcePage = 'https://www.youtube.com/watch?v=ch9NjW5wHOw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 16.5
-        DurationSeconds = 7.5
-        FramesPerSecond = 12
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 7.75
+        FramesPerSecond = 20
+        Crop = 'crop=450:360:0:0,pad=450:450:0:45:black'
         MirrorForAlternation = $false
     }
     194 = @{
@@ -1795,41 +2111,57 @@
         MirrorForAlternation = $true
     }
     197 = @{
-        File = 'first-second-plie-releve.mp4'
-        Url = 'https://www.youtube.com/watch?v=tY_HLvG_h-U'
-        SourcePage = 'https://www.youtube.com/watch?v=tY_HLvG_h-U'
+        PingPong = $false
+        Crop = 'crop=802:720:0:0,pad=802:802:0:41:black'
+        LocalSourceSha256 = '543c686b169f3408106eebf111e0f56d4af71bdf660a10f7f1ebf38f7d4a05d0'
+        LocalSourceFile = 'catalog-audit-0197-1.38-2.17.mp4'
+        SourceHeight = 720
+        SourceWidth = 802
+        File = 'catalog-audit-native/squatcalf-tross.mp4'
+        Url = 'https://www.youtube.com/watch?v=3XOZGZ6W6f4'
+        SourcePage = 'https://www.youtube.com/watch?v=3XOZGZ6W6f4'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 11.0
-        DurationSeconds = 29.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 2.17
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     958 = @{
+        PingPong = $false
+        LocalSourceSha256 = '1587b8387763303ce26c37c963cee78369cd7f8dfa0594663d290ce98184d05a'
+        LocalSourceFile = 'catalog-audit-0958-11-1.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'y4WOWce78TY.mp4'
         Url = 'https://www.youtube.com/watch?v=y4WOWce78TY'
         SourcePage = 'https://www.youtube.com/watch?v=y4WOWce78TY'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2.8
-        DurationSeconds = 12.2
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     959 = @{ File = '3231-p195zsJ.gif'; MirrorForAlternation = $false }
     960 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'ac8223152680ed869c412de0650dfd3d5b890cc1c9e431b5c3bc450c576999a0'
+        LocalSourceFile = 'catalog-audit-0960-1470.3-2.1.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1470
-        DurationSeconds = 8
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 2.1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
@@ -2275,30 +2607,40 @@
         MirrorForAlternation = $false
     }
     377 = @{
-        File = 'eight-brocades-hold-heavens.mp4'
-        Url = 'https://www.youtube.com/watch?v=fbtZR3w-B3E'
-        SourcePage = 'https://www.youtube.com/watch?v=fbtZR3w-B3E'
+        PingPong = $false
+        SourceHeight = 360
+        SourceWidth = 640
+        LocalSourceSha256 = '3bdd33e9e35150d184c61cbba2fe956936f1e4f18a059d696bb1154081698d0d'
+        LocalSourceFile = 'catalog-audit-0377-62.5-19.3.mp4'
+        File = 'qigong-kseny-lifting-sky.mp4'
+        Url = 'https://www.youtube.com/watch?v=C5iy4L34F-o'
+        SourcePage = 'https://www.youtube.com/watch?v=C5iy4L34F-o'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 4.6
-        DurationSeconds = 18.0
-        FramesPerSecond = 10
-        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 19.3
+        FramesPerSecond = 20
+        Crop = 'crop=320:320:160:30'
         MirrorForAlternation = $false
     }
     379 = @{
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = 'adbdb0c8f9196a21c12bf7f4f92fbb2c78ab6752b2aa433e8443857efab3ce48'
+        LocalSourceFile = 'catalog-audit-0379-59.7-16.7.mp4'
         File = 'eight-brocades-draw-bow.mp4'
         Url = 'https://www.youtube.com/watch?v=Qt5cnWj9hjg'
         SourcePage = 'https://www.youtube.com/watch?v=Qt5cnWj9hjg'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 44.0
-        DurationSeconds = 16.0
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 16.7
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     572 = @{
         File = 'tai-chi-white-crane-drill.mp4'
@@ -2458,29 +2800,39 @@
     # Movement-first additions from a visually reviewed, all-standing,
     # no-jumping MIZI routine.
     103 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'a7ac501a63790355eae77da6155bf65aff68dbfb7ea29cdaeac6173f90a81b76'
+        LocalSourceFile = 'catalog-audit-0103-514.5-3.6.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 510
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 3.6
+        FramesPerSecond = 20
+        Crop = 'crop=680:680:300:0'
         MirrorForAlternation = $false
     }
     110 = @{
+        PingPong = $false
+        LocalSourceSha256 = '3a5815709f93b13a2e9b668c3ed3d4ab2bca4bf521d64d8a50c9f65a31c659a9'
+        LocalSourceFile = 'catalog-audit-0110-172.97-2.47.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 170
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 2.47
+        FramesPerSecond = 20
+        Crop = 'crop=680:680:300:0'
         MirrorForAlternation = $false
     }
     146 = @{
@@ -2497,43 +2849,58 @@
         MirrorForAlternation = $false
     }
     152 = @{
+        PingPong = $false
+        LocalSourceSha256 = '07ad85b6aadc01c4e120544d570c33d6bcb3bcbb9277d7df511d26fbbf34462b'
+        LocalSourceFile = 'catalog-audit-0152-610.65-5.1.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 610
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 5.1
+        FramesPerSecond = 20
+        Crop = 'crop=880:720:200:0,pad=880:880:0:80:black'
+        MirrorForAlternation = $false
     }
     174 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'a762d4b19e8ced6d43a4ec6998b2d933c6f3822d3d33cfa9a7e76799f9455bb2'
+        LocalSourceFile = 'catalog-audit-0174-963.98-2.52.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 960
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 2.52
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:200:0,pad=800:800:0:40:black'
+        MirrorForAlternation = $false
     }
     303 = @{
+        PingPong = $false
+        LocalSourceSha256 = '9e68fd54e6773c7524eeb377e62a769a9131ddc5ab19b4e4df901e6cbcffc4f0'
+        LocalSourceFile = 'catalog-audit-0303-1013.58-4.6.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1010.6
-        DurationSeconds = 3.4
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 4.6
+        FramesPerSecond = 20
+        Crop = 'crop=880:720:200:0,pad=880:880:0:80'
+        MirrorForAlternation = $false
     }
     314 = @{
         File = 'mizi-standing.mp4'
@@ -2562,17 +2929,22 @@
         MirrorForAlternation = $false
     }
     632 = @{
+        PingPong = $false
+        LocalSourceSha256 = '26280a4d6ef2cb701fdbb856f8a7522d150fabbe4fa1a55551d6f0516d32bd0d'
+        LocalSourceFile = 'catalog-audit-0632-1215-1.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1210
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
     }
     636 = @{
         File = 'mizi-standing.mp4'
@@ -2614,199 +2986,269 @@
         MirrorForAlternation = $true
     }
     733 = @{
+        PingPong = $false
+        LocalSourceSha256 = '3c07f224ec9ed12af659323cad8eea7b6d1840b5eb57cc8bedb86027c31cc638'
+        LocalSourceFile = 'catalog-audit-0733-768.65-5.4.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 764
-        DurationSeconds = 12
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 5.4
+        FramesPerSecond = 20
+        Crop = 'crop=700:650:280:5,pad=700:700:0:25:color=white'
         MirrorForAlternation = $false
     }
     804 = @{
+        PingPong = $false
+        LocalSourceSha256 = '8ed3d196db60d55c0edb9fe8c55bfd6a41991f2b75be1d64661bdda14991b4db'
+        LocalSourceFile = 'catalog-audit-0804-1111.2-2.5.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1110
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 2.5
+        FramesPerSecond = 20
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $false
     }
     825 = @{
+        PingPong = $false
+        LocalSourceSha256 = '26a813a379172606d69646b8949a8f7e4e49bd492216a4974e3f0795b277c1c2'
+        LocalSourceFile = 'catalog-audit-0825-260.5-7.3.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 260
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 7.3
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     831 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'b4703349f3210a625a3b8682b2de40ae8c005eebf05fa407c008a981387da35f'
+        LocalSourceFile = 'catalog-audit-0831-50.1-3.5.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 50
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 3.5
+        FramesPerSecond = 20
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $false
     }
     834 = @{
+        MirrorForAlternation = $false
+        StartSeconds = 810
+        Video = $true
         File = 'mizi-standing.mp4'
-        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
-        Youtube = $true
-        Video = $true
-        StartSeconds = 810
-        DurationSeconds = 8
-        FramesPerSecond = 10
         Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $false
+        DurationSeconds = 8
+        Youtube = $true
+        Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
+        FramesPerSecond = 10
     }
     836 = @{
+        PingPong = $false
+        LocalSourceSha256 = '4b7505aaab2a9566aaf3017c9365aa7968a94f95751f77b7379a7bf19eae13a9'
+        LocalSourceFile = 'catalog-audit-0836-861.05-4.75.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 860
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 4.75
+        FramesPerSecond = 20
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $false
     }
     906 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'e238431324db7510a720795ff16cfdd14767baf7dffde8689cf6c420634d4f80'
+        LocalSourceFile = 'catalog-audit-0906-210.45-4.4.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 210
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 4.4
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     943 = @{
+        PingPong = $false
+        LocalSourceSha256 = '0de55e88b54b712c817d66b48781c8b41fad258636c03dc9be927daa182789b9'
+        LocalSourceFile = 'catalog-audit-0943-461-3.4.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 461.2
-        DurationSeconds = 2.6
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 3.4
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
     }
     954 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'b5b6d9f073aea112669e7e261dccb4dafdc88500d9562cdeaec24f65700dc9fa'
+        LocalSourceFile = 'catalog-audit-0954-140.55-2.3.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 140
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 2.3
+        FramesPerSecond = 20
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $false
     }
     973 = @{
+        PingPong = $false
+        LocalSourceSha256 = '394edbeb0baaea7a7a6a656d549f01fccb59a6ed41b74ca8d50e28857e386d20'
+        LocalSourceFile = 'catalog-audit-0973-660.95-7.5.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 661.4
-        DurationSeconds = 3.4
-        FramesPerSecond = 10
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 7.5
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
     }
 
     # Movement-first additions from a visually reviewed standing-Pilates class.
     101 = @{
+        PingPong = $false
+        LocalSourceSha256 = '66257a694d4ba24b4f19a1cf4721013fab358642194deb96453f6c976c899d2f'
+        LocalSourceFile = 'catalog-audit-0101-254.35-3.95.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 254
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 3.95
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:140:0'
         MirrorForAlternation = $false
     }
     108 = @{
+        PingPong = $false
+        LocalSourceSha256 = '7a5c33d5c11ecbba3378feeb5f52c3229ed10f0a5fbff6e1b43b38e1adae6540'
+        LocalSourceFile = 'catalog-audit-0108-1251.25-3.55.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1246
-        DurationSeconds = 10
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 3.55
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:120:0,pad=400:400:0:20:color=black'
         MirrorForAlternation = $false
     }
     128 = @{
+        PingPong = $false
+        LocalSourceSha256 = '30bcc09e08d59ff37e69cb7b696be04c0da2fb94956991caf53f32f8d7c765a0'
+        LocalSourceFile = 'catalog-audit-0128-398.35-3.8.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 397.8
-        DurationSeconds = 4
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 3.8
+        FramesPerSecond = 20
+        Crop = 'crop=420:360:90:0,pad=420:420:0:30:color=black'
+        MirrorForAlternation = $false
     }
     144 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'da794cffe3645fd82aa18a9944a4f9cda0684e3e4605614b91488c0e38c4f1e9'
+        LocalSourceFile = 'catalog-audit-0144-159.85-3.65.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 159
-        DurationSeconds = 6
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 3.65
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:140:0'
+        MirrorForAlternation = $false
     }
     389 = @{
+        PingPong = $false
+        LocalSourceSha256 = '99bac58247a8b6e3d56862d7ffce6785a7eeabd0623c3d5e9285bb3adeb5ae9f'
+        LocalSourceFile = 'catalog-audit-0389-897.75-4.5.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 890
-        DurationSeconds = 10
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 4.5
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
@@ -2923,94 +3365,129 @@
         MirrorForAlternation = $false
     }
     399 = @{
+        PingPong = $false
+        LocalSourceSha256 = '2a111611c7753277474cd67cb04759fdd824a93aa3f4f0c209b0ca106b1aa88e'
+        LocalSourceFile = 'catalog-audit-0399-48.9-8.8.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'shibashi-set1.mp4'
         Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 42
-        DurationSeconds = 40
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 8.8
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40'
         MirrorForAlternation = $false
     }
     400 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'c2a14cc3e2877779492161f0112a86be82841300cfe1a4874f976528f4303ce9'
+        LocalSourceFile = 'catalog-audit-0400-155.5-6.8.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'shibashi-set1.mp4'
         Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 154
-        DurationSeconds = 32
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 6.8
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40'
         MirrorForAlternation = $false
     }
     401 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'dff305dbd7385dccf4664caa3b6ba3c4d41242fe80de7bbf1238c579eba17223'
+        LocalSourceFile = 'catalog-audit-0401-194-12.1.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'shibashi-set1.mp4'
         Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 194
-        DurationSeconds = 30
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 12.1
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40'
         MirrorForAlternation = $false
     }
     402 = @{
+        PingPong = $false
+        LocalSourceSha256 = '02391706db0e9a5007d6abf636f6ed69afc78135d6ad6ff25959ab63015d5a19'
+        LocalSourceFile = 'catalog-audit-0402-234.4-7.5.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'shibashi-set1.mp4'
         Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 228
-        DurationSeconds = 36
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 7.5
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40'
         MirrorForAlternation = $false
     }
     403 = @{
+        PingPong = $false
+        LocalSourceSha256 = '4786cd1b49c082fb85c74c0f043a2915e2a3fae5bbcff28585ec9fb6e02c72c2'
+        LocalSourceFile = 'catalog-audit-0403-354.2-10.4.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'shibashi-set1.mp4'
         Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 353
-        DurationSeconds = 24
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 10.4
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40'
         MirrorForAlternation = $false
     }
     404 = @{
+        PingPong = $false
+        LocalSourceSha256 = '32641fefbef849bb308adf95f1df8ef4209df397afada2eee4e5ca10b67ff967'
+        LocalSourceFile = 'catalog-audit-0404-530.3-9.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'shibashi-set1.mp4'
         Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 530
-        DurationSeconds = 30
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 9.0
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40'
         MirrorForAlternation = $false
     }
     405 = @{
+        PingPong = $false
+        LocalSourceSha256 = '6b452f3636ccf7c3eae0e84c4e446f99c35ceefa85078a228b76e12676ed3f23'
+        LocalSourceFile = 'catalog-audit-0405-570.5-7.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'shibashi-set1.mp4'
         Url = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         SourcePage = 'https://www.youtube.com/watch?v=PG1WGuzm7T0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 564
-        DurationSeconds = 40
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 7.0
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40'
         MirrorForAlternation = $false
     }
     406 = @{
@@ -3027,43 +3504,58 @@
         MirrorForAlternation = $false
     }
     617 = @{
+        PingPong = $false
+        LocalSourceSha256 = '5c3fb3102aa99239a24a57c7b1d171b02feb4a2075f51fe163625fabc15a04ad'
+        LocalSourceFile = 'catalog-audit-0617-323-10.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 323
+        StartSeconds = 0
         DurationSeconds = 10
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        FramesPerSecond = 20
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+        MirrorForAlternation = $false
     }
     620 = @{
+        PingPong = $false
+        LocalSourceSha256 = '91f02acb569bef2b92f670b56ecc200ed11813b0c03d1545327a3ccc70aa457a'
+        LocalSourceFile = 'catalog-audit-0620-335-8.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 335
+        StartSeconds = 0
         DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        FramesPerSecond = 20
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
+        MirrorForAlternation = $false
     }
     648 = @{
+        PingPong = $false
+        LocalSourceSha256 = '0b4698b5f4fab1c25fc9c4c5b774126850af59bdbe5e11fb0de9d6ce274519ce'
+        LocalSourceFile = 'catalog-audit-0648-496.5-3.4.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 495
-        DurationSeconds = 8
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 3.4
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     649 = @{
         File = 'standing-bent-knee-hip-abduction.mp4'
@@ -3079,6 +3571,8 @@
         MirrorForAlternation = $false
     }
     806 = @{
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
@@ -3092,56 +3586,76 @@
         MirrorForAlternation = $false
     }
     905 = @{
+        PingPong = $false
+        LocalSourceSha256 = '5035b6e844198158262bbf7a7106915c279243439b7c31df787376bd2b44169e'
+        LocalSourceFile = 'catalog-audit-0905-1276.2-8.4.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1275
-        DurationSeconds = 10
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 8.4
+        FramesPerSecond = 20
+        Crop = 'crop=ih*4/3:ih:(iw-ih*4/3)/2:0'
         MirrorForAlternation = $false
     }
     910 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'd2f135a238e7aee5536a3e70c039eb822d12e4e032c52b00c3ba7324da4069da'
+        LocalSourceFile = 'catalog-audit-0910-188-3.35.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 188
-        DurationSeconds = 3.4
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 3.35
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     915 = @{
+        PingPong = $false
+        LocalSourceSha256 = '7e46b9a44922f1d5b1fd4ef55aa8fe0bad33e6768f1c4b90e934cf9d834ff89a'
+        LocalSourceFile = 'catalog-audit-0915-470.8-3.8.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 466
-        DurationSeconds = 9
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 3.8
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     939 = @{
+        PingPong = $false
+        LocalSourceSha256 = '3ac847bef27096779ea6022fa742fed2375a511f4547d65e9ce08b4c76858890'
+        LocalSourceFile = 'catalog-audit-0939-1193.85-4.8.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'standing-pilates.mp4'
         Url = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         SourcePage = 'https://www.youtube.com/watch?v=ASAWSZ3Zrns'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1184
-        DurationSeconds = 10
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 4.8
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:50:0'
+        MirrorForAlternation = $false
     }
 
     # Movement-first additions from a visually reviewed, no-jumping,
@@ -3160,54 +3674,74 @@
         MirrorForAlternation = $false
     }
     109 = @{
+        PingPong = $false
+        LocalSourceSha256 = '81f3cc2f48275006e3b4de3ea76a3337d8e7fd1e540dcb9d54270c79ba9b3486'
+        LocalSourceFile = 'catalog-audit-0109-992.95-3.1.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 990
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 3.1
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:130:0,pad=400:400:0:20:color=black'
         MirrorForAlternation = $false
     }
     147 = @{
+        PingPong = $false
+        LocalSourceSha256 = '2bb3a4cf6d87ce1e135384526d7773bf553bb9d2e7b354c28aa483f4562063b9'
+        LocalSourceFile = 'catalog-audit-0147-933.45-1.28.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 930
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.28
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:120:0,pad=400:400:0:20:black'
         MirrorForAlternation = $false
     }
     156 = @{
+        PingPong = $false
+        LocalSourceSha256 = '61d579bd27abbc688e3b085b9da0843db930897272691e1d75d5068158b7df96'
+        LocalSourceFile = 'catalog-audit-0156-1835.94-5.68.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1830
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 5.68
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:120:0,pad=400:400:0:20:black'
+        MirrorForAlternation = $false
     }
     200 = @{
+        PingPong = $false
+        LocalSourceSha256 = '14f4acc8f20c3e98cc0ed89e2b0aafe3219947c3d9a01691d2418d651c58ac42'
+        LocalSourceFile = 'catalog-audit-0200-230.92-4.52.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 230
-        DurationSeconds = 8
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 4.52
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
@@ -3225,29 +3759,39 @@
         MirrorForAlternation = $false
     }
     311 = @{
+        PingPong = $false
+        LocalSourceSha256 = '017c0d264d480718ec9b80413b7059d5bf9a115e3c5357926877b8945d67235c'
+        LocalSourceFile = 'catalog-audit-0311-451.95-1.95.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 450
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.95
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:160:0'
         MirrorForAlternation = $false
     }
     315 = @{
+        PingPong = $false
+        LocalSourceSha256 = '40aecfe439f5cde629142f1112487e11feea8a536c28c50ffaeaf92453d8d5fa'
+        LocalSourceFile = 'catalog-audit-0315-1770-5.9.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1770
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 5.9
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:160:0'
         MirrorForAlternation = $false
     }
     326 = @{
@@ -3277,67 +3821,92 @@
         MirrorForAlternation = $false
     }
     340 = @{
+        PingPong = $false
+        LocalSourceSha256 = '49ec5554d1ff35288ae791fd451650de28e568750243ddf60d0783cc7a9d3bdd'
+        LocalSourceFile = 'catalog-audit-0340-513.85-3.85.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 510
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 3.85
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:160:0'
         MirrorForAlternation = $false
     }
     341 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'd41aa509de826ff59ce718cac5c2fe018c868909e369de25931fbff75856f79b'
+        LocalSourceFile = 'catalog-audit-0341-690-2.6.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 690
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2.6
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:160:0'
         MirrorForAlternation = $false
     }
     544 = @{
+        PingPong = $false
+        LocalSourceSha256 = '9ef0e503bdf8f232dc5cb9298cd33f2a9e2e0fe4004d1503a967f23b58e3c045'
+        LocalSourceFile = 'catalog-audit-0544-1650.3-1.5.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1650
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.5
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:140:0'
         MirrorForAlternation = $false
     }
     914 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'a958a5b8d8a4b4593bbea423c3065e6852268907da5c62880fce1fe184e24d27'
+        LocalSourceFile = 'catalog-audit-0914-811.55-1.15.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 810
-        DurationSeconds = 1.8
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 1.15
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        MirrorForAlternation = $true
+        MirrorForAlternation = $false
     }
     962 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'edd99113790dca9499e103334df8304386713fa73b518f60f6eb62cedcfbbc8a'
+        LocalSourceFile = 'catalog-audit-0962-51.7-2.1.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'growing-nojump.mp4'
         Url = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         SourcePage = 'https://www.youtube.com/watch?v=HuYoYJX9pgU'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 50
-        DurationSeconds = 8
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 2.1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
@@ -3750,55 +4319,75 @@
         MirrorForAlternation = $false
     }
     252 = @{
-        File = 'F86ztTs14q8.mp4'
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '65d51b287bcc5e4ea4d73f5eae0a2b02f7a52227bde7047c64db62848976357e'
+        LocalSourceFile = 'catalog-audit-0252-84.61-1.67.mp4'
+        File = 'catalog-audit-native/calf74.mp4'
         Url = 'https://www.youtube.com/watch?v=F86ztTs14q8'
         SourcePage = 'https://www.youtube.com/watch?v=F86ztTs14q8'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 82
-        DurationSeconds = 20
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.67
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0,pad=720:720:0:0'
         MirrorForAlternation = $false
     }
     253 = @{
-        File = 'F86ztTs14q8.mp4'
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '5397fd49f905ad4d6c9102c8ed8fac0476d0d2051d451b5d78ddbc403f81b23a'
+        LocalSourceFile = 'catalog-audit-0253-151.06-1.67.mp4'
+        File = 'catalog-audit-native/calf74.mp4'
         Url = 'https://www.youtube.com/watch?v=F86ztTs14q8'
         SourcePage = 'https://www.youtube.com/watch?v=F86ztTs14q8'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 151
-        DurationSeconds = 20
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.67
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0,pad=720:720:0:0'
         MirrorForAlternation = $false
     }
     254 = @{
-        File = 'F86ztTs14q8.mp4'
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '6876a99c3a629e40b4d7274a403442f432d6d4ff43fd68a72266c845fa0fd88f'
+        LocalSourceFile = 'catalog-audit-0254-222.18-1.67.mp4'
+        File = 'catalog-audit-native/calf74.mp4'
         Url = 'https://www.youtube.com/watch?v=F86ztTs14q8'
         SourcePage = 'https://www.youtube.com/watch?v=F86ztTs14q8'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 214
-        DurationSeconds = 20
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.67
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0,pad=720:720:0:0'
         MirrorForAlternation = $false
     }
     255 = @{
+        PingPong = $false
+        SourceHeight = 360
+        SourceWidth = 640
+        LocalSourceSha256 = 'cae18f01796dc37fea65ae9c9696de4ed6c1c0e4dc283af589a37b1ea7d1d920'
+        LocalSourceFile = 'catalog-audit-0255-29.7-2.05.mp4'
         File = 'YmBD3vnH3q8.mp4'
         Url = 'https://www.youtube.com/watch?v=YmBD3vnH3q8'
         SourcePage = 'https://www.youtube.com/watch?v=YmBD3vnH3q8'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 29
-        DurationSeconds = 6
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2.05
+        FramesPerSecond = 20
+        Crop = 'crop=480:360:80:0,pad=480:480:0:60'
         MirrorForAlternation = $false
     }
     256 = @{
@@ -3854,16 +4443,21 @@
         MirrorForAlternation = $false
     }
     261 = @{
-        File = 'PJO1hQSMPT4.mp4'
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = 'f60e319d1ae4342fbcf10565a5007a834a0ba0828844eededdc9c842326d3fa9'
+        LocalSourceFile = 'catalog-audit-0261-123.5-1.85.mp4'
+        File = 'catalog-audit-native/arms74.mp4'
         Url = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
         SourcePage = 'https://www.youtube.com/watch?v=PJO1hQSMPT4'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 115
-        DurationSeconds = 15
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.85
+        FramesPerSecond = 20
+        Crop = 'crop=800:720:240:0,pad=800:800:0:40'
         MirrorForAlternation = $false
     }
     262 = @{
@@ -3971,16 +4565,21 @@
         MirrorForAlternation = $false
     }
     271 = @{
+        PingPong = $false
+        SourceHeight = 360
+        SourceWidth = 640
+        LocalSourceSha256 = 'ea8b2d5d2082209e4becd0ad7d4c6a6100be9ccfeb0c788ccbd482606f32c905'
+        LocalSourceFile = 'catalog-audit-0271-14.2-1.6.mp4'
         File = 'TpIL3IvBk8k.mp4'
         Url = 'https://www.youtube.com/watch?v=TpIL3IvBk8k'
         SourcePage = 'https://www.youtube.com/watch?v=TpIL3IvBk8k'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 3
-        DurationSeconds = 28
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.6
+        FramesPerSecond = 20
+        Crop = 'crop=480:360:80:0,pad=480:480:0:60'
         MirrorForAlternation = $false
     }
     272 = @{
@@ -3997,16 +4596,21 @@
         MirrorForAlternation = $false
     }
     273 = @{
+        PingPong = $false
+        SourceHeight = 360
+        SourceWidth = 640
+        LocalSourceSha256 = '4b2bba46636ddeaec7b11c240ef8a73a3aa965bbb3ccaf766d865c5ff65ae74c'
+        LocalSourceFile = 'catalog-audit-0273-8.5-1.6.mp4'
         File = 'uRNFlZYlsZ4.mp4'
         Url = 'https://www.youtube.com/watch?v=uRNFlZYlsZ4'
         SourcePage = 'https://www.youtube.com/watch?v=uRNFlZYlsZ4'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 5
-        DurationSeconds = 8
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.6
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:140:0,pad=360:360:0:0'
         MirrorForAlternation = $false
     }
     274 = @{
@@ -4049,16 +4653,21 @@
         MirrorForAlternation = $false
     }
     277 = @{
+        PingPong = $false
+        LocalSourceSha256 = '3a2c879352ad609f3bca159eefd8da488a96b2c9743c5eab479d73fa9ca8a04d'
+        LocalSourceFile = 'catalog-audit-0277-19.35-2.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'AbAcFaqvZwQ.mp4'
         Url = 'https://www.youtube.com/watch?v=AbAcFaqvZwQ'
         SourcePage = 'https://www.youtube.com/watch?v=AbAcFaqvZwQ'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 3
-        DurationSeconds = 36
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2
+        FramesPerSecond = 20
+        Crop = 'crop=480:360:80:0,pad=480:480:0:60'
         MirrorForAlternation = $false
     }
     278 = @{
@@ -4378,16 +4987,21 @@
         MirrorForAlternation = $false
     }
     21 = @{
+        PingPong = $false
+        LocalSourceSha256 = '65ad400d2e7b3ee362694547ded08d76e42cddb89c0971b0264e72878ac06025'
+        LocalSourceFile = 'catalog-audit-0021-382.5-6.9.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'julia-balance-stability.mp4'
         Url = 'https://www.youtube.com/watch?v=9Slz5XXmLpM'
         SourcePage = 'https://www.youtube.com/watch?v=9Slz5XXmLpM'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 377.5
-        DurationSeconds = 34.5
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 6.9
+        FramesPerSecond = 20
+        Crop = 'crop=440:360:100:0,pad=440:440:0:40:color=black'
         MirrorForAlternation = $false
     }
     31 = @{
@@ -4404,16 +5018,21 @@
         MirrorForAlternation = $false
     }
     96 = @{
+        PingPong = $false
+        LocalSourceSha256 = '7842d4a97240c213a30f6a79905d5efc88ed01cd90d75779b25f433bdf76b4e6'
+        LocalSourceFile = 'catalog-audit-0096-28.85-6.5.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'dynamic-standing-figure-four.mp4'
         Url = 'https://www.youtube.com/watch?v=ZP7dk6zVn4s'
         SourcePage = 'https://www.youtube.com/watch?v=ZP7dk6zVn4s'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 9.5
-        DurationSeconds = 33.5
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 6.5
+        FramesPerSecond = 20
+        Crop = 'crop=480:360:80:0,pad=480:480:0:60'
         MirrorForAlternation = $false
     }
     97 = @{
@@ -4446,44 +5065,57 @@
     # Standing stretching: bilateral holds stay frozen; side-specific sources
     # use the reviewed two-block sequence from ExerciseSideSequences.psd1.
     740 = @{
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '61e1dd62dcccb21d0871160c392ddf6a9f45f88b5b2f6791ddf1b01307a44476'
+        LocalSourceFile = 'catalog-audit-0740-30-1.mp4'
         File = 'alex-standing-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
         SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 24.5
-        DurationSeconds = 7
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     741 = @{
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '5332a724c0e9339bbee27804774eb0fb81ac705a145124b61f2930b21956226d'
+        LocalSourceFile = 'catalog-audit-0741-104-1.mp4'
         File = 'alex-standing-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
         SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 103
-        DurationSeconds = 12.5
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
+        PingPong = $false
         MirrorForAlternation = $false
     }
     742 = @{
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = 'e4303f7073b5e3a9a26ea99f7d7742d8938d62bdb381b2be09be8f81b07a78e9'
+        LocalSourceFile = 'catalog-audit-0742-188-1.mp4'
         File = 'alex-standing-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
         SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 187
-        DurationSeconds = 12
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
+        PingPong = $false
         MirrorForAlternation = $false
     }
     743 = @{
@@ -4500,425 +5132,986 @@
         MirrorForAlternation = $false
     }
     744 = @{
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = 'ab5620c594c31d17c124ac259fa47b8e13f170959d07e973d69ab08649caca95'
+        LocalSourceFile = 'catalog-audit-0744-314-1.mp4'
         File = 'alex-standing-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
         SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 312
-        DurationSeconds = 13
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
+        PingPong = $false
         MirrorForAlternation = $false
     }
     746 = @{
+        LocalSourceSha256 = 'c8d57f58a00596dba714acb617fdfb7603a53bd7e82eb551f92050108245efce'
+        LocalSourceFile = 'catalog-audit-0746-1246-1.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
         File = 'mizi-standing.mp4'
         Url = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         SourcePage = 'https://www.youtube.com/watch?v=mfF2gW1BvOA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1243
-        DurationSeconds = 10
-        FramesPerSecond = 8
-        Crop = 'crop=ih-20:ih-20:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:(iw-ih)/2:0'
         PingPong = $false
         MirrorForAlternation = $false
     }
     747 = @{
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '455a503063f4f5f415d68dad54854574394cba3cd83e1e160c4d0b46ace04446'
+        LocalSourceFile = 'catalog-audit-0747-12-1.mp4'
         File = 'unsupported-standing-quad-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=Uwwuc8pRRc0'
         SourcePage = 'https://www.youtube.com/watch?v=Uwwuc8pRRc0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2
-        DurationSeconds = 18
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         PingPong = $false
         MirrorForAlternation = $false
     }
     748 = @{
-        File = 'alex-standing-stretch.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = 'd08635c3afebea6d74159e6de5cceb9e5215e90bdafa44c5abe2ce57252f95ca'
+        LocalSourceFile = 'catalog-audit-0748-556.8-2.mp4'
+        File = 'standing-stretch-alex-full.mp4'
         Url = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
         SourcePage = 'https://www.youtube.com/watch?v=YtDq7zNjORk'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 563
-        DurationSeconds = 15
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
+        StartSeconds = 0
+        DurationSeconds = 2.0
+        FramesPerSecond = 20
+        Crop = 'crop=560:560:290:140'
+        PingPong = $false
         MirrorForAlternation = $false
     }
     750 = @{
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = 'c6f13ecd2c983fd2664c685235a08c20221a9cd8a1686338436f7b9c5d8dd382'
+        LocalSourceFile = 'catalog-audit-0750-271.5-1.mp4'
         File = 'fit-by-lys-standing-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=H_VH2eilukE'
         SourcePage = 'https://www.youtube.com/watch?v=H_VH2eilukE'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 261
-        DurationSeconds = 7
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
-        MirrorForAlternation = $true
+        PingPong = $false
+        MirrorForAlternation = $false
     }
     751 = @{
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '55dfe41f9bfcf85db7f7d4b534e06761d924e1f715bbd47a51b1e153a3105aff'
+        LocalSourceFile = 'catalog-audit-0751-124.8-7.2.mp4'
         File = 'fit-by-lys-standing-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=H_VH2eilukE'
         SourcePage = 'https://www.youtube.com/watch?v=H_VH2eilukE'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 130
-        DurationSeconds = 5.5
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 7.2
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
-        MirrorForAlternation = $true
+        PingPong = $false
+        MirrorForAlternation = $false
     }
     752 = @{
-        File = 'standing-wrist-extension-stretch.mp4'
-        Url = 'https://www.youtube.com/watch?v=a5rXt7U-phg'
-        SourcePage = 'https://www.youtube.com/watch?v=a5rXt7U-phg'
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = 'a7b1c669ed46b87a98c78f32a9e3fa78c023e859f0a6875577566525065637fb'
+        LocalSourceFile = 'catalog-audit-0752-10-1.5.mp4'
+        File = 'C:\Users\user\AppData\Local\Temp\FluxExerciseSourceCache\catalog-audit-native\stelizabeth-wrist-extensor.mp4'
+        Url = 'https://www.youtube.com/watch?v=etzLNUaJ_y8'
+        SourcePage = 'https://www.stelizabeth.com/medical-services/orthopaedics/upper-extremity/upper-extremity-exercises/'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2.5
-        DurationSeconds = 6
-        FramesPerSecond = 8
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
-        PingPong = $true
-        MirrorForAlternation = $true
+        StartSeconds = 0
+        DurationSeconds = 1.5
+        FramesPerSecond = 20
+        Crop = 'crop=620:720:130:0'
+        PingPong = $false
+        MirrorForAlternation = $false
     }
     134 = @{
+        PingPong = $false
+        LocalSourceSha256 = '4a5d03610b775b08e18add75171530414e9663dcc4975079649354e8b1866e9f'
+        LocalSourceFile = 'catalog-audit-0134-7.4-2.mp4'
+        SourceHeight = 338
+        SourceWidth = 640
         File = 'wall-sit-puregym.mp4'
         Url = 'https://www.youtube.com/watch?v=6Li55TURhVg'
         SourcePage = 'https://www.youtube.com/watch?v=6Li55TURhVg'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.25
-        DurationSeconds = 14.5
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2.0
+        FramesPerSecond = 20
+        Crop = 'crop=360:338:120:0,pad=360:360:0:11:color=black'
         MirrorForAlternation = $false
     }
     137 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'f1ef860319046005c45a83f346332ed7228979e55360831380a157f3da5b5f6c'
+        LocalSourceFile = 'catalog-audit-0137-10.5-5.2.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-squat.mp4'
         Url = 'https://www.youtube.com/watch?v=hAvVXAE9Bgs'
         SourcePage = 'https://www.youtube.com/watch?v=hAvVXAE9Bgs'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2
-        DurationSeconds = 16
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 5.2
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:110:0,pad=400:400:0:20:color=black'
         MirrorForAlternation = $false
     }
     149 = @{
+        PingPong = $false
+        LocalSourceSha256 = '046a6cab10b4be0315c2c38cf18d6cc897f841ee9b7480d763e1347b6e3bc036'
+        LocalSourceFile = 'catalog-audit-0149-16-2.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'isometric-hip-abduction-against-wall.mp4'
         Url = 'https://www.youtube.com/watch?v=MpjO3dbsdqg'
         SourcePage = 'https://www.youtube.com/watch?v=MpjO3dbsdqg'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 5.5
-        DurationSeconds = 19
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:140:0'
         MirrorForAlternation = $false
     }
     153 = @{
-        File = 'wall-supported-standing-hip-extension.mp4'
-        Url = 'https://www.youtube.com/watch?v=ey-ZCfnm4E0'
-        SourcePage = 'https://www.youtube.com/watch?v=ey-ZCfnm4E0'
+        PingPong = $false
+        LocalSourceSha256 = '6b2bd4450474069b942e564349f8b7ef292c06292802d78be0487baa21e4ee01'
+        LocalSourceFile = 'catalog-audit-0153-24.9-1.92.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/wall-glute-leap.mp4'
+        Url = 'https://www.youtube.com/watch?v=qzqDHSDTc0U'
+        SourcePage = 'https://www.youtube.com/watch?v=qzqDHSDTc0U'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1
-        DurationSeconds = 25
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.92
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:320:0'
         MirrorForAlternation = $false
     }
     162 = @{
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-leaning-calf-raise.mp4'
         Url = 'https://www.youtube.com/watch?v=eF9h8tGzucA'
         SourcePage = 'https://www.youtube.com/watch?v=eF9h8tGzucA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.5
-        DurationSeconds = 11.5
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0.1
+        DurationSeconds = 5.0
+        FramesPerSecond = 20
+        Crop = 'crop=410:360:80:0'
         MirrorForAlternation = $false
     }
     163 = @{
+        PingPong = $false
+        LocalSourceSha256 = '38adc5c3b436a5fb37ba4c59225c842fa193a7aa31f01766e7a0261ca400104b'
+        LocalSourceFile = 'catalog-audit-0163-13-2.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-soleus-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=kTnS4Sxnt0E'
         SourcePage = 'https://www.youtube.com/watch?v=kTnS4Sxnt0E'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 8
-        DurationSeconds = 13
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:120:0,pad=400:400:0:20:black'
         MirrorForAlternation = $false
     }
     165 = @{
-        File = 'wall-tibialis-raise.mp4'
-        Url = 'https://www.youtube.com/watch?v=VzIcGAgBiaM'
-        SourcePage = 'https://www.youtube.com/watch?v=VzIcGAgBiaM'
+        SourceHeight = 640
+        SourceWidth = 360
+        File = 'tib-wall-luke.mp4'
+        Url = 'https://www.youtube.com/watch?v=-vh1NsR2i7Y'
+        SourcePage = 'https://www.youtube.com/watch?v=-vh1NsR2i7Y'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1
-        DurationSeconds = 19
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 19.1
+        DurationSeconds = 2.0
+        FramesPerSecond = 20
+        Crop = 'crop=iw:ih:0:0'
         MirrorForAlternation = $false
     }
     166 = @{
+        PingPong = $false
+        LocalSourceSha256 = '7365939be974637110b04df79536267e43d239a256502ccf2434828622f820ba'
+        LocalSourceFile = 'catalog-audit-0166-1.53-2.82.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-drill-marching-clean.mp4'
         Url = 'https://www.youtube.com/watch?v=O8ck9U0B4nk'
         SourcePage = 'https://www.youtube.com/watch?v=O8ck9U0B4nk'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.25
-        DurationSeconds = 10.25
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2.82
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:100:0,pad=400:400:0:20:black'
         MirrorForAlternation = $false
     }
     172 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'aca2be3aa174e523bd5acb92b03d52057b9dbf642bc800965865495c28a74110'
+        LocalSourceFile = 'catalog-audit-0172-6.28-1.06.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-drill-knee-drives-igRNX0B6Wyo.mp4'
         Url = 'https://www.youtube.com/watch?v=igRNX0B6Wyo'
         SourcePage = 'https://www.youtube.com/watch?v=igRNX0B6Wyo'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 4.75
-        DurationSeconds = 9.75
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:iw*0.15625:0'
+        StartSeconds = 0
+        DurationSeconds = 1.06
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:80:0,pad=400:400:0:20:black'
         MirrorForAlternation = $false
     }
     175 = @{
+        PingPong = $false
+        LocalSourceSha256 = '462acc747fac1970051004fe285ff902ffc9d88047df31c02c1fbf0293f3f11c'
+        LocalSourceFile = 'catalog-audit-0175-2.47-2.1.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-sit-march.mp4'
         Url = 'https://www.youtube.com/watch?v=WJ-X-1sL1k8'
         SourcePage = 'https://www.youtube.com/watch?v=WJ-X-1sL1k8'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.3
-        DurationSeconds = 9
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 2.1
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:120:0,pad=400:400:0:20:black'
         MirrorForAlternation = $false
     }
     579 = @{
+        PingPong = $false
+        LocalSourceSha256 = '5929ed0cfa2d130aa8ab551f7a21a2beb8e37f9224db6cdea8d72f745389745d'
+        LocalSourceFile = 'catalog-audit-0579-42.2-4.85.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-shoulder-slides-no-equipment.mp4'
         Url = 'https://www.youtube.com/watch?v=oK5PtUf5tZk'
         SourcePage = 'https://www.youtube.com/watch?v=oK5PtUf5tZk'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 42
-        DurationSeconds = 6
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 4.85
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:140:0'
         MirrorForAlternation = $false
     }
     580 = @{
+        PingPong = $false
+        LocalSourceSha256 = '4a92ddb0f45a68f6f005b6f0ad016400b79cd0f7d89ccdfa6e0585a3e2d3a879'
+        LocalSourceFile = 'catalog-audit-0580-11.7-4.9.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-angel.mp4'
         Url = 'https://www.youtube.com/watch?v=cvx06snMQ3A'
         SourcePage = 'https://www.youtube.com/watch?v=cvx06snMQ3A'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2
-        DurationSeconds = 18
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 4.9
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:140:0'
         MirrorForAlternation = $false
     }
     584 = @{
+        PingPong = $false
+        LocalSourceSha256 = '1d4275b2a65e5943ea2ccb885bc53278b1d79740dfaac6c27e95583556439284'
+        LocalSourceFile = 'catalog-audit-0584-46.2-3.2.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-scapular-push-up.mp4'
         Url = 'https://www.youtube.com/watch?v=qqVHikvbt7w'
         SourcePage = 'https://www.youtube.com/watch?v=qqVHikvbt7w'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 22
-        DurationSeconds = 25
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 3.2
+        FramesPerSecond = 20
+        Crop = 'crop=560:360:0:0'
         MirrorForAlternation = $false
     }
     585 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'ae8e34c9f0d07d53344806946da7249bd02fb8e0afa51392d60656b7f574d8c8'
+        LocalSourceFile = 'catalog-audit-0585-8-1.5.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'isometric-shoulder-abduction-against-wall.mp4'
         Url = 'https://www.youtube.com/watch?v=ocy3UYV3ikc'
         SourcePage = 'https://www.youtube.com/watch?v=ocy3UYV3ikc'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2
-        DurationSeconds = 24
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.5
+        FramesPerSecond = 20
+        Crop = 'crop=380:360:160:0'
         MirrorForAlternation = $false
     }
     586 = @{
+        PingPong = $false
+        LocalSourceSha256 = '098321e138a547b3ea32288d9042c2befac3c9eec31c8b6bd2680066c21eb2f5'
+        LocalSourceFile = 'catalog-audit-0586-24-1.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'isometric-shoulder-flexion-against-wall.mp4'
         Url = 'https://www.youtube.com/watch?v=3Ldy98UgaW0'
         SourcePage = 'https://www.youtube.com/watch?v=3Ldy98UgaW0'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2
-        DurationSeconds = 8
-        FramesPerSecond = 10
-        Crop = 'crop=iw*0.75:ih:iw*0.25:0'
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:210:0'
         MirrorForAlternation = $false
     }
     587 = @{
-        File = 'isometric-shoulder-external-rotation-against-wall.mp4'
-        Url = 'https://www.youtube.com/watch?v=xZKlQlkAeZA'
-        SourcePage = 'https://www.youtube.com/watch?v=xZKlQlkAeZA'
+        PingPong = $false
+        LocalSourceSha256 = '6a3f4743a5a07e9c4e29765843363e115c361182b9718240f9191a60d57e7936'
+        LocalSourceFile = 'catalog-audit-0587-24-1.5.mp4'
+        SourceHeight = 480
+        SourceWidth = 854
+        File = 'C:\Users\user\AppData\Local\Temp\FluxExerciseSourceCache\catalog-audit-native\elite-shoulder-external-isometric.mp4'
+        Url = 'https://www.youtube.com/watch?v=ozhHe-u6uMM'
+        SourcePage = 'https://elite-performance-institute.com/exercise-library/shoulder-exercises/isometric-shoulder-external-rotation/'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 2
-        DurationSeconds = 24
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.5
+        FramesPerSecond = 20
+        Crop = 'crop=480:480:280:0'
         MirrorForAlternation = $false
     }
     603 = @{
-        File = 'wall-supported-glute-kickback.mp4'
+        PingPong = $false
+        LocalSourceSha256 = '6b2bd4450474069b942e564349f8b7ef292c06292802d78be0487baa21e4ee01'
+        LocalSourceFile = 'catalog-audit-0603-24.9-1.92.mp4'
+        SourceHeight = 720
+        SourceWidth = 1280
+        File = 'catalog-audit-native/wall-glute-leap.mp4'
         Url = 'https://www.youtube.com/watch?v=qzqDHSDTc0U'
         SourcePage = 'https://www.youtube.com/watch?v=qzqDHSDTc0U'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 7
-        DurationSeconds = 25
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1.92
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:320:0'
         MirrorForAlternation = $false
     }
     633 = @{
+        PingPong = $false
+        LocalSourceSha256 = 'ac3cf6d88de237f5ead505acf38e946c0b020edd93808af61d61570a39356c50'
+        LocalSourceFile = 'catalog-audit-0633-12-1.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-calf-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=mafo7o7OnFo'
         SourcePage = 'https://www.youtube.com/watch?v=mafo7o7OnFo'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 3
-        DurationSeconds = 16
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     701 = @{
+        PingPong = $false
+        Crop = 'crop=ih:ih:0:0'
+        LocalSourceSha256 = 'fe8c74b52119f1206b839d18239dc7ce79a3b38e4b09bb4816a530437d823676'
+        LocalSourceFile = 'catalog-audit-0701-43-2.8.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-push-up-healthy-lifestyle-program.mp4'
         Url = 'https://www.youtube.com/watch?v=B7ATp1rhcSw'
         SourcePage = 'https://www.youtube.com/watch?v=B7ATp1rhcSw'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 42
-        DurationSeconds = 8
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 2.8
+        FramesPerSecond = 20
         MirrorForAlternation = $false
     }
     702 = @{
+        Crop = 'crop=360:530:0:65,pad=530:530:85:0:color=black'
+        LocalSourceSha256 = 'aaa96a60df6557eed951bed38c5866a8a6dd50489ad6c13a2f0c4dcbfbef7cf7'
+        LocalSourceFile = 'catalog-audit-0702-22.2-3.05.mp4'
+        SourceHeight = 640
+        SourceWidth = 360
         File = 'wall-triceps-push-up.mp4'
         Url = 'https://www.youtube.com/watch?v=Gqgud0M2eTo'
         SourcePage = 'https://www.youtube.com/watch?v=Gqgud0M2eTo'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 23
-        DurationSeconds = 5
-        FramesPerSecond = 10
-        PingPong = $true
+        StartSeconds = 0
+        DurationSeconds = 3.05
+        FramesPerSecond = 20
+        PingPong = $false
         MirrorForAlternation = $false
     }
     703 = @{
+        PingPong = $false
+        LocalSourceSha256 = '4181670b4182b4c6aab1c04ad215f1ea5468d2d33ece113e2643001efdb10c45'
+        LocalSourceFile = 'catalog-audit-0703-2.55-4.25.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-push-up-shoulder-tap.mp4'
         Url = 'https://www.youtube.com/watch?v=Je_kiDtc5eY'
         SourcePage = 'https://www.youtube.com/watch?v=Je_kiDtc5eY'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.3
-        DurationSeconds = 12
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 4.25
+        FramesPerSecond = 20
+        Crop = 'crop=400:360:30:0'
         MirrorForAlternation = $false
     }
     704 = @{
+        PingPong = $false
+        LocalSourceSha256 = '989b3d70eb3cc58e09584580954e1935aa9fc97c47d260d762c7f911b6655c03'
+        LocalSourceFile = 'catalog-audit-0704-18-1.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-pectoral-stretch-blue-wall.mp4'
         Url = 'https://www.youtube.com/watch?v=7ZJFqBHRCtI'
         SourcePage = 'https://www.youtube.com/watch?v=7ZJFqBHRCtI'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.5
-        DurationSeconds = 21
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
+        Crop = 'crop=iw:ih:0:0'
         MirrorForAlternation = $false
     }
     801 = @{
+        PingPong = $false
+        LocalSourceSha256 = '58268a1641f1396879c26d7b998e84c547e9a2353b840c121b233e3bad7acb34'
+        LocalSourceFile = 'catalog-audit-0801-0.7-10.6.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-roll-down.mp4'
         Url = 'https://www.youtube.com/watch?v=D89Qyxoj-Lg'
         SourcePage = 'https://www.youtube.com/watch?v=D89Qyxoj-Lg'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 3
-        DurationSeconds = 18
-        FramesPerSecond = 10
+        StartSeconds = 0
+        DurationSeconds = 10.6
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
         MirrorForAlternation = $false
     }
     835 = @{
+        PingPong = $false
+        LocalSourceSha256 = '56d54af5bdf0e5959e551ec6590c6b225830667afb15a45194c7feae93909803'
+        LocalSourceFile = 'catalog-audit-0835-8-1.mp4'
+        SourceHeight = 360
+        SourceWidth = 640
         File = 'wall-lat-stretch.mp4'
         Url = 'https://www.youtube.com/watch?v=Ca6cJdBeB0s'
         SourcePage = 'https://www.youtube.com/watch?v=Ca6cJdBeB0s'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 1
-        DurationSeconds = 14
-        FramesPerSecond = 10
-        Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
+        Crop = 'crop=ih:ih:iw*0.12:0'
         MirrorForAlternation = $false
     }
     1000 = @{
+        PingPong = $false
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '962f6e0e22a670857954be85bae6c1dbde06d18be8316f9d0cd28de553a8bcd6'
+        LocalSourceFile = 'catalog-audit-1000-12-1.mp4'
         File = 'oy2AfcI1CXA.mp4'
         Url = 'https://www.youtube.com/watch?v=oy2AfcI1CXA'
         SourcePage = 'https://www.youtube.com/watch?v=oy2AfcI1CXA'
         Human = $true
         Youtube = $true
         Video = $true
-        StartSeconds = 0.5
-        DurationSeconds = 15
-        FramesPerSecond = 8
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
         Crop = 'crop=ih:ih:(iw-ih)/2:0'
+        MirrorForAlternation = $false
+    }
+    1001 = @{
+        LocalSourceFile = 'catalog-audit-1001-135.65-15.9.mp4'
+        LocalSourceSha256 = '6c817862a6ad5d08dc3eed9f1a129ab024aa3357897201ac8e4724e8c41f3e04'
+        File = 'pectineus-precision.mp4'
+        Url = 'https://www.youtube.com/watch?v=nwws3C_VHf8'
+        SourcePage = 'https://www.youtube.com/watch?v=nwws3C_VHf8'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 15.9
+        FramesPerSecond = 20
+        Crop = 'crop=610:650:340:55,pad=650:650:20:0:color=white'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1002 = @{
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = '2258f5bc314994329132d10cecb1a7b0e7c2db15adaabcd1f9e7fa9b9f0e4e72'
+        LocalSourceFile = 'catalog-audit-1002-66.3-2.mp4'
+        File = 'zaib-high-knee-clap.mp4'
+        Url = 'https://www.youtube.com/watch?v=dNbrfrK6hgc'
+        SourcePage = 'https://www.youtube.com/watch?v=dNbrfrK6hgc'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 2.0
+        FramesPerSecond = 20
+        Crop = 'crop=640:640:320:70'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1003 = @{
+        SourceHeight = 720
+        SourceWidth = 1280
+        LocalSourceSha256 = 'c8a72e11ea71590f6c2ae0dd2a02fdc635a44e8c286925b3599a919f52177f50'
+        LocalSourceFile = 'catalog-audit-1003-501.45-8.9.mp4'
+        File = 'nick-six-sounds.mp4'
+        Url = 'https://www.youtube.com/watch?v=Fc-J_SE3qd4'
+        SourcePage = 'https://www.youtube.com/watch?v=Fc-J_SE3qd4'
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 8.9
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:230:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1004 = @{
+        LocalSourceFile = 'catalog-audit-1004-8.6-2.mp4'
+        LocalSourceSha256 = '5f35cb72edb66fa694929cee1a1f9f8eda956f5da1171b02528353d3480ac966'
+        File = 'soleus-unsupported.mp4'
+        Url = 'https://www.youtube.com/watch?v=I3HC_ChB7hY'
+        SourcePage = 'https://www.youtube.com/watch?v=I3HC_ChB7hY'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 2
+        FramesPerSecond = 20
+        Crop = 'crop=540:570:50:0,pad=570:570:15:0:color=white'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1005 = @{
+        LocalSourceFile = 'catalog-audit-1005-22-6.6.mp4'
+        LocalSourceSha256 = '4918c050cd7d0f23fe465d55f0b7ae34513faa0bac2eb894c38eace94f109b8e'
+        File = 'standing-diaphragmatic-group-hiit.mp4'
+        Url = 'https://www.youtube.com/watch?v=LkpY7z02zpM'
+        SourcePage = 'https://www.youtube.com/watch?v=LkpY7z02zpM'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 6.6
+        FramesPerSecond = 20
+        Crop = 'crop=500:600:440:20,pad=600:600:50:0:color=white'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1006 = @{
+        LocalSourceFile = 'catalog-audit-1006-56.95-4.05.mp4'
+        LocalSourceSha256 = 'ef97c8d67523cd08d3adf7f165e37802fd2ab77d7859ea1b10e2fb441e4491b6'
+        File = 'pnf-d1-rachelle.mp4'
+        Url = 'https://www.youtube.com/watch?v=nTV16lueeaA'
+        SourcePage = 'https://www.youtube.com/watch?v=nTV16lueeaA'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 4.05
+        FramesPerSecond = 20
+        Crop = 'crop=600:720:280:0,pad=720:720:60:0:color=white'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1007 = @{
+        LocalSourceFile = 'catalog-audit-1007-66.65-15.9.mp4'
+        LocalSourceSha256 = '3adf87cc1bcbaaa5bc040639b5e9e43558bc9ee8697339bafe2c15e757c68ea7'
+        File = 'five-animals-deyin.mp4'
+        Url = 'https://www.youtube.com/watch?v=WSfMgvOq6Ig'
+        SourcePage = 'https://www.youtube.com/watch?v=WSfMgvOq6Ig'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 15.9
+        FramesPerSecond = 20
+        Crop = 'crop=570:570:350:110'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1008 = @{
+        LocalSourceFile = 'catalog-audit-1008-160.95-37.6.mp4'
+        LocalSourceSha256 = 'e74db37d1f1bdc0fb17b51df1f8907ad4b5ce5b2b9d86bd43da673f7f676719d'
+        File = 'five-animals-yogalily.mp4'
+        Url = 'https://www.youtube.com/watch?v=FOQQxtmVBIA'
+        SourcePage = 'https://www.youtube.com/watch?v=FOQQxtmVBIA'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 37.6
+        FramesPerSecond = 20
+        Crop = 'crop=640:640:410:75'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1009 = @{
+        LocalSourceFile = 'catalog-audit-1009-16.4-5.35.mp4'
+        LocalSourceSha256 = '67333d938b5e571a22cf5356c77fc440c74ba82037d2d6150ba7a24eb77ba4b1'
+        File = 'lateral-lunge-overhead-mypt.mp4'
+        Url = 'https://www.youtube.com/watch?v=96MjyksdAcc'
+        SourcePage = 'https://www.youtube.com/watch?v=96MjyksdAcc'
+        SourceWidth = 854
+        SourceHeight = 480
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 5.35
+        FramesPerSecond = 20
+        Crop = 'crop=570:480:25:0,pad=570:570:0:45:color=white'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1010 = @{
+        LocalSourceFile = 'catalog-audit-1010-16-10.1.mp4'
+        LocalSourceSha256 = 'a37e1e971757b707cca9235bb0c9186e1645955f23020cc61c1ea76ad9aac07e'
+        File = 'spinal-circles-arms-kempf.mp4'
+        Url = 'https://www.youtube.com/watch?v=U3gH2yMWNNs'
+        SourcePage = 'https://www.youtube.com/watch?v=U3gH2yMWNNs'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 10.1
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:245:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1011 = @{
+        LocalSourceFile = 'catalog-audit-1011-375.85-3.35.mp4'
+        LocalSourceSha256 = 'bb5bd4725a0e3850848b4e5847f4af2b714b48d19ece6053c83cc57d1421e07e'
+        File = 'joint-loosening-james-fu.mp4'
+        Url = 'https://www.youtube.com/watch?v=8PWZ8opGqjg'
+        SourcePage = 'https://www.youtube.com/watch?v=8PWZ8opGqjg'
+        SourceWidth = 480
+        SourceHeight = 324
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 3.35
+        FramesPerSecond = 20
+        Crop = 'crop=270:270:125:30'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1012 = @{
+        LocalSourceFile = 'catalog-audit-1012-0-10.8.mp4'
+        LocalSourceSha256 = 'f25497fdcabb646826e0dac3f09789101295e325d15d0a143e95cf7b09a68dbf'
+        File = 'chest-scapula-physitrack.mp4'
+        Url = 'https://media.physitrack.com/exercises/ef6fb2fe-d1df-422e-bd42-7047eea1e3b4/en/video_1280x720.mp4'
+        SourcePage = 'https://us.physitrack.com/home-exercise-video/chest-stretch-%2528scapula-retraction%2529'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $false
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 10.8
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1013 = @{
+        LocalSourceFile = 'catalog-audit-1013-525.65-32.85.mp4'
+        LocalSourceSha256 = '66c4bbaa672b73228850b85138c1c9a45273aef9b44f19db82856fae92e8e193'
+        File = 'swimming-dragon-yoqi.mp4'
+        Url = 'https://www.youtube.com/watch?v=M59aylBo3ZE'
+        SourcePage = 'https://www.youtube.com/watch?v=M59aylBo3ZE'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 32.85
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1014 = @{
+        LocalSourceFile = 'catalog-audit-1014-289.5-36.4.mp4'
+        LocalSourceSha256 = '8f379677361843c7e2fc7e5b944707b9a2b80888059d7f8c19cfb331cb26aeb3'
+        File = 'five-animals-deyin.mp4'
+        Url = 'https://www.youtube.com/watch?v=WSfMgvOq6Ig'
+        SourcePage = 'https://www.youtube.com/watch?v=WSfMgvOq6Ig'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 36.4
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1015 = @{
+        LocalSourceFile = 'catalog-audit-1015-1.7-7.55.mp4'
+        LocalSourceSha256 = '1296bde7d60780074d5fd27e2183d589ba6954f790d4687f3cf5e1587224496b'
+        File = 'pnf-d2-vissco.mp4'
+        Url = 'https://comfortmypain.s3.ap-south-1.amazonaws.com/DSC_0009.mp4'
+        SourcePage = 'https://www.vissco.com/physiotherapy-exercise/pnf-d2-flexion/'
+        SourceWidth = 1280
+        SourceHeight = 960
+        Human = $true
+        Youtube = $false
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 7.55
+        FramesPerSecond = 20
+        Crop = 'crop=960:960:160:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1017 = @{
+        LocalSourceFile = 'catalog-audit-1017-1125.02-5.1.mp4'
+        LocalSourceSha256 = '9ea62d3f418cfda1887029c6b61a84c4cf32a069f1259790abf78f83be412314'
+        File = 'fitnessblender-dynamic-core.mp4'
+        Url = 'https://www.youtube.com/watch?v=qlD6DFZwqAI'
+        SourcePage = 'https://www.fitnessblender.com/videos/dynamic-cardio-core-walking-workout-all-standing-with-no-equipment'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 5.1
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1018 = @{
+        LocalSourceFile = 'catalog-audit-1018-4-3.4.mp4'
+        LocalSourceSha256 = 'a9cd71d51fc115c09c883d660b2b2d95123a8351e7016d81bf72b995d35c3cc3'
+        File = 'torso-circles-athlete.mp4'
+        Url = 'https://www.youtube.com/watch?v=6PhmU75xdhA'
+        SourcePage = 'https://www.youtube.com/watch?v=6PhmU75xdhA'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 3.4
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1020 = @{
+        LocalSourceFile = 'catalog-audit-1020-525.28-2.16.mp4'
+        LocalSourceSha256 = '4e80276b461b261cc4b55e35823db80c6c14993dd774271726997f065d1dc0da'
+        File = 'catalog-audit-native/tatarek-vall-torzs.mp4'
+        Url = 'https://www.youtube.com/watch?v=HOVsAxoLslo'
+        SourcePage = 'https://www.youtube.com/watch?v=HOVsAxoLslo&t=525'
+        SourceWidth = 640
+        SourceHeight = 480
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 2.16
+        FramesPerSecond = 25
+        Crop = 'crop=320:320:0:135'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1021 = @{
+        LocalSourceFile = 'catalog-audit-1021-9.9-9.8.mp4'
+        LocalSourceSha256 = 'e836e8c3afbe99c605e6b2d009569a3e3d40bb1ad245a683fbbc4df6dfb21bff'
+        File = 'catalog-audit-native/segmental-flexion-e3.mp4'
+        Url = 'https://www.youtube.com/watch?v=ZDQ9o6PXweY'
+        SourcePage = 'https://www.youtube.com/watch?v=ZDQ9o6PXweY'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 9.8
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:310:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1022 = @{
+        LocalSourceFile = 'catalog-audit-1022-37.12-6.96.mp4'
+        LocalSourceSha256 = '840030cef9376d1e5618ed8b38953979744eded07e8ede031df486bd6c14ed41'
+        File = 'catalog-audit-native/single-leg-windmill-physitrack.mp4'
+        Url = 'https://media.physitrack.com/exercises/f615c085-8839-46ab-9678-8859e24c7763/en/video_1280x720.mp4'
+        SourcePage = 'https://uk.physitrack.com/home-exercise-video/windmills-%2528single-leg%2529'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 6.96
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:330:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1024 = @{
+        LocalSourceFile = 'catalog-audit-1024-8.15-1.4.mp4'
+        LocalSourceSha256 = 'c1eb04b491acfd596e04afcf6724fc77c27275f0f796b6f9b88f29afa4e6d7eb'
+        File = 'catalog-audit-native/boxing-jab-cross-hook-tampa.mp4'
+        Url = 'https://www.youtube.com/watch?v=QuAZYQzk_ok'
+        SourcePage = 'https://www.youtube.com/watch?v=QuAZYQzk_ok'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 1.4
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:290:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1025 = @{
+        LocalSourceFile = 'catalog-audit-1025-2.85-2.65.mp4'
+        LocalSourceSha256 = 'd9468c3b77536af70fbd920cff63c910f8e077a42f3bf079e1179e57eae79c30'
+        File = 'catalog-audit-native/natural-ballplayer-back-claps.mp4'
+        Url = 'https://www.youtube.com/watch?v=g3sSseSqNos'
+        SourcePage = 'https://www.youtube.com/watch?v=g3sSseSqNos'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 2.65
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:290:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1026 = @{
+        LocalSourceFile = 'catalog-audit-1026-7.25-8.mp4'
+        LocalSourceSha256 = '8d690387940e90ab0757fc932ee8bb0328401d92883c7edd6efd81c3f6bec906'
+        File = 'catalog-audit-native/teacups-serving-yoda.mp4'
+        Url = 'https://www.youtube.com/watch?v=DBB2zpgMAfw'
+        SourcePage = 'https://www.youtube.com/watch?v=DBB2zpgMAfw'
+        SourceWidth = 734
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 8
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:7:0'
+        PingPong = $false
         MirrorForAlternation = $false
     }
 }

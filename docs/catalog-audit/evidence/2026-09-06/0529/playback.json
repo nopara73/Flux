@@ -1,0 +1,1154 @@
+{
+  "id": 529,
+  "fixture": {
+    "name": "Alternating Single-Leg Bodyweight Deadlifts",
+    "group": {
+      "id": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "displayName": "Posterior thigh and knee flexors",
+      "order": 31,
+      "canonicalGroups": [
+        "PosteriorThighAndKneeFlexors"
+      ],
+      "selectionGroupId": "r30.posterior-thigh-knee-flexors",
+      "exerciseOverrideId": 529,
+      "sequenceBlockIndex": 2,
+      "sequenceBlockCount": 3,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 493,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 629,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.043549,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 686,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.098364,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 961,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.373743,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1168,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.580626,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1375,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.796466,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1587,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 1.001335,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1791,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 1.206479,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1998,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 1.415855,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2211,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 1.625229,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2417,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 1.829443,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2620,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 2.066422,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2873,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 2.285723,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3087,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 2.500708,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3291,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 2.705796,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3496,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 2.910024,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3703,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 3.115473,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3909,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 3.321861,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4111,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 3.523079,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4112,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 3.52438,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4360,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 3.772762,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4574,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 3.989044,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4784,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 4.19895,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4992,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 4.415046,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5217,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 4.629913,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5419,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 4.831632,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5622,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 5.034147,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5825,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 5.238239,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6031,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 5.443763,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6234,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 5.647521,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6440,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 5.854169,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6646,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 6.060248,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6852,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 6.265401,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7058,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 6.471367,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7263,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.119357,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7470,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.326037,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7684,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.540993,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7893,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.750133,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8102,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.956554,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8104,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 0.958437,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8336,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 1.189978,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8563,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 1.317066,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8807,
+      "name": "Alternating Single-Leg Bodyweight Deadlifts",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-thigh-knee-flexors.set1.block3",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0529.mp4?v=8f49fae698fe179872645fdacd1e7f1f48b825f69e8ef2c778336a6b37c3274e",
+        "time": 1.317066,
+        "duration": 6.55,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9087,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 0.077006,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 629
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "01-block1-work-start.png",
+      "elapsedMs": 686
+    },
+    {
+      "phase": "block1-action",
+      "file": "02-block1-action.png",
+      "elapsedMs": 4112
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "03-block1-loop-end.png",
+      "elapsedMs": 8104
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "04-block1-work-end.png",
+      "elapsedMs": 8336
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "05-block1-rest-start.png",
+      "elapsedMs": 8563
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "06-block1-rest-end.png",
+      "elapsedMs": 8807
+    },
+    {
+      "phase": "block1-next",
+      "file": "07-block1-next.png",
+      "elapsedMs": 9087
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 8163,
+      "milliseconds": 36500
+    },
+    {
+      "realElapsedMs": 8378,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 8633,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 8894,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 6.55,
+      "realPlaybackMs": 7345,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

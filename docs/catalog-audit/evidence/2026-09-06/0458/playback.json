@@ -1,0 +1,1926 @@
+{
+  "id": 458,
+  "fixture": {
+    "name": "Single-Leg Rotational Hops",
+    "group": {
+      "id": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "displayName": "Calf, deep posterior leg and plantar foot",
+      "order": 44,
+      "canonicalGroups": [
+        "CalfDeepPosteriorLegAndPlantarFoot"
+      ],
+      "selectionGroupId": "r30.calf-deep-posterior-leg-plantar-foot",
+      "exerciseOverrideId": 458,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenRight",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 680,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 790,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1041,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1261,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.074793,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1519,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.330343,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1723,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.533921,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1928,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.738701,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2131,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.942449,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2340,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.159384,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2553,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.363532,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2760,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.575643,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2972,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.784251,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3176,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.986737,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3378,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 2.188587,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3586,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 2.401623,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3798,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 2.616129,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4020,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 2.857204,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4212,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 3.025361,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4759,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 3.585138,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5008,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 3.819227,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5227,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 4.038746,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5433,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 4.244165,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5642,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 4.45323,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5851,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 4.661334,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6053,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 4.863711,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6263,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 5.081032,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6474,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 5.285848,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6711,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.010636,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6917,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.219344,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7126,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.42591,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7338,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.638798,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7555,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.85616,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7559,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.85841,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7788,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.089678,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8031,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.073166,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8284,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.325386,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8547,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.128259,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8600,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.180973,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8653,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.235062,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8905,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.48686,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9113,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.695181,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9322,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.904548,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9526,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.107386,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9729,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.312014,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9935,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.517684,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10140,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.721956,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10344,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.925105,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10545,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 2.127941,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10756,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 2.337222,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10957,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 2.538356,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11164,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 2.745914,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11368,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 2.949853,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11577,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 3.158409,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11582,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 3.163158,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11884,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 3.537522,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12187,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 3.783558,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12422,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 4.033637,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12662,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 4.250008,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12881,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 4.464029,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13092,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 4.674053,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13300,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 4.882985,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13511,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 5.124292,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13756,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 5.340219,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13964,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.057255,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14187,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.262927,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14393,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.468594,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14600,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.674393,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14805,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.881203,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14808,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 0.882641,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15037,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.114006,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15282,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.226037,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15521,
+      "name": "Single-Leg Rotational Hops",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0458.mp4?v=de78cfefa68e1568018f1f1f7f97e38d574467f877cebf370f0db68158c69690",
+        "time": 1.226037,
+        "duration": 5.5,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15756,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 0.131685,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 790
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1041
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1261
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 4212
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 7559
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 7788
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 8031
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 8284
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 8547
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 8600
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 8653
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 11582
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 14808
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 15037
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 15282
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 15521
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 15756
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 868,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1090,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 7610,
+      "milliseconds": 36500
+    },
+    {
+      "realElapsedMs": 7846,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 8110,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 8341,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 14861,
+      "milliseconds": 37500
+    },
+    {
+      "realElapsedMs": 15107,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 15344,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 15568,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 5.5,
+      "realPlaybackMs": 6240,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 5.5,
+      "realPlaybackMs": 6105,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

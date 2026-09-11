@@ -3,6 +3,8 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'ExerciseCatalogDefinitions.ps1')
+$definedExerciseIds = @(Get-ExerciseCatalogDefinitions | ForEach-Object { [int]$_.Id })
 
 $resolvedAssetsRoot = [IO.Path]::GetFullPath($AssetsRoot)
 $catalogPath = Join-Path $resolvedAssetsRoot 'exercises.json'
@@ -10,13 +12,15 @@ $catalog = @(Get-Content -LiteralPath $catalogPath -Raw | ConvertFrom-Json)
 $failures = [System.Collections.Generic.List[string]]::new()
 $motionFreezeFilter = 'freezedetect=n=-60dB:d=2'
 $maximumMotionFreezeSeconds = 2.0
+# Native cadence approved in review-evidence-2026-09-06.json, including the
+# replacement source loops. These ranges must follow an explicit media review.
 $reviewedWorkoutCadenceDurationRanges = @{
     251 = @{ Minimum = 3.9; Maximum = 4.1 }
-    231 = @{ Minimum = 7.9; Maximum = 8.1 }
-    681 = @{ Minimum = 5.3; Maximum = 5.7 }
-    684 = @{ Minimum = 8.1; Maximum = 8.3 }
-    685 = @{ Minimum = 2.9; Maximum = 3.1 }
-    687 = @{ Minimum = 8.1; Maximum = 8.3 }
+    231 = @{ Minimum = 2.4; Maximum = 2.5 }
+    681 = @{ Minimum = 1.95; Maximum = 2.05 }
+    684 = @{ Minimum = 3.1; Maximum = 3.2 }
+    685 = @{ Minimum = 1.4; Maximum = 1.5 }
+    687 = @{ Minimum = 0.8; Maximum = 0.9 }
 }
 
 if ($catalog.Count -lt 30) {
@@ -54,9 +58,9 @@ if ($invalidAssignments.Count -gt 0) {
 }
 
 $catalogIds = @($catalog.id | ForEach-Object { [int]$_ })
-if (@($catalogIds | Where-Object { $_ -lt 1 -or $_ -gt 1000 }).Count -gt 0 -or
+if (@($catalogIds | Where-Object { $_ -notin $definedExerciseIds }).Count -gt 0 -or
     @($catalogIds | Sort-Object -Unique).Count -ne $catalog.Count) {
-    throw 'Catalog exercise IDs must be unique stable IDs from 1 through 1000.'
+    throw 'Catalog exercise IDs must be unique declared stable IDs.'
 }
 
 $sourceAssignmentIds = @(
@@ -77,7 +81,7 @@ if ($assignmentDrift.Count -gt 0) {
 }
 
 $videoPaths = @($catalog.video)
-if (@($videoPaths | Where-Object { $_ -notmatch '^exercise_videos/exercise_\d{4}\.mp4$' }).Count -gt 0 -or
+if (@($videoPaths | Where-Object { $_ -notmatch '^exercise_videos/exercise_\d{4,}\.mp4$' }).Count -gt 0 -or
     @($videoPaths | Sort-Object -Unique).Count -ne $catalog.Count -or
     @($catalog | Where-Object {
             [string]$_.video -ne
@@ -146,12 +150,15 @@ if (@(Compare-Object ($expectedVideoNames | Sort-Object) `
     throw 'The media directories contain missing or orphaned exercise assets.'
 }
 
+$directionTransforms = Import-PowerShellDataFile -LiteralPath (
+    Join-Path $PSScriptRoot 'ExerciseDirectionMediaTransforms.psd1')
+
 foreach ($exercise in $directionExercises) {
     $directionVideoPath = Join-Path $resolvedAssetsRoot (
         'exercise_direction_videos/exercise_{0:D4}.mp4' -f [int]$exercise.id)
     $directionProbeJson = & ffprobe `
         -v error `
-        -show_entries 'stream=codec_type,codec_name,width,height,pix_fmt:format=duration' `
+        -show_entries 'stream=codec_type,codec_name,width,height,pix_fmt,r_frame_rate:format=duration' `
         -of json `
         $directionVideoPath
     if ($LASTEXITCODE -ne 0) {
@@ -166,14 +173,29 @@ foreach ($exercise in $directionExercises) {
     $directionDuration = [double]::Parse(
         [string]$directionProbe.format.duration,
         [Globalization.CultureInfo]::InvariantCulture)
+    $transform = $directionTransforms[[int]$exercise.id]
+    $sourceId = if ($transform.Mode -eq 'ExactExercise') {
+        [int]$transform.SecondExerciseId
+    } else { [int]$exercise.id }
+    $sourceDurationText = & ffprobe -v error -show_entries format=duration `
+        -of default=noprint_wrappers=1:nokey=1 (Join-Path $resolvedAssetsRoot (
+            'exercise_videos/exercise_{0:D4}.mp4' -f $sourceId))
+    if ($LASTEXITCODE -ne 0) {
+        $failures.Add("$($exercise.id): directional source duration probe failed")
+        continue
+    }
+    $sourceDuration = [double]::Parse([string]$sourceDurationText,
+        [Globalization.CultureInfo]::InvariantCulture)
     if ($directionVideoStreams.Count -ne 1 -or
         $directionVideoStreams[0].codec_name -ne 'h264' -or
         $directionVideoStreams[0].width -ne 256 -or
         $directionVideoStreams[0].height -ne 256 -or
         $directionVideoStreams[0].pix_fmt -ne 'yuv420p' -or
         $directionAudioStreams.Count -ne 0 -or
-        $directionDuration -lt 39.8 -or
-        $directionDuration -gt 40.2) {
+        $directionVideoStreams[0].r_frame_rate -ne '20/1' -or
+        -not [double]::IsFinite($directionDuration) -or
+        $directionDuration -le 0 -or
+        [Math]::Abs($directionDuration - $sourceDuration) -gt 0.051) {
         $failures.Add(
             "$($exercise.id): invalid directional codec, dimensions, audio, or duration")
     }
@@ -197,11 +219,11 @@ foreach ($exercise in $directionExercises) {
                     [string]$_.best_effort_timestamp_time,
                     [Globalization.CultureInfo]::InvariantCulture)
             })
-    if (-not ($directionKeyframes | Where-Object {
-                [Math]::Abs($_ - 20.0) -le 0.025
-            })) {
+    if (@($directionKeyframes | Where-Object {
+                [Math]::Abs($_) -le 0.025
+            }).Count -eq 0) {
         $failures.Add(
-            "$($exercise.id): no exact keyframe at the 20-second direction boundary")
+            "$($exercise.id): no keyframe at the start of the opposite-direction clip")
     }
 }
 
@@ -407,8 +429,7 @@ else {
 }
 
 if ($failures.Count -gt 0) {
-    $failures | ForEach-Object { Write-Error $_ }
-    throw "$($failures.Count) exercise MP4 verification checks failed."
+    throw ("$($failures.Count) exercise MP4 verification checks failed:`n" + ($failures -join "`n"))
 }
 
 Write-Output "Verified: $($catalog.Count) / $($catalog.Count) MP4 assets"

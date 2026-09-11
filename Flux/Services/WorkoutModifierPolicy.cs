@@ -34,12 +34,6 @@ public sealed record WorkoutMuscularDemandCoverageDeficiency(
     int MatchingExerciseCount,
     int RequiredExerciseCount);
 
-public sealed record WorkoutMirrorCategoryDeficiency(
-    ExerciseMirrorRelationship Relationship,
-    ExerciseMirrorCoverage MinimumCoverage,
-    int MatchingExerciseCount,
-    int RequiredExerciseCount);
-
 public sealed record WorkoutWallRequiredCatalogDeficiency(
     int MatchingSessionMovementCount,
     int RequiredSessionMovementCount);
@@ -71,7 +65,6 @@ public static class WorkoutModifierPolicy
     public const int MinimumExercisesPerBroadPairStatePerGroup = 5;
     public const int MinimumExercisesPerFinePairStatePerGroup = 1;
     public const int MinimumExercisesPerMuscularDemandCategoryPerGroup = 1;
-    public const int MinimumExercisesPerMirrorCategory = 5;
     public const int MinimumWallRequiredSessionMovements = 20;
     public const int MinimumSoleWallContactRequiredSessionMovements = 5;
     public const int MinimumMaterialExercises = 5;
@@ -94,17 +87,6 @@ public static class WorkoutModifierPolicy
     private static readonly HashSet<CanonicalMuscleGroup>
         WallFreeInsectFineCoverageExceptions =
     [
-        CanonicalMuscleGroup.IntrinsicHand,
-    ];
-
-    // Isolated intrinsic-hand and pelvic-floor work is neutral to the floor:
-    // every honest standing version is HardFloor-compatible. Requiring a
-    // HardFloor-incompatible variant would manufacture unrelated footwork or
-    // a false secondary claim solely for validation.
-    private static readonly HashSet<CanonicalMuscleGroup>
-        HardFloorNeutralFineCoverageExceptions =
-    [
-        CanonicalMuscleGroup.PelvicFloorAndPerineum,
         CanonicalMuscleGroup.IntrinsicHand,
     ];
 
@@ -420,15 +402,8 @@ public static class WorkoutModifierPolicy
                             {
                                 WorkoutModifiers profile = Normalize(
                                     firstState | secondState);
-                                // Mirror is a preference, not an eligibility
-                                // filter for agnostic exercises. Broad-region
-                                // coverage proves that enabling it has a
-                                // material effect; fine buckets only prove
-                                // that the workout remains viable.
-                                bool requiresMirrorRelevance =
-                                    minutes == BroadCoverageResolutionMinutes &&
-                                    GetMirrorEquipment(profile) !=
-                                        MirrorEquipment.None;
+                                // Availability includes every selectable mirror relationship.
+                                // Mirror benefit is enforced separately by materiality.
                                 return new
                                 {
                                     Minutes = minutes,
@@ -455,9 +430,7 @@ public static class WorkoutModifierPolicy
                                                 exercise,
                                                 exercisesById,
                                                 group,
-                                                profile) &&
-                                            (!requiresMirrorRelevance ||
-                                                IsMirrorRelevant(exercise)))
+                                                profile))
                                         .Select(GetSessionMovementId)
                                         .Distinct()
                                         .Count(),
@@ -488,7 +461,6 @@ public static class WorkoutModifierPolicy
         ExerciseHardFloorCompatibility[] requiredCategories =
         [
             ExerciseHardFloorCompatibility.Compatible,
-            ExerciseHardFloorCompatibility.Incompatible,
         ];
         (WorkoutModifiers Modifier, bool Enabled)[] partnerStates =
         [
@@ -505,10 +477,7 @@ public static class WorkoutModifierPolicy
                     requiredCategories.SelectMany(category =>
                         partnerStates.Select(partnerState =>
                         {
-                            WorkoutModifiers profile = category ==
-                                ExerciseHardFloorCompatibility.Compatible
-                                    ? WorkoutModifiers.HardFloor
-                                    : WorkoutModifiers.None;
+                            WorkoutModifiers profile = WorkoutModifiers.HardFloor;
                             if (partnerState.Enabled)
                             {
                                 profile |= partnerState.Modifier;
@@ -540,10 +509,7 @@ public static class WorkoutModifierPolicy
                                 matchingExerciseCount,
                                 IsWallFreeInsectFineCoverageException(
                                     group,
-                                    profile) ||
-                                IsHardFloorCategoryFineCoverageException(
-                                    group,
-                                    category)
+                                    profile)
                                     ? 0
                                     : GetMinimumExercisesPerPairStatePerGroup(
                                         minutes));
@@ -577,55 +543,6 @@ public static class WorkoutModifierPolicy
     {
         ArgumentNullException.ThrowIfNull(group);
         return !IsWallFreeInsectFineCoverageException(group, profile);
-    }
-
-    private static bool IsHardFloorCategoryFineCoverageException(
-        WorkoutGroup group,
-        ExerciseHardFloorCompatibility category)
-    {
-        return category == ExerciseHardFloorCompatibility.Incompatible &&
-            group.CanonicalGroups.Count > 0 &&
-            group.CanonicalGroups.All(
-                HardFloorNeutralFineCoverageExceptions.Contains);
-    }
-
-    public static IReadOnlyList<WorkoutMirrorCategoryDeficiency>
-        FindMirrorCategoryDeficiencies(
-            IReadOnlyCollection<Exercise> exercises)
-    {
-        ArgumentNullException.ThrowIfNull(exercises);
-        (ExerciseMirrorRelationship Relationship,
-            ExerciseMirrorCoverage Coverage)[] requiredCategories =
-        [
-            (ExerciseMirrorRelationship.MirrorOnly,
-                ExerciseMirrorCoverage.UpperBody),
-            (ExerciseMirrorRelationship.MirrorOnly,
-                ExerciseMirrorCoverage.FullBody),
-            (ExerciseMirrorRelationship.BenefitsGreatly,
-                ExerciseMirrorCoverage.UpperBody),
-            (ExerciseMirrorRelationship.BenefitsGreatly,
-                ExerciseMirrorCoverage.FullBody),
-            (ExerciseMirrorRelationship.Agnostic,
-                ExerciseMirrorCoverage.None),
-        ];
-
-        return requiredCategories
-            .Select(category => new WorkoutMirrorCategoryDeficiency(
-                category.Relationship,
-                category.Coverage,
-                exercises
-                    .Where(exercise =>
-                        IsMirrorMetadataReviewed(exercise) &&
-                        exercise.MirrorRelationship == category.Relationship &&
-                        exercise.MinimumMirrorCoverage == category.Coverage)
-                    .Select(GetSessionMovementId)
-                    .Distinct()
-                    .Count(),
-                MinimumExercisesPerMirrorCategory))
-            .Where(deficiency =>
-                deficiency.MatchingExerciseCount <
-                    deficiency.RequiredExerciseCount)
-            .ToArray();
     }
 
     public static IReadOnlyList<WorkoutModifierMaterialityDeficiency>

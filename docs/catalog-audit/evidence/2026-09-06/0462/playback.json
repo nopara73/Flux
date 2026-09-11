@@ -1,0 +1,1374 @@
+{
+  "id": 462,
+  "fixture": {
+    "name": "Two-Foot Fake Jump Rope",
+    "group": {
+      "id": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "displayName": "Calf, deep posterior leg and plantar foot",
+      "order": 49,
+      "canonicalGroups": [
+        "CalfDeepPosteriorLegAndPlantarFoot"
+      ],
+      "selectionGroupId": "r30.calf-deep-posterior-leg-plantar-foot",
+      "exerciseOverrideId": 462,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 824,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 993,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1260,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1497,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.104077,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1781,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.387139,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1993,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.601838,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2207,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.810978,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2411,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.015716,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2625,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.229116,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2832,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.436586,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3036,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.640433,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3040,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.644295,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3322,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.926183,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3523,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 2.127758,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3739,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 2.345098,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3950,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 2.647954,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4274,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.06243,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4492,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.274496,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4709,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.491737,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4914,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.697597,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5125,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.906948,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5127,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.91099,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5393,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.175133,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5671,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.072533,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5945,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.350718,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6329,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.12658,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6410,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.202354,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6474,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.266843,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6923,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.715948,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7137,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.932476,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7344,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.138372,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7550,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.343466,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7759,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.555332,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7970,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.768316,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8214,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 2.006404,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8217,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 2.009689,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8518,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 2.31446,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8738,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 2.551955,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8966,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 2.757464,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9176,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.158268,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9378,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.362947,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9587,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.571202,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9795,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.776865,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9999,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 0.980898,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10207,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.189307,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10209,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.190523,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10448,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.429798,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10678,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.521329,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10928,
+      "name": "Two-Foot Fake Jump Rope",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.calf-deep-posterior-leg-plantar-foot.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0462.mp4?v=c9762bfc104398cae1dc931dfd34875e0eb8da6bb67a875cc5153bd6c4345e1d",
+        "time": 1.521329,
+        "duration": 2.8,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11167,
+      "name": "Alternating Deadlift with Body Twist",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0825.mp4?v=e8f27eff0e50c393c2697f8f563e9d0fd3e12f1f8b9166a8e2eae932687526f8",
+        "time": 0.029774,
+        "duration": 8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 993
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1260
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1497
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 3040
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 5127
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 5393
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 5671
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 5945
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 6329
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 6410
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 6474
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 8217
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 10209
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 10448
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 10678
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 10928
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 11167
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1077,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1321,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 5211,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 5459,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 5770,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6018,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 10275,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 10498,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 10744,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 10984,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 2.8,
+      "realPlaybackMs": 3550,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 2.8,
+      "realPlaybackMs": 3486,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

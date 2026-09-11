@@ -75,6 +75,11 @@ public sealed class Exercise
 
     public required bool Silent { get; init; }
 
+    public string GetVideoAssetPath(ExerciseSequenceMediaSegment segment) =>
+        segment == ExerciseSequenceMediaSegment.SecondDirection
+            ? $"exercise_direction_videos/exercise_{Id:D4}.mp4"
+            : Video;
+
     public bool Trains(CanonicalMuscleGroup group)
     {
         return PrimaryCanonicalGroup == group ||

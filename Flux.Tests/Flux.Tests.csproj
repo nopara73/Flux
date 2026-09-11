@@ -69,6 +69,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\docs\catalog-audit\training-claim-corrections-2026-09-05.json"
+          Link="Assets\training-claim-corrections-2026-09-05.json"
+          CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\docs\catalog-audit\migration-2026-09-05.json"
+          Link="Assets\migration-2026-09-05.json"
+          CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\Flux\Assets\exercises.json"
           Link="Assets\exercises.json"
           CopyToOutputDirectory="PreserveNewest" />

@@ -10,7 +10,6 @@ import {
   MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP,
   MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
   findHardFloorCategoryCoverageDeficiencies,
-  findMirrorCategoryDeficiencies,
   findMuscularDemandCoverageDeficiencies,
   findWorkoutModifierMaterialityDeficiencies,
   findWorkoutModifierPairCoverageDeficiencies,
@@ -40,7 +39,6 @@ const hardFloorCategory =
   findHardFloorCategoryCoverageDeficiencies(catalog);
 const muscularDemand = findMuscularDemandCoverageDeficiencies(catalog);
 const materiality = findWorkoutModifierMaterialityDeficiencies(catalog);
-const mirrorCategory = findMirrorCategoryDeficiencies(catalog);
 const distinctLineup = findWorkoutProfileLineupDeficiencies(catalog);
 
 const report = {
@@ -78,14 +76,12 @@ const report = {
       muscularDemand.filter((item) => item.muscularDemand === 2),
     ),
     materialityDeficiencyCount: materiality.length,
-    mirrorCategoryDeficiencyCount: mirrorCategory.length,
     distinctLineupDeficiencyCount: distinctLineup.length,
   },
   pairwise,
   hardFloorCategory,
   muscularDemand,
   materiality,
-  mirrorCategory,
   distinctLineup,
 };
 

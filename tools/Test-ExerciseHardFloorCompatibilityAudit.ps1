@@ -88,7 +88,9 @@ foreach ($compatibilityReview in @(
 # jack, or bound that remains honestly identified in the catalog.
 $airborneImpactNamePattern =
     '(?i)\b(?:jump(?:ing|s)?|hop(?:ping|s)?|pogo|bounce(?:s)?|jack(?:s)?|bound(?:s|ing)?)\b'
-$airborneImpactProfilePattern = '(?:Jump|Hop|Pogo|Bounce|Jack|Bound)'
+# Profiles use PascalCase. Match complete motion tokens case-sensitively so
+# OverheadChop is not mistaken for a Hop.
+$airborneImpactProfilePattern = '(?-i:(?:Jump(?:ing|s)?|Hop(?:ping|s)?|Pogo|Bounce(?:s)?|Jack(?:s)?|Bound(?:s|ing)?)(?=[A-Z]|$))'
 $hardFloorAirborneImpactExercises = @(
     $catalog | Where-Object {
         ([string]$_.name -match $airborneImpactNamePattern -or

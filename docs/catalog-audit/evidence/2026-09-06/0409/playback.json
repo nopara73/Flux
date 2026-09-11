@@ -1,0 +1,3438 @@
+{
+  "id": 409,
+  "fixture": {
+    "name": "Full Neck Circles",
+    "group": {
+      "id": "r30.posterior-neck-suboccipital.set1.block1",
+      "displayName": "Posterior neck and suboccipital muscles",
+      "order": 7,
+      "canonicalGroups": [
+        "PosteriorNeckAndSuboccipitalMuscles"
+      ],
+      "selectionGroupId": "r30.posterior-neck-suboccipital",
+      "exerciseOverrideId": 409,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "Clockwise",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "FirstDirection"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 1552,
+      "name": "Full Neck Circles",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1868,
+      "name": "Full Neck Circles",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2277,
+      "name": "Full Neck Circles",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2539,
+      "name": "Full Neck Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0.111823,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2809,
+      "name": "Full Neck Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0.382751,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3020,
+      "name": "Full Neck Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0.593158,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3294,
+      "name": "Full Neck Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0.867134,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3515,
+      "name": "Full Neck Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 1.089465,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3723,
+      "name": "Full Neck Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 1.297139,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3952,
+      "name": "Full Neck Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 1.525185,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4161,
+      "name": "Full Neck Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 1.733824,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4377,
+      "name": "Full Neck Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 1.953127,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4654,
+      "name": "Full Neck Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 2.228417,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4865,
+      "name": "Full Neck Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 2.439064,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5073,
+      "name": "Full Neck Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 2.646385,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5289,
+      "name": "Full Neck Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 2.861958,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5491,
+      "name": "Full Neck Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 3.064378,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5709,
+      "name": "Full Neck Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 3.283291,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5926,
+      "name": "Full Neck Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 3.50251,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6163,
+      "name": "Full Neck Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 3.739188,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6373,
+      "name": "Full Neck Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 3.946191,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6586,
+      "name": "Full Neck Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 4.158857,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6802,
+      "name": "Full Neck Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 4.376338,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7007,
+      "name": "Full Neck Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 4.581044,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7223,
+      "name": "Full Neck Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 4.79686,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7445,
+      "name": "Full Neck Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 5.018369,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7661,
+      "name": "Full Neck Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 5.235114,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7875,
+      "name": "Full Neck Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 5.449338,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8093,
+      "name": "Full Neck Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 5.666547,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8307,
+      "name": "Full Neck Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 5.881036,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8515,
+      "name": "Full Neck Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 6.088607,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8726,
+      "name": "Full Neck Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 6.300315,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8757,
+      "name": "Full Neck Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 6.3316,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9070,
+      "name": "Full Neck Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 6.643236,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9287,
+      "name": "Full Neck Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 6.86017,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9496,
+      "name": "Full Neck Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 7.069266,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9704,
+      "name": "Full Neck Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 7.277722,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9915,
+      "name": "Full Neck Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 7.488179,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10122,
+      "name": "Full Neck Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 7.695361,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10325,
+      "name": "Full Neck Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 7.898605,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10544,
+      "name": "Full Neck Circles",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 8.116829,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10807,
+      "name": "Full Neck Circles",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 8.382202,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11016,
+      "name": "Full Neck Circles",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 8.589351,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11235,
+      "name": "Full Neck Circles",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 8.808209,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11450,
+      "name": "Full Neck Circles",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 9.023837,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11664,
+      "name": "Full Neck Circles",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 9.238148,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11878,
+      "name": "Full Neck Circles",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 9.451195,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12088,
+      "name": "Full Neck Circles",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 9.661036,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12301,
+      "name": "Full Neck Circles",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 9.874577,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12514,
+      "name": "Full Neck Circles",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 10.088579,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12733,
+      "name": "Full Neck Circles",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 10.306555,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12954,
+      "name": "Full Neck Circles",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 10.527772,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13157,
+      "name": "Full Neck Circles",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 10.735498,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13369,
+      "name": "Full Neck Circles",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 10.941625,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13581,
+      "name": "Full Neck Circles",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 11.154319,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13792,
+      "name": "Full Neck Circles",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 11.364856,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14001,
+      "name": "Full Neck Circles",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 11.574547,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14216,
+      "name": "Full Neck Circles",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 11.789852,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14426,
+      "name": "Full Neck Circles",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 11.999402,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14665,
+      "name": "Full Neck Circles",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0.007581,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14891,
+      "name": "Full Neck Circles",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0.236271,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15097,
+      "name": "Full Neck Circles",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0.43867,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15312,
+      "name": "Full Neck Circles",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0.654754,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15536,
+      "name": "Full Neck Circles",
+      "countdown": "31",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0.878762,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15546,
+      "name": "Full Neck Circles",
+      "countdown": "31",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 0.88853,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15796,
+      "name": "Full Neck Circles",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0409.mp4?v=62c595a5b8061ffe0dda8538f8ad83c2ab463fd002d724971f0140adab2dfe94",
+        "time": 1.137566,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16253,
+      "name": "Full Neck Circles",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.307985,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16497,
+      "name": "Full Neck Circles",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-neck-suboccipital.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.552012,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16784,
+      "name": "Full Neck Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.112203,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16867,
+      "name": "Full Neck Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.195057,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16918,
+      "name": "Full Neck Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.246767,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17192,
+      "name": "Full Neck Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.527354,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17403,
+      "name": "Full Neck Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.731406,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17618,
+      "name": "Full Neck Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.946071,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17832,
+      "name": "Full Neck Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 1.161174,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18043,
+      "name": "Full Neck Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 1.371208,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18246,
+      "name": "Full Neck Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 1.57509,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18462,
+      "name": "Full Neck Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 1.791505,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18669,
+      "name": "Full Neck Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 1.998479,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18909,
+      "name": "Full Neck Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 2.237828,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19119,
+      "name": "Full Neck Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 2.447841,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19331,
+      "name": "Full Neck Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 2.659473,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19541,
+      "name": "Full Neck Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 2.869983,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19756,
+      "name": "Full Neck Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 3.085435,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19985,
+      "name": "Full Neck Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 3.314128,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20194,
+      "name": "Full Neck Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 3.522292,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20409,
+      "name": "Full Neck Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 3.737664,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20617,
+      "name": "Full Neck Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 3.945501,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20834,
+      "name": "Full Neck Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 4.162955,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21043,
+      "name": "Full Neck Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 4.371966,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21249,
+      "name": "Full Neck Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 4.579335,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21458,
+      "name": "Full Neck Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 4.786691,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21673,
+      "name": "Full Neck Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 5.002543,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21888,
+      "name": "Full Neck Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 5.217035,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22109,
+      "name": "Full Neck Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 5.439981,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22383,
+      "name": "Full Neck Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 5.711981,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22608,
+      "name": "Full Neck Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 5.937545,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22817,
+      "name": "Full Neck Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 6.145883,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23028,
+      "name": "Full Neck Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 6.357675,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23256,
+      "name": "Full Neck Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 6.588796,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23263,
+      "name": "Full Neck Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 6.59205,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23543,
+      "name": "Full Neck Circles",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 6.872082,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23756,
+      "name": "Full Neck Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 7.085985,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23969,
+      "name": "Full Neck Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 7.298884,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24335,
+      "name": "Full Neck Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 7.66378,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24571,
+      "name": "Full Neck Circles",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 7.899156,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24786,
+      "name": "Full Neck Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 8.114911,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24993,
+      "name": "Full Neck Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 8.321663,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25215,
+      "name": "Full Neck Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 8.547499,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25428,
+      "name": "Full Neck Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 8.756986,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25642,
+      "name": "Full Neck Circles",
+      "countdown": "37",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 8.971232,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25864,
+      "name": "Full Neck Circles",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 9.192267,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26079,
+      "name": "Full Neck Circles",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 9.407764,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26290,
+      "name": "Full Neck Circles",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 9.618571,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26509,
+      "name": "Full Neck Circles",
+      "countdown": "36",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 9.839209,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26721,
+      "name": "Full Neck Circles",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 10.050642,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26935,
+      "name": "Full Neck Circles",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 10.264282,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27147,
+      "name": "Full Neck Circles",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 10.476054,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27354,
+      "name": "Full Neck Circles",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 10.683569,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27558,
+      "name": "Full Neck Circles",
+      "countdown": "35",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 10.886421,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27761,
+      "name": "Full Neck Circles",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 11.090479,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27978,
+      "name": "Full Neck Circles",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 11.307047,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28194,
+      "name": "Full Neck Circles",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 11.522768,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28398,
+      "name": "Full Neck Circles",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 11.727221,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28615,
+      "name": "Full Neck Circles",
+      "countdown": "34",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 11.944127,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28821,
+      "name": "Full Neck Circles",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 12.150269,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29025,
+      "name": "Full Neck Circles",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.134197,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29233,
+      "name": "Full Neck Circles",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.342813,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29452,
+      "name": "Full Neck Circles",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.561476,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29673,
+      "name": "Full Neck Circles",
+      "countdown": "33",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.782935,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29882,
+      "name": "Full Neck Circles",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 0.994454,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29893,
+      "name": "Full Neck Circles",
+      "countdown": "32",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 1.002308,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30124,
+      "name": "Full Neck Circles",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 1.235062,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30427,
+      "name": "Full Neck Circles",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 1.305155,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30654,
+      "name": "Full Neck Circles",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.posterior-neck-suboccipital.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_0409.mp4?v=96ded0de5d6af1d33d24fa4b219225686f68ed2e63fd4ce19f934c2e7a2eac4d",
+        "time": 1.305155,
+        "duration": 12.2,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30945,
+      "name": "Single-Arm Bent-Elbow External Rotation",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0228.mp4?v=d12247d2dd412ebca1a512513cd2748163833c6e765ed9d15c2ec081dbdf5d2a",
+        "time": 0.025509,
+        "duration": 4.8,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1868
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 2277
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 2539
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 8757
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 15546
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 15796
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 16253
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 16497
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 16784
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 16867
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 16918
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 23263
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 29893
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 30124
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 30427
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 30654
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 30945
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 2072,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 2355,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 15622,
+      "milliseconds": 29500
+    },
+    {
+      "realElapsedMs": 15865,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 16322,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 16560,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 29942,
+      "milliseconds": 30500
+    },
+    {
+      "realElapsedMs": 30193,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 30479,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 30731,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 12.2,
+      "realPlaybackMs": 12946,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 12.2,
+      "realPlaybackMs": 12908,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

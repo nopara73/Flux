@@ -1,0 +1,1590 @@
+{
+  "id": 480,
+  "fixture": {
+    "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+    "group": {
+      "id": "r30.breathing-muscles.set1.block1",
+      "displayName": "Breathing muscles",
+      "order": 13,
+      "canonicalGroups": [
+        "BreathingMuscles"
+      ],
+      "selectionGroupId": "r30.breathing-muscles",
+      "exerciseOverrideId": 480,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 1,
+      "setNumber": 1,
+      "setCount": 2,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 1227,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1498,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1893,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2209,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.210074,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2497,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.499699,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2716,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.719463,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2928,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.931598,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3147,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.150917,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3355,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.356964,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3574,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.576647,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3794,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.79759,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4003,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.003814,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4217,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.218463,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4219,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.220735,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4508,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.509923,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4724,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.725956,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4935,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.936956,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5145,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 3.154425,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5360,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 3.361049,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5564,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 3.566193,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5772,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.051917,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5994,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.271352,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6202,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.480582,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6415,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.692762,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6627,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.906371,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6631,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.908664,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6880,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.158579,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7246,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.breathing-muscles.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.121645,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7526,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.breathing-muscles.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.395647,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7882,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.212283,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7941,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.271395,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8003,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.334417,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8302,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.63649,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8516,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.847301,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8720,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.051286,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8928,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.259196,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9144,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.476163,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9357,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.688613,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9561,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.89327,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9785,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.116411,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9993,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.3244,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9999,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.329547,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10258,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.589448,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10466,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 2.797464,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10673,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 3.004651,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10894,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 3.225824,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11107,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 3.440534,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11326,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 3.658111,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11537,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.118111,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11748,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.331992,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11954,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.536091,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12167,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.748448,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12379,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 0.960228,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12588,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.171754,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12595,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.176022,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12843,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.breathing-muscles.set2.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.424201,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13120,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.breathing-muscles.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.613298,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13402,
+      "name": "Three-Part Arm Inhale with Forceful Fold Exhale",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.breathing-muscles.set2.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0480.mp4?v=d87a9133acd4e20284d97366b8e997a89a1f1b4df9e59b2a2f632046344a0c4c",
+        "time": 1.613298,
+        "duration": 3.7,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13872,
+      "name": "Alternating Inhale-Twist, Exhale-Push",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0401.mp4?v=8a1bb90a2ca9f51aa70cc6e9223be635398d38a62c1b926859ecf9868ad1c7e2",
+        "time": 0.051725,
+        "duration": 12.1,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1498
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1893
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 2209
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 4219
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 6631
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 6880
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 7246
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 7526
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 7882
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 7941
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 8003
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 9999
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 12595
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 12843
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 13120
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 13402
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 13872
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1710,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1995,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 6709,
+      "milliseconds": 38500
+    },
+    {
+      "realElapsedMs": 6939,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 7335,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 7601,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 12660,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 12925,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 13226,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 13551,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 3.7,
+      "realPlaybackMs": 4335,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 3.7,
+      "realPlaybackMs": 4500,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

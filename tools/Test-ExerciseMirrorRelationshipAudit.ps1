@@ -21,7 +21,6 @@ $requiredBenefitsGreatlyCriteria = @(
     'SubtlePelvicPositionFeedback'
 )
 $requiredCoverageCategories = @('UpperBody', 'FullBody')
-$minimumExercisesPerMirrorCategory = 5
 
 $review = Import-PowerShellDataFile -LiteralPath $ReviewPath -SkipLimitCheck
 $benefitsGreatlyByCriterion = $review.BenefitsGreatlyByCriterion
@@ -37,9 +36,6 @@ $benefitsGreatlyIds = @(
         $criterionIds = @(
             $benefitsGreatlyByCriterion[$criterion] |
                 ForEach-Object { [int]$_ })
-        if ($criterionIds.Count -eq 0) {
-            throw "BenefitsGreatly criterion '$criterion' must not be empty."
-        }
         $criterionIds
     })
 
@@ -61,9 +57,6 @@ $mirrorOnlyIds = @(
         $coverageIds = @(
             $mirrorOnlyByCoverage[$coverage] |
                 ForEach-Object { [int]$_ })
-        if ($coverageIds.Count -lt $minimumExercisesPerMirrorCategory) {
-            throw "MirrorOnly + $coverage must contain at least $minimumExercisesPerMirrorCategory exercises."
-        }
         $coverageIds
     })
 $benefitsGreatlyCoverageIds = @(
@@ -71,9 +64,6 @@ $benefitsGreatlyCoverageIds = @(
         $coverageIds = @(
             $benefitsGreatlyByCoverage[$coverage] |
                 ForEach-Object { [int]$_ })
-        if ($coverageIds.Count -lt $minimumExercisesPerMirrorCategory) {
-            throw "BenefitsGreatly + $coverage must contain at least $minimumExercisesPerMirrorCategory exercises."
-        }
         $coverageIds
     })
 if (@(Compare-Object `

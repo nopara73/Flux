@@ -1,0 +1,1525 @@
+{
+  "id": 1018,
+  "fixture": {
+    "name": "Standing Torso Circles",
+    "group": {
+      "id": "r30.deep-intersegmental-back.set1.block1",
+      "displayName": "Deep and intersegmental back",
+      "order": 12,
+      "canonicalGroups": [
+        "DeepAndIntersegmentalBack"
+      ],
+      "selectionGroupId": "r30.deep-intersegmental-back",
+      "exerciseOverrideId": 1018,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "None",
+      "sequenceDirectionCue": "Counterclockwise",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "FirstDirection"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "none; production application logic unchanged",
+    "appSourceSha256": "5f68829e533e1ee5b753ea92f04651460ae61832517661fb60861bc983c5e64c",
+    "workoutSourceSha256": "3c72d89f2a31ee092c274f37c5c15ac053bfca8d3b8b5fbc555a3ee98bb0a046",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 820,
+      "name": "Standing Torso Circles",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1187,
+      "name": "Standing Torso Circles",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1531,
+      "name": "Standing Torso Circles",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1772,
+      "name": "Standing Torso Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0.084568,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2069,
+      "name": "Standing Torso Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0.37863,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2279,
+      "name": "Standing Torso Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0.590115,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2502,
+      "name": "Standing Torso Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0.812111,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2719,
+      "name": "Standing Torso Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 1.033159,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2941,
+      "name": "Standing Torso Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 1.25498,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3150,
+      "name": "Standing Torso Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 1.459955,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3358,
+      "name": "Standing Torso Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 1.668602,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3563,
+      "name": "Standing Torso Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 1.874356,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3569,
+      "name": "Standing Torso Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 1.879307,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3851,
+      "name": "Standing Torso Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 2.161179,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4061,
+      "name": "Standing Torso Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 2.370843,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4272,
+      "name": "Standing Torso Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 2.583308,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4484,
+      "name": "Standing Torso Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 2.795303,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4691,
+      "name": "Standing Torso Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 3.000933,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4899,
+      "name": "Standing Torso Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 3.209081,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5107,
+      "name": "Standing Torso Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0.001993,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5313,
+      "name": "Standing Torso Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0.206973,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5518,
+      "name": "Standing Torso Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0.411767,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5722,
+      "name": "Standing Torso Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0.615268,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5934,
+      "name": "Standing Torso Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0.833168,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5944,
+      "name": "Standing Torso Circles",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 0.837717,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6192,
+      "name": "Standing Torso Circles",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1018.mp4?v=8c0f26cfa96dce8fab1a23cc3fd30730352a3d52019502e0e88d3c7931ef8ff5",
+        "time": 1.085189,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6461,
+      "name": "Standing Torso Circles",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.089338,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6733,
+      "name": "Standing Torso Circles",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-intersegmental-back.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.362913,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7018,
+      "name": "Standing Torso Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.003207,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7119,
+      "name": "Standing Torso Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.10547,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7218,
+      "name": "Standing Torso Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.202465,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7510,
+      "name": "Standing Torso Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.494797,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7721,
+      "name": "Standing Torso Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.706035,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7937,
+      "name": "Standing Torso Circles",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.921292,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8142,
+      "name": "Standing Torso Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 1.134516,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8355,
+      "name": "Standing Torso Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 1.339817,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8572,
+      "name": "Standing Torso Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 1.558103,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8780,
+      "name": "Standing Torso Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 1.764943,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8990,
+      "name": "Standing Torso Circles",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 1.975381,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9197,
+      "name": "Standing Torso Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 2.182345,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9203,
+      "name": "Standing Torso Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 2.186824,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9514,
+      "name": "Standing Torso Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 2.499396,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9722,
+      "name": "Standing Torso Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 2.708294,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9930,
+      "name": "Standing Torso Circles",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 2.915087,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10135,
+      "name": "Standing Torso Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 3.122492,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10346,
+      "name": "Standing Torso Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 3.332212,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10567,
+      "name": "Standing Torso Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.146173,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10777,
+      "name": "Standing Torso Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.353683,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10980,
+      "name": "Standing Torso Circles",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.557764,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11185,
+      "name": "Standing Torso Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.76197,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11392,
+      "name": "Standing Torso Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.969215,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11396,
+      "name": "Standing Torso Circles",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 0.972869,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11712,
+      "name": "Standing Torso Circles",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 1.291206,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12090,
+      "name": "Standing Torso Circles",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 1.534151,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12411,
+      "name": "Standing Torso Circles",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-intersegmental-back.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_direction_videos/exercise_1018.mp4?v=f03fea9860cd40a20722ff1d8fa210eb988e02cf8000ecd2993e4dde2c927892",
+        "time": 1.534151,
+        "duration": 3.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12988,
+      "name": "Shibashi Side Shift with Rainbow Reach",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0059.mp4?v=c3746e9781eefdbd538939d37577336d84a75a4ff690aa824bb678170bed8cae",
+        "time": 0.019409,
+        "duration": 9.85,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 1187
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1531
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1772
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 3569
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 5944
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 6192
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 6461
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 6733
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 7018
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 7119
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 7218
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 9203
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 11396
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 11712
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 12090
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 12411
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 12988
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1344,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1596,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 6013,
+      "milliseconds": 38500
+    },
+    {
+      "realElapsedMs": 6268,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 6555,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6803,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 11528,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 11870,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 12235,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 12534,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 3.4,
+      "realPlaybackMs": 4085,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 3.4,
+      "realPlaybackMs": 4096,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

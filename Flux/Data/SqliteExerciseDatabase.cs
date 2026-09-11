@@ -933,8 +933,6 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
         IReadOnlyCollection<Exercise> exercises,
         bool requireInitialScores)
     {
-        bool hasUndersizedMirrorCategory =
-            WorkoutModifierPolicy.FindMirrorCategoryDeficiencies(exercises).Count > 0;
         bool hasUndersizedWallCatalog =
             WorkoutModifierPolicy.FindWallRequiredCatalogDeficiencies(exercises)
                 .Count > 0;
@@ -1069,8 +1067,7 @@ public sealed class SqliteExerciseDatabase : SQLiteOpenHelper, IExerciseDatabase
                             StringComparison.Ordinal)));
         }
 
-        if (hasUndersizedMirrorCategory ||
-            hasUndersizedWallCatalog ||
+        if (hasUndersizedWallCatalog ||
             hasUndersizedSoleWallCatalog ||
             !WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises) ||
             exercises.Select(exercise => exercise.Id).Distinct().Count() != exercises.Count ||

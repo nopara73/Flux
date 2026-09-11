@@ -1,0 +1,1374 @@
+{
+  "id": 396,
+  "fixture": {
+    "name": "Standing Front-to-Side Knee Lifts",
+    "group": {
+      "id": "r30.deep-hip-rotators.set1.block1",
+      "displayName": "Deep hip rotators",
+      "order": 45,
+      "canonicalGroups": [
+        "DeepHipRotators"
+      ],
+      "selectionGroupId": "r30.deep-hip-rotators",
+      "exerciseOverrideId": 396,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 559,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 971,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1294,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1564,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.09828,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1877,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.409241,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2085,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.615252,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2290,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.819453,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2496,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.027172,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2703,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.232978,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2915,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.445053,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3125,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.655856,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3130,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.65968,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3397,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.926208,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3606,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 2.136442,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3817,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 2.346931,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4051,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 2.580741,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4259,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 2.787918,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4462,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.083303,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4669,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.290003,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4872,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.495464,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5079,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.700818,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5282,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.903614,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5285,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.905685,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5523,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.144838,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5789,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.04537,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6039,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.295636,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6300,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.090093,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6375,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.165226,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6429,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.218646,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6683,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.473344,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6889,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.678874,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7092,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.892897,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7329,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.137035,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7555,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.347615,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7834,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.625792,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8048,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.844567,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8062,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.856715,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8357,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 2.224463,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8674,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 2.464446,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8878,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 2.667441,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9081,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 2.870923,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9289,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.241779,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9583,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.469741,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9794,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.682609,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10022,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.921601,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10043,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 0.92705,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10268,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.deep-hip-rotators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.162046,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10584,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.3193,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10848,
+      "name": "Standing Front-to-Side Knee Lifts",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.deep-hip-rotators.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0396.mp4?v=b1a20727d46bfd5d87cbf3f627f4d08b8950e05895f09d2c592065a17b1d5f90",
+        "time": 1.3193,
+        "duration": 2.9,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11203,
+      "name": "Unsupported Standing Toe Raises",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0191.mp4?v=eeaffb546758e0d93609819a3e8f9a07328059b74a79a58d532cc744ef74eecd",
+        "time": 0.024952,
+        "duration": 2.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 971
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 1294
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1564
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 3130
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 5285
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 5523
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 5789
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 6039
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 6300
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 6375
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 6429
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 8062
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 10043
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 10268
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 10584
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 10848
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 11203
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 1119,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1382,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 5345,
+      "milliseconds": 39500
+    },
+    {
+      "realElapsedMs": 5604,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 5860,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 6101,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 10095,
+      "milliseconds": 40500
+    },
+    {
+      "realElapsedMs": 10386,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 10668,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 10966,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 2.9,
+      "realPlaybackMs": 3608,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 2.9,
+      "realPlaybackMs": 3561,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}
