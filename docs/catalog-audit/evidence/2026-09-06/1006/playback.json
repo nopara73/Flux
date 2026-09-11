@@ -1,0 +1,1669 @@
+{
+  "id": 1006,
+  "fixture": {
+    "name": "Palm-Up Diagonal Curl Across Chest",
+    "group": {
+      "id": "r30.forearm-flexors-pronators.set1.block1",
+      "displayName": "Forearm flexors and pronators",
+      "order": 7,
+      "canonicalGroups": [
+        "ForearmFlexorsAndPronators"
+      ],
+      "selectionGroupId": "r30.forearm-flexors-pronators",
+      "exerciseOverrideId": 1006,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "auditPreview": {
+    "draftCatalog": true,
+    "deferredGate": "bootstrap mirror category only",
+    "appSourceSha256": "3f73bd238d12751e07a71d1811dd5622e4b28444776930e3c584af7532ac2b0e",
+    "workoutSourceSha256": "91dad6a5d5d25ac8f685266d7057c2247d0d046b95935d3bb34d456ae3a69843",
+    "releaseApproved": false
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 2098,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2309,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2651,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2919,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.115753,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3196,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.399942,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3409,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.606484,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3628,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.861447,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3940,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.136816,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4159,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.357128,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4366,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.563439,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4571,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.768373,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4783,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.979852,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4992,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 2.190208,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5206,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 2.403184,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5219,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 2.415786,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5478,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 2.675602,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5682,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 2.88033,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5900,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 3.097714,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6121,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 3.318246,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6330,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 3.52712,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6544,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 3.743527,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6756,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 3.954135,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6976,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.090629,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7203,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.316655,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7409,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.522661,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7630,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.74562,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7840,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.953493,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7851,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.964499,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8093,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.213441,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8408,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.058628,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8661,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.forearm-flexors-pronators.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.311667,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8934,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.141469,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9013,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.219394,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9075,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.281735,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9345,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.554211,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9566,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.772104,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9781,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.989705,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9993,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.199385,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10215,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.42474,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10432,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.640327,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10640,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.846371,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10846,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 2.052819,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11051,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 2.25872,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11260,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 2.467729,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11269,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 2.476515,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11552,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 2.759503,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11793,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 3.000338,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12009,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 3.216203,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12233,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 3.441232,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12446,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 3.653543,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12651,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 3.857236,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12893,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.004433,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13107,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.216084,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13315,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.424403,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13528,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.637942,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13739,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 0.848412,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13951,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.06075,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13954,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.063156,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14201,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "2",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.310654,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14497,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.406429,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14752,
+      "name": "Palm-Up Diagonal Curl Across Chest",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.forearm-flexors-pronators.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_1006.mp4?v=b08f08514273fa54da42326aba732b66b8489a4daa0716e1fc8b7434b8c4aa3d",
+        "time": 1.406429,
+        "duration": 4.05,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15307,
+      "name": "Standing Shoulder CAR",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.212603,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 2309
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 2651
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 2919
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 5219
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 7851
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 8093
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 8408
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 8661
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 8934
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 9013
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 9075
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 11269
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 13954
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 14201
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 14497
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 14752
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 15307
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 2410,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 2744,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 7917,
+      "milliseconds": 38500
+    },
+    {
+      "realElapsedMs": 8198,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 8488,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 8717,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 14025,
+      "milliseconds": 38500
+    },
+    {
+      "realElapsedMs": 14267,
+      "milliseconds": 2100
+    },
+    {
+      "realElapsedMs": 14576,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 14814,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 4.05,
+      "realPlaybackMs": 4861,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 4.05,
+      "realPlaybackMs": 4816,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

@@ -23,8 +23,6 @@ namespace Flux;
 public partial class MainActivity : Activity
 {
     private const int CountdownSeconds = 45;
-    private const int DirectionSecondPhaseOffsetMilliseconds = 20_000;
-    private const int DirectionSegmentDurationMilliseconds = 20_000;
     private const int RestSeconds = 15;
     private const long PhaseMotionDurationMilliseconds = 160L;
     private const long HueMotionDurationMilliseconds = 120L;
@@ -305,7 +303,13 @@ public partial class MainActivity : Activity
         _sessionService = startup.SessionService;
         _applicationStartupCompleted = true;
 
-        if (_state.WorkoutCompleted && !_state.CompletionAcknowledged)
+        if (_state.WorkoutSetupReviewRequired)
+        {
+            CancelQueuedWorkoutStart();
+            ShowDurationSelection();
+            _ = ReviewUpdatedWorkoutAsync();
+        }
+        else if (_state.WorkoutCompleted && !_state.CompletionAcknowledged)
         {
             CancelQueuedWorkoutStart();
             ShowCongratulations();
@@ -565,6 +569,7 @@ public partial class MainActivity : Activity
 
     protected override void OnDestroy()
     {
+        _workoutScopeDialog?.Dismiss();
         _activityDestroyed = true;
         _ouraReadCancellation?.Cancel();
         _workoutPreparationCancellation?.Cancel();
@@ -2686,6 +2691,19 @@ public partial class MainActivity : Activity
             int minutes = _selectedWorkoutMinutes;
             WorkoutModifiers modifiers = WorkoutModifierPolicy.Normalize(
                 _selectedWorkoutModifiers);
+            WorkoutAvailability availability = _sessionService.GetWorkoutAvailability(_state, minutes, modifiers);
+            bool acceptedLimitedCoverage = false;
+            if (!availability.CanStart || availability.RequiresAcceptance)
+            {
+                acceptedLimitedCoverage = await ReviewWorkoutScopeAsync(availability);
+                if (_activityDestroyed) return;
+                if (!acceptedLimitedCoverage)
+                {
+                    _beginWorkoutButton.Enabled = true;
+                    _beginWorkoutButton.Alpha = 1f;
+                    return;
+                }
+            }
             QueueWorkoutPreparation();
             PreparedWorkout? prepared = _preparedWorkout is
                 { Minutes: var preparedMinutes, Modifiers: var preparedModifiers }
@@ -2723,16 +2741,25 @@ public partial class MainActivity : Activity
             _workoutPreparationCancellation = null;
             _workoutPreparationTask = null;
             _preparedWorkout = null;
-            _state = prepared.State;
-            _state.OuraRecovery = GetAvailableOuraSnapshot();
+            WorkoutState preparedState = prepared.State;
+            preparedState.OuraRecovery = GetAvailableOuraSnapshot();
             if (prepared.IsReconfiguration)
             {
+                _state = preparedState;
                 _stateStore.Save(_state);
                 RestoreWorkoutAfterSetup();
                 return;
             }
 
-            _sessionService.ActivatePreparedWorkout(_state);
+            WorkoutAvailability finalScope = _sessionService.GetWorkoutAvailability(preparedState, minutes, preparedState.ActiveWorkoutModifiers);
+            if (finalScope.RequiresAcceptance && !finalScope.Groups.Select(group => group.Id).SequenceEqual(availability.Groups.Select(group => group.Id)))
+            {
+                acceptedLimitedCoverage = await ReviewWorkoutScopeAsync(finalScope);
+                if (_activityDestroyed) return;
+                if (!acceptedLimitedCoverage) { _beginWorkoutButton.Enabled = true; _beginWorkoutButton.Alpha = 1f; return; }
+            }
+            _sessionService.ActivatePreparedWorkout(preparedState, acceptedLimitedCoverage);
+            _state = preparedState;
             LogOuraDecision(workoutStarted: true);
             _stateStore.Save(_state);
             ShowNextExercise();
@@ -2747,6 +2774,14 @@ public partial class MainActivity : Activity
             _beginWorkoutButton.Enabled = true;
             _beginWorkoutButton.Alpha = 1f;
             Android.Util.Log.Error("Flux", $"Unable to start workout: {error}");
+            if (!_activityDestroyed)
+            {
+                WorkoutAvailability unavailable = error is WorkoutUnavailableException known
+                    ? known.Availability
+                    : _sessionService.GetWorkoutAvailability(_state, _selectedWorkoutMinutes, _selectedWorkoutModifiers)
+                        with { Groups = [] };
+                await ReviewWorkoutScopeAsync(unavailable);
+            }
         }
     }
 
@@ -2892,7 +2927,7 @@ public partial class MainActivity : Activity
                     (_workoutPhase == WorkoutPhase.Rest &&
                         _previewingUpcomingSequenceBlock))
                 {
-                    _exerciseVideo.SeekTo(GetCurrentMediaSegmentStartMilliseconds());
+                    _exerciseVideo.SeekTo(0);
                     ApplyCurrentMediaPlaybackState();
                     return;
                 }
@@ -2932,9 +2967,7 @@ public partial class MainActivity : Activity
         _mediaReady = false;
         _loopExerciseVideo =
             !holdDuringMove &&
-            !holdDuringRest &&
-            workoutGroup.SequenceMediaSegment ==
-                ExerciseSequenceMediaSegment.Full;
+            !holdDuringRest;
         _freezeHoldAtEnd = holdDuringMove || holdDuringRest;
         _activeMediaPlayer = null;
 
@@ -3135,10 +3168,9 @@ public partial class MainActivity : Activity
 
     private string GetExerciseVideoAssetPath(Exercise exercise)
     {
-        return _mediaWorkoutGroup?.SequenceMediaSegment ==
-                ExerciseSequenceMediaSegment.Full
-            ? exercise.Video
-            : $"exercise_direction_videos/exercise_{exercise.Id:D4}.mp4";
+        return exercise.GetVideoAssetPath(
+            _mediaWorkoutGroup?.SequenceMediaSegment ??
+                ExerciseSequenceMediaSegment.Full);
     }
 
     private void SetStartAvailability(bool available)
@@ -3915,7 +3947,6 @@ public partial class MainActivity : Activity
         }
         _countdownProgress.Progress = (int)boundedMilliseconds;
         ApplyMovementPhase(state);
-        EnforceDirectionMediaSegment(state.Phase);
     }
 
     private int GetCurrentMovementDurationMilliseconds() =>
@@ -4020,56 +4051,10 @@ public partial class MainActivity : Activity
 
         ClearHoldFrame();
         _exerciseVideo.Pause();
-        int positionMilliseconds = GetCurrentMediaSegmentStartMilliseconds();
+        int positionMilliseconds = 0;
         _exerciseVideo.SeekTo(positionMilliseconds);
         RestartHoldOrResumeRepetition();
     }
-
-    private void EnforceDirectionMediaSegment(MovementPhase phase)
-    {
-        if (_mediaWorkoutGroup?.SequenceMediaSegment ==
-                ExerciseSequenceMediaSegment.Full ||
-            _activeMediaPlayer is null ||
-            !_mediaReady ||
-            phase != MovementPhase.Continuous)
-        {
-            return;
-        }
-
-        int segmentStartMilliseconds = GetCurrentMediaSegmentStartMilliseconds();
-        int segmentEndMilliseconds =
-            segmentStartMilliseconds + DirectionSegmentDurationMilliseconds;
-        int positionMilliseconds;
-        try
-        {
-            positionMilliseconds = _activeMediaPlayer.CurrentPosition;
-        }
-        catch (Java.Lang.IllegalStateException)
-        {
-            RecoverInvalidMediaPlayerState();
-            return;
-        }
-        catch (ObjectDisposedException)
-        {
-            RecoverInvalidMediaPlayerState();
-            return;
-        }
-        if (positionMilliseconds >= segmentStartMilliseconds &&
-            positionMilliseconds < segmentEndMilliseconds)
-        {
-            return;
-        }
-
-        _exerciseVideo.Pause();
-        _exerciseVideo.SeekTo(segmentStartMilliseconds);
-        ApplyCurrentMediaPlaybackState();
-    }
-
-    private int GetCurrentMediaSegmentStartMilliseconds() =>
-        _mediaWorkoutGroup?.SequenceMediaSegment ==
-            ExerciseSequenceMediaSegment.SecondDirection
-            ? DirectionSecondPhaseOffsetMilliseconds
-            : 0;
 
     private void RecoverInvalidMediaPlayerState()
     {

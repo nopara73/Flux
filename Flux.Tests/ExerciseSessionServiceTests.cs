@@ -227,12 +227,12 @@ public sealed class ExerciseSessionServiceTests
     [Fact]
     public void UnreviewedCatalogCannotSilentlyTreatEnabledModifierAsOff()
     {
-        Exercise[] exercises = ThreeGroupCatalog();
+        Exercise[] exercises = ThreeGroupCatalog(ExerciseInsectCompatibility.Unreviewed);
         var service = new ExerciseSessionService(exercises, new Random(1));
         var state = new WorkoutState();
 
         Assert.False(WorkoutModifierPolicy.IsCatalogMetadataComplete(exercises));
-        Assert.Throws<InvalidOperationException>(() =>
+        Assert.Throws<WorkoutUnavailableException>(() =>
             service.StartWorkout(state, 3, WorkoutModifiers.Insect));
     }
 
@@ -975,7 +975,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(29, state.Version);
+        Assert.Equal(30, state.Version);
         Assert.Equal(
             WorkoutModifiers.HardFloor |
                 WorkoutModifiers.UpperBodyClothing,
@@ -1004,7 +1004,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(29, state.Version);
+        Assert.Equal(30, state.Version);
         Assert.Equal(
             WorkoutModifiers.Insect |
                 WorkoutModifiers.HardFloor |
@@ -1165,7 +1165,7 @@ public sealed class ExerciseSessionServiceTests
         }
         service.AcknowledgeCompletion(state);
 
-        service.StartWorkout(state, 45, WorkoutModifiers.Insect);
+        service.StartWorkout(state, 45, WorkoutModifiers.Insect, acceptLimitedCoverage: true);
 
         Assert.Equal(keptExerciseIds.Order(), state.LastKeptExerciseIds.Order());
         Assert.All(keptExerciseIds, keptExerciseId => Assert.Contains(
@@ -1705,6 +1705,59 @@ public sealed class ExerciseSessionServiceTests
         Assert.Equal(rounds[0].SelectionKey, rounds[1].SelectionKey);
         Assert.True(service.IsIntermediateSequenceBlock(restored, rounds[0]));
         Assert.False(service.IsIntermediateSequenceBlock(restored, rounds[1]));
+
+        service.AdvanceSequence(restored, rounds[0]);
+        long restDeadline = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 15_000;
+        service.BeginRest(restored, rounds[1], restDeadline);
+        Assert.Equal(rounds[1].Id, service.GetPendingRestGroup(restored)?.Id);
+        Assert.Equal(10_000, service.GetPendingRestMillisecondsRemaining(restored, restDeadline - 10_000));
+        Assert.True(service.KeepPendingRest(restored));
+
+        store.Save(restored);
+        WorkoutState resumedRest = store.Load();
+        service.Initialize(resumedRest);
+        Assert.Equal(rounds[1].Id, service.GetPendingRestGroup(resumedRest)?.Id);
+        Assert.True(resumedRest.PendingRestKept);
+    }
+
+    [Fact]
+    public void IntegrationMemberKeepsRestInItsPrimarySlot()
+    {
+        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(30).Groups.ToArray();
+        Exercise root = CloneWithLinkedSequenceMember(
+            ExerciseWithCoverage(1, CanonicalMuscleGroup.ShoulderAbductors, 30, 1,
+                score: 100, additionalSecondaries: [CanonicalMuscleGroup.RotatorCuff],
+                sideSequence: ExerciseSideSequence.ScreenRightThenLeft), 2);
+        Exercise member = CloneWithLinkedSequenceMember(
+            ExerciseWithCoverage(2, CanonicalMuscleGroup.Chest, 30, 1,
+                score: 100, additionalSecondaries: [CanonicalMuscleGroup.ShoulderAbductors]), 1);
+        Exercise[] exercises = [root, member, .. groups.Select((group, index) => QualifiedForGroup(index + 100, group))];
+        var service = new ExerciseSessionService(exercises, new Random(1));
+        var state = new WorkoutState
+        {
+            CatalogRevision = CatalogMigrationRules.CurrentCatalogRevision,
+            SelectedExerciseIds = new Dictionary<string, int> { ["r30.rotator-cuff"] = root.Id },
+            KeptExerciseRootIdsBySelectionGroupId = new Dictionary<string, HashSet<int>>
+            {
+                ["r30.rotator-cuff"] = [root.Id],
+            },
+        };
+        service.StartWorkout(state, 60, WorkoutModifiers.None);
+        WorkoutGroup target = service.GetActiveGroups(state).Last(group =>
+            service.GetSelectedExercise(state, group).Id == member.Id &&
+            group.CanonicalGroups.Contains(member.PrimaryCanonicalGroup));
+        CompleteRoundsBefore(service, state, target);
+        long restDeadline = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 15_000;
+        service.BeginRest(state, target, restDeadline);
+        Assert.Equal(target.Id, service.GetPendingRestGroup(state)?.Id);
+        Assert.Equal(10_000, service.GetPendingRestMillisecondsRemaining(state, restDeadline - 10_000));
+        Assert.True(service.KeepPendingRest(state));
+        var store = new FakeWorkoutStateStore();
+        store.Save(state);
+        WorkoutState resumed = store.Load();
+        service.Initialize(resumed);
+        Assert.Equal(target.Id, service.GetPendingRestGroup(resumed)?.Id);
+        Assert.True(resumed.PendingRestKept);
     }
 
     [Fact]
@@ -2162,7 +2215,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(29, state.Version);
+        Assert.Equal(30, state.Version);
         Assert.Equal(
             WorkoutModifiers.HardFloor |
                 WorkoutModifiers.UpperBodyClothing,
@@ -2222,7 +2275,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         WorkoutGroup pending = service.GetPendingMovementGroup(state)!;
-        Assert.Equal(29, state.Version);
+        Assert.Equal(30, state.Version);
         Assert.Equal(45, state.ActiveWorkoutMinutes);
         Assert.Equal(sequenceLead.SelectionKey, pending.SelectionKey);
         Assert.Equal(1, pending.SequenceBlockIndex);
@@ -2854,61 +2907,6 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void HigherScoringSecondaryAssignmentOutranksLowerScoringPrimary()
-    {
-        WorkoutGroup lower = MassGroupingTaxonomy.GetGroup(3, "r3.lower-limbs");
-        Exercise primary = QualifiedExercise(
-            1,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            -5);
-        Exercise secondary = Exercise(
-            2,
-            CanonicalMuscleGroup.SpinalExtensors,
-            100,
-            lower.CanonicalGroups.ToArray());
-        Exercise otherTorso = QualifiedExercise(3, CanonicalMuscleGroup.SpinalExtensors);
-        Exercise upper = QualifiedExercise(4, CanonicalMuscleGroup.ScapularGirdle);
-        var service = new ExerciseSessionService(
-            [primary, secondary, otherTorso, upper],
-            new Random(1));
-        var state = new WorkoutState();
-
-        service.StartWorkout(state, 3, WorkoutModifiers.None);
-
-        Assert.Equal(secondary.Id,
-            service.GetSelectedExercise(state, lower).Id);
-    }
-
-    [Fact]
-    public void MuscleBalanceCanOverridePrimaryTieWhenSecondaryChoiceImprovesLineup()
-    {
-        WorkoutGroup lower = MassGroupingTaxonomy.GetGroup(3, "r3.lower-limbs");
-        Exercise primary = ExerciseWithCoverage(
-            1,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            6,
-            5);
-        Exercise secondary = Exercise(
-            2,
-            CanonicalMuscleGroup.SpinalExtensors,
-            5,
-            lower.CanonicalGroups.ToArray());
-        var service = new ExerciseSessionService(
-        [
-            primary,
-            secondary,
-            QualifiedExercise(3, CanonicalMuscleGroup.SpinalExtensors),
-            QualifiedExercise(4, CanonicalMuscleGroup.ScapularGirdle),
-        ], new Random(1));
-        var state = new WorkoutState();
-
-        service.StartWorkout(state, 3, WorkoutModifiers.None);
-
-        Assert.Equal(secondary.Id, service.GetSelectedExercise(state, lower).Id);
-    }
-
-    [Fact]
     public void SelectionUsesHighestScoreBucketAmongPrimaryCandidates()
     {
         Exercise lowerScore = QualifiedExercise(
@@ -2934,112 +2932,6 @@ public sealed class ExerciseSessionServiceTests
             3,
             higherScore.PrimaryCanonicalGroup);
         Assert.Equal(higherScore.Id,
-            service.GetSelectedExercise(state, lower).Id);
-    }
-
-    [Fact]
-    public void CoverageGateRunsBeforeScoreRanking()
-    {
-        Exercise highScoreBelowThreshold = ExerciseWithCoverage(
-            1,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            5,
-            100);
-        Exercise lowerScoreQualified = ExerciseWithCoverage(
-            2,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            6,
-            -100);
-        var service = new ExerciseSessionService(
-        [
-            highScoreBelowThreshold,
-            lowerScoreQualified,
-            QualifiedExercise(3, CanonicalMuscleGroup.SpinalExtensors),
-            QualifiedExercise(4, CanonicalMuscleGroup.ScapularGirdle),
-        ], new Random(1));
-        var state = new WorkoutState();
-
-        service.StartWorkout(state, 3, WorkoutModifiers.None);
-
-        WorkoutGroup lower = MassGroupingTaxonomy.GetGroup(
-            3,
-            lowerScoreQualified.PrimaryCanonicalGroup);
-        Assert.Equal(
-            lowerScoreQualified.Id,
-            service.GetSelectedExercise(state, lower).Id);
-    }
-
-    [Fact]
-    public void SelectionPrefersBroadestCoverageWithinHighestScoreBucket()
-    {
-        Exercise narrow = ExerciseWithCoverage(
-            1,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            6,
-            3);
-        Exercise broad = ExerciseWithCoverage(
-            2,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            7,
-            3);
-        var service = new ExerciseSessionService(
-        [
-            narrow,
-            broad,
-            QualifiedExercise(3, CanonicalMuscleGroup.SpinalExtensors),
-            QualifiedExercise(4, CanonicalMuscleGroup.ScapularGirdle),
-        ], new Random(1));
-        var state = new WorkoutState();
-
-        service.StartWorkout(state, 3, WorkoutModifiers.None);
-
-        WorkoutGroup lower = MassGroupingTaxonomy.GetGroup(
-            3,
-            broad.PrimaryCanonicalGroup);
-        Assert.Equal(broad.Id,
-            service.GetSelectedExercise(state, lower).Id);
-    }
-
-    [Fact]
-    public void SelectionCountsCoverageOnlyInsideOwningRolledUpGroup()
-    {
-        Exercise crossBucketCoverage = ExerciseWithCoverage(
-            1,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            6,
-            3,
-        [
-            CanonicalMuscleGroup.SpinalExtensors,
-            CanonicalMuscleGroup.AbdominalWall,
-            CanonicalMuscleGroup.ScapularGirdle,
-            CanonicalMuscleGroup.ElbowExtensors,
-        ]);
-        Exercise inBucketCoverage = ExerciseWithCoverage(
-            2,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            7,
-            3);
-        var service = new ExerciseSessionService(
-        [
-            crossBucketCoverage,
-            inBucketCoverage,
-            QualifiedExercise(3, CanonicalMuscleGroup.SpinalExtensors),
-            QualifiedExercise(4, CanonicalMuscleGroup.ScapularGirdle),
-        ], new Random(1));
-        var state = new WorkoutState();
-
-        service.StartWorkout(state, 3, WorkoutModifiers.None);
-
-        WorkoutGroup lower = MassGroupingTaxonomy.GetGroup(
-            3,
-            inBucketCoverage.PrimaryCanonicalGroup);
-        Assert.Equal(inBucketCoverage.Id,
             service.GetSelectedExercise(state, lower).Id);
     }
 
@@ -3136,77 +3028,6 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void RejectedExerciseReplacementUsesCoverageRanking()
-    {
-        Exercise current = ExerciseWithCoverage(
-            1,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            6,
-            10);
-        Exercise narrowReplacement = ExerciseWithCoverage(
-            2,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            6,
-            9);
-        Exercise broadReplacement = ExerciseWithCoverage(
-            3,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            7,
-            9);
-        var service = new ExerciseSessionService(
-        [
-            current,
-            narrowReplacement,
-            broadReplacement,
-            QualifiedExercise(4, CanonicalMuscleGroup.SpinalExtensors, 10),
-            QualifiedExercise(5, CanonicalMuscleGroup.ScapularGirdle, 10),
-        ], new Random(1));
-        var state = new WorkoutState();
-        service.StartWorkout(state, 3, WorkoutModifiers.None);
-        WorkoutGroup[] groups = service.GetActiveGroups(state).ToArray();
-        WorkoutGroup lower = MassGroupingTaxonomy.GetGroup(
-            3,
-            current.PrimaryCanonicalGroup);
-
-        foreach (WorkoutGroup group in groups.Where(group => group.Id != lower.Id))
-        {
-            service.RecordOutcome(state, group, keep: true);
-        }
-        service.RecordOutcome(state, lower, keep: false);
-        service.FinishInterruptedWorkout(state);
-
-        Assert.Equal(broadReplacement.Id, state.SelectedExerciseIds[lower.Id]);
-    }
-
-    [Fact]
-    public void SecondaryOnlyCandidateIsEligibleWhenItMeetsCoverageGate()
-    {
-        WorkoutGroup lower = MassGroupingTaxonomy.GetGroup(3, "r3.lower-limbs");
-        Exercise secondaryForLower = Exercise(
-            1,
-            CanonicalMuscleGroup.SpinalExtensors,
-            10,
-            lower.CanonicalGroups.Take(6).ToArray());
-        var service = new ExerciseSessionService(
-        [
-            secondaryForLower,
-            QualifiedExercise(2, CanonicalMuscleGroup.SpinalExtensors, 10),
-            QualifiedExercise(3, CanonicalMuscleGroup.ScapularGirdle, 10),
-        ],
-            new Random(1));
-        var state = new WorkoutState();
-
-        service.StartWorkout(state, 3, WorkoutModifiers.None);
-
-        Assert.Equal(
-            secondaryForLower.Id,
-            state.SelectedExerciseIds[lower.Id]);
-    }
-
-    [Fact]
     public void ValidSavedSelectionIsNotRerankedWithoutUserRejection()
     {
         Exercise savedNarrow = ExerciseWithCoverage(
@@ -3243,46 +3064,6 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(savedNarrow.Id, state.SelectedExerciseIds[lower.Id]);
-    }
-
-    [Fact]
-    public void SavedSelectionBelowCoverageThresholdIsReplaced()
-    {
-        Exercise savedBelowThreshold = ExerciseWithCoverage(
-            1,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            5,
-            100);
-        Exercise qualifyingReplacement = ExerciseWithCoverage(
-            2,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            6);
-        WorkoutGroup lower = MassGroupingTaxonomy.GetGroup(
-            3,
-            savedBelowThreshold.PrimaryCanonicalGroup);
-        var service = new ExerciseSessionService(
-        [
-            savedBelowThreshold,
-            qualifyingReplacement,
-            QualifiedExercise(3, CanonicalMuscleGroup.SpinalExtensors),
-            QualifiedExercise(4, CanonicalMuscleGroup.ScapularGirdle),
-        ], new Random(1));
-        var state = new WorkoutState
-        {
-            ActiveWorkoutMinutes = 3,
-            SelectedExerciseIds = new Dictionary<string, int>
-            {
-                [lower.Id] = savedBelowThreshold.Id,
-            },
-        };
-
-        service.Initialize(state);
-
-        Assert.Equal(
-            qualifyingReplacement.Id,
-            state.SelectedExerciseIds[lower.Id]);
     }
 
     [Fact]
@@ -3374,48 +3155,6 @@ public sealed class ExerciseSessionServiceTests
         Assert.Equal(0, performed.Score);
         Assert.Equal(performed.Id, state.SelectedExerciseIds[lower.Id]);
         Assert.Equal(0, state.ActiveWorkoutMinutes);
-    }
-
-    [Fact]
-    public void StalePendingRestDoesNotPreserveSelectionBelowCoverageThreshold()
-    {
-        Exercise staleSelection = ExerciseWithCoverage(
-            1,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            5);
-        Exercise qualifyingReplacement = ExerciseWithCoverage(
-            2,
-            CanonicalMuscleGroup.MedialAndDeepKneeExtensors,
-            3,
-            6);
-        WorkoutGroup lower = MassGroupingTaxonomy.GetGroup(
-            3,
-            staleSelection.PrimaryCanonicalGroup);
-        var service = new ExerciseSessionService(
-        [
-            staleSelection,
-            qualifyingReplacement,
-            QualifiedExercise(3, CanonicalMuscleGroup.SpinalExtensors),
-            QualifiedExercise(4, CanonicalMuscleGroup.ScapularGirdle),
-        ], new Random(1));
-        var state = new WorkoutState
-        {
-            ActiveWorkoutMinutes = 3,
-            SelectedExerciseIds = new Dictionary<string, int>
-            {
-                [lower.Id] = staleSelection.Id,
-            },
-            PendingRestGroupId = lower.Id,
-            PendingRestEndsAtUnixMilliseconds = 0,
-        };
-
-        service.Initialize(state);
-
-        Assert.Null(state.PendingRestGroupId);
-        Assert.Equal(
-            qualifyingReplacement.Id,
-            state.SelectedExerciseIds[lower.Id]);
     }
 
     [Fact]
@@ -3539,33 +3278,6 @@ public sealed class ExerciseSessionServiceTests
                 .Select(WorkoutModifierPolicy.GetSessionMovementId)
                 .Distinct()
                 .Count());
-    }
-
-    [Fact]
-    public void InitializeUsesGlobalMatchingWhenPreservingASavedExerciseWouldDeadEnd()
-    {
-        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
-        Exercise shared = FullyCoveredExercise(1, groups[0].CanonicalGroups.First(), 100);
-        Exercise firstOnly = QualifiedForGroup(2, groups[0]);
-        Exercise lastOnly = QualifiedForGroup(3, groups[2]);
-        var service = new ExerciseSessionService(
-            [shared, firstOnly, lastOnly],
-            new Random(1));
-        var state = new WorkoutState
-        {
-            ActiveWorkoutMinutes = 3,
-            SelectedExerciseIds = new Dictionary<string, int>
-            {
-                [groups[0].Id] = shared.Id,
-                [groups[2].Id] = lastOnly.Id,
-            },
-        };
-
-        service.Initialize(state);
-
-        Assert.Equal(firstOnly.Id, state.SelectedExerciseIds[groups[0].Id]);
-        Assert.Equal(shared.Id, state.SelectedExerciseIds[groups[1].Id]);
-        Assert.Equal(lastOnly.Id, state.SelectedExerciseIds[groups[2].Id]);
     }
 
     [Fact]
@@ -3787,7 +3499,7 @@ public sealed class ExerciseSessionServiceTests
             3,
             service.GetDefaultWorkoutModifiers(state));
 
-        Assert.Equal(29, state.Version);
+        Assert.Equal(30, state.Version);
         Assert.Single(state.LegacyCompletedTrainingDayUnixMilliseconds);
         Assert.True(state.ActiveWorkoutIsLightDay);
         Assert.True(state.ActiveWorkoutSession!.IsLightDay);
@@ -4068,7 +3780,7 @@ public sealed class ExerciseSessionServiceTests
 
         WorkoutModifiers lightProfile = WorkoutModifiers.Silence |
             WorkoutModifiers.Light;
-        Assert.Equal(29, state.Version);
+        Assert.Equal(30, state.Version);
         Assert.Equal(WorkoutModifiers.Silence, state.LastWorkoutModifiers);
         Assert.Equal(lightProfile, state.ActiveWorkoutModifiers);
         Assert.True(state.ActiveWorkoutIsLightDay);
@@ -4268,6 +3980,10 @@ public sealed class ExerciseSessionServiceTests
         state.ActiveExtraSetSelectionGroupIds.Clear();
         state.ActiveSelectionGroupOrder.Clear();
 
+        // Produce persisted old-build work without asking the new strict Light engine to execute it.
+        state.ActiveWorkoutModifiers = WorkoutModifiers.None;
+        foreach (var selection in state.SelectedExerciseIds.Where(entry => entry.Key.StartsWith(profilePrefix)).ToArray())
+            state.SelectedExerciseIds[selection.Key[profilePrefix.Length..]] = selection.Value;
         WorkoutGroup completed = service.GetNextGroup(state)!;
         Assert.Equal(groups[0].Id, completed.SelectionKey);
         service.RecordOutcome(state, completed, keep: true);
@@ -4292,7 +4008,8 @@ public sealed class ExerciseSessionServiceTests
             pausedByUser: true);
         Assert.Single(state.ActiveWorkoutSession.Blocks);
         Assert.Single(state.ActiveWorkoutSession.Decisions);
-        state.Version = 28;
+        state.ActiveWorkoutModifiers = WorkoutModifiers.Light;
+        state.Version = 29;
 
         var restoredService = new ExerciseSessionService(
             exercises,
@@ -4301,7 +4018,7 @@ public sealed class ExerciseSessionServiceTests
             TimeZoneInfo.Utc);
         restoredService.Initialize(state);
 
-        Assert.Equal(29, state.Version);
+        Assert.Equal(30, state.Version);
         Assert.Equal(sessionId, state.ActiveWorkoutSession!.SessionId);
         Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[completed.Id]);
         Assert.Single(state.ActiveWorkoutSession.Decisions);
@@ -4478,7 +4195,7 @@ public sealed class ExerciseSessionServiceTests
 
         service.Initialize(state);
 
-        Assert.Equal(29, state.Version);
+        Assert.Equal(30, state.Version);
         Assert.True(state.ActiveWorkoutIsLightDay);
         Assert.Equal(
             easy.Id,
@@ -5061,49 +4778,6 @@ public sealed class ExerciseSessionServiceTests
     }
 
     [Fact]
-    public void PreparingRejectedReplacementsUsesGlobalMatchingInsteadOfGreedyOrder()
-    {
-        WorkoutGroup[] groups = MassGroupingTaxonomy.GetResolution(3).Groups.ToArray();
-        Exercise currentFirst = QualifiedForGroup(1, groups[0], 10);
-        Exercise currentMiddle = QualifiedForGroup(2, groups[1], 10);
-        Exercise currentLast = QualifiedForGroup(3, groups[2], 10);
-        Exercise sharedReplacement = FullyCoveredExercise(
-            4,
-            groups[0].CanonicalGroups.First(),
-            100);
-        Exercise firstOnlyReplacement = QualifiedForGroup(5, groups[0], 5);
-        var service = new ExerciseSessionService(
-            [
-                currentFirst,
-                currentMiddle,
-                currentLast,
-                sharedReplacement,
-                firstOnlyReplacement,
-            ],
-            new Random(1));
-        var state = new WorkoutState
-        {
-            ActiveWorkoutMinutes = 3,
-            SelectedExerciseIds = new Dictionary<string, int>
-            {
-                [groups[0].Id] = currentFirst.Id,
-                [groups[1].Id] = currentMiddle.Id,
-                [groups[2].Id] = currentLast.Id,
-            },
-        };
-        service.Initialize(state);
-
-        service.RecordOutcome(state, groups[0], keep: false);
-        service.RecordOutcome(state, groups[1], keep: false);
-        service.RecordOutcome(state, groups[2], keep: true);
-        service.AcknowledgeCompletion(state);
-
-        Assert.Equal(firstOnlyReplacement.Id, state.SelectedExerciseIds[groups[0].Id]);
-        Assert.Equal(sharedReplacement.Id, state.SelectedExerciseIds[groups[1].Id]);
-        Assert.Equal(currentLast.Id, state.SelectedExerciseIds[groups[2].Id]);
-    }
-
-    [Fact]
     public void AbruptClosePenalizesPendingRestExactlyOnceAndRespectsCompletedOutcomes()
     {
         Exercise[] exercises = ThreeGroupCatalog();
@@ -5373,7 +5047,7 @@ public sealed class ExerciseSessionServiceTests
         service.Initialize(state);
 
         Assert.Equal(5, state.LastWorkoutMinutes);
-        Assert.Equal(29, state.Version);
+        Assert.Equal(30, state.Version);
         foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
         {
             WorkoutGroup group = MassGroupingTaxonomy.GetGroup(
@@ -5522,7 +5196,7 @@ public sealed class ExerciseSessionServiceTests
 
     private static Exercise[] ThreeGroupCatalog(
         ExerciseInsectCompatibility insectCompatibility =
-            ExerciseInsectCompatibility.Unreviewed)
+            ExerciseInsectCompatibility.Compatible)
     {
         return
         [
@@ -5626,7 +5300,7 @@ public sealed class ExerciseSessionServiceTests
         int score = 0,
         ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous,
         ExerciseInsectCompatibility insectCompatibility =
-            ExerciseInsectCompatibility.Unreviewed,
+            ExerciseInsectCompatibility.Compatible,
         ExerciseDirectionSequence directionSequence = ExerciseDirectionSequence.None)
     {
         CanonicalMuscleGroup primary = group.CanonicalGroups
@@ -5650,7 +5324,7 @@ public sealed class ExerciseSessionServiceTests
         CanonicalMuscleGroup primary,
         int score = 0,
         ExerciseInsectCompatibility insectCompatibility =
-            ExerciseInsectCompatibility.Unreviewed)
+            ExerciseInsectCompatibility.Compatible)
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetGroup(3, primary);
         return ExerciseWithCoverage(
@@ -5671,7 +5345,7 @@ public sealed class ExerciseSessionServiceTests
         CanonicalMuscleGroup[]? additionalSecondaries = null,
         ExerciseSideSequence sideSequence = ExerciseSideSequence.Continuous,
         ExerciseInsectCompatibility insectCompatibility =
-            ExerciseInsectCompatibility.Unreviewed,
+            ExerciseInsectCompatibility.Compatible,
         ExerciseDirectionSequence directionSequence = ExerciseDirectionSequence.None)
     {
         WorkoutGroup group = MassGroupingTaxonomy.GetGroup(minutes, primary);
@@ -5937,7 +5611,7 @@ public sealed class ExerciseSessionServiceTests
             primary,
             score,
             sideSequence,
-            ExerciseInsectCompatibility.Unreviewed,
+            ExerciseInsectCompatibility.Compatible,
             secondary);
 
     private static Exercise Exercise(
@@ -5992,7 +5666,7 @@ public sealed class ExerciseSessionServiceTests
             Score = score,
             OnlyFeetTouchGround = true,
             ShoeAgnostic = true,
-            MaxSpaceMeters = 3,
+            MaxSpaceMeters = 2,
             Equipment = "None",
             Silent = true,
         };

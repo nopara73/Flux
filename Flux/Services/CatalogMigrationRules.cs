@@ -7,10 +7,9 @@ public sealed record StoredExerciseSnapshot(string Name, string Video, int Score
 public static class CatalogMigrationRules
 {
     private const string AlternatingPrefix = "Alternating ";
-    // Revisions 71-72 correct overlooked arm positions, lead stances, and
-    // one-way demonstrations to complete atomic side/direction sequences.
-    // Rebuild affected lineups without discarding saved feedback.
-    public const int CurrentCatalogRevision = 72;
+    // Revision 73 corrects catalog training claims and complete movement sequences.
+    // Revalidate impossible slot choices while preserving exercise feedback.
+    public const int CurrentCatalogRevision = 73;
     private const int HardFloorSlipperinessCatalogRevision = 53;
     private const int ReusedShyAuditCatalogRevision = 70;
     private const int LastCumulativeWorkoutStateRevision = 3;
@@ -53,6 +52,44 @@ public static class CatalogMigrationRules
                     537, 541, 543, 545, 546, 548, 556, 561, 573, 575, 578, 583, 613,
                     681, 685, 712, 745, 790,
                 },
+                [73] = new HashSet<int>
+                {
+                    15, 16, 17, 19, 20, 21, 31, 32, 37, 41, 47, 58, 59,
+                    60, 93, 94, 95, 96, 97, 98, 99, 100, 102, 103, 104, 105,
+                    107, 108, 109, 112, 113, 114, 115, 116, 117, 119, 120, 121, 122,
+                    123, 124, 125, 126, 127, 128, 129, 130, 133, 134, 135, 136, 137,
+                    138, 140, 142, 143, 145, 146, 147, 148, 149, 150, 152, 153, 154,
+                    156, 159, 160, 163, 165, 166, 167, 168, 169, 170, 171, 172, 174,
+                    175, 176, 177, 178, 179, 181, 182, 183, 184, 185, 186, 187, 188,
+                    190, 192, 193, 195, 196, 197, 198, 199, 200, 201, 203, 204, 205,
+                    214, 217, 218, 219, 220, 223, 227, 228, 230, 231, 232, 234, 237,
+                    238, 240, 241, 242, 245, 246, 248, 251, 252, 253, 254, 256, 257,
+                    258, 260, 261, 262, 263, 264, 265, 266, 268, 269, 270, 271, 272,
+                    274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286,
+                    287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 301, 302, 303,
+                    304, 305, 307, 308, 309, 310, 311, 314, 315, 321, 326, 327, 329,
+                    338, 340, 341, 367, 377, 379, 389, 390, 391, 392, 393, 394, 395,
+                    396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408,
+                    410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 424,
+                    426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438,
+                    439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 452, 453,
+                    454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466,
+                    467, 468, 469, 470, 471, 472, 473, 476, 478, 479, 480, 484, 485,
+                    486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 499, 501,
+                    502, 503, 504, 507, 508, 509, 510, 512, 513, 517, 518, 519, 520,
+                    522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 535,
+                    536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548,
+                    549, 550, 551, 552, 554, 555, 556, 557, 560, 561, 562, 563, 564,
+                    565, 567, 568, 569, 570, 572, 574, 575, 576, 577, 578, 579, 580,
+                    583, 584, 585, 586, 587, 588, 591, 603, 608, 609, 610, 611, 612,
+                    613, 614, 615, 616, 617, 618, 619, 620, 625, 626, 632, 633, 636,
+                    647, 649, 654, 666, 677, 678, 681, 683, 684, 685, 686, 687, 701,
+                    702, 703, 704, 712, 733, 740, 741, 742, 743, 744, 745, 746, 747,
+                    748, 750, 752, 755, 756, 758, 784, 790, 801, 804, 816, 818, 825,
+                    831, 834, 835, 843, 845, 884, 885, 886, 887, 905, 906, 910, 911,
+                    913, 914, 915, 916, 919, 939, 943, 948, 949, 954, 958, 960, 962,
+                    969, 971, 973, 986, 987, 993, 996, 997, 998, 999, 1000,
+                },
             };
 
     private sealed record PriorReviewedReplacementIdentity(
@@ -80,13 +117,13 @@ public static class CatalogMigrationRules
                     "Alternating Knee Raises with Two-Arm Pull-Down"),
                 [21] = new(
                     "Standing-Scale Balance",
-                    "Standing-Scale Balance Hold"),
+                    "Alternating Single-Leg Hinge with Forward Reach"),
                 [105] = new(
                     "Plie Squat",
                     "Wide Turned-Out Squat"),
                 [119] = new(
                     "Squat to Calf Raise",
-                    "Tiptoe Walk"),
+                    "Tiptoe Walking Back and Forth"),
                 [139] = new(
                     "Wide-Squat Heel Raise",
                     "Wide-Squat Alternating Heel Raises"),
@@ -95,61 +132,61 @@ public static class CatalogMigrationRules
                     "Narrow Turned-Out Shallow Squat"),
                 [197] = new(
                     "First-Position Plie-Releve",
-                    "Parallel Squat-to-Calf Raise"),
+                    "Squat to Calf Raise"),
                 [198] = new(
                     "Second-Position Plie-Releve",
                     "Wide Squat to Feet-Together Calf Raise"),
                 [199] = new(
                     "Alternating Deep Side Lunge",
-                    "Wide-Stance Side-to-Side Squat"),
+                    "Horse-Stance Squat"),
                 [255] = new(
                     "Standing Bent-Knee Calf Raise",
                     "Deep-Squat Calf Raise"),
                 [145] = new(
                     "Standing Knee Extension",
-                    "Standing Knee-Extension Hold"),
+                    "Wall-Supported Standing Knee-Extension Hold"),
                 [256] = new(
                     "Self-Resisted Overhead Pull",
                     "Self-Resisted Overhead Pull Hold"),
                 [257] = new(
                     "Self-Resisted Chest-Level Pull",
-                    "Self-Resisted Chest-Level Pull Hold"),
+                    "Finger Spreading with Arms Held Forward"),
                 [258] = new(
                     "Self-Resisted Low Pull",
-                    "Self-Resisted Low Pull Hold"),
+                    "Alternating Karate Downward Blocks"),
                 [262] = new(
                     "Standing Hands-to-Thigh Abdominal Press",
                     "Standing Hands-to-Thigh Abdominal Press Hold"),
                 [270] = new(
                     "Bodyweight Svend Press",
-                    "Palm-Squeeze Forward Press"),
+                    "Goalpost Arm Hold"),
                 [282] = new(
                     "High-Knee Horizontal Punches",
                     "Side-Step Knee Drive with Alternating Side Punches"),
                 [219] = new(
                     "Single-Side High-Knee Cross-Body Pull",
-                    "Alternating High-Knee Cross-Body Pull"),
+                    "High-Knee Cross-Body Pull"),
                 [684] = new(
                     "Karate Step-Through Cross-Elbow Strike",
                     "Knee Strike to Horizontal Elbow Strike"),
                 [290] = new(
                     "Universe-in-Motion Qigong",
-                    "Low Palm Scoop to Side Opening"),
+                    "Thumb and Little-Finger Switches"),
                 [231] = new(
                     "Karate Reverse Punch",
-                    "Step-Through Karate Reverse Punch"),
+                    "Step-In Karate Reverse Punch"),
                 [394] = new(
                     "Standing Arms Open and Close",
-                    "Inhale Arms Open, Exhale Arms Close and Round"),
+                    "Alternating Cross-Body Knee with Arm Sweep"),
                 [395] = new(
                     "Standing Overhead Arm Sweep",
-                    "Overhead Hold with Deep Ribcage Breaths"),
+                    "Alternating Knee Lift and Overhead Reach"),
                 [397] = new(
                     "Inhale Open, Exhale Cross-Body Side Tap",
-                    "Alternating Side Tap with Diagonal Arm Sweep"),
+                    "Alternating Side Tap with Diagonal Reach"),
                 [398] = new(
                     "Standing Hug and Arm Expansion",
-                    "Inhale Arms Open, Exhale Self-Hug and Fold"),
+                    "Inhale Arms Open, Exhale Arms Together"),
                 [399] = new(
                     "Shallow Squat with Chest-Opening Arms",
                     "Inhale Chest Open, Exhale Arms Close with Shallow Squat"),
@@ -164,7 +201,7 @@ public static class CatalogMigrationRules
                     "Shallow Squat with Rowing Arm Circle"),
                 [403] = new(
                     "Shibashi Alternating Pushing-Palms Breathing",
-                    "Alternating Weight Shift with Palm Push"),
+                    "Alternating Palm Press with Weight Shift"),
                 [404] = new(
                     "Shibashi Alternating Punch Breathing",
                     "Wide-Stance Alternating Slow Punch"),
@@ -182,13 +219,13 @@ public static class CatalogMigrationRules
                     "Diagonal Finger Tracking"),
                 [958] = new(
                     "Standing Alternating Side Bend",
-                    "Standing Overhead Side Bend"),
+                    "Standing Overhead Side-Stretch Hold"),
                 [425] = new(
                     "Chin-Tuck Isometric",
                     "Chin-Tuck Hold"),
                 [396] = new(
                     "Unsupported Single-Leg Balance",
-                    "Unsupported Single-Leg Balance Hold"),
+                    "Standing Front-to-Side Knee Lifts"),
                 [510] = new(
                     "Clasped-Hands Chest-Opening Forward Fold",
                     "Clasped-Hands Chest-Opening Forward-Fold Hold"),
@@ -197,13 +234,13 @@ public static class CatalogMigrationRules
                     "Knee Raise with Elbow Pull"),
                 [508] = new(
                     "Wide-Step Elbow Pull",
-                    "Side-Step with Two-Arm Overhead Reach"),
+                    "Alternating Side Taps with Forward Overhead Raises"),
                 [588] = new(
                     "Belly-Dance Alternating Shoulder Roll",
                     "Belly-Dance Alternating Shoulder Rolls"),
                 [577] = new(
                     "High-Knee Goalpost Pull",
-                    "Standing Side-Leg Raise with Side Reach"),
+                    "Standing Side Crunch and Side Kick"),
                 [915] = new(
                     "Split-Stance Knee Drive with Overhead Reach",
                     "Single-Side Split-Stance Knee Drive with Overhead Reach"),
@@ -224,7 +261,7 @@ public static class CatalogMigrationRules
                     "Standing Forward-Fold Hold"),
                 [136] = new(
                     "Goddess Pose",
-                    "Wide Turned-Out Squat Hold"),
+                    "Wide Squat Hold with Hands on Thighs"),
                 [225] = new(
                     "Clenched-Fist Wrist Extensor Stretch",
                     "Opposite-Hand Fist-Down Wrist Stretch"),
@@ -239,22 +276,22 @@ public static class CatalogMigrationRules
                     "Alternating Side-Tap Palm Pushes"),
                 [283] = new(
                     "Straight-Fist Tendon Glide",
-                    "Open Hand to Straight Fist"),
+                    "Rear-Hand Palm Strike"),
                 [291] = new(
                     "Open-to-Claw Tendon Glide",
                     "Open Hand to Claw Fist"),
                 [293] = new(
                     "Finger-Web Space Stretch",
-                    "Opposite-Hand Finger-Web Stretches"),
+                    "Opposite-Hand Thumb-Web Stretch"),
                 [683] = new(
                     "Alternating Palm-Up T-Arm Flips",
                     "Alternating Palm-Up Shoulder Rotations"),
                 [214] = new(
                     "Forward Wrist Circles",
-                    "Inward Wrist Circles"),
+                    "Single-Arm Wrist Circles"),
                 [223] = new(
                     "Forward Controlled Wrist Circles",
-                    "Inward Controlled Wrist Circles"),
+                    "Controlled Wrist Circles"),
                 [755] = new(
                     "Reverse Wrist Circles",
                     "Outward Wrist Circles"),
@@ -293,37 +330,37 @@ public static class CatalogMigrationRules
                     "Symmetric Smile"),
                 [515] = new(
                     "One-Eyebrow Isolation Practice",
-                    "Mirror One-Eyebrow Isolation Practice"),
+                    "Raise Upper Lip and Scrunch Nose"),
                 [522] = new(
                     "Tutting Box Sequence",
-                    "Mirror Tutting Box Sequence"),
+                    "Tutting Box Sequence"),
                 [523] = new(
                     "Arm-Wave Isolation Practice",
-                    "Mirror Arm-Wave Isolation Practice"),
+                    "Pass an Arm Wave from Hand to Hand"),
                 [524] = new(
                     "Mirror Front Double-Biceps Pose Hold",
-                    "Mirror Front Double-Biceps Posing"),
+                    "Front Double-Biceps Posing"),
                 [525] = new(
                     "Mirror Front Lat-Spread Pose Hold",
-                    "Mirror Front Lat-Spread Posing"),
+                    "Front Lat-Spread Posing"),
                 [526] = new(
                     "Mirror Side-Chest Pose Hold",
-                    "Mirror Side-Chest Posing"),
+                    "Side-Chest Posing"),
                 [527] = new(
                     "Mirror Side-Triceps Pose Hold",
-                    "Mirror Side-Triceps Posing"),
+                    "Side-Triceps Posing"),
                 [528] = new(
                     "Mirror Abdominals-and-Thighs Pose Hold",
-                    "Mirror Abdominals-and-Thighs Posing"),
+                    "Abdominals-and-Thighs Posing"),
                 [790] = new(
                     "Mirror Most-Muscular Pose Hold",
-                    "Mirror Most-Muscular Posing"),
+                    "Most-Muscular Posing, Hands on Thighs"),
                 [193] = new(
                     "Wide-Squat Floor-to-Overhead Reach",
-                    "Wide-Stance Floor-to-Overhead Reach"),
+                    "Hip Hinge with Overhead Reach"),
                 [417] = new(
                     "Narrow Squat and Overhead Reach with Thumb Tracking",
-                    "Narrow-Stance Overhead-to-Floor Reach"),
+                    "Narrow-Stance Overhead-to-Toe Reach"),
                 [439] = new(
                     "Feet-Together Fixed-Gaze Head Turns",
                     "Pogo Bounces with Fixed-Gaze Head Turns"),
@@ -335,13 +372,13 @@ public static class CatalogMigrationRules
                     "Pogo Bounces with Fixed-Gaze Head Tilts"),
                 [556] = new(
                     "Tiptoe Raises with Fist Clenches",
-                    "Standing Fist Clench and Release"),
+                    "Single-Arm Backfist"),
                 [561] = new(
                     "Tiptoe Bourree Steps with Head Spot",
-                    "Tiptoe Running Steps with Head Spot"),
+                    "Tiptoe Turn with Head Spot"),
                 [562] = new(
                     "Ballet Rises with Arm Movement",
-                    "Ballet Calf Raises with Arm Sweeps"),
+                    "First-Position Calf Raises"),
                 [564] = new(
                     "Calf Raise with Pelvic Floor Contraction",
                     "Parallel Calf Raises with Hands on Hips"),
@@ -359,7 +396,388 @@ public static class CatalogMigrationRules
                     "Toes-Out Calf Raises"),
                 [615] = new(
                     "Hamstring Curl with Prayer Hands",
-                    "Alternating Hamstring Curls with Prayer Hands"),
+                    "Alternating Hamstring Curl with Prayer-to-Open Arms"),
+                [138] = new(
+                    "Narrow-Squat Heel Raise",
+                    "Narrow Squat to Calf Raise"),
+                [140] = new(
+                    "Sumo-Squat Calf Raise",
+                    "Tiptoe Sumo Squat"),
+                [152] = new(
+                    "Side-Leg Raise Pulse",
+                    "Alternating Side-Leg Raise Pulses"),
+                [390] = new(
+                    "Inhale Arms Up, Exhale Step-Touch",
+                    "Step-Touch with Goalpost Arm Openings"),
+                [391] = new(
+                    "Inhale Arms Open, Exhale High-Knee",
+                    "Alternating High-Knee Inner-Foot Taps"),
+                [408] = new(
+                    "Split-Squat Torso Rotation with Thumb Tracking",
+                    "Staggered-Stance Torso Rotation with Hand Tracking"),
+                [414] = new(
+                    "Fixed-Thumb Head Turns",
+                    "Tiptoe Fixed-Thumb Head Turns"),
+                [415] = new(
+                    "Fixed-Thumb Head Nods",
+                    "Tiptoe Fixed-Thumb Head Nods"),
+                [416] = new(
+                    "Fixed-Thumb Head Tilts",
+                    "Tiptoe Fixed-Thumb Head Tilts"),
+                [531] = new(
+                    "Alternating Standing Shoulder CARs",
+                    "Single-Arm Shoulder CAR"),
+                [533] = new(
+                    "Alternating Standing Donkey Kicks",
+                    "Standing Bent-Knee Hip Extension"),
+                [557] = new(
+                    "Tiptoe Forward Punches",
+                    "Calf Raise with Double Forward Punch"),
+                [618] = new(
+                    "Single-Side High-Knee Hold with Side Reach",
+                    "Single-Side Knee Raise with Torso Twist"),
+                [649] = new(
+                    "Standing Bent-Knee Hip Abduction",
+                    "Standing Side-Leg Raise with Knee Extension"),
+                [677] = new(
+                    "Bent-Elbow Reverse-Fly Hold",
+                    "Standing Goalpost Arm Hold"),
+                [911] = new(
+                    "Single-Side Wall Side-Plank Knee Drive",
+                    "Wall-Supported High-Knee Raise"),
+                [939] = new(
+                    "Hinge-to-Knee Drive",
+                    "Split-Stance Knee-to-Hand Crunch"),
+                [542] = new(
+                    "Alternating Standing Bird Dogs",
+                    "Standing Bird-Dog Reach"),
+                [269] = new(
+                    "Standing Leg-Resistance Biceps Curl",
+                    "Wall-Supported Leg-Resistance Biceps Curl"),
+                [619] = new(
+                    "Squat with Forward Scoop",
+                    "Mini Squat with Forward Scoop"),
+                [228] = new(
+                    "Bent-Elbow External Rotation",
+                    "Single-Arm Bent-Elbow External Rotation"),
+                [274] = new(
+                    "Alternating Boxing Uppercuts",
+                    "Alternating Standing Uppercut Punches"),
+                [285] = new(
+                    "Karate Inside Block",
+                    "Karate Outward Forearm Block"),
+                [286] = new(
+                    "Karate Outside Block",
+                    "Alternating Karate Inward Forearm Blocks"),
+                [541] = new(
+                    "Alternating Karate Inside Blocks",
+                    "Alternating Karate Cross-Body Forearm Blocks"),
+                [545] = new(
+                    "Alternating Karate Outside Blocks",
+                    "Alternating Karate Outward Forearm Blocks"),
+                [112] = new(
+                    "Wide Squat with Overhead Reach",
+                    "Wide Squat with Arms Held Overhead"),
+                [171] = new(
+                    "Alternating Hamstring Sweep",
+                    "Standing Hamstring Sweep"),
+                [748] = new(
+                    "Alternating Wide-Stance Groin-Hamstring Shift",
+                    "Wide-Stance Groin and Hamstring Stretch"),
+                [116] = new(
+                    "Alternating Cossack Squat",
+                    "Alternating Lateral Squat"),
+                [733] = new(
+                    "Alternating Side Lunge with Chest Push",
+                    "Alternating Side Lunge with Forward Arm Reach"),
+                [16] = new(
+                    "Split-Stance Toe Raises",
+                    "Split-Stance Calf Raises"),
+                [17] = new(
+                    "Standing Toe-Touch Windmill",
+                    "Alternating Toe Touch with Overhead Reach"),
+                [19] = new(
+                    "Wide Plie Squat Pulses",
+                    "Wide Squat with Hands on Hips"),
+                [20] = new(
+                    "Standing Rear-Leg Pulses",
+                    "Standing Rear-Leg Raises"),
+                [104] = new(
+                    "Sumo Squat",
+                    "Sumo Squat with Pause"),
+                [32] = new(
+                    "Tandem Walk",
+                    "Tandem Walk Forward and Back"),
+                [97] = new(
+                    "Standing Side-Kick Reach",
+                    "Knee Raise and Side-Kick Reach"),
+                [111] = new(
+                    "Rainbow Squat Thruster",
+                    "Squat with Overhead Reach and Arm Sweep"),
+                [115] = new(
+                    "Pistol Squat",
+                    "Pistol Squat with Bottom Pause"),
+                [125] = new(
+                    "Alternating Reverse Lunge with Torso Twist",
+                    "Split Squat with Torso Twist"),
+                [126] = new(
+                    "Squat to Alternating Side Kick",
+                    "Squat with Side Kick"),
+                [128] = new(
+                    "Alternating Curtsy Squat with Arm Sweep",
+                    "Curtsy Squat with Arm Sweep"),
+                [129] = new(
+                    "Squat to Alternating Front Kick",
+                    "Squat with Front Kick"),
+                [131] = new(
+                    "Squat to Alternating Back Leg Lift",
+                    "Squat with Rear Leg Lift"),
+                [133] = new(
+                    "Alternating Lateral Lunge with Overhead Reach",
+                    "Lateral Lunge with Overhead Reach"),
+                [135] = new(
+                    "Overhead Squat Hold",
+                    "Wide Overhead Squat Hold"),
+                [137] = new(
+                    "Wall Squat",
+                    "Shallow Wall Squat"),
+                [141] = new(
+                    "Squat with Alternating Heel Lift",
+                    "Squat Hold with Alternating Heel Raises"),
+                [144] = new(
+                    "Alternating Standing Knee Lift",
+                    "Standing Knee Lift"),
+                [147] = new(
+                    "Squat to Alternating Star Reach",
+                    "Shallow Squat with Overhead Reach"),
+                [148] = new(
+                    "Straight-Leg Hip-Extension Lift",
+                    "Bent-Over Standing Bird Dog"),
+                [150] = new(
+                    "Wide-Squat Side-to-Side Shifts",
+                    "Side-to-Side Lunge"),
+                [151] = new(
+                    "Alternating Straight-Leg Front Raise",
+                    "Straight-Leg Front Raise"),
+                [154] = new(
+                    "Diagonal Leg Raise",
+                    "Standing Fire Hydrant"),
+                [159] = new(
+                    "Standing Hamstring Curl to Diagonal Extension",
+                    "Standing Fire-Hydrant Kick"),
+                [161] = new(
+                    "Alternating Standing Gate Opener",
+                    "Standing Gate Opener"),
+                [170] = new(
+                    "Alternating Cross-Body Knee Drive",
+                    "Standing Cross-Body Knee Drive"),
+                [173] = new(
+                    "Alternating Side Knee Lift",
+                    "Standing Side Knee Lift"),
+                [178] = new(
+                    "Crescent Kick",
+                    "Outside Crescent Kick"),
+                [179] = new(
+                    "Hip-Hinge Rear-Leg Raises",
+                    "Standing Rear Leg Raise"),
+                [182] = new(
+                    "Capoeira Armada de Frente",
+                    "Capoeira Meia-Lua de Frente"),
+                [184] = new(
+                    "Split-Squat Hold",
+                    "Split-Squat Pulse"),
+                [187] = new(
+                    "Standing Heel-and-Toe Raises",
+                    "Standing Heel Raise"),
+                [201] = new(
+                    "Wide-Stance Tiptoe Hold",
+                    "Sumo Squat to Calf Raise"),
+                [211] = new(
+                    "Bent-Elbow Wrist-Flexion Stretch",
+                    "Assisted Standing Wrist-Flexion Stretch"),
+                [213] = new(
+                    "Bent-Elbow Wrist-Extension Stretch",
+                    "Assisted Standing Wrist-Extension Stretch"),
+                [227] = new(
+                    "Rotating Relaxed Arm Swings",
+                    "Arm Swings with Trunk Rotation"),
+                [236] = new(
+                    "Bilateral Wrist Figure Eights",
+                    "Bilateral Wrist Circles"),
+                [239] = new(
+                    "Standing Reverse Prayer Stretch",
+                    "Back-of-Hands Wrist Stretch"),
+                [245] = new(
+                    "Straight-Punch to Shovel-Hook Combo",
+                    "Jab-Jab-Cross-Shovel-Hook Combo"),
+                [261] = new(
+                    "Standing Bent-Elbow Reverse Fly",
+                    "Standing Bent-Elbow Chest Squeeze"),
+                [266] = new(
+                    "T-Arm Shoulder Hold",
+                    "Alternating Overhead Arm Raises"),
+                [268] = new(
+                    "Goalpost-to-T Rotations",
+                    "Goalpost-to-T Arm Extensions"),
+                [271] = new(
+                    "Standing Lumbar Extension",
+                    "Standing Lumbar Extension Hold"),
+                [273] = new(
+                    "Bent-Knee Calf-Raise Hold",
+                    "Wall-Supported Bent-Knee Calf Raise Hold"),
+                [280] = new(
+                    "Alternating Boxing Hook Punches",
+                    "Rear-Hand Boxing Hook"),
+                [288] = new(
+                    "Forward Knee-and-Ankle Circles",
+                    "Standing Knee-and-Ankle Circles"),
+                [289] = new(
+                    "Fingertip Spider Presses",
+                    "Fist Opening and Closing with Arms Held Forward"),
+                [294] = new(
+                    "Outward Knife-Hand Strikes",
+                    "Rear-Hand Outward Knife-Hand Strike"),
+                [295] = new(
+                    "Ankle Squat March",
+                    "Alternating Bent-Knee Heel Raises"),
+                [301] = new(
+                    "Overhead Arm Pumps",
+                    "Standing Side Arm Raises"),
+                [309] = new(
+                    "Self-Resisted Neck Rotation Isometric",
+                    "Self-Resisted Neck Rotation Hold with Head Turned"),
+                [321] = new(
+                    "Side-Tap Alternating Arm Raises",
+                    "Alternating Side Taps with Overhead Arm Raises"),
+                [379] = new(
+                    "Alternating Qigong Drawing the Bow",
+                    "Qigong Drawing the Bow"),
+                [389] = new(
+                    "First-Position Heel Raise with Elbow Pull-Down",
+                    "Toes-Out Heel Raise with Elbow Pull-Down"),
+                [418] = new(
+                    "Alternating-Thumb Head Turns",
+                    "Look Between Fingers with Head Turns"),
+                [419] = new(
+                    "Vertical Thumb Tracking with Head Nods",
+                    "Track Thumb While Nodding the Opposite Way"),
+                [427] = new(
+                    "Split Jacks",
+                    "Jumping Lunges with Alternating Overhead Reach"),
+                [437] = new(
+                    "Alternating High-Knee Under-Thigh Claps",
+                    "Hopping High-Knee Under-Thigh Claps"),
+                [467] = new(
+                    "Look Up and Down",
+                    "Standing Chin-to-Chest Nods"),
+                [470] = new(
+                    "Windmill Jacks",
+                    "Alternating Windmill Toe Touch"),
+                [473] = new(
+                    "Bouncing Uppercuts",
+                    "Boxing Lead-Hand Parry"),
+                [474] = new(
+                    "Head Glide Forward and Back",
+                    "Chin Tucks with Hands Pulling Forward at Base of Neck"),
+                [484] = new(
+                    "Goddess Squat with Lion's Breath",
+                    "Wide Squat with Tongue-Out Exhale"),
+                [485] = new(
+                    "Cupped-Palm Armpit Tapping",
+                    "Alternating Back Taps with Rowing Arms"),
+                [486] = new(
+                    "Bent-Over Back-of-Knee Tapping",
+                    "Alternating Knee Lift with Two-Arm Pull-Down"),
+                [490] = new(
+                    "Track One Thumb Side to Side",
+                    "Track Finger Side to Side, Head Still"),
+                [491] = new(
+                    "Keep Eyes on Thumb While Nodding",
+                    "Keep Eyes on Finger While Nodding"),
+                [501] = new(
+                    "Keep Eyes on Thumb While Turning Head",
+                    "Keep Eyes on Finger While Turning Head"),
+                [505] = new(
+                    "Jaw Side-to-Side Glides",
+                    "Jaw Side Glide and Relax"),
+                [519] = new(
+                    "Standing Yes Pullbacks",
+                    "Push Forearm Outward Against Other Hand"),
+                [520] = new(
+                    "Mirror Facial-Expression Practice",
+                    "Raise Arms, Exhale Choo as Hips Sink"),
+                [521] = new(
+                    "Smile at Yourself in the Mirror",
+                    "Stretch and Scrunch Face"),
+                [538] = new(
+                    "Alternating Reverse Lunge to Front Kicks",
+                    "Reverse Lunge with Front Kick"),
+                [547] = new(
+                    "Alternating Standing Rotation Claps",
+                    "Standing Rotational Reach and Clap"),
+                [554] = new(
+                    "Half Squat Arm Swing to Heel Raise",
+                    "Arm Raises in Shallow Squat"),
+                [560] = new(
+                    "Tiptoe Forward-and-Back Torso-and-Arm Sweep",
+                    "Try to Turn Palm Up Against Other Hand"),
+                [569] = new(
+                    "Tiptoe Hip Hinge",
+                    "Unsupported Single-Leg Straight-Knee Calf Raise"),
+                [570] = new(
+                    "Tiptoe Torso Twists",
+                    "Calf Raise with Arm Reach and Fist Close"),
+                [614] = new(
+                    "Alternating Reinforced Forearm Blocks",
+                    "Push Forearm Down Against Other Hand"),
+                [633] = new(
+                    "Wall Calf Stretch",
+                    "Straight-Knee Toes-on-Wall Stretch"),
+                [636] = new(
+                    "Curtsy-Lunge Hold",
+                    "Curtsy Lunge to Alternating Side Crunch"),
+                [647] = new(
+                    "Alternating Knee Lift with Overhead Reach",
+                    "Alternating Heel Curl with Overhead Reach"),
+                [654] = new(
+                    "Single-Side Leg Lift to Overhead Knee Drive",
+                    "Alternating Side Leg Lifts and Heel Curls"),
+                [678] = new(
+                    "Overhead Arm Figure Eight",
+                    "Overhead Arm Sways"),
+                [681] = new(
+                    "Muay Thai Downward Elbow Strike",
+                    "Downward Elbow Strike"),
+                [751] = new(
+                    "Neck Side Stretch",
+                    "Standing Neck Half Rolls"),
+                [816] = new(
+                    "Side-Step Overhead Reach",
+                    "Low-Impact Side-Step Jacks"),
+                [836] = new(
+                    "Squat with Back Squeeze",
+                    "Alternating Side-Step Squat with Back Squeeze"),
+                [845] = new(
+                    "Overhead Side Stretch",
+                    "Overhead Side-Bend Hold"),
+                [913] = new(
+                    "Wall-Supported Vertical Dead Bug",
+                    "Shallow Wall Sit with Overhead Arm Raises"),
+                [914] = new(
+                    "Alternating Diagonal Knee Pull-Down",
+                    "Single-Side Diagonal Knee Pull-Down"),
+                [919] = new(
+                    "March in Place with Fixed-Gaze Head Turns",
+                    "Marching in Place with Head Turns"),
+                [949] = new(
+                    "Standing Reverse Wood Chop",
+                    "Standing Low-to-High Wood Chop"),
+                [962] = new(
+                    "Alternating Standing Knee-to-Elbow Crunch",
+                    "Alternating Standing Knee Taps"),
+                [993] = new(
+                    "Mirror Standing Vacuum Repetitions",
+                    "Standing Stomach Vacuum, Then Release"),
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<string>>
@@ -374,22 +792,27 @@ public static class CatalogMigrationRules
                 [524] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Front Double-Biceps Pose Hold",
+                    "Mirror Front Double-Biceps Posing",
                 },
                 [525] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Front Lat-Spread Pose Hold",
+                    "Mirror Front Lat-Spread Posing",
                 },
                 [526] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Side-Chest Pose Hold",
+                    "Mirror Side-Chest Posing",
                 },
                 [527] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Side-Triceps Pose Hold",
+                    "Mirror Side-Triceps Posing",
                 },
                 [528] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Abdominals-and-Thighs Pose Hold",
+                    "Mirror Abdominals-and-Thighs Posing",
                 },
                 [565] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -398,22 +821,30 @@ public static class CatalogMigrationRules
                 [21] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Alternating Standing-Scale Balance",
+                    "Standing-Scale Balance Hold",
                 },
                 [145] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Alternating Standing Knee Extension",
+                    "Standing Knee-Extension Hold",
                 },
                 [231] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Alternating Karate Reverse Punch",
+                    "Step-Through Karate Reverse Punch",
                 },
                 [394] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Standing Open-and-Close Breathing",
+                    "Inhale Open, Exhale Cross-Body Knee",
+                    "Inhale Arms Open, Exhale Arms Close and Round",
                 },
                 [395] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Standing Overhead Rib-Expansion Breathing",
+                    "Single-Side Inhale Reach Up, Exhale Knee Lift",
+                    "Overhead Hold with Deep Ribcage Breaths",
+                    "Single-Side Knee Lift with Overhead Reach",
                 },
                 [500] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -422,6 +853,7 @@ public static class CatalogMigrationRules
                 [398] = new HashSet<string>(StringComparer.Ordinal)
                 {
                     "Standing Arm-Expansion Breathing",
+                    "Inhale Arms Open, Exhale Self-Hug and Fold",
                 },
                 [399] = new HashSet<string>(StringComparer.Ordinal)
                 {
@@ -443,6 +875,150 @@ public static class CatalogMigrationRules
                 {
                     "Single-Leg Pelvic Control",
                 },
+                [270] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Goalpost Chest-Opener Hold",
+                    "Palm-Squeeze Forward Press",
+                },
+                [556] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating Backfists",
+                    "Standing Fist Clench and Release",
+                },
+                [615] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating Hamstring Curls with Prayer Hands",
+                    "Heel Raise with Prayer-to-Open Arms",
+                },
+                [119] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Tiptoe Walk",
+                },
+                [136] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Wide Turned-Out Squat Hold",
+                },
+                [193] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Wide-Stance Floor-to-Overhead Reach",
+                },
+                [197] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Parallel Squat-to-Calf Raise",
+                },
+                [199] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Wide-Stance Side-to-Side Squat",
+                },
+                [214] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Inward Wrist Circles",
+                },
+                [219] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating High-Knee Cross-Body Pull",
+                },
+                [223] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Inward Controlled Wrist Circles",
+                },
+                [257] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Finger Spread to Interlace Stretch",
+                    "Self-Resisted Chest-Level Pull Hold",
+                },
+                [258] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Karate Downward Block",
+                    "Self-Resisted Low Pull Hold",
+                },
+                [283] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating Palm Strikes",
+                    "Open Hand to Straight Fist",
+                },
+                [290] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Low Palm Scoop to Side Opening",
+                },
+                [293] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Opposite-Hand Finger-Web Stretches",
+                },
+                [390] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Step-Touch with Overhead Arm Arcs",
+                },
+                [391] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating High Knee with Arm Opening",
+                },
+                [396] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Single-Leg Knee-Lift Balance Hold",
+                    "Unsupported Single-Leg Balance Hold",
+                },
+                [397] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating Side Tap with Diagonal Arm Sweep",
+                },
+                [403] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Alternating Weight Shift with Palm Push",
+                },
+                [408] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Split-Squat Torso Rotation with Hand Tracking",
+                },
+                [417] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Narrow-Stance Overhead-to-Floor Reach",
+                },
+                [508] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Side-Step with Two-Arm Overhead Reach",
+                },
+                [515] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Mirror One-Eyebrow Isolation Practice",
+                },
+                [522] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Mirror Tutting Box Sequence",
+                },
+                [523] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Mirror Arm-Wave Isolation Practice",
+                },
+                [561] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Tiptoe Running Steps with Head Spot",
+                },
+                [562] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Ballet Calf Raises with Arm Sweeps",
+                },
+                [577] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Single-Side Standing Side-Leg Raise with Side Reach",
+                    "Standing Side-Leg Raise with Side Reach",
+                },
+                [618] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Single-Side High-Knee Raise with Side Reach",
+                },
+                [790] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Mirror Most-Muscular Posing",
+                },
+                [939] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Split-Stance Knee-to-Hand Press",
+                },
+                [958] = new HashSet<string>(StringComparer.Ordinal)
+                {
+                    "Standing Overhead Side Bend",
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, RestoredReviewedExerciseIdentity>
@@ -462,6 +1038,48 @@ public static class CatalogMigrationRules
         DiscardedStoredExerciseIdentities =
             new Dictionary<int, IReadOnlySet<DiscardedStoredExerciseIdentity>>
             {
+                [257] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new("Self-Resisted Chest-Level Pull", "exercise_videos/exercise_0257.mp4"),
+                    new("Self-Resisted Chest-Level Pull Hold", "exercise_videos/exercise_0257.mp4"),
+                },
+                [425] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new("Chin-Tuck Hold", "exercise_videos/exercise_0425.mp4"),
+                    new("Chin-Tuck Isometric", "exercise_videos/exercise_0425.mp4"),
+                },
+                [395] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new("Overhead Hold with Deep Ribcage Breaths", "exercise_videos/exercise_0395.mp4"),
+                    new("Standing Overhead Arm Sweep", "exercise_videos/exercise_0395.mp4"),
+                    new("Standing Overhead Rib-Expansion Breathing", "exercise_videos/exercise_0395.mp4"),
+                },
+                [394] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new("Inhale Arms Open, Exhale Arms Close and Round", "exercise_videos/exercise_0394.mp4"),
+                    new("Standing Arms Open and Close", "exercise_videos/exercise_0394.mp4"),
+                    new("Standing Open-and-Close Breathing", "exercise_videos/exercise_0394.mp4"),
+                },
+                [270] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new("Palm-Squeeze Forward Press", "exercise_videos/exercise_0270.mp4"),
+                    new("Bodyweight Svend Press", "exercise_videos/exercise_0270.mp4"),
+                },
+                [262] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new("Standing Scapular Depression", "exercise_videos/exercise_0262.mp4"),
+                    new("Standing Hands-to-Thigh Abdominal Press", "exercise_videos/exercise_0262.mp4"),
+                },
+                [258] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new("Self-Resisted Low Pull Hold", "exercise_videos/exercise_0258.mp4"),
+                    new("Self-Resisted Low Pull", "exercise_videos/exercise_0258.mp4"),
+                },
+                [256] = new HashSet<DiscardedStoredExerciseIdentity>
+                {
+                    new("Self-Resisted Overhead Pull Hold", "exercise_videos/exercise_0256.mp4"),
+                    new("Self-Resisted Overhead Pull", "exercise_videos/exercise_0256.mp4"),
+                },
                 [202] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
                     new(
@@ -542,6 +1160,8 @@ public static class CatalogMigrationRules
                 },
                 [241] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
+                    new("Ninja Water-Dragon 44 Hand-Seal Sequence", "exercise_videos/exercise_0241.mp4"),
+                    new("Hook-Fist Tendon Glide", "exercise_videos/exercise_0241.mp4"),
                     new(
                         "Open Hand to Hook Fist",
                         "exercise_videos/exercise_0241.mp4"),
@@ -551,12 +1171,16 @@ public static class CatalogMigrationRules
                 },
                 [242] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
+                    new("Ninja Shadow-Clone Hand-Seal Sequence", "exercise_videos/exercise_0242.mp4"),
+                    new("Full-Fist Tendon Glide", "exercise_videos/exercise_0242.mp4"),
                     new(
                         "Open Hand to Full Fist",
                         "exercise_videos/exercise_0242.mp4"),
                 },
                 [283] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
+                    new("Qigong Fist Rotation", "exercise_videos/exercise_0283.mp4"),
+                    new("Straight-Fist Tendon Glide", "exercise_videos/exercise_0283.mp4"),
                     new(
                         "Open Hand to Straight Fist",
                         "exercise_videos/exercise_0283.mp4"),
@@ -566,6 +1190,8 @@ public static class CatalogMigrationRules
                 },
                 [291] = new HashSet<DiscardedStoredExerciseIdentity>
                 {
+                    new("Black Dragon Enters the Cave", "exercise_videos/exercise_0291.mp4"),
+                    new("Open-to-Claw Tendon Glide", "exercise_videos/exercise_0291.mp4"),
                     new(
                         "Open Hand to Claw Fist",
                         "exercise_videos/exercise_0291.mp4"),
@@ -1123,9 +1749,9 @@ public static class CatalogMigrationRules
         218, 219, 220, 223, 224, 225, 227, 228, 229, 230, 231, 232, 233, 234, 236, 237, 239,
         240, 241, 242, 245, 246, 248, 251, 256, 257, 258, 260, 262, 263, 264, 265, 266, 267, 268, 269,
         270, 272, 274, 275, 276, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288,
-        289, 291, 292, 293, 294, 295, 296, 301, 302, 304, 305, 307, 308, 309, 310,
+        289, 290, 291, 292, 293, 294, 295, 296, 301, 302, 304, 305, 307, 308, 309, 310,
         314, 321, 326, 327, 329, 338, 367, 390, 391,
-        392, 393, 394, 395, 396, 397, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417,
+        392, 393, 394, 395, 396, 397, 398, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417,
         418, 419, 420, 421, 422, 423, 424, 425, 426, 427, 428, 429, 430,
         431, 432, 433, 434, 467, 474, 475, 477, 481, 482, 483,
         435, 436, 437, 438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448,
@@ -1146,7 +1772,7 @@ public static class CatalogMigrationRules
 
     private static readonly HashSet<int> PermanentlyRetiredExerciseIdSet =
     [
-        90, 229, 267, 553, 558, 559, 757, 759, 760, 761, 762, 763, 764,
+        90, 229, 267, 412, 553, 558, 559, 757, 759, 760, 761, 762, 763, 764,
     ];
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1334,6 +1960,18 @@ public static class CatalogMigrationRules
                 {
                     307, 490, 491, 492, 495, 499, 501, 520, 528, 561, 958,
                 },
+                [73] = new HashSet<int>
+                {
+                    16, 20, 21, 32, 47, 95, 97, 99, 100, 117, 123, 125, 126,
+                    128, 129, 131, 133, 143, 144, 145, 151, 152, 153, 160, 161, 170,
+                    171, 173, 178, 181, 182, 195, 198, 203, 215, 219, 220, 223, 228,
+                    233, 245, 258, 261, 264, 266, 274, 275, 279, 280, 283, 285, 286,
+                    289, 290, 291, 292, 301, 307, 327, 329, 379, 395, 414, 418, 422, 423, 460, 473,
+                    483, 485, 486, 488, 491, 500, 515, 519, 520, 521, 531, 533, 538,
+                    541, 542, 546, 556, 560, 569, 570, 572, 585, 587, 588, 610, 614, 618,
+                    633, 636, 654, 677, 681, 741, 743, 744, 745, 747, 748, 751, 834,
+                    948,
+                },
             };
 
     private static readonly IReadOnlyDictionary<int, IReadOnlySet<int>>
@@ -1442,6 +2080,11 @@ public static class CatalogMigrationRules
                 [67] = new HashSet<int> { 911, 913, 916, 917 },
                 [69] = new HashSet<int> { 918, 919 },
                 [70] = new HashSet<int> { 202, 204, 205 },
+                [73] = new HashSet<int>
+                {
+                    261, 266, 289, 290, 301, 473, 485, 486, 515, 519, 520, 521, 560,
+                    569, 570, 614, 677,
+                },
             };
 
     private static readonly HashSet<int> ContinuousAlternationNormalizationIdSet =
@@ -1492,9 +2135,22 @@ public static class CatalogMigrationRules
 
         var alreadyReviewedReplacementIds = new HashSet<int>();
         var restoredReviewedExerciseIds = new HashSet<int>();
+        var integrityReplacedExerciseIds = new HashSet<int>();
 
         foreach ((int exerciseId, StoredExerciseSnapshot stored) in storedExercises)
         {
+            // Different-action replacements must not inherit the old action's
+            // score. The exact reviewed name and video still have to match.
+            if (ScopedScoreInvalidationsByRevision[73].Contains(exerciseId) &&
+                bundledById.TryGetValue(exerciseId, out Exercise? integrityReplacement) &&
+                !string.Equals(stored.Name, integrityReplacement.Name, StringComparison.Ordinal) &&
+                IsApprovedExerciseCorrection(exerciseId, stored.Name, integrityReplacement.Name) &&
+                string.Equals(stored.Video, integrityReplacement.Video, StringComparison.Ordinal))
+            {
+                integrityReplacedExerciseIds.Add(exerciseId);
+                continue;
+            }
+
             if (ReplacedExerciseIdSet.Contains(exerciseId))
             {
                 if (!bundledById.TryGetValue(exerciseId, out Exercise? replacement))
@@ -1534,12 +2190,6 @@ public static class CatalogMigrationRules
                         stored.Video,
                         replacement.Video,
                         StringComparison.Ordinal);
-                if (currentReviewedIdentityMatches || approvedCorrectionMatches)
-                {
-                    alreadyReviewedReplacementIds.Add(exerciseId);
-                    continue;
-                }
-
                 bool discardedStoredIdentityMatches =
                     DiscardedStoredExerciseIdentities.TryGetValue(
                         exerciseId,
@@ -1550,6 +2200,14 @@ public static class CatalogMigrationRules
                         stored.Video));
                 if (discardedStoredIdentityMatches)
                 {
+                    continue;
+                }
+
+                // A historical name correction must never revive feedback for
+                // an explicitly discarded, different exercise at the same ID.
+                if (currentReviewedIdentityMatches || approvedCorrectionMatches)
+                {
+                    alreadyReviewedReplacementIds.Add(exerciseId);
                     continue;
                 }
 
@@ -1694,7 +2352,8 @@ public static class CatalogMigrationRules
             .Where(exerciseId =>
                 (!ReplacedExerciseIdSet.Contains(exerciseId) ||
                     alreadyReviewedReplacementIds.Contains(exerciseId)) &&
-                !restoredReviewedExerciseIds.Contains(exerciseId))
+                !restoredReviewedExerciseIds.Contains(exerciseId) &&
+                !integrityReplacedExerciseIds.Contains(exerciseId))
             .ToHashSet();
     }
 
@@ -1814,10 +2473,6 @@ public static class CatalogMigrationRules
                         (string selectionGroupId, _) =
                             ParseSelectionStorageKey(selection.Key);
                         return IsKnownSelectionGroupId(selectionGroupId) &&
-                            IsTrainingClaimAffectedRoot(
-                                selection.Value,
-                                exercisesById!,
-                                trainingClaimChangedExerciseIds) &&
                             !IsValidPreferenceRoot(
                                 selectionGroupId,
                                 selection.Value,
@@ -1846,7 +2501,11 @@ public static class CatalogMigrationRules
 
         if (state.CatalogRevision < ReusedShyAuditCatalogRevision)
         {
-            ReconcileReusedExerciseKeeps(state, exercisesById);
+            ReconcileReusedExerciseKeeps(state, exercisesById, ReusedShyAuditExerciseIdSet);
+        }
+        if (state.CatalogRevision < 73)
+        {
+            ReconcileReusedExerciseKeeps(state, exercisesById, ScopedScoreInvalidationsByRevision[73]);
         }
 
         var selectionsWithInvalidatedExercises = state.SelectedExerciseIds
@@ -1860,7 +2519,8 @@ public static class CatalogMigrationRules
                 semanticallyInvalidSelectionStorageKeys.Contains(
                     selection.StorageKey) ||
                 invalidatedExerciseIds.Contains(selection.ExerciseId) ||
-                ReusedShyAuditExerciseIdSet.Contains(selection.ExerciseId) ||
+                (state.CatalogRevision < ReusedShyAuditCatalogRevision &&
+                    ReusedShyAuditExerciseIdSet.Contains(selection.ExerciseId)) ||
                 (shyAuditInvalidatedExerciseIds.Contains(selection.ExerciseId) &&
                     (WorkoutModifierPolicy.Normalize(selection.Parsed.Modifiers) &
                         WorkoutModifiers.Shy) != 0) ||
@@ -1979,7 +2639,8 @@ public static class CatalogMigrationRules
 
     private static void ReconcileReusedExerciseKeeps(
         WorkoutState state,
-        IReadOnlyDictionary<int, Exercise>? exercisesById)
+        IReadOnlyDictionary<int, Exercise>? exercisesById,
+        IReadOnlySet<int> reusedExerciseIds)
     {
         var removedRootIds = new HashSet<int>();
         foreach (string selectionGroupId in
@@ -1990,7 +2651,7 @@ public static class CatalogMigrationRules
             foreach (int rootId in keptRootIds.Where(rootId =>
                          IsScorePreferenceRootInvalidated(
                              rootId,
-                             ReusedShyAuditExerciseIdSet,
+                             reusedExerciseIds,
                              exercisesById)).ToArray())
             {
                 keptRootIds.Remove(rootId);
@@ -2004,7 +2665,7 @@ public static class CatalogMigrationRules
             }
         }
 
-        var removedExerciseIds = new HashSet<int>(ReusedShyAuditExerciseIdSet);
+        var removedExerciseIds = new HashSet<int>(reusedExerciseIds);
         if (exercisesById is not null)
         {
             foreach (int rootId in removedRootIds)
@@ -2049,10 +2710,6 @@ public static class CatalogMigrationRules
             state.KeptExerciseRootIdsBySelectionGroupId[selectionGroupId]
                 .RemoveWhere(rootId =>
                     IsKnownSelectionGroupId(selectionGroupId) &&
-                    IsTrainingClaimAffectedRoot(
-                        rootId,
-                        exercisesById,
-                        trainingClaimChangedExerciseIds) &&
                     !IsValidPreferenceRoot(
                         selectionGroupId,
                         rootId,
@@ -2073,10 +2730,6 @@ public static class CatalogMigrationRules
                     selectionGroupId];
             foreach (int rootId in adjustments.Keys.Where(rootId =>
                          IsKnownSelectionGroupId(selectionGroupId) &&
-                         IsTrainingClaimAffectedRoot(
-                             rootId,
-                             exercisesById,
-                             trainingClaimChangedExerciseIds) &&
                          !IsValidPreferenceRoot(
                              selectionGroupId,
                              rootId,

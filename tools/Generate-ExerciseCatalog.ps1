@@ -1,15 +1,22 @@
 param(
     [string]$OutputRoot = (Join-Path $PSScriptRoot '..\Flux\Assets'),
-    [ValidateRange(1, 1000)]
+    [ValidateRange(1, [int]::MaxValue)]
     [int]$StartExercise = 1,
-    [ValidateRange(0, 1000)]
+    [ValidateRange(0, [int]::MaxValue)]
     [int]$MaxExercises = 0,
-    [ValidateRange(1, 1000)]
+    [ValidateRange(1, [int]::MaxValue)]
     [int[]]$ExerciseIds = @(),
     [switch]$Force
 )
 
 $ErrorActionPreference = 'Stop'
+
+. (Join-Path $PSScriptRoot 'ReviewedSourceMedia.ps1')
+. (Join-Path $PSScriptRoot 'ExerciseSourceDownload.ps1')
+. (Join-Path $PSScriptRoot 'ExactExerciseMediaTiming.ps1')
+. (Join-Path $PSScriptRoot 'ExerciseCatalogDefinitions.ps1')
+$sourceDefinitions = @(Get-ExerciseCatalogDefinitions)
+$sourceExerciseIds = @($sourceDefinitions | ForEach-Object { [int]$_.Id })
 
 # The historical source catalog remains partitioned into ten 100-item families
 # so stable exercise IDs and media-generation profiles do not move. These source
@@ -140,9 +147,6 @@ $mirrorOnlyExerciseIds = @(
     foreach ($coverage in $requiredMirrorCoverages) {
         $coverageExerciseIds = @(
             $mirrorOnlyByCoverage[$coverage] | ForEach-Object { [int]$_ })
-        if ($coverageExerciseIds.Count -lt 5) {
-            throw "MirrorOnly + $coverage requires at least five reviewed exercises."
-        }
         $coverageExerciseIds
     })
 $mirrorBenefitsGreatlyByCriterion =
@@ -159,9 +163,6 @@ $mirrorBenefitsGreatlyExerciseIds = @(
         $criterionExerciseIds = @(
             $mirrorBenefitsGreatlyByCriterion[$criterion] |
                 ForEach-Object { [int]$_ })
-        if ($criterionExerciseIds.Count -eq 0) {
-            throw "BenefitsGreatly criterion '$criterion' must not be empty."
-        }
         $criterionExerciseIds
     })
 $mirrorBenefitsGreatlyByCoverage =
@@ -178,9 +179,6 @@ $mirrorBenefitsGreatlyCoverageExerciseIds = @(
         $coverageExerciseIds = @(
             $mirrorBenefitsGreatlyByCoverage[$coverage] |
                 ForEach-Object { [int]$_ })
-        if ($coverageExerciseIds.Count -lt 5) {
-            throw "BenefitsGreatly + $coverage requires at least five reviewed exercises."
-        }
         $coverageExerciseIds
     })
 if (@(Compare-Object `
@@ -202,9 +200,6 @@ foreach ($coverage in $requiredMirrorCoverages) {
 }
 $mirrorAgnosticExerciseIds = @(
     $mirrorRelationshipReview.Agnostic | ForEach-Object { [int]$_ })
-if ($mirrorAgnosticExerciseIds.Count -lt 5) {
-    throw 'The mirror-agnostic category requires at least five reviewed exercises.'
-}
 $muscularDemandReview = Import-PowerShellDataFile -LiteralPath (
     Join-Path $PSScriptRoot 'ExerciseMuscularDemand.psd1') -SkipLimitCheck
 $sessionMovementReview = Import-PowerShellDataFile -LiteralPath (
@@ -462,6 +457,8 @@ foreach ($exerciseId in $replacementExerciseIds) {
     }
     $externalExerciseMedia[$exerciseId] = $replacement.Media
     $exerciseSideSequences.Remove($exerciseId)
+    $alternatingExerciseIds = @(
+        $alternatingExerciseIds | Where-Object { $_ -ne $exerciseId })
     $reviewedContinuousExerciseIds = @(
         $reviewedContinuousExerciseIds | Where-Object { $_ -ne $exerciseId })
     if ([string]$replacement.SideSequence -eq 'Continuous') {
@@ -477,8 +474,6 @@ foreach ($exerciseId in $replacementExerciseIds) {
         }
     }
     else {
-        $alternatingExerciseIds = @(
-            $alternatingExerciseIds | Where-Object { $_ -ne $exerciseId })
         $exerciseSideSequences[$exerciseId] = [string]$replacement.SideSequence
     }
     $holdExerciseFrames.Remove($exerciseId)
@@ -525,7 +520,7 @@ if ($invalidPracticeOverrides.Count -gt 0) {
 if ($bilateralExerciseNames.Count -eq 0 -or @(
         $bilateralExerciseNames.GetEnumerator() | Where-Object {
             [int]$_.Key -lt 1 -or
-            [int]$_.Key -gt 1000 -or
+            [int]$_.Key -notin $sourceExerciseIds -or
             [string]::IsNullOrWhiteSpace([string]$_.Value)
         }).Count -gt 0) {
     throw 'The bilateral catalog replacement map contains an invalid entry.'
@@ -534,7 +529,7 @@ if ($bilateralExerciseNames.Count -eq 0 -or @(
 $invalidRegionOverrides = @(
     $exerciseRegionOverrides.GetEnumerator() | Where-Object {
         [int]$_.Key -lt 1 -or
-        [int]$_.Key -gt 1000 -or
+        [int]$_.Key -notin $sourceExerciseIds -or
         [string]$_.Value -notin $regions
     })
 if ($invalidRegionOverrides.Count -gt 0) {
@@ -547,7 +542,7 @@ foreach ($entry in $rawExerciseCanonicalGroups.GetEnumerator()) {
     $exerciseId = 0
     if (-not [int]::TryParse([string]$entry.Key, [ref]$exerciseId) -or
         $exerciseId -lt 1 -or
-        $exerciseId -gt 1000 -or
+        $exerciseId -notin $sourceExerciseIds -or
         $exerciseCanonicalGroups.ContainsKey($exerciseId)) {
         $invalidCanonicalAssignmentIds.Add([string]$entry.Key)
         continue
@@ -674,7 +669,7 @@ if ($invalidSessionMovementFamilies.Count -gt 0) {
 if ($holdExerciseFrames.Count -eq 0 -or @(
         $holdExerciseFrames.GetEnumerator() | Where-Object {
             [int]$_.Key -lt 1 -or
-            [int]$_.Key -gt 1000 -or
+            [int]$_.Key -notin $sourceExerciseIds -or
             [int]$_.Value -lt 1 -or
             [int]$_.Value -gt 99
         }).Count -gt 0) {
@@ -696,7 +691,7 @@ $invalidExternalMedia = @(
         $exerciseId = [int]$_.Key
         $media = $_.Value
         $exerciseId -lt 1 -or
-        $exerciseId -gt 1000 -or
+        $exerciseId -notin $sourceExerciseIds -or
         $media -isnot [System.Collections.IDictionary] -or
         -not $media.ContainsKey('File') -or
         [string]::IsNullOrWhiteSpace([string]$media.File) -or
@@ -715,7 +710,12 @@ $invalidExternalMedia = @(
         ($media.ContainsKey('FramesPerSecond') -and
             [int]$media.FramesPerSecond -le 0) -or
         ($media.ContainsKey('DelayCentiseconds') -and
-            [int]$media.DelayCentiseconds -le 0)
+            [int]$media.DelayCentiseconds -le 0) -or
+        ($media.ContainsKey('LocalSourceFile') -xor
+            $media.ContainsKey('LocalSourceSha256')) -or
+        ($media.ContainsKey('LocalSourceFile') -and (
+            [string]$media.LocalSourceFile -cnotmatch '^[A-Za-z0-9][A-Za-z0-9._-]*\.(gif|mp4)$' -or
+            [string]$media.LocalSourceSha256 -cnotmatch '^[a-f0-9]{64}$'))
     })
 if ($invalidExternalMedia.Count -gt 0) {
     throw 'The reviewed external-media map contains an invalid entry.'
@@ -916,7 +916,7 @@ $invalidPosecodeMedia = @(
         $exerciseId = [int]$_.Key
         $media = $_.Value
         $exerciseId -lt 1 -or
-        $exerciseId -gt 1000 -or
+        $exerciseId -notin $sourceExerciseIds -or
         $media -isnot [System.Collections.IDictionary] -or
         -not $media.ContainsKey('File') -or
         [string]::IsNullOrWhiteSpace([string]$media.File) -or
@@ -930,9 +930,9 @@ if ($invalidPosecodeMedia.Count -gt 0) {
 if (@(
         $exactExerciseMediaCopies.GetEnumerator() | Where-Object {
             [int]$_.Key -lt 1 -or
-            [int]$_.Key -gt 1000 -or
+            [int]$_.Key -notin $sourceExerciseIds -or
             [int]$_.Value -lt 1 -or
-            [int]$_.Value -gt 1000 -or
+            [int]$_.Value -notin $sourceExerciseIds -or
             [int]$_.Key -eq [int]$_.Value
         }).Count -gt 0) {
     throw 'The exact-media copy map contains an invalid entry.'
@@ -943,11 +943,11 @@ if (@(
             $targetId = [int]$_.Key
             $transform = $_.Value
             $targetId -lt 1 -or
-            $targetId -gt 1000 -or
+            $targetId -notin $sourceExerciseIds -or
             $transform -isnot [System.Collections.IDictionary] -or
             -not $transform.ContainsKey('Source') -or
             [int]$transform.Source -lt 1 -or
-            [int]$transform.Source -gt 1000 -or
+            [int]$transform.Source -notin $sourceExerciseIds -or
             $targetId -eq [int]$transform.Source -or
             ($transform.ContainsKey('StartFramePercent') -and
                 ([int]$transform.StartFramePercent -lt 1 -or
@@ -1069,7 +1069,8 @@ function Get-MotionProfile {
             return 'WalkingStep'
         }
         'LEGS' {
-            if ($Name -match 'Squat|Plie|Chair Pose|Goddess|Horse|Duck Walk') { return 'Squat' }
+            if ($Name -match 'Squat|Pli[eé]|Chair Pose|Goddess|Horse|Duck Walk') { return 'Squat' }
+            if ($Name -match 'Hinge|Good Morning|Deadlift') { return 'HipHinge' }
             if ($Name -match 'Lunge|Warrior I|Warrior II|Side Angle') { return 'Lunge' }
             if ($Name -match 'Calf Raise') { return 'HeelRaise' }
             if ($Name -match 'Tibialis Raise') { return 'ForefootRaise' }
@@ -1721,20 +1722,6 @@ function Get-RoundedInt {
     return [int][Math]::Round($Value, [MidpointRounding]::AwayFromZero)
 }
 
-function Get-YtDlpPath {
-    $sourceCacheRoot = Join-Path (
-        [IO.Path]::GetTempPath()) 'FluxExerciseSourceCache'
-    New-Item -ItemType Directory -Force -Path $sourceCacheRoot | Out-Null
-    $ytDlpPath = Join-Path $sourceCacheRoot 'yt-dlp.exe'
-    if (-not (Test-Path -LiteralPath $ytDlpPath)) {
-        $ytDlpUrl = 'https://github.com/yt-dlp/yt-dlp/releases/' +
-            'download/2026.07.04/yt-dlp.exe'
-        Invoke-WebRequest -Uri $ytDlpUrl -OutFile $ytDlpPath
-    }
-
-    return $ytDlpPath
-}
-
 function Publish-GeneratedFile {
     param(
         [Parameter(Mandatory)]
@@ -1792,7 +1779,13 @@ function New-ExternalExerciseGif {
     $frameRoot = Join-Path $WorkingRoot ('external-frames-{0:D4}' -f $ExerciseId)
     New-Item -ItemType Directory -Force -Path $sourceRoot, $frameRoot | Out-Null
 
-    $sourcePath = Join-Path $sourceRoot ([string]$Media.File)
+    $hasLocalSource = $Media.ContainsKey('LocalSourceFile')
+    $sourcePath = if ($hasLocalSource) {
+        Resolve-ReviewedSourceMedia -Media $Media -ToolsRoot $PSScriptRoot
+    }
+    else {
+        Join-Path $sourceRoot ([string]$Media.File)
+    }
     $sourceUrl = if ($Media.ContainsKey('ArchiveUrl')) {
         [string]$Media.ArchiveUrl
     }
@@ -1832,65 +1825,7 @@ function New-ExternalExerciseGif {
             }
         }
         elseif ($Media.ContainsKey('Youtube') -and [bool]$Media.Youtube) {
-            $ytDlpPath = Get-YtDlpPath
-            & $ytDlpPath `
-                --no-playlist `
-                --no-warnings `
-                --no-progress `
-                --impersonate chrome `
-                --extractor-args 'youtube:player_client=android' `
-                --retries 5 `
-                --fragment-retries 5 `
-                --retry-sleep 1 `
-                --format '18/b[height<=480][vcodec^=avc1]/bv[height<=480][vcodec^=avc1]/bv[height<=480]/worst' `
-                --output $sourcePath `
-                $sourceUrl
-
-            if ($LASTEXITCODE -ne 0 -or
-                -not (Test-Path -LiteralPath $sourcePath)) {
-                # YouTube occasionally authorizes format 18 metadata but rejects
-                # the media CDN request. Retry without the constrained Android
-                # client, preferring an independently addressed AVC stream;
-                # audio is discarded during normalization in either case.
-                & $ytDlpPath `
-                    --no-playlist `
-                    --no-warnings `
-                    --no-progress `
-                    --impersonate chrome `
-                    --retries 5 `
-                    --fragment-retries 5 `
-                    --retry-sleep 1 `
-                    --force-overwrites `
-                    --format '134/bv*[height<=480][vcodec^=avc1]/bv*[height<=480]/b[height<=480][vcodec^=avc1]/b[height<=480]/worst' `
-                    --output $sourcePath `
-                    $sourceUrl
-
-                if ($LASTEXITCODE -ne 0 -or
-                    -not (Test-Path -LiteralPath $sourcePath)) {
-                    # Some reviewed sources expose their stable progressive MP4
-                    # only to YouTube's mobile-web client. Keep this as an
-                    # explicit final transport fallback; the exact reviewed trim
-                    # is still decoded and validated below before acceptance.
-                    & $ytDlpPath `
-                        --no-playlist `
-                        --no-warnings `
-                        --no-progress `
-                        --impersonate chrome `
-                        --extractor-args 'youtube:player_client=mweb' `
-                        --retries 5 `
-                        --fragment-retries 5 `
-                        --retry-sleep 1 `
-                        --force-overwrites `
-                        --format '18/b[height<=480][vcodec^=avc1]/bv[height<=480][vcodec^=avc1]/bv[height<=480]/worst' `
-                        --output $sourcePath `
-                        $sourceUrl
-
-                    if ($LASTEXITCODE -ne 0 -or
-                        -not (Test-Path -LiteralPath $sourcePath)) {
-                        throw "Could not download reviewed video for $ExerciseName."
-                    }
-                }
-            }
+            Save-YouTubeExerciseSource -Url $sourceUrl -Destination $sourcePath -Media $Media
         }
         else {
             Invoke-WebRequest `
@@ -1900,76 +1835,12 @@ function New-ExternalExerciseGif {
         }
     }
 
-    if ($Media.ContainsKey('Video') -and [bool]$Media.Video -and
-        $Media.ContainsKey('Youtube') -and [bool]$Media.Youtube) {
-        $culture = [Globalization.CultureInfo]::InvariantCulture
-        $validationStart = if ($Media.ContainsKey('StartSeconds')) {
-            ([double]$Media.StartSeconds).ToString('0.###', $culture)
-        }
-        else {
-            '0'
-        }
-        & ffmpeg `
-            -hide_banner `
-            -loglevel error `
-            -ss $validationStart `
-            -i $sourcePath `
-            -frames:v 1 `
-            -an `
-            -f null `
-            -
-        if ($LASTEXITCODE -ne 0) {
-            # Some YouTube sessions expose a nominal format-18 URL whose
-            # content-length is only a truncated MP4 header. Retry through the
-            # independently addressed AVC video stream and validate the exact
-            # reviewed trim before accepting it into the stable source cache.
-            $ytDlpPath = Get-YtDlpPath
-            & $ytDlpPath `
-                --no-playlist `
-                --no-warnings `
-                --no-progress `
-                --impersonate chrome `
-                --retries 5 `
-                --fragment-retries 5 `
-                --retry-sleep 1 `
-                --force-overwrites `
-                --format '134/bv*[height<=480][vcodec^=avc1]/bv*[height<=480]/b[height<=480][vcodec^=avc1]/b[height<=480]/worst' `
-                --output $sourcePath `
-                $sourceUrl
-            if ($LASTEXITCODE -ne 0) {
-                & $ytDlpPath `
-                    --no-playlist `
-                    --no-warnings `
-                    --no-progress `
-                    --impersonate chrome `
-                    --extractor-args 'youtube:player_client=mweb' `
-                    --retries 5 `
-                    --fragment-retries 5 `
-                    --retry-sleep 1 `
-                    --force-overwrites `
-                    --format '18/b[height<=480][vcodec^=avc1]/bv[height<=480][vcodec^=avc1]/bv[height<=480]/worst' `
-                    --output $sourcePath `
-                    $sourceUrl
-                if ($LASTEXITCODE -ne 0) {
-                    throw "Could not redownload decodable video for $ExerciseName."
-                }
-            }
-            & ffmpeg `
-                -hide_banner `
-                -loglevel error `
-                -ss $validationStart `
-                -i $sourcePath `
-                -frames:v 1 `
-                -an `
-                -f null `
-                -
-            if ($LASTEXITCODE -ne 0) {
-                throw "Downloaded video is not decodable for $ExerciseName."
-            }
-        }
+    if ($Media.ContainsKey('Video') -and [bool]$Media.Video) {
+        Assert-ExerciseSourceVideo -Path $sourcePath -Media $Media
     }
 
     $framePattern = Join-Path $frameRoot 'frame_%04d.png'
+    $sourceFrameDelays = @()
     if ($Media.ContainsKey('Video') -and [bool]$Media.Video) {
         $culture = [Globalization.CultureInfo]::InvariantCulture
         $framesPerSecond = if ($Media.ContainsKey('FramesPerSecond')) {
@@ -2014,6 +1885,19 @@ function New-ExternalExerciseGif {
         & ffmpeg @ffmpegArguments
     }
     else {
+        # PNG normalization drops animation timing. Keep each source delay
+        # alongside its frame, including through mirroring and ping-pong.
+        $sourceFrameDelays = @(& magick identify -format "%T`n" $sourcePath)
+        if ($LASTEXITCODE -ne 0 -or $sourceFrameDelays.Count -lt 2) {
+            throw "External media for $ExerciseName is not an animated image."
+        }
+        $sourceFrameDelays = @($sourceFrameDelays | ForEach-Object {
+            $delay = 0
+            if (-not [int]::TryParse([string]$_, [ref]$delay) -or $delay -lt 1) {
+                throw "External media for $ExerciseName has an invalid frame delay."
+            }
+            $delay
+        })
         & magick $sourcePath `
             -coalesce `
             -resize '256x256' `
@@ -2035,6 +1919,10 @@ function New-ExternalExerciseGif {
     if ($framePaths.Count -lt 2) {
         throw "External media for $ExerciseName is not animated."
     }
+    if ($sourceFrameDelays.Count -gt 0 -and
+        $sourceFrameDelays.Count -ne $framePaths.Count) {
+        throw "External media for $ExerciseName lost frames during normalization."
+    }
 
     if ($Media.MirrorForAlternation -and $SideSequence -notin @(
             'ScreenLeftThenRight', 'ScreenRightThenLeft',
@@ -2050,25 +1938,38 @@ function New-ExternalExerciseGif {
             $mirroredPaths.Add($mirroredPath)
         }
         $framePaths += @($mirroredPaths)
+        if ($sourceFrameDelays.Count -gt 0) {
+            $sourceFrameDelays += @($sourceFrameDelays)
+        }
     }
 
     $isPingPong = $Media.ContainsKey('PingPong') -and [bool]$Media.PingPong
     if ($isPingPong) {
         $returnPaths = [System.Collections.Generic.List[string]]::new()
+        $returnDelays = [System.Collections.Generic.List[int]]::new()
         for ($index = $framePaths.Count - 2; $index -ge 1; $index--) {
             $returnPaths.Add($framePaths[$index])
+            if ($sourceFrameDelays.Count -gt 0) {
+                $returnDelays.Add($sourceFrameDelays[$index])
+            }
         }
         $framePaths += @($returnPaths)
+        $sourceFrameDelays += @($returnDelays)
     }
 
     $frameDelay = if ($Media.ContainsKey('DelayCentiseconds')) {
-        [int]$Media.DelayCentiseconds
+        ([int]$Media.DelayCentiseconds).ToString()
     }
     elseif ($Media.ContainsKey('Video') -and [bool]$Media.Video) {
-        [Math]::Max(1, [int][Math]::Round(100 / [int]$Media.FramesPerSecond))
+        # GIF stores integer centiseconds. Round cumulative frame boundaries,
+        # not a single repeated delay: 8 fps needs alternating 13/12 cs and
+        # 12 fps needs 8/9/8 cs. Repeating 12 or 8 cs accelerates both by 4.17%.
+        # ImageMagick's t is the index in the complete (possibly mirrored)
+        # sequence, so the total duration stays within half a centisecond.
+        '%[fx:floor((t+1)*100/{0}+0.5)-floor(t*100/{0}+0.5)]' -f $framesPerSecond
     }
     else {
-        8
+        $null
     }
 
     $gifInputPaths = if ($isPingPong) {
@@ -2087,8 +1988,21 @@ function New-ExternalExerciseGif {
 
     $temporaryGifPath = Join-Path $WorkingRoot (
         'external-exercise-{0:D4}.gif' -f $ExerciseId)
-    $gifArguments = @($gifInputPaths) + @(
-        '-set', 'delay', $frameDelay.ToString(),
+    $gifArguments = if ($null -eq $frameDelay) {
+        # A single repeated delay would silently accelerate or slow an
+        # external GIF with a variable cadence.
+        @(
+            for ($index = 0; $index -lt $framePaths.Count; $index++) {
+                '-delay'
+                $sourceFrameDelays[$index].ToString()
+                $framePaths[$index]
+            }
+        )
+    }
+    else {
+        @($gifInputPaths) + @('-set', 'delay', $frameDelay)
+    }
+    $gifArguments += @(
         '-set', 'dispose', 'background',
         '-set', 'comment', "Flux reviewed exercise $ExerciseId - $ExerciseName",
         '-loop', '0',
@@ -3207,64 +3121,32 @@ function New-DirectionSequenceMp4 {
     param(
         [string]$SourceVideoPath,
         [string]$OutputPath,
-        [string]$WorkingRoot,
         [ValidateSet('HorizontalMirror', 'TemporalReverse', 'ExactExercise')]
         [string]$Transform,
         [string]$ExactSecondVideoPath = ''
     )
 
-    $exerciseKey = [IO.Path]::GetFileNameWithoutExtension($OutputPath)
-    $secondDirectionPath = $SourceVideoPath
-    $secondDirectionFilter = '[1:v]hflip,trim=duration=20,' +
-        'setpts=PTS-STARTPTS[second];'
-    if ($Transform -eq 'TemporalReverse') {
-        $secondDirectionPath = Join-Path $WorkingRoot "$exerciseKey-reverse.mp4"
-        & ffmpeg `
-            -hide_banner `
-            -loglevel error `
-            -y `
-            -i $SourceVideoPath `
-            -vf 'reverse' `
-            -an `
-            -map_metadata -1 `
-            -c:v libx264 `
-            -profile:v baseline `
-            -level 3.0 `
-            -preset medium `
-            -crf 24 `
-            -movflags +faststart `
-            $secondDirectionPath
-        if ($LASTEXITCODE -ne 0 -or
-            -not (Test-Path -LiteralPath $secondDirectionPath)) {
-            throw "FFmpeg could not reverse $SourceVideoPath."
+    # Each asset contains a complete natural loop. The base asset supplies the
+    # first direction; this asset supplies only the opposite direction.
+    $inputPath = $SourceVideoPath
+    $filter = switch ($Transform) {
+        'HorizontalMirror' { 'hflip' }
+        'TemporalReverse' { 'reverse' }
+        'ExactExercise' {
+            if ([string]::IsNullOrWhiteSpace($ExactSecondVideoPath) -or
+                -not (Test-Path -LiteralPath $ExactSecondVideoPath)) {
+                throw "The exact opposite-direction source is missing for $OutputPath."
+            }
+            $inputPath = $ExactSecondVideoPath
+            'null'
         }
-        $secondDirectionFilter = '[1:v]trim=duration=20,' +
-            'setpts=PTS-STARTPTS[second];'
     }
-    elseif ($Transform -eq 'ExactExercise') {
-        if ([string]::IsNullOrWhiteSpace($ExactSecondVideoPath) -or
-            -not (Test-Path -LiteralPath $ExactSecondVideoPath)) {
-            throw "The exact opposite-direction source is missing for $OutputPath."
-        }
-        $secondDirectionPath = $ExactSecondVideoPath
-        $secondDirectionFilter = '[1:v]trim=duration=20,' +
-            'setpts=PTS-STARTPTS[second];'
-    }
-
-    $filter =
-        '[0:v]trim=duration=20,setpts=PTS-STARTPTS[first];' +
-        $secondDirectionFilter +
-        '[first][second]concat=n=2:v=1:a=0,fps=20,format=yuv420p[out]'
     & ffmpeg `
         -hide_banner `
         -loglevel error `
         -y `
-        -stream_loop -1 `
-        -i $SourceVideoPath `
-        -stream_loop -1 `
-        -i $secondDirectionPath `
-        -filter_complex $filter `
-        -map '[out]' `
+        -i $inputPath `
+        -vf "$filter,fps=20,format=yuv420p" `
         -an `
         -map_metadata -1 `
         -c:v libx264 `
@@ -3272,11 +3154,10 @@ function New-DirectionSequenceMp4 {
         -level 3.0 `
         -preset medium `
         -crf 24 `
-        -force_key_frames '0,20' `
         -movflags +faststart `
         $OutputPath
     if ($LASTEXITCODE -ne 0 -or -not (Test-Path -LiteralPath $OutputPath)) {
-        throw "FFmpeg could not build the two-direction demonstration $OutputPath."
+        throw "FFmpeg could not build the opposite-direction demonstration $OutputPath."
     }
 }
 
@@ -3374,467 +3255,379 @@ New-Item -ItemType Directory -Path $tempRoot | Out-Null
 
 $records = [System.Collections.Generic.List[object]]::new($expectedExerciseCount)
 
-for ($regionIndex = 0; $regionIndex -lt $regions.Count; $regionIndex++) {
-    $region = $regions[$regionIndex]
-    $regionNames = @($catalogNames[$region])
-
-    if ($regionNames.Count -ne 100) {
-        throw "$region must define exactly 100 real movements."
+foreach ($definition in $sourceDefinitions) {
+    $exerciseId = [int]$definition.Id
+    if ($exerciseId -notin $retainedExerciseIds) { continue }
+    $region = [string]$definition.Region
+    $sourceExerciseName = [string]$definition.Name
+    $baselineExerciseName = if ($bilateralExerciseNames.ContainsKey($exerciseId)) {
+        [string]$bilateralExerciseNames[$exerciseId]
     }
-
-    for ($movementIndex = 0; $movementIndex -lt 100; $movementIndex++) {
-        $exerciseId = ($regionIndex * 100) + $movementIndex + 1
-        if ($exerciseId -notin $retainedExerciseIds) {
-            continue
+    else {
+        $sourceExerciseName
+    }
+    $replacement = if ($catalogExerciseReplacements.ContainsKey($exerciseId)) {
+        $catalogExerciseReplacements[$exerciseId]
+    }
+    else {
+        $null
+    }
+    if ($null -ne $replacement) {
+        $baselineSideSequence = if (
+            $baselineExerciseSideSequences.ContainsKey($exerciseId)) {
+            [string]$baselineExerciseSideSequences[$exerciseId]
         }
-
-        $sourceExerciseName = $regionNames[$movementIndex]
-        $baselineExerciseName = if ($bilateralExerciseNames.ContainsKey($exerciseId)) {
-            [string]$bilateralExerciseNames[$exerciseId]
+        elseif ($exerciseId -in $baselineReviewedContinuousExerciseIds -or
+            $exerciseDirectionSequences.ContainsKey($exerciseId) -or
+            $exerciseId -in $retiredDirectionOnlyExerciseIds) {
+            'Continuous'
         }
         else {
-            $sourceExerciseName
+            throw "Exercise $exerciseId has no baseline side-sequence decision."
         }
-        $replacement = if ($catalogExerciseReplacements.ContainsKey($exerciseId)) {
-            $catalogExerciseReplacements[$exerciseId]
+        $retiredBaselineName = $baselineExerciseName
+        if ($baselineSideSequence -ne 'Continuous' -and
+            $retiredBaselineName.StartsWith(
+                'Alternating ',
+                [StringComparison]::Ordinal)) {
+            $retiredBaselineName = $retiredBaselineName.Substring(
+                'Alternating '.Length)
+        }
+        if ([string]$replacement.RetiredName -ne $retiredBaselineName) {
+            throw "Replacement $exerciseId expects retired exercise '$($replacement.RetiredName)' but the baseline name is '$retiredBaselineName'."
+        }
+    }
+    $exerciseSideSequence = if ($exerciseSideSequences.ContainsKey($exerciseId)) {
+        [string]$exerciseSideSequences[$exerciseId]
+    }
+    elseif ($exerciseId -in $alternatingExerciseIds) {
+        'Alternating'
+    }
+    elseif ($exerciseId -in $reviewedContinuousExerciseIds -or
+        $exerciseDirectionSequences.ContainsKey($exerciseId)) {
+        'Continuous'
+    }
+    else {
+        throw "Exercise $exerciseId is missing a reviewed side-sequence decision."
+    }
+    $exerciseDirectionSequence = if (
+        $exerciseDirectionSequences.ContainsKey($exerciseId)) {
+        [string]$exerciseDirectionSequences[$exerciseId]
+    }
+    else {
+        'None'
+    }
+    $exerciseName = if ($null -ne $replacement) {
+        [string]$replacement.Name
+    }
+    else {
+        $baselineExerciseName
+    }
+    if ($exerciseSideSequence -in @(
+            'ScreenLeftThenRight', 'ScreenRightThenLeft') -and
+        $exerciseName.StartsWith(
+            'Alternating ',
+            [StringComparison]::Ordinal)) {
+        $exerciseName = $exerciseName.Substring('Alternating '.Length)
+    }
+    $effectiveRegion = if ($exerciseRegionOverrides.ContainsKey($exerciseId)) {
+        [string]$exerciseRegionOverrides[$exerciseId]
+    }
+    else {
+        $region
+    }
+    $practice = if ($null -ne $replacement) {
+        [string]$replacement.Practice
+    }
+    elseif ($definition.Additional) {
+        [string]$definition.Practice
+    }
+    elseif ($exercisePracticeOverrides.ContainsKey($exerciseId)) {
+        [string]$exercisePracticeOverrides[$exerciseId]
+    }
+    else {
+        Get-Practice -Name $exerciseName
+    }
+    $motionProfile = if ($null -ne $replacement) {
+        [string]$replacement.MotionProfile
+    }
+    elseif ($definition.Additional) {
+        [string]$definition.MotionProfile
+    }
+    else {
+        Get-MotionProfile `
+            -Region $effectiveRegion `
+            -Name $exerciseName
+    }
+    $canonicalAssignment = $exerciseCanonicalGroups[$exerciseId]
+    $primaryCanonicalGroup = [string]$canonicalAssignment.Primary
+    $secondaryCanonicalGroups = @(
+        $canonicalAssignment.Secondary | ForEach-Object { [string]$_ })
+    $isHold = $holdExerciseFrames.ContainsKey($exerciseId)
+    $exerciseMode = if ($isHold) { 'Hold' } else { 'Repetition' }
+    $exercisePresentation = if (
+        $stillExercisePresentations.ContainsKey($exerciseId)) {
+        'Still'
+    }
+    else {
+        'Motion'
+    }
+    $holdFramePercent = if ($isHold) {
+        [int]$holdExerciseFrames[$exerciseId]
+    }
+    else {
+        0
+    }
+    $gifFileName = 'exercise_{0:D4}.gif' -f $exerciseId
+    $videoFileName = 'exercise_{0:D4}.mp4' -f $exerciseId
+    $videoRelativePath = "exercise_videos/$videoFileName"
+
+    $record = [ordered]@{
+        id = $exerciseId
+        name = $exerciseName
+        retiredName = if ($null -ne $replacement) {
+            [string]$replacement.RetiredName
         }
         else {
             $null
         }
-        if ($null -ne $replacement) {
-            $baselineSideSequence = if (
-                $baselineExerciseSideSequences.ContainsKey($exerciseId)) {
-                [string]$baselineExerciseSideSequences[$exerciseId]
-            }
-            elseif ($exerciseId -in $baselineReviewedContinuousExerciseIds -or
-                $exerciseDirectionSequences.ContainsKey($exerciseId) -or
-                $exerciseId -in $retiredDirectionOnlyExerciseIds) {
-                'Continuous'
-            }
-            else {
-                throw "Exercise $exerciseId has no baseline side-sequence decision."
-            }
-            $retiredBaselineName = $baselineExerciseName
-            if ($baselineSideSequence -ne 'Continuous' -and
-                $retiredBaselineName.StartsWith(
-                    'Alternating ',
-                    [StringComparison]::Ordinal)) {
-                $retiredBaselineName = $retiredBaselineName.Substring(
-                    'Alternating '.Length)
-            }
-            if ([string]$replacement.RetiredName -ne $retiredBaselineName) {
-                throw "Replacement $exerciseId expects retired exercise '$($replacement.RetiredName)' but the baseline name is '$retiredBaselineName'."
-            }
-        }
-        $exerciseSideSequence = if ($exerciseSideSequences.ContainsKey($exerciseId)) {
-            [string]$exerciseSideSequences[$exerciseId]
-        }
-        elseif ($exerciseId -in $alternatingExerciseIds) {
-            'Alternating'
-        }
-        elseif ($exerciseId -in $reviewedContinuousExerciseIds -or
-            $exerciseDirectionSequences.ContainsKey($exerciseId)) {
-            'Continuous'
+        video = $videoRelativePath
+        primaryCanonicalGroup = $primaryCanonicalGroup
+        secondaryCanonicalGroups = $secondaryCanonicalGroups
+        practice = $practice
+        motionProfile = $motionProfile
+        mode = $exerciseMode
+        presentation = $exercisePresentation
+        holdFramePercent = $holdFramePercent
+        sideSequence = $exerciseSideSequence
+        directionSequence = $exerciseDirectionSequence
+        sequenceBlocks = @()
+        insectCompatibility = if (
+            $exerciseId -in $insectCompatibleExerciseIds) {
+            'Compatible'
         }
         else {
-            throw "Exercise $exerciseId is missing a reviewed side-sequence decision."
+            'Incompatible'
         }
-        $exerciseDirectionSequence = if (
-            $exerciseDirectionSequences.ContainsKey($exerciseId)) {
-            [string]$exerciseDirectionSequences[$exerciseId]
+        hardFloorCompatibility = if (
+            $exerciseId -in $hardFloorCompatibleExerciseIds) {
+            'Compatible'
+        }
+        else {
+            'Incompatible'
+        }
+        upperBodyClothingRequirement = if (
+            $exerciseId -in $upperBodyClothingRequiredExerciseIds) {
+            'ClothingRequired'
+        }
+        elseif ($exerciseId -in $bareUpperBodyRequiredExerciseIds) {
+            'BareUpperBodyRequired'
+        }
+        else {
+            'Agnostic'
+        }
+        shyCompatibility = if (
+            $exerciseId -in $shyCompatibleExerciseIds) {
+            'Compatible'
+        }
+        else {
+            'Incompatible'
+        }
+        wallRequired = $exerciseId -in $wallRequiredExerciseIds
+        soleWallContactRequired =
+            $exerciseId -in $soleWallContactRequiredExerciseIds
+        mirrorRelationship = if (
+            $exerciseId -in $mirrorOnlyExerciseIds) {
+            'MirrorOnly'
+        }
+        elseif ($exerciseId -in $mirrorBenefitsGreatlyExerciseIds) {
+            'BenefitsGreatly'
+        }
+        else {
+            'Agnostic'
+        }
+        minimumMirrorCoverage = if (
+            $mirrorCoverageByExerciseId.ContainsKey($exerciseId)) {
+            [string]$mirrorCoverageByExerciseId[$exerciseId]
         }
         else {
             'None'
         }
-        $exerciseName = if ($null -ne $replacement) {
-            [string]$replacement.Name
+        score = 0
+        muscularDemand = [int]$muscularDemandByExerciseId[$exerciseId]
+        onlyFeetTouchGround = $true
+        shoeAgnostic = $true
+        maxSpaceMeters = 2
+        equipment = if ($exerciseId -in $mirrorOnlyExerciseIds) {
+            'Mirror'
         }
         else {
-            $baselineExerciseName
+            'None'
         }
-        if ($exerciseSideSequence -in @(
-                'ScreenLeftThenRight', 'ScreenRightThenLeft') -and
-            $exerciseName.StartsWith(
-                'Alternating ',
-                [StringComparison]::Ordinal)) {
-            $exerciseName = $exerciseName.Substring('Alternating '.Length)
-        }
-        $effectiveRegion = if ($exerciseRegionOverrides.ContainsKey($exerciseId)) {
-            [string]$exerciseRegionOverrides[$exerciseId]
-        }
-        else {
-            $region
-        }
-        $practice = if ($null -ne $replacement) {
-            [string]$replacement.Practice
-        }
-        elseif ($exercisePracticeOverrides.ContainsKey($exerciseId)) {
-            [string]$exercisePracticeOverrides[$exerciseId]
-        }
-        else {
-            Get-Practice -Name $exerciseName
-        }
-        $motionProfile = if ($null -ne $replacement) {
-            [string]$replacement.MotionProfile
-        }
-        else {
-            Get-MotionProfile `
-                -Region $effectiveRegion `
-                -Name $exerciseName
-        }
-        $canonicalAssignment = $exerciseCanonicalGroups[$exerciseId]
-        $primaryCanonicalGroup = [string]$canonicalAssignment.Primary
-        $secondaryCanonicalGroups = @(
-            $canonicalAssignment.Secondary | ForEach-Object { [string]$_ })
-        $isHold = $holdExerciseFrames.ContainsKey($exerciseId)
-        $exerciseMode = if ($isHold) { 'Hold' } else { 'Repetition' }
-        $exercisePresentation = if (
-            $stillExercisePresentations.ContainsKey($exerciseId)) {
-            'Still'
-        }
-        else {
-            'Motion'
-        }
-        $holdFramePercent = if ($isHold) {
-            [int]$holdExerciseFrames[$exerciseId]
-        }
-        else {
-            0
-        }
-        $gifFileName = 'exercise_{0:D4}.gif' -f $exerciseId
-        $videoFileName = 'exercise_{0:D4}.mp4' -f $exerciseId
-        $videoRelativePath = "exercise_videos/$videoFileName"
-
-        $record = [ordered]@{
-            id = $exerciseId
-            name = $exerciseName
-            retiredName = if ($null -ne $replacement) {
-                [string]$replacement.RetiredName
-            }
-            else {
-                $null
-            }
-            video = $videoRelativePath
-            primaryCanonicalGroup = $primaryCanonicalGroup
-            secondaryCanonicalGroups = $secondaryCanonicalGroups
-            practice = $practice
-            motionProfile = $motionProfile
-            mode = $exerciseMode
-            presentation = $exercisePresentation
-            holdFramePercent = $holdFramePercent
-            sideSequence = $exerciseSideSequence
-            directionSequence = $exerciseDirectionSequence
-            sequenceBlocks = @()
-            insectCompatibility = if (
-                $exerciseId -in $insectCompatibleExerciseIds) {
-                'Compatible'
-            }
-            else {
-                'Incompatible'
-            }
-            hardFloorCompatibility = if (
-                $exerciseId -in $hardFloorCompatibleExerciseIds) {
-                'Compatible'
-            }
-            else {
-                'Incompatible'
-            }
-            upperBodyClothingRequirement = if (
-                $exerciseId -in $upperBodyClothingRequiredExerciseIds) {
-                'ClothingRequired'
-            }
-            elseif ($exerciseId -in $bareUpperBodyRequiredExerciseIds) {
-                'BareUpperBodyRequired'
-            }
-            else {
-                'Agnostic'
-            }
-            shyCompatibility = if (
-                $exerciseId -in $shyCompatibleExerciseIds) {
-                'Compatible'
-            }
-            else {
-                'Incompatible'
-            }
-            wallRequired = $exerciseId -in $wallRequiredExerciseIds
-            soleWallContactRequired =
-                $exerciseId -in $soleWallContactRequiredExerciseIds
-            mirrorRelationship = if (
-                $exerciseId -in $mirrorOnlyExerciseIds) {
-                'MirrorOnly'
-            }
-            elseif ($exerciseId -in $mirrorBenefitsGreatlyExerciseIds) {
-                'BenefitsGreatly'
-            }
-            else {
-                'Agnostic'
-            }
-            minimumMirrorCoverage = if (
-                $mirrorCoverageByExerciseId.ContainsKey($exerciseId)) {
-                [string]$mirrorCoverageByExerciseId[$exerciseId]
-            }
-            else {
-                'None'
-            }
-            score = 0
-            muscularDemand = [int]$muscularDemandByExerciseId[$exerciseId]
-            onlyFeetTouchGround = $true
-            shoeAgnostic = $true
-            maxSpaceMeters = 2
-            equipment = if ($exerciseId -in $mirrorOnlyExerciseIds) {
-                'Mirror'
-            }
-            else {
-                'None'
-            }
-            silent = $exerciseId -in $silentExerciseIds
-        }
-        if ($sessionMovementByExerciseId.ContainsKey($exerciseId)) {
-            $record['sessionMovementId'] =
-                [int]$sessionMovementByExerciseId[$exerciseId]
-        }
-        $records.Add($record)
-
-        $isSelected = if ($ExerciseIds.Count -gt 0) {
-            $ExerciseIds -contains $exerciseId
-        }
-        else {
-            $exerciseId -ge $StartExercise -and
-                ($MaxExercises -eq 0 -or $exerciseId -le $MaxExercises)
-        }
-
-        if (-not $isSelected) {
-            continue
-        }
-
-        $gifPath = Join-Path $gifOutputRoot $gifFileName
-        $videoPath = Join-Path $videoOutputRoot $videoFileName
-        $holdFramePath = Join-Path $holdFrameOutputRoot (
-            'exercise_{0:D4}.png' -f $exerciseId)
-
-        if ($exactExerciseMediaTransforms.ContainsKey($exerciseId)) {
-            $transform = $exactExerciseMediaTransforms[$exerciseId]
-            $sourceExerciseId = [int]$transform.Source
-            $sourceGifPath = Join-Path $gifOutputRoot (
-                'exercise_{0:D4}.gif' -f $sourceExerciseId)
-            if (-not (Test-Path -LiteralPath $sourceGifPath)) {
-                throw "Exact transform source GIF $sourceExerciseId is missing for $exerciseName."
-            }
-
-            $transformedGifPath = Join-Path $tempRoot (
-                'transformed_{0:D4}.gif' -f $exerciseId)
-            $transformFrameRoot = Join-Path $tempRoot (
-                'transform_frames_{0:D4}' -f $exerciseId)
-            New-Item -ItemType Directory -Path $transformFrameRoot | Out-Null
-            $transformFramePattern = Join-Path $transformFrameRoot 'frame_%04d.png'
-            & magick $sourceGifPath -coalesce $transformFramePattern
-            if ($LASTEXITCODE -ne 0) {
-                throw "Could not extract transform source frames for $exerciseName."
-            }
-
-            [object[]]$transformFramePaths = @(
-                Get-ChildItem -LiteralPath $transformFrameRoot -Filter 'frame_*.png' |
-                    Sort-Object Name |
-                    Select-Object -ExpandProperty FullName)
-            if ($transformFramePaths.Count -lt 2) {
-                throw "Exact transform source media is not animated for $exerciseName."
-            }
-
-            if ($transform.ContainsKey('ReverseFrames') -and
-                [bool]$transform.ReverseFrames) {
-                [Array]::Reverse($transformFramePaths)
-            }
-
-            if ($transform.ContainsKey('StartFramePercent')) {
-                $startFrameIndex = [int][Math]::Round(
-                    ($transformFramePaths.Count - 1) *
-                        ([int]$transform.StartFramePercent / 100.0))
-                $orderedTransformFrames = [System.Collections.Generic.List[string]]::new()
-                for ($index = $startFrameIndex;
-                    $index -lt $transformFramePaths.Count;
-                    $index++) {
-                    $orderedTransformFrames.Add([string]$transformFramePaths[$index])
-                }
-                for ($index = 0; $index -lt $startFrameIndex; $index++) {
-                    $orderedTransformFrames.Add([string]$transformFramePaths[$index])
-                }
-                $transformFramePaths = @($orderedTransformFrames)
-            }
-
-            $orderedFrameRoot = Join-Path $transformFrameRoot 'ordered'
-            New-Item -ItemType Directory -Path $orderedFrameRoot | Out-Null
-            for ($index = 0; $index -lt $transformFramePaths.Count; $index++) {
-                $orderedFramePath = Join-Path $orderedFrameRoot (
-                    'frame_{0:D4}.png' -f $index)
-                if ($transform.ContainsKey('HorizontalMirror') -and
-                    [bool]$transform.HorizontalMirror) {
-                    & magick $transformFramePaths[$index] -flop $orderedFramePath
-                    if ($LASTEXITCODE -ne 0) {
-                        throw "Could not mirror exact source media for $exerciseName."
-                    }
-                }
-                else {
-                    Copy-Item `
-                        -LiteralPath $transformFramePaths[$index] `
-                        -Destination $orderedFramePath
-                }
-            }
-
-            $transformDelay = if ($transform.ContainsKey('DelayCentiseconds')) {
-                [int]$transform.DelayCentiseconds
-            }
-            else {
-                $sourceFirstFrame = $sourceGifPath + '[0]'
-                $identifiedDelay = & magick identify -format '%T' $sourceFirstFrame
-                $parsedDelay = 0
-                if ($LASTEXITCODE -ne 0 -or
-                    -not [int]::TryParse(
-                        [string]$identifiedDelay,
-                        [ref]$parsedDelay) -or
-                    $parsedDelay -lt 1) {
-                    throw "Could not identify the source-frame delay for $exerciseName."
-                }
-                $parsedDelay
-            }
-
-            $orderedFramePattern = Join-Path $orderedFrameRoot 'frame_*.png'
-            $transformArguments = @($orderedFramePattern) + @(
-                '-set', 'delay', $transformDelay.ToString(),
-                '-set', 'dispose', 'background',
-                '-set', 'comment',
-                "Flux reviewed transformed exercise $exerciseId - $exerciseName",
-                '-loop', '0',
-                '-layers', 'Optimize',
-                $transformedGifPath)
-            & magick @transformArguments
-            if ($LASTEXITCODE -ne 0 -or
-                -not (Test-Path -LiteralPath $transformedGifPath)) {
-                throw "Could not transform exact source media for $exerciseName."
-            }
-
-            $transformChanged = $Force -or -not (Test-Path -LiteralPath $gifPath)
-            if (-not $transformChanged) {
-                $newHash = (Get-FileHash -LiteralPath $transformedGifPath -Algorithm SHA256).Hash
-                $oldHash = (Get-FileHash -LiteralPath $gifPath -Algorithm SHA256).Hash
-                $transformChanged = $newHash -ne $oldHash
-            }
-            if ($transformChanged) {
-                $transformChanged = Publish-GeneratedFile `
-                    -SourcePath $transformedGifPath `
-                    -DestinationPath $gifPath
-            }
-
-            if ($isHold) {
-                New-HoldFrameImage `
-                    -GifPath $gifPath `
-                    -OutputPath $holdFramePath `
-                    -FramePercent $holdFramePercent `
-                    -Overwrite:($Force -or $transformChanged)
-            }
-            New-ExerciseMp4 `
-                -GifPath $gifPath `
-                -VideoPath $videoPath `
-                -HoldFramePercent $holdFramePercent `
-                -Overwrite:($Force -or $transformChanged)
-            continue
-        }
-
-        if ($exactExerciseMediaCopies.ContainsKey($exerciseId)) {
-            $sourceExerciseId = [int]$exactExerciseMediaCopies[$exerciseId]
-            $sourceGifPath = Join-Path $gifOutputRoot (
-                'exercise_{0:D4}.gif' -f $sourceExerciseId)
-            if (-not (Test-Path -LiteralPath $sourceGifPath)) {
-                throw "Exact source GIF $sourceExerciseId is missing for $exerciseName."
-            }
-
-            $copyRequired = -not (Test-Path -LiteralPath $gifPath)
-            if (-not $copyRequired) {
-                $sourceHash = (Get-FileHash -LiteralPath $sourceGifPath -Algorithm SHA256).Hash
-                $targetHash = (Get-FileHash -LiteralPath $gifPath -Algorithm SHA256).Hash
-                $copyRequired = $sourceHash -ne $targetHash
-            }
-
-            if ($copyRequired) {
-                $copyRequired = Publish-GeneratedFile `
-                    -SourcePath $sourceGifPath `
-                    -DestinationPath $gifPath
-            }
-
-            if ($isHold) {
-                New-HoldFrameImage `
-                    -GifPath $gifPath `
-                    -OutputPath $holdFramePath `
-                    -FramePercent $holdFramePercent `
-                    -Overwrite:($Force -or $copyRequired)
-            }
-            New-ExerciseMp4 `
-                -GifPath $gifPath `
-                -VideoPath $videoPath `
-                -HoldFramePercent $holdFramePercent `
-                -Overwrite:($Force -or $copyRequired)
-            continue
-        }
-
-        if ((Test-Path -LiteralPath $gifPath) -and -not $Force) {
-            if ($isHold) {
-                New-HoldFrameImage `
-                    -GifPath $gifPath `
-                    -OutputPath $holdFramePath `
-                    -FramePercent $holdFramePercent
-            }
-            New-ExerciseMp4 `
-                -GifPath $gifPath `
-                -VideoPath $videoPath `
-                -HoldFramePercent $holdFramePercent
-            continue
-        }
-
-        if ($exerciseId -in $reviewedPosecodeIds) {
-            if (-not (Test-Path -LiteralPath $gifPath)) {
-                throw "The reviewed Posecode asset is missing for $exerciseName."
-            }
-
-            if ($isHold) {
-                New-HoldFrameImage `
-                    -GifPath $gifPath `
-                    -OutputPath $holdFramePath `
-                    -FramePercent $holdFramePercent `
-                    -Overwrite:$Force
-            }
-            New-ExerciseMp4 `
-                -GifPath $gifPath `
-                -VideoPath $videoPath `
-                -HoldFramePercent $holdFramePercent `
-                -Overwrite:$Force
-            continue
-        }
-
-        if ($exerciseId -in $reviewedExternalIds -or
-            $exerciseId -in $reviewedInternalAnatomyIds) {
-            New-ExternalExerciseGif `
-                -ExerciseId $exerciseId `
-                -ExerciseName $exerciseName `
-                -SideSequence $exerciseSideSequence `
-                -Media $externalExerciseMedia[$exerciseId] `
-                -GifPath $gifPath `
-                -WorkingRoot $tempRoot
-            if ($isHold) {
-                New-HoldFrameImage `
-                    -GifPath $gifPath `
-                    -OutputPath $holdFramePath `
-                    -FramePercent $holdFramePercent `
-                    -Overwrite:$Force
-            }
-            New-ExerciseMp4 `
-                -GifPath $gifPath `
-                -VideoPath $videoPath `
-                -HoldFramePercent $holdFramePercent `
-                -Overwrite:$Force
-            continue
-        }
-
-        throw "No reviewed demonstration is assigned to $exerciseName."
+        silent = $exerciseId -in $silentExerciseIds
     }
+    if ($sessionMovementByExerciseId.ContainsKey($exerciseId)) {
+        $record['sessionMovementId'] =
+            [int]$sessionMovementByExerciseId[$exerciseId]
+    }
+    $records.Add($record)
+
+    $isSelected = if ($ExerciseIds.Count -gt 0) {
+        $ExerciseIds -contains $exerciseId
+    }
+    else {
+        $exerciseId -ge $StartExercise -and
+            ($MaxExercises -eq 0 -or $exerciseId -le $MaxExercises)
+    }
+
+    if (-not $isSelected) {
+        continue
+    }
+
+    $gifPath = Join-Path $gifOutputRoot $gifFileName
+    $videoPath = Join-Path $videoOutputRoot $videoFileName
+    $holdFramePath = Join-Path $holdFrameOutputRoot (
+        'exercise_{0:D4}.png' -f $exerciseId)
+
+    if ($exactExerciseMediaTransforms.ContainsKey($exerciseId)) {
+        $transform = $exactExerciseMediaTransforms[$exerciseId]
+        $sourceExerciseId = [int]$transform.Source
+        $sourceGifPath = Join-Path $gifOutputRoot (
+            'exercise_{0:D4}.gif' -f $sourceExerciseId)
+        if (-not (Test-Path -LiteralPath $sourceGifPath)) {
+            throw "Exact transform source GIF $sourceExerciseId is missing for $exerciseName."
+        }
+
+        $transformedGifPath = Join-Path $tempRoot (
+            'transformed_{0:D4}.gif' -f $exerciseId)
+        New-ExactExerciseGif `
+            -SourceGifPath $sourceGifPath `
+            -OutputPath $transformedGifPath `
+            -Transform $transform `
+            -Comment "Flux reviewed transformed exercise $exerciseId - $exerciseName"
+
+        $transformChanged = $Force -or -not (Test-Path -LiteralPath $gifPath)
+        if (-not $transformChanged) {
+            $newHash = (Get-FileHash -LiteralPath $transformedGifPath -Algorithm SHA256).Hash
+            $oldHash = (Get-FileHash -LiteralPath $gifPath -Algorithm SHA256).Hash
+            $transformChanged = $newHash -ne $oldHash
+        }
+        if ($transformChanged) {
+            $transformChanged = Publish-GeneratedFile `
+                -SourcePath $transformedGifPath `
+                -DestinationPath $gifPath
+        }
+
+        if ($isHold) {
+            New-HoldFrameImage `
+                -GifPath $gifPath `
+                -OutputPath $holdFramePath `
+                -FramePercent $holdFramePercent `
+                -Overwrite:($Force -or $transformChanged)
+        }
+        New-ExerciseMp4 `
+            -GifPath $gifPath `
+            -VideoPath $videoPath `
+            -HoldFramePercent $holdFramePercent `
+            -Overwrite:($Force -or $transformChanged)
+        continue
+    }
+
+    if ($exactExerciseMediaCopies.ContainsKey($exerciseId)) {
+        $sourceExerciseId = [int]$exactExerciseMediaCopies[$exerciseId]
+        $sourceGifPath = Join-Path $gifOutputRoot (
+            'exercise_{0:D4}.gif' -f $sourceExerciseId)
+        if (-not (Test-Path -LiteralPath $sourceGifPath)) {
+            throw "Exact source GIF $sourceExerciseId is missing for $exerciseName."
+        }
+
+        $copyRequired = -not (Test-Path -LiteralPath $gifPath)
+        if (-not $copyRequired) {
+            $sourceHash = (Get-FileHash -LiteralPath $sourceGifPath -Algorithm SHA256).Hash
+            $targetHash = (Get-FileHash -LiteralPath $gifPath -Algorithm SHA256).Hash
+            $copyRequired = $sourceHash -ne $targetHash
+        }
+
+        if ($copyRequired) {
+            $copyRequired = Publish-GeneratedFile `
+                -SourcePath $sourceGifPath `
+                -DestinationPath $gifPath
+        }
+
+        if ($isHold) {
+            New-HoldFrameImage `
+                -GifPath $gifPath `
+                -OutputPath $holdFramePath `
+                -FramePercent $holdFramePercent `
+                -Overwrite:($Force -or $copyRequired)
+        }
+        New-ExerciseMp4 `
+            -GifPath $gifPath `
+            -VideoPath $videoPath `
+            -HoldFramePercent $holdFramePercent `
+            -Overwrite:($Force -or $copyRequired)
+        continue
+    }
+
+    if ((Test-Path -LiteralPath $gifPath) -and -not $Force) {
+        if ($isHold) {
+            New-HoldFrameImage `
+                -GifPath $gifPath `
+                -OutputPath $holdFramePath `
+                -FramePercent $holdFramePercent
+        }
+        New-ExerciseMp4 `
+            -GifPath $gifPath `
+            -VideoPath $videoPath `
+            -HoldFramePercent $holdFramePercent
+        continue
+    }
+
+    if ($exerciseId -in $reviewedPosecodeIds) {
+        if (-not (Test-Path -LiteralPath $gifPath)) {
+            throw "The reviewed Posecode asset is missing for $exerciseName."
+        }
+
+        if ($isHold) {
+            New-HoldFrameImage `
+                -GifPath $gifPath `
+                -OutputPath $holdFramePath `
+                -FramePercent $holdFramePercent `
+                -Overwrite:$Force
+        }
+        New-ExerciseMp4 `
+            -GifPath $gifPath `
+            -VideoPath $videoPath `
+            -HoldFramePercent $holdFramePercent `
+            -Overwrite:$Force
+        continue
+    }
+
+    if ($exerciseId -in $reviewedExternalIds -or
+        $exerciseId -in $reviewedInternalAnatomyIds) {
+        New-ExternalExerciseGif `
+            -ExerciseId $exerciseId `
+            -ExerciseName $exerciseName `
+            -SideSequence $exerciseSideSequence `
+            -Media $externalExerciseMedia[$exerciseId] `
+            -GifPath $gifPath `
+            -WorkingRoot $tempRoot
+        if ($isHold) {
+            New-HoldFrameImage `
+                -GifPath $gifPath `
+                -OutputPath $holdFramePath `
+                -FramePercent $holdFramePercent `
+                -Overwrite:$Force
+        }
+        New-ExerciseMp4 `
+            -GifPath $gifPath `
+            -VideoPath $videoPath `
+            -HoldFramePercent $holdFramePercent `
+            -Overwrite:$Force
+        continue
+    }
+
+    throw "No reviewed demonstration is assigned to $exerciseName."
 }
 
 $recordsById = @{}
@@ -3882,10 +3675,18 @@ foreach ($entry in $exerciseDirectionSequences.GetEnumerator()) {
     else {
         ''
     }
+    # A selected media batch cannot change an unrelated direction sequence.
+    # Rebuild when either source is selected, or when its output is missing.
+    if ($ExerciseIds.Count -gt 0 -and
+        $exerciseId -notin $ExerciseIds -and
+        ([string]$transform.Mode -ne 'ExactExercise' -or
+            [int]$transform.SecondExerciseId -notin $ExerciseIds) -and
+        (Test-Path -LiteralPath $directionVideoPath)) {
+        continue
+    }
     New-DirectionSequenceMp4 `
         -SourceVideoPath $sourceVideoPath `
         -OutputPath $directionVideoPath `
-        -WorkingRoot $tempRoot `
         -Transform ([string]$transform.Mode) `
         -ExactSecondVideoPath $exactSecondVideoPath
 }
@@ -4135,7 +3936,7 @@ if ($MaxExercises -eq 0 -and $ExerciseIds.Count -eq 0) {
 
         Get-ChildItem -LiteralPath $resolvedMediaDirectory -File |
             Where-Object {
-                $_.Name -match ('^exercise_(?<id>\d{4})\.' +
+                $_.Name -match ('^exercise_(?<id>\d{4,})\.' +
                     [regex]::Escape([string]$mediaDirectory.Extension) + '$') -and
                 [int]$Matches.id -notin @($mediaDirectory.ExpectedIds)
             } |

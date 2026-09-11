@@ -1,0 +1,2046 @@
+{
+  "id": 203,
+  "fixture": {
+    "name": "Shibashi Split-Stance Wing Open",
+    "group": {
+      "id": "r30.scapular-girdle.set1.block1",
+      "displayName": "Scapular girdle",
+      "order": 58,
+      "canonicalGroups": [
+        "ScapularGirdle"
+      ],
+      "selectionGroupId": "r30.scapular-girdle",
+      "exerciseOverrideId": 203,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenRight",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "method": "Actual app UI; real-time normal-speed complete media loops. Additive application clock skips redundant work/rest waiting; no timer or video playback acceleration.",
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 569,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 702,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "5",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 932,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": true,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1200,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.098596,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1476,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.373253,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1688,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.584283,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1899,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.816801,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2129,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.027301,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2337,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.233793,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2543,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.439781,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2749,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.647168,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2956,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.853147,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3162,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 2.059557,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3368,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 2.265674,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3586,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 2.484212,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3793,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 2.689349,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4002,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 2.903277,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4213,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 3.110671,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4217,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 3.114097,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4499,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 3.400908,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4711,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 3.607996,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4919,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 3.835572,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5150,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 4.048692,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5355,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 4.251173,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5574,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 4.469829,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5780,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 4.675703,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5982,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 4.877932,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6194,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 5.091187,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6400,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 5.295077,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6606,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 5.501942,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6810,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.041414,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7018,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.245867,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7237,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.464942,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7443,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.670973,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7660,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.890118,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7667,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "38",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.893719,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7903,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block1",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.128975,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8116,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.scapular-girdle.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.092277,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8358,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.scapular-girdle.set1.block1",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.329405,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8599,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.121853,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8654,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.176256,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8697,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.220428,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8960,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.487788,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9168,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.692267,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9371,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.895164,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9578,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.109552,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9795,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.320442,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10003,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.528813,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10211,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.738004,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10420,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "44",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.945386,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10627,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 2.151844,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10834,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 2.35912,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11040,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 2.563188,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11244,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 2.770898,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11462,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "43",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 2.986792,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11668,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 3.192683,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11673,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 3.195906,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11983,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 3.513151,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12203,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 3.727227,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12410,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "42",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 3.953038,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12635,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 4.158343,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12839,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 4.362864,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13048,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 4.572312,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13254,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 4.77788,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13460,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "41",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 4.984747,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13668,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 5.192372,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13883,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 5.406705,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14089,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 5.613402,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14296,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.145744,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14502,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "40",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.351445,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14708,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.557372,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14914,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.763811,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15131,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.980753,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15136,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "39",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 0.985275,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15427,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "1",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": "r30.scapular-girdle.set1.block2",
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.277005,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15716,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "0",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.scapular-girdle.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.440907,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16002,
+      "name": "Shibashi Split-Stance Wing Open",
+      "countdown": "0",
+      "rest": "1",
+      "preparation": false,
+      "restVisible": true,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": "r30.scapular-girdle.set1.block2",
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0203.mp4?v=0ffd49e24c17e58b2c3ca621560f45162ed79d13a2124aa5faa7ae0cd65ef2fb",
+        "time": 1.440907,
+        "duration": 5.65,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16294,
+      "name": "Side-to-Side Ankle Rocks",
+      "countdown": "45",
+      "rest": "15",
+      "preparation": false,
+      "restVisible": false,
+      "pendingMovementGroupId": null,
+      "pendingRestGroupId": null,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0284.mp4?v=a05a7deaab793469fa3a65dc9dfb88bec3ed1adc87a6f021dc43f5a607dd3ee7",
+        "time": 0.006946,
+        "duration": 28,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "block1-start",
+      "file": "00-block1-start.png",
+      "elapsedMs": 702
+    },
+    {
+      "phase": "block1-preparation-end",
+      "file": "01-block1-preparation-end.png",
+      "elapsedMs": 932
+    },
+    {
+      "phase": "block1-work-start",
+      "file": "02-block1-work-start.png",
+      "elapsedMs": 1200
+    },
+    {
+      "phase": "block1-action",
+      "file": "03-block1-action.png",
+      "elapsedMs": 4217
+    },
+    {
+      "phase": "block1-loop-end",
+      "file": "04-block1-loop-end.png",
+      "elapsedMs": 7667
+    },
+    {
+      "phase": "block1-work-end",
+      "file": "05-block1-work-end.png",
+      "elapsedMs": 7903
+    },
+    {
+      "phase": "block1-rest-start",
+      "file": "06-block1-rest-start.png",
+      "elapsedMs": 8116
+    },
+    {
+      "phase": "block1-rest-end",
+      "file": "07-block1-rest-end.png",
+      "elapsedMs": 8358
+    },
+    {
+      "phase": "block1-next",
+      "file": "08-block1-next.png",
+      "elapsedMs": 8599
+    },
+    {
+      "phase": "block2-start",
+      "file": "09-block2-start.png",
+      "elapsedMs": 8654
+    },
+    {
+      "phase": "block2-work-start",
+      "file": "10-block2-work-start.png",
+      "elapsedMs": 8697
+    },
+    {
+      "phase": "block2-action",
+      "file": "11-block2-action.png",
+      "elapsedMs": 11673
+    },
+    {
+      "phase": "block2-loop-end",
+      "file": "12-block2-loop-end.png",
+      "elapsedMs": 15136
+    },
+    {
+      "phase": "block2-work-end",
+      "file": "13-block2-work-end.png",
+      "elapsedMs": 15427
+    },
+    {
+      "phase": "block2-rest-start",
+      "file": "14-block2-rest-start.png",
+      "elapsedMs": 15716
+    },
+    {
+      "phase": "block2-rest-end",
+      "file": "15-block2-rest-end.png",
+      "elapsedMs": 16002
+    },
+    {
+      "phase": "block2-next",
+      "file": "16-block2-next.png",
+      "elapsedMs": 16294
+    }
+  ],
+  "clockAdvances": [
+    {
+      "realElapsedMs": 756,
+      "milliseconds": 3900
+    },
+    {
+      "realElapsedMs": 1021,
+      "milliseconds": 1500
+    },
+    {
+      "realElapsedMs": 7728,
+      "milliseconds": 36500
+    },
+    {
+      "realElapsedMs": 7939,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 8182,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 8404,
+      "milliseconds": 1150
+    },
+    {
+      "realElapsedMs": 15247,
+      "milliseconds": 37500
+    },
+    {
+      "realElapsedMs": 15530,
+      "milliseconds": 1100
+    },
+    {
+      "realElapsedMs": 15817,
+      "milliseconds": 13900
+    },
+    {
+      "realElapsedMs": 16090,
+      "milliseconds": 1150
+    }
+  ],
+  "cycles": [
+    {
+      "block": 1,
+      "duration": 5.65,
+      "realPlaybackMs": 6394,
+      "wrapped": true,
+      "still": false
+    },
+    {
+      "block": 2,
+      "duration": 5.65,
+      "realPlaybackMs": 6392,
+      "wrapped": true,
+      "still": false
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

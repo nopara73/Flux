@@ -1,0 +1,3020 @@
+{
+  "id": 531,
+  "fixture": {
+    "name": "Single-Arm Shoulder CAR",
+    "group": {
+      "id": "r30.rotator-cuff.set1.block1",
+      "displayName": "Rotator cuff",
+      "order": 4,
+      "canonicalGroups": [
+        "RotatorCuff"
+      ],
+      "selectionGroupId": "r30.rotator-cuff",
+      "exerciseOverrideId": 531,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 3,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1133,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2151,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3170,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4176,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5184,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.182742,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6247,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "44",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.245197,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7260,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "43",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.259115,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8270,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "42",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.268659,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9278,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "41",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.277498,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10288,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "40",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.286399,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11368,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "39",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.365643,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12379,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "38",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.377416,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13385,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "37",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 8.383977,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14412,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "36",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 9.408747,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15418,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "35",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 10.417179,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16477,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "34",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 11.475706,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17490,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "33",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 12.486879,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18508,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "32",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 13.505311,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19519,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "31",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 14.517064,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20525,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "30",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 15.524384,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21610,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "29",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 16.608098,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22616,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "28",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 17.614877,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23625,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "27",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 18.624166,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24634,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "26",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.866071,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25640,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "25",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.873747,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26702,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "24",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.935797,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27711,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "23",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.944691,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28719,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "22",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.952216,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29732,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "21",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.963713,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30751,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "20",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.983051,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 31817,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "19",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 8.050556,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 32826,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "18",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 9.058807,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 33830,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "17",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 10.062396,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 34842,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "16",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 11.074398,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 35862,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "15",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 12.094513,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 36929,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "14",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 13.161884,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 37936,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "13",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 14.169106,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 38950,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "12",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 15.18253,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 39958,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "11",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 16.191554,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 40983,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "10",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 17.215684,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 42041,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "9",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 18.273331,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 43050,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "7",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.517886,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 44062,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "6",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.529812,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 45071,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.538701,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 46086,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.55119,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 47159,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.627373,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 48182,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.648471,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 49201,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.668752,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 50218,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "15",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.105788,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 51288,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "14",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.17603,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 52343,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "13",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.23034,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 53359,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "12",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.247031,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 54374,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "11",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.260549,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 55385,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "10",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.2717,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 56396,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "9",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.282346,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 57470,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "8",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.357315,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 58475,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "7",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 8.363104,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 59484,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "6",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 9.370751,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 60492,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "5",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 10.379797,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 61517,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "4",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 11.404862,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 62580,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "3",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 12.467135,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 63612,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "2",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 13.49841,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 64634,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "1",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 14.516558,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 65643,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.448398,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 66718,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "44",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.524435,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 67777,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "43",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.583315,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 68788,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "42",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.59354,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 69795,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "41",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.60106,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 70817,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "40",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.622441,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 71825,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "39",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.63066,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 72937,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "38",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.742405,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 73945,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "37",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 8.750781,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 74956,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "36",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 9.761232,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 75968,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "35",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 10.773205,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 76979,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "34",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 11.784808,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 78087,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "33",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 12.893216,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 79096,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "32",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 13.901527,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 80111,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "31",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 14.916171,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 81118,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "30",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 15.924167,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 82126,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "29",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 16.931689,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 83245,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "27",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 18.05083,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 84253,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "27",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.294952,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 85270,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "26",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.311663,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 86286,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "24",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.327519,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 87294,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "23",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.335999,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 88393,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "22",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.434839,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 89411,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "21",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.452153,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 90418,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "20",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.459718,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 91437,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "19",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.478381,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 92445,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "18",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 8.486772,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 93553,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "17",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 9.594856,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 94570,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "16",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 10.610889,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 95582,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "15",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 11.623494,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 96593,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "14",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 12.634586,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 97601,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "13",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 13.642798,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 98697,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "12",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 14.737851,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 99714,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "11",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 15.754711,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 100723,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "10",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 16.764295,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 101736,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "9",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 17.777633,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 102742,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "8",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.016549,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 103812,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "7",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.085992,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 104822,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "6",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.095029,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 105839,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.111821,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 106846,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.11954,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 107863,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.136123,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 108948,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.220812,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 109966,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.24049,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 110976,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "15",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 112054,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "14",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 113065,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "13",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 114140,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "12",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 115159,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "11",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 116169,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "10",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 117178,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "9",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 118195,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "8",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 119301,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "6",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 120308,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "5",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 121316,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "4",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 122324,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "3",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 123334,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "2",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 124405,
+      "name": "Single-Arm Shoulder CAR",
+      "countdown": "0",
+      "rest": "1",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.530708,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 125412,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 126486,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 127505,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 128520,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 129598,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 130610,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 131624,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 132637,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 133654,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 134726,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 135765,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 136784,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 137794,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0531.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "00.png",
+      "elapsedMs": 127
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "05.png",
+      "elapsedMs": 5235
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "10.png",
+      "elapsedMs": 10349
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "15.png",
+      "elapsedMs": 15469
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "20.png",
+      "elapsedMs": 20583
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "25.png",
+      "elapsedMs": 25697
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "30.png",
+      "elapsedMs": 30802
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "35.png",
+      "elapsedMs": 35915
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "40.png",
+      "elapsedMs": 41029
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "45.png",
+      "elapsedMs": 46149
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "49.png",
+      "elapsedMs": 50281
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "50.png",
+      "elapsedMs": 51337
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "55.png",
+      "elapsedMs": 56460
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "60.png",
+      "elapsedMs": 61560
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "64.png",
+      "elapsedMs": 65714
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "65.png",
+      "elapsedMs": 66770
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "70.png",
+      "elapsedMs": 71921
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "75.png",
+      "elapsedMs": 77079
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "80.png",
+      "elapsedMs": 82231
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "85.png",
+      "elapsedMs": 87386
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "90.png",
+      "elapsedMs": 92546
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "95.png",
+      "elapsedMs": 97685
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "100.png",
+      "elapsedMs": 102801
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "105.png",
+      "elapsedMs": 107935
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "108.png",
+      "elapsedMs": 111041
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "110.png",
+      "elapsedMs": 113128
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "115.png",
+      "elapsedMs": 118291
+    },
+    {
+      "phase": "Single-Arm Shoulder CAR|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "120.png",
+      "elapsedMs": 123390
+    },
+    {
+      "phase": "Standing Reverse Prayer Stretch|false|true|false|none",
+      "file": "122.png",
+      "elapsedMs": 125474
+    },
+    {
+      "phase": "Standing Reverse Prayer Stretch|false|true|false|none",
+      "file": "125.png",
+      "elapsedMs": 128575
+    },
+    {
+      "phase": "Standing Reverse Prayer Stretch|false|true|false|none",
+      "file": "130.png",
+      "elapsedMs": 133702
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

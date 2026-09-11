@@ -1,0 +1,119 @@
+# Only explicit review records can establish approval. Unchanged metadata and
+# successful decoding do not establish visual or anatomical correctness.
+$catalogReviewDimensions = @(
+    'Metadata', 'FullLoop', 'Crop', 'LoopSeam', 'PlaybackSpeed',
+    'Mirroring', 'Travel', 'HoldFrame', 'Equipment', 'Workout')
+
+function Get-CatalogMetadataHash {
+    param([Parameter(Mandatory)]$Exercise)
+    $json = ConvertTo-Json -InputObject $Exercise -Depth 100 -Compress
+    $bytes = [Text.Encoding]::UTF8.GetBytes($json)
+    [Convert]::ToHexString([Security.Cryptography.SHA256]::HashData($bytes)).ToLowerInvariant()
+}
+
+function Get-CatalogAssetHashes {
+    param([Parameter(Mandatory)]$Exercise, [Parameter(Mandatory)][string]$AssetsRoot)
+    $id = [int]$Exercise.id
+    $expectedVideo = 'exercise_videos/exercise_{0:D4}.mp4' -f $id
+    if ([string]$Exercise.video -cne $expectedVideo) {
+        throw "Unexpected runtime video path for exercise $id."
+    }
+    $paths = @($expectedVideo)
+    if ([string]$Exercise.mode -eq 'Hold') {
+        $paths += 'exercise_hold_frames/exercise_{0:D4}.png' -f $id
+    }
+    if ([string]$Exercise.directionSequence -ne 'None') {
+        $paths += 'exercise_direction_videos/exercise_{0:D4}.mp4' -f $id
+    }
+    $hashes = [ordered]@{}
+    foreach ($relative in $paths) {
+        $path = Join-Path $AssetsRoot $relative
+        if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
+            throw "Missing runtime asset for exercise ${id}: $relative"
+        }
+        $hashes[$relative] = (Get-FileHash -Algorithm SHA256 -LiteralPath $path).Hash.ToLowerInvariant()
+    }
+    return $hashes
+}
+
+function Get-CatalogReviewResult {
+    param(
+        [Parameter(Mandatory)]$Exercise,
+        [Parameter(Mandatory)][string]$AssetsRoot,
+        [System.Collections.IDictionary]$Review
+    )
+    $metadataHash = Get-CatalogMetadataHash -Exercise $Exercise
+    $assetHashes = Get-CatalogAssetHashes -Exercise $Exercise -AssetsRoot $AssetsRoot
+    $dimensions = [ordered]@{}
+    foreach ($name in $catalogReviewDimensions) { $dimensions[$name] = 'UNREVIEWED' }
+    $result = [ordered]@{
+        Status = 'UNREVIEWED'
+        Reason = 'No explicit review is recorded for this exercise.'
+        MetadataSha256 = $metadataHash
+        AssetSha256 = $assetHashes
+        ActualFinalDemonstration = 'Not established by this comparison.'
+        Dimensions = $dimensions
+    }
+    if ($null -eq $Review) { return [pscustomobject]$result }
+
+    if ([string]$Review.metadataSha256 -cne $metadataHash -or
+        $Review.assets -isnot [System.Collections.IDictionary] -or
+        @($Review.assets.Keys).Count -ne @($assetHashes.Keys).Count -or
+        @($assetHashes.Keys | Where-Object {
+            [string]$Review.assets[$_] -cne [string]$assetHashes[$_]
+        }).Count -gt 0) {
+        $result.Status = 'STALE'
+        $result.Reason = 'The recorded review does not match the current metadata and every runtime asset.'
+        return [pscustomobject]$result
+    }
+
+    $reviewedAt = [DateTimeOffset]::MinValue
+    if (-not [DateTimeOffset]::TryParse([string]$Review.reviewedAt, [ref]$reviewedAt) -or
+        [string]::IsNullOrWhiteSpace([string]$Review.method) -or
+        [string]::IsNullOrWhiteSpace([string]$Review.observedAction) -or
+        @($Review.evidence | Where-Object { -not [string]::IsNullOrWhiteSpace([string]$_) }).Count -eq 0 -or
+        $Review.checks -isnot [System.Collections.IDictionary]) {
+        $result.Reason = 'The review lacks its date, method, observed action, evidence, or explicit checks.'
+        return [pscustomobject]$result
+    }
+    $result.ActualFinalDemonstration = [string]$Review.observedAction
+    foreach ($name in $catalogReviewDimensions) {
+        $check = $Review.checks[$name]
+        if ($check -isnot [System.Collections.IDictionary] -or
+            [string]::IsNullOrWhiteSpace([string]$check.reason)) { continue }
+        $status = [string]$check.status
+        if ($status -cin @('PASS', 'FAIL')) { $dimensions[$name] = $status }
+        elseif ($status -ceq 'NOT_APPLICABLE' -and $name -eq 'HoldFrame' -and
+            [string]$Exercise.mode -ne 'Hold') { $dimensions[$name] = $status }
+    }
+    if ('FAIL' -in @($dimensions.Values)) {
+        $result.Status = 'FAIL'
+        $result.Reason = 'The explicit review records one or more failed checks.'
+    }
+    elseif ('UNREVIEWED' -notin @($dimensions.Values)) {
+        $result.Status = 'PASS'
+        $result.Reason = 'Every required check has an explicit verdict bound to the current metadata and runtime assets.'
+    }
+    else {
+        $result.Reason = 'One or more required review dimensions remain unreviewed.'
+    }
+    return [pscustomobject]$result
+}
+
+function Read-CatalogReviewEvidence {
+    param([string]$Path)
+    $byId = @{}
+    if ([string]::IsNullOrWhiteSpace($Path)) { return $byId }
+    $document = Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json -AsHashtable
+    if ($document.schemaVersion -ne 1 -or $document.entries -isnot [array]) {
+        throw 'Catalog review evidence must use schemaVersion 1 and an entries array.'
+    }
+    foreach ($entry in $document.entries) {
+        $id = [int]$entry.id
+        if ($id -lt 1 -or $byId.ContainsKey($id)) {
+            throw 'Catalog review evidence contains an invalid or repeated exercise ID.'
+        }
+        $byId[$id] = $entry
+    }
+    return $byId
+}

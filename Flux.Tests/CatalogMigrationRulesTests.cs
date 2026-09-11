@@ -97,7 +97,7 @@ public sealed class CatalogMigrationRulesTests
             [replacement],
             stored);
 
-        Assert.Equal(376, CatalogMigrationRules.ReplacedExerciseIds.Count);
+        Assert.Equal(378, CatalogMigrationRules.ReplacedExerciseIds.Count);
         Assert.Contains(replacedId, CatalogMigrationRules.ReplacedExerciseIds);
         Assert.DoesNotContain(replacedId, preserved);
         Assert.Equal(-7, stored[replacedId].Score);
@@ -279,10 +279,7 @@ public sealed class CatalogMigrationRulesTests
     {
         const int exerciseId = 231;
         const string video = "exercise_videos/exercise_0231.mp4";
-        Exercise normalized = Exercise(
-            exerciseId,
-            "Step-Through Karate Reverse Punch",
-            video);
+        Exercise normalized = LoadBundledExercise(exerciseId);
         var stored = new Dictionary<int, StoredExerciseSnapshot>
         {
             [exerciseId] = new("Karate Reverse Punch", video, -3),
@@ -301,10 +298,7 @@ public sealed class CatalogMigrationRulesTests
     {
         const int exerciseId = 231;
         const string video = "exercise_videos/exercise_0231.mp4";
-        Exercise normalized = Exercise(
-            exerciseId,
-            "Step-Through Karate Reverse Punch",
-            video);
+        Exercise normalized = LoadBundledExercise(exerciseId);
         var stored = new Dictionary<int, StoredExerciseSnapshot>
         {
             [exerciseId] = new("Alternating Karate Reverse Punch", video, -4),
@@ -568,7 +562,8 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(0, state.PendingScoreExerciseId);
         Assert.Equal(0, state.PendingScoreValue);
         Assert.All(latestReplacementIds, exerciseId =>
-            Assert.Contains(exerciseId, state.LastKeptExerciseIds));
+            Assert.Equal(!CatalogMigrationRules.ScoreInvalidationsByRevision[73].Contains(exerciseId),
+                state.LastKeptExerciseIds.Contains(exerciseId)));
         Assert.Contains(historicalReplacementId, state.LastKeptExerciseIds);
         Assert.Contains(retainedId, state.LastKeptExerciseIds);
 
@@ -740,38 +735,38 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Theory]
-    [InlineData(21, "Standing-Scale Balance", "Standing-Scale Balance Hold")]
+    [InlineData(21, "Standing-Scale Balance", "Alternating Single-Leg Hinge with Forward Reach")]
     [InlineData(105, "Plie Squat", "Wide Turned-Out Squat")]
-    [InlineData(119, "Squat to Calf Raise", "Tiptoe Walk")]
+    [InlineData(119, "Squat to Calf Raise", "Tiptoe Walking Back and Forth")]
     [InlineData(139, "Wide-Squat Heel Raise", "Wide-Squat Alternating Heel Raises")]
     [InlineData(188, "Parallel Demi-Plie", "Narrow Turned-Out Shallow Squat")]
-    [InlineData(197, "First-Position Plie-Releve", "Parallel Squat-to-Calf Raise")]
+    [InlineData(197, "First-Position Plie-Releve", "Squat to Calf Raise")]
     [InlineData(198, "Second-Position Plie-Releve", "Wide Squat to Feet-Together Calf Raise")]
-    [InlineData(199, "Alternating Deep Side Lunge", "Wide-Stance Side-to-Side Squat")]
+    [InlineData(199, "Alternating Deep Side Lunge", "Horse-Stance Squat")]
     [InlineData(255, "Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise")]
-    [InlineData(145, "Standing Knee Extension", "Standing Knee-Extension Hold")]
-    [InlineData(256, "Self-Resisted Overhead Pull", "Self-Resisted Overhead Pull Hold")]
-    [InlineData(257, "Self-Resisted Chest-Level Pull", "Self-Resisted Chest-Level Pull Hold")]
-    [InlineData(258, "Self-Resisted Low Pull", "Self-Resisted Low Pull Hold")]
-    [InlineData(262, "Standing Hands-to-Thigh Abdominal Press", "Standing Hands-to-Thigh Abdominal Press Hold")]
-    [InlineData(270, "Bodyweight Svend Press", "Palm-Squeeze Forward Press")]
-    [InlineData(290, "Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening")]
-    [InlineData(394, "Standing Arms Open and Close", "Inhale Arms Open, Exhale Arms Close and Round")]
-    [InlineData(395, "Standing Overhead Arm Sweep", "Overhead Hold with Deep Ribcage Breaths")]
-    [InlineData(398, "Standing Hug and Arm Expansion", "Inhale Arms Open, Exhale Self-Hug and Fold")]
+    [InlineData(145, "Standing Knee Extension", "Wall-Supported Standing Knee-Extension Hold")]
+    [InlineData(256, "Self-Resisted Overhead Pull", "Overhead Side-Stretch Hold")]
+    [InlineData(257, "Self-Resisted Chest-Level Pull", "Finger Spreading with Arms Held Forward")]
+    [InlineData(258, "Self-Resisted Low Pull", "Alternating Karate Downward Blocks")]
+    [InlineData(262, "Standing Hands-to-Thigh Abdominal Press", "Standing Bicycle Crunches")]
+    [InlineData(270, "Bodyweight Svend Press", "Goalpost Arm Hold")]
+    [InlineData(290, "Universe-in-Motion Qigong", "Thumb and Little-Finger Switches")]
+    [InlineData(394, "Standing Arms Open and Close", "Alternating Cross-Body Knee with Arm Sweep")]
+    [InlineData(395, "Standing Overhead Arm Sweep", "Alternating Knee Lift and Overhead Reach")]
+    [InlineData(398, "Standing Hug and Arm Expansion", "Inhale Arms Open, Exhale Arms Together")]
     [InlineData(399, "Shallow Squat with Chest-Opening Arms", "Inhale Chest Open, Exhale Arms Close with Shallow Squat")]
     [InlineData(400, "Shallow Squat with Overhead Arm Circle", "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down")]
     [InlineData(401, "Alternating Weight Shift with Arm Swing", "Alternating Inhale-Twist, Exhale-Push")]
     [InlineData(402, "Shibashi Rowing-a-Boat Breathing", "Shallow Squat with Rowing Arm Circle")]
-    [InlineData(403, "Shibashi Alternating Pushing-Palms Breathing", "Alternating Weight Shift with Palm Push")]
+    [InlineData(403, "Shibashi Alternating Pushing-Palms Breathing", "Alternating Palm Press with Weight Shift")]
     [InlineData(404, "Shibashi Alternating Punch Breathing", "Wide-Stance Alternating Slow Punch")]
     [InlineData(405, "Shibashi Flying-Wild-Goose Breathing", "Shallow Squat with Wing Arm Raise")]
     [InlineData(406, "Shibashi Spinning-Wheels Breathing", "Standing Wheel Arm Circles")]
     [InlineData(409, "Neck Controlled Articular Rotation", "Full Neck Circles")]
     [InlineData(493, "Track Finger Upper-Right to Lower-Left", "Diagonal Finger Tracking")]
-    [InlineData(958, "Standing Alternating Side Bend", "Standing Overhead Side Bend")]
-    [InlineData(425, "Chin-Tuck Isometric", "Chin-Tuck Hold")]
-    [InlineData(396, "Unsupported Single-Leg Balance", "Unsupported Single-Leg Balance Hold")]
+    [InlineData(958, "Standing Alternating Side Bend", "Standing Overhead Side-Stretch Hold")]
+    [InlineData(425, "Chin-Tuck Isometric", "Feet-Together Head Turns")]
+    [InlineData(396, "Unsupported Single-Leg Balance", "Standing Front-to-Side Knee Lifts")]
     [InlineData(510, "Clasped-Hands Chest-Opening Forward Fold", "Clasped-Hands Chest-Opening Forward-Fold Hold")]
     [InlineData(588, "Belly-Dance Alternating Shoulder Roll", "Belly-Dance Alternating Shoulder Rolls")]
     [InlineData(617, "Standing Side-Leg Circles", "Standing Forward Side-Leg Circles")]
@@ -779,24 +774,24 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(712, "Standing Arms-Back Chest Opener", "Standing Arms-Back Chest-Opener Hold")]
     [InlineData(969, "Chair-Pose Core Hold", "Chair-Pose Hold")]
     [InlineData(1000, "Standing Forward Fold", "Standing Forward-Fold Hold")]
-    [InlineData(136, "Goddess Pose", "Wide Turned-Out Squat Hold")]
+    [InlineData(136, "Goddess Pose", "Wide Squat Hold with Hands on Thighs")]
     [InlineData(225, "Clenched-Fist Wrist Extensor Stretch", "Opposite-Hand Fist-Down Wrist Stretch")]
-    [InlineData(241, "Hook-Fist Tendon Glide", "Open Hand to Hook Fist")]
-    [InlineData(242, "Full-Fist Tendon Glide", "Open Hand to Full Fist")]
+    [InlineData(241, "Hook-Fist Tendon Glide", "Isometric Palm Press Hold")]
+    [InlineData(242, "Full-Fist Tendon Glide", "Jazz Square")]
     [InlineData(248, "Side-Tap Palm Pushes", "Alternating Side-Tap Palm Pushes")]
-    [InlineData(283, "Straight-Fist Tendon Glide", "Open Hand to Straight Fist")]
-    [InlineData(291, "Open-to-Claw Tendon Glide", "Open Hand to Claw Fist")]
-    [InlineData(293, "Finger-Web Space Stretch", "Opposite-Hand Finger-Web Stretches")]
+    [InlineData(283, "Straight-Fist Tendon Glide", "Rear-Hand Palm Strike")]
+    [InlineData(291, "Open-to-Claw Tendon Glide", "Inward Knife-Hand Strikes")]
+    [InlineData(293, "Finger-Web Space Stretch", "Opposite-Hand Thumb-Web Stretch")]
     [InlineData(683, "Alternating Palm-Up T-Arm Flips", "Alternating Palm-Up Shoulder Rotations")]
-    [InlineData(214, "Forward Wrist Circles", "Inward Wrist Circles")]
-    [InlineData(223, "Forward Controlled Wrist Circles", "Inward Controlled Wrist Circles")]
+    [InlineData(214, "Forward Wrist Circles", "Single-Arm Wrist Circles")]
+    [InlineData(223, "Forward Controlled Wrist Circles", "Controlled Wrist Circles")]
     [InlineData(755, "Reverse Wrist Circles", "Outward Wrist Circles")]
     [InlineData(756, "Reverse Controlled Wrist Circles", "Outward Controlled Wrist Circles")]
     [InlineData(758, "Reverse Knee-and-Ankle Circles", "Backward Knee-and-Ankle Circles")]
     [InlineData(94, "Mirror-Guided Lateral Weight Shift", "Lateral Weight Shift")]
     [InlineData(95, "Mirror-Guided Single-Leg Pelvic Control", "Single-Leg Knee-Raise Hold")]
     [InlineData(95, "Single-Leg Pelvic Control", "Single-Leg Knee-Raise Hold")]
-    [InlineData(417, "Narrow Squat and Overhead Reach with Thumb Tracking", "Narrow-Stance Overhead-to-Floor Reach")]
+    [InlineData(417, "Narrow Squat and Overhead Reach with Thumb Tracking", "Narrow-Stance Overhead-to-Toe Reach")]
     [InlineData(99, "Mirror-Guided Bent-Knee Front-to-Back Leg Swing", "Bent-Knee Front-to-Back Leg Swing")]
     [InlineData(100, "Mirror-Guided Bent-Knee Leg Swing with Pause", "Bent-Knee Leg Swing with Pause")]
     [InlineData(497, "Mirror-Guided Eyebrow Raise", "Eyebrow Raise")]
@@ -805,20 +800,20 @@ public sealed class CatalogMigrationRulesTests
     [InlineData(500, "Mirror-Guided Straight Jaw Opening", "Straight Jaw Opening")]
     [InlineData(511, "Mirror-Guided Lip Pucker", "Lip Pucker")]
     [InlineData(514, "Mirror-Guided Symmetric Smile", "Symmetric Smile")]
-    [InlineData(524, "Mirror Front Double-Biceps Pose Hold", "Mirror Front Double-Biceps Posing")]
-    [InlineData(524, "Front Double-Biceps Pose Hold", "Mirror Front Double-Biceps Posing")]
-    [InlineData(525, "Mirror Front Lat-Spread Pose Hold", "Mirror Front Lat-Spread Posing")]
-    [InlineData(525, "Front Lat-Spread Pose Hold", "Mirror Front Lat-Spread Posing")]
-    [InlineData(526, "Mirror Side-Chest Pose Hold", "Mirror Side-Chest Posing")]
-    [InlineData(526, "Side-Chest Pose Hold", "Mirror Side-Chest Posing")]
-    [InlineData(527, "Mirror Side-Triceps Pose Hold", "Mirror Side-Triceps Posing")]
-    [InlineData(527, "Side-Triceps Pose Hold", "Mirror Side-Triceps Posing")]
-    [InlineData(528, "Mirror Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Posing")]
-    [InlineData(528, "Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Posing")]
-    [InlineData(790, "Mirror Most-Muscular Pose Hold", "Mirror Most-Muscular Posing")]
+    [InlineData(524, "Mirror Front Double-Biceps Pose Hold", "Front Double-Biceps Posing")]
+    [InlineData(524, "Front Double-Biceps Pose Hold", "Front Double-Biceps Posing")]
+    [InlineData(525, "Mirror Front Lat-Spread Pose Hold", "Front Lat-Spread Posing")]
+    [InlineData(525, "Front Lat-Spread Pose Hold", "Front Lat-Spread Posing")]
+    [InlineData(526, "Mirror Side-Chest Pose Hold", "Side-Chest Posing")]
+    [InlineData(526, "Side-Chest Pose Hold", "Side-Chest Posing")]
+    [InlineData(527, "Mirror Side-Triceps Pose Hold", "Side-Triceps Posing")]
+    [InlineData(527, "Side-Triceps Pose Hold", "Side-Triceps Posing")]
+    [InlineData(528, "Mirror Abdominals-and-Thighs Pose Hold", "Abdominals-and-Thighs Posing")]
+    [InlineData(528, "Abdominals-and-Thighs Pose Hold", "Abdominals-and-Thighs Posing")]
+    [InlineData(790, "Mirror Most-Muscular Pose Hold", "Most-Muscular Posing, Hands on Thighs")]
     [InlineData(565, "Mini Squat with Forward Reach", "Mini-Squat Calf Raises with Forward Reach")]
-    [InlineData(397, "Inhale Open, Exhale Cross-Body Side Tap", "Alternating Side Tap with Diagonal Arm Sweep")]
-    public void MigrationAllowsReviewedClarityCorrectionWithoutResettingScore(
+    [InlineData(397, "Inhale Open, Exhale Cross-Body Side Tap", "Alternating Side Tap with Diagonal Reach")]
+    public void HistoricalClarityCorrectionsRespectSubsequentReplacements(
         int exerciseId,
         string previousName,
         string correctedName)
@@ -828,13 +823,16 @@ public sealed class CatalogMigrationRulesTests
         {
             [exerciseId] = new(previousName, video, -4),
         };
-        Exercise corrected = Exercise(exerciseId, correctedName, video);
+        Exercise corrected = LoadBundledExercise(exerciseId);
+        Assert.Equal(correctedName, corrected.Name);
 
         IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
             [corrected],
             stored);
 
-        Assert.Contains(exerciseId, preserved);
+        // These historical aliases belonged to movements subsequently replaced.
+        int[] discardedIds = [241, 242, 256, 257, 258, 262, 270, 283, 290, 291, 394, 395, 425];
+        Assert.Equal(!discardedIds.Contains(exerciseId), preserved.Contains(exerciseId));
         Assert.Equal(-4, stored[exerciseId].Score);
     }
 
@@ -1677,7 +1675,7 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
-    public void DirectionNameCorrectionPreservesActiveWorkoutState()
+    public void DirectionNameCorrectionPreservesScoreAcrossLaterPlacementRebuild()
     {
         const string groupId = "direction.group";
         var state = new WorkoutState
@@ -1701,11 +1699,12 @@ public sealed class CatalogMigrationRulesTests
 
         Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
 
-        Assert.Equal(223, state.SelectedExerciseIds[groupId]);
-        Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[groupId]);
-        Assert.Equal(groupId, state.PendingRestGroupId);
-        Assert.Equal(123456, state.PendingRestEndsAtUnixMilliseconds);
-        Assert.True(state.PendingRestKept);
+        // Revision 73 rebuilds this movement's corrected placement.
+        Assert.DoesNotContain(groupId, state.SelectedExerciseIds);
+        Assert.DoesNotContain(groupId, state.Outcomes);
+        Assert.Null(state.PendingRestGroupId);
+        Assert.Equal(0, state.PendingRestEndsAtUnixMilliseconds);
+        Assert.False(state.PendingRestKept);
         Assert.Equal(223, state.PendingScoreExerciseId);
         Assert.Equal(-4, state.PendingScoreValue);
         Assert.False(
@@ -2113,6 +2112,40 @@ public sealed class CatalogMigrationRulesTests
             CatalogMigrationRules.ValidatePreservedCatalog([replacement], stored));
     }
 
+    [Theory]
+    [InlineData(327, "r30.chest")]
+    [InlineData(414, "r30.cranial-muscles")]
+    public void SplitFloorSequencesDiscardObsoleteRoundsButPreserveFeedback(int exerciseId, string groupId)
+    {
+        Exercise[] catalog = JsonSerializer.Deserialize<Exercise[]>(
+            File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Assets", "exercises.json")),
+            JsonOptions)!;
+        var state = new WorkoutState
+        {
+            CatalogRevision = 72,
+            ActiveWorkoutMinutes = 30,
+            ActiveWorkoutModifiers = WorkoutModifiers.None,
+            SelectedExerciseIds = new() { [groupId] = exerciseId },
+            KeptExerciseRootIdsBySelectionGroupId = new() { [groupId] = [exerciseId] },
+            LastKeptExerciseIds = [exerciseId],
+            PendingMovementGroupId = $"{groupId}.set1.block3",
+            PendingMovementMillisecondsRemaining = 4000,
+            PendingMovementPausedByUser = true,
+            PendingScoreExerciseId = exerciseId,
+            PendingScoreValue = 7,
+        };
+
+        CatalogMigrationRules.ReconcileWorkoutState(state, catalog.ToDictionary(exercise => exercise.Id));
+
+        Assert.Null(state.PendingMovementGroupId);
+        Assert.Equal(0, state.PendingMovementMillisecondsRemaining);
+        Assert.False(state.PendingMovementPausedByUser);
+        Assert.Equal(exerciseId, state.PendingScoreExerciseId);
+        Assert.Equal(7, state.PendingScoreValue);
+        Assert.Contains(exerciseId, state.KeptExerciseRootIdsBySelectionGroupId[groupId]);
+        Assert.Contains(exerciseId, state.LastKeptExerciseIds);
+    }
+
     [Fact]
     public void DemonstrationIntegrityRevisionRebuildsChangedWorkoutStateButPreservesScores()
     {
@@ -2282,7 +2315,7 @@ public sealed class CatalogMigrationRulesTests
     public void SoleWallRevisionRebuildsChangedWorkoutStateAndResetsScores()
     {
         HashSet<int> changedIds = [563, 564, 567, 568, 574];
-        Assert.Equal(72, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(73, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[54]);
@@ -2389,7 +2422,7 @@ public sealed class CatalogMigrationRulesTests
             104, 113, 117, 120, 123, 135, 177, 184, 186, 199,
             256, 261, 626, 677, 845, 996, 997,
         ];
-        Assert.Equal(72, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(73, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[64]);
@@ -2565,7 +2598,7 @@ public sealed class CatalogMigrationRulesTests
     public void MaterialTrainingRevisionRemovesOnlyAnatomicallyInvalidSlotsAndKeeps()
     {
         HashSet<int> addedIds = [911, 913, 916, 917];
-        Assert.Equal(72, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(73, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             addedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[67]);
@@ -2648,12 +2681,12 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(ExerciseOutcome.Tick, state.Outcomes[unrelatedLegacySlot]);
         Assert.Null(state.PendingMovementGroupId);
         Assert.Null(state.PendingRestGroupId);
-        Assert.Equal([910], state.KeptExerciseRootIdsBySelectionGroupId[
-            invalidAbdominalSlot]);
+        // The integrity audit also removed the old abdominal claim from 910.
+        Assert.DoesNotContain(invalidAbdominalSlot, state.KeptExerciseRootIdsBySelectionGroupId);
         Assert.Equal([701], state.KeptExerciseRootIdsBySelectionGroupId[
             validChestSlot]);
         Assert.Equal(
-            new HashSet<int> { 701, 910, 962 },
+            new HashSet<int> { 701 },
             state.LastKeptExerciseIds);
         Assert.Equal(701, state.PendingScoreExerciseId);
         Assert.Equal(-1, state.PendingScoreValue);
@@ -2669,7 +2702,7 @@ public sealed class CatalogMigrationRulesTests
     public void TrainingClaimRevisionRemovesOnlyNewlyInvalidSlotFeedback()
     {
         HashSet<int> addedIds = [918, 919];
-        Assert.Equal(72, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(73, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             addedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[69]);
@@ -2791,13 +2824,23 @@ public sealed class CatalogMigrationRulesTests
             Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state));
             Assert.Empty(state.SelectedExerciseIds);
             Assert.Empty(state.Outcomes);
+            // The later integrity revision replaces action 520 entirely.
+            if (id == 520)
+            {
+                Assert.Empty(state.KeptExerciseRootIdsBySelectionGroupId);
+                Assert.Empty(state.ExerciseScoreAdjustmentsBySelectionGroupId);
+                Assert.Empty(state.ExerciseScoreAdjustmentsByPhase);
+                Assert.Empty(state.PendingScoreUpdates);
+                Assert.Equal(0, state.PendingScoreExerciseId);
+                continue;
+            }
             Assert.Equal([id], state.KeptExerciseRootIdsBySelectionGroupId[group]);
             Assert.Equal(-1, state.ExerciseScoreAdjustmentsBySelectionGroupId[group][id]);
             Assert.Equal(-3, state.ExerciseScoreAdjustmentsByPhase[WorkoutExercisePhase.PeakPerformance][id]);
             Assert.Equal(id, state.PendingScoreExerciseId);
             Assert.Equal(-4, state.PendingScoreValue);
             Assert.Equal(-4, state.PendingScoreUpdates[id]);
-            Assert.Equal(72, state.CatalogRevision);
+            Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
         }
     }
 
@@ -2805,7 +2848,7 @@ public sealed class CatalogMigrationRulesTests
     public void CorrectedTwoSidedRevisionRebuildsPlacementsAndPreservesFeedback()
     {
         HashSet<int> changedIds = [32, 483, 493];
-        Assert.Equal(72, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(73, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[71]);
@@ -2875,7 +2918,7 @@ public sealed class CatalogMigrationRulesTests
             -3,
             state.ExerciseScoreAdjustmentsByPhase[
                 WorkoutExercisePhase.PeakPerformance][483]);
-        Assert.Equal(72, state.CatalogRevision);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 
     [Fact]
@@ -2949,7 +2992,7 @@ public sealed class CatalogMigrationRulesTests
             -3,
             state.ExerciseScoreAdjustmentsByPhase[
                 WorkoutExercisePhase.PeakPerformance][56]);
-        Assert.Equal(72, state.CatalogRevision);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 
     [Fact]
@@ -3019,7 +3062,7 @@ public sealed class CatalogMigrationRulesTests
             -2,
             state.ExerciseScoreAdjustmentsByPhase[
                 WorkoutExercisePhase.PeakPerformance][15]);
-        Assert.Equal(72, state.CatalogRevision);
+        Assert.Equal(CatalogMigrationRules.CurrentCatalogRevision, state.CatalogRevision);
     }
 
     [Fact]
@@ -3389,7 +3432,7 @@ public sealed class CatalogMigrationRulesTests
     public void DemandCoverageExpansionRebuildsReusedIdsAndResetsFeedback()
     {
         HashSet<int> changedIds = [302, 304, 305, 307, 308, 309, 310];
-        Assert.Equal(72, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(73, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[61]);
@@ -3448,7 +3491,7 @@ public sealed class CatalogMigrationRulesTests
         [
             248, 281, 286, 367, 393, 529, 537, 545,
         ];
-        Assert.Equal(72, CatalogMigrationRules.CurrentCatalogRevision);
+        Assert.Equal(73, CatalogMigrationRules.CurrentCatalogRevision);
         Assert.Equal(
             changedIds,
             CatalogMigrationRules.WorkoutStateInvalidationsByRevision[62]);
@@ -3732,11 +3775,15 @@ public sealed class CatalogMigrationRulesTests
         Assert.Equal(
             new HashSet<int>
             {
-                90, 229, 267, 553, 558, 559, 757, 759, 760, 761, 762, 763, 764,
+                90, 229, 267, 412, 553, 558, 559, 757, 759, 760, 761, 762, 763, 764,
             },
             CatalogMigrationRules.PermanentlyRetiredExerciseIds);
         var stored = new Dictionary<int, StoredExerciseSnapshot>
         {
+            [412] = new(
+                "Lateral Lunge with Sideward Thumb Tracking",
+                "exercise_videos/exercise_0412.mp4",
+                -8),
             [90] = new(
                 "Mirror-Guided Bodyweight Squat",
                 "exercise_videos/exercise_0090.mp4",
@@ -3832,11 +3879,11 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Theory]
-    [InlineData(21, "Alternating Standing-Scale Balance", "Standing-Scale Balance Hold")]
-    [InlineData(145, "Alternating Standing Knee Extension", "Standing Knee-Extension Hold")]
-    [InlineData(394, "Standing Open-and-Close Breathing", "Inhale Arms Open, Exhale Arms Close and Round")]
-    [InlineData(395, "Standing Overhead Rib-Expansion Breathing", "Overhead Hold with Deep Ribcage Breaths")]
-    [InlineData(398, "Standing Arm-Expansion Breathing", "Inhale Arms Open, Exhale Self-Hug and Fold")]
+    [InlineData(21, "Alternating Standing-Scale Balance", "Alternating Single-Leg Hinge with Forward Reach")]
+    [InlineData(145, "Alternating Standing Knee Extension", "Wall-Supported Standing Knee-Extension Hold")]
+    [InlineData(394, "Standing Open-and-Close Breathing", "Alternating Cross-Body Knee with Arm Sweep")]
+    [InlineData(395, "Standing Overhead Rib-Expansion Breathing", "Alternating Knee Lift and Overhead Reach")]
+    [InlineData(398, "Standing Arm-Expansion Breathing", "Inhale Arms Open, Exhale Arms Together")]
     [InlineData(399, "Shibashi Opening-the-Chest Breathing", "Inhale Chest Open, Exhale Arms Close with Shallow Squat")]
     [InlineData(400, "Shibashi Separating-the-Clouds Breathing", "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down")]
     [InlineData(401, "Shibashi Alternating Swinging-Arms Breathing", "Alternating Inhale-Twist, Exhale-Push")]
@@ -3850,13 +3897,16 @@ public sealed class CatalogMigrationRulesTests
         {
             [exerciseId] = new(earlierName, video, -5),
         };
-        Exercise corrected = Exercise(exerciseId, correctedName, video);
+        Exercise corrected = LoadBundledExercise(exerciseId);
+        Assert.Equal(correctedName, corrected.Name);
 
         IReadOnlySet<int> preserved = CatalogMigrationRules.ValidatePreservedCatalog(
             [corrected],
             stored);
 
-        Assert.Contains(exerciseId, preserved);
+        // These historical aliases belonged to movements subsequently replaced.
+        int[] discardedIds = [241, 242, 256, 257, 258, 262, 270, 283, 290, 291, 394, 395, 425];
+        Assert.Equal(!discardedIds.Contains(exerciseId), preserved.Contains(exerciseId));
         Assert.Equal(-5, stored[exerciseId].Score);
     }
 
@@ -3962,7 +4012,7 @@ public sealed class CatalogMigrationRulesTests
     }
 
     [Fact]
-    public void VersionFifteenInventoryReconcilesAdditivelyIntoBundledCatalog()
+    public void MixedHistoricalInventoryReconcilesIntoBundledCatalog()
     {
         int[] versionSixteenIds = [400, 401, 402, 403, 404, 405, 406];
         string catalogPath = Path.Combine(
@@ -3989,15 +4039,24 @@ public sealed class CatalogMigrationRulesTests
             bundled,
             versionFifteen);
 
-        Assert.Equal(
-            versionFifteen.Keys
-                .Except(CatalogMigrationRules.ReplacedExerciseIds)
-                .Order(),
-            preserved.Order());
+        HashSet<int> expectedPreserved = versionFifteen.Keys
+            .Except(CatalogMigrationRules.ReplacedExerciseIds)
+            // Reviewed travel wording (231) and breathing cues (398) preserve identity.
+            .Union([231, 398])
+            .ToHashSet();
+        Assert.True(expectedPreserved.SetEquals(preserved),
+            $"Unexpected preservation: {string.Join(", ", preserved.Except(expectedPreserved))}; " +
+            $"unexpected reset: {string.Join(", ", expectedPreserved.Except(preserved))}.");
         Assert.All(versionFifteen, entry =>
             Assert.Equal(-entry.Key, entry.Value.Score));
         Assert.DoesNotContain(versionSixteenIds, preserved.Contains);
     }
+
+    private static Exercise LoadBundledExercise(int exerciseId) =>
+        (JsonSerializer.Deserialize<Exercise[]>(File.ReadAllText(
+            Path.Combine(AppContext.BaseDirectory, "Assets", "exercises.json")), JsonOptions)
+            ?? throw new InvalidOperationException("The bundled catalog is missing."))
+        .Single(exercise => exercise.Id == exerciseId);
 
     private static Exercise Exercise(
         int id,

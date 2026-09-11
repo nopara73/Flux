@@ -1,0 +1,1430 @@
+{
+  "schemaVersion": 1,
+  "priorRevision": 72,
+  "revision": 73,
+  "associationChangedIds": [
+    15,
+    16,
+    17,
+    19,
+    20,
+    21,
+    31,
+    32,
+    37,
+    41,
+    47,
+    58,
+    59,
+    60,
+    93,
+    94,
+    95,
+    96,
+    97,
+    98,
+    99,
+    100,
+    102,
+    103,
+    104,
+    105,
+    107,
+    108,
+    109,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    119,
+    120,
+    121,
+    122,
+    123,
+    124,
+    125,
+    126,
+    127,
+    128,
+    129,
+    130,
+    133,
+    134,
+    135,
+    136,
+    137,
+    138,
+    140,
+    142,
+    143,
+    145,
+    146,
+    147,
+    148,
+    149,
+    150,
+    152,
+    153,
+    154,
+    156,
+    159,
+    160,
+    163,
+    165,
+    166,
+    167,
+    168,
+    169,
+    170,
+    171,
+    172,
+    174,
+    175,
+    176,
+    177,
+    178,
+    179,
+    181,
+    182,
+    183,
+    184,
+    185,
+    186,
+    187,
+    188,
+    190,
+    192,
+    193,
+    195,
+    196,
+    197,
+    198,
+    199,
+    200,
+    201,
+    203,
+    204,
+    205,
+    214,
+    217,
+    218,
+    219,
+    220,
+    223,
+    227,
+    228,
+    230,
+    231,
+    232,
+    234,
+    237,
+    238,
+    240,
+    241,
+    242,
+    245,
+    246,
+    248,
+    251,
+    252,
+    253,
+    254,
+    256,
+    257,
+    258,
+    260,
+    261,
+    262,
+    263,
+    264,
+    265,
+    266,
+    268,
+    269,
+    270,
+    271,
+    272,
+    274,
+    275,
+    276,
+    277,
+    278,
+    279,
+    280,
+    281,
+    282,
+    283,
+    284,
+    285,
+    286,
+    287,
+    288,
+    289,
+    290,
+    291,
+    292,
+    293,
+    294,
+    295,
+    296,
+    301,
+    302,
+    303,
+    304,
+    305,
+    307,
+    308,
+    309,
+    310,
+    311,
+    314,
+    315,
+    321,
+    326,
+    327,
+    329,
+    338,
+    340,
+    341,
+    367,
+    377,
+    379,
+    389,
+    390,
+    391,
+    392,
+    393,
+    394,
+    395,
+    396,
+    397,
+    398,
+    399,
+    400,
+    401,
+    402,
+    403,
+    404,
+    405,
+    406,
+    407,
+    408,
+    410,
+    411,
+    412,
+    413,
+    414,
+    415,
+    416,
+    417,
+    418,
+    419,
+    420,
+    421,
+    424,
+    426,
+    427,
+    428,
+    429,
+    430,
+    431,
+    432,
+    433,
+    434,
+    435,
+    436,
+    437,
+    438,
+    439,
+    440,
+    441,
+    442,
+    443,
+    444,
+    445,
+    446,
+    447,
+    448,
+    449,
+    452,
+    453,
+    454,
+    455,
+    456,
+    457,
+    458,
+    459,
+    460,
+    461,
+    462,
+    463,
+    464,
+    465,
+    466,
+    467,
+    468,
+    469,
+    470,
+    471,
+    472,
+    473,
+    476,
+    478,
+    479,
+    480,
+    484,
+    485,
+    486,
+    487,
+    488,
+    489,
+    490,
+    491,
+    492,
+    493,
+    494,
+    495,
+    496,
+    499,
+    501,
+    502,
+    503,
+    504,
+    507,
+    508,
+    509,
+    510,
+    512,
+    513,
+    517,
+    518,
+    519,
+    520,
+    522,
+    523,
+    524,
+    525,
+    526,
+    527,
+    528,
+    529,
+    530,
+    531,
+    532,
+    533,
+    535,
+    536,
+    537,
+    538,
+    539,
+    540,
+    541,
+    542,
+    543,
+    544,
+    545,
+    546,
+    547,
+    548,
+    549,
+    550,
+    551,
+    552,
+    554,
+    555,
+    556,
+    557,
+    560,
+    561,
+    562,
+    563,
+    564,
+    565,
+    567,
+    568,
+    569,
+    570,
+    572,
+    574,
+    575,
+    576,
+    577,
+    578,
+    579,
+    580,
+    583,
+    584,
+    585,
+    586,
+    587,
+    588,
+    591,
+    603,
+    608,
+    609,
+    610,
+    611,
+    612,
+    613,
+    614,
+    615,
+    616,
+    617,
+    618,
+    619,
+    620,
+    625,
+    626,
+    632,
+    633,
+    636,
+    647,
+    649,
+    654,
+    666,
+    677,
+    678,
+    681,
+    683,
+    684,
+    685,
+    686,
+    687,
+    701,
+    702,
+    703,
+    704,
+    712,
+    733,
+    740,
+    741,
+    742,
+    743,
+    744,
+    745,
+    746,
+    747,
+    748,
+    750,
+    752,
+    755,
+    756,
+    758,
+    784,
+    790,
+    801,
+    804,
+    816,
+    818,
+    825,
+    831,
+    834,
+    835,
+    843,
+    845,
+    884,
+    885,
+    886,
+    887,
+    905,
+    906,
+    910,
+    911,
+    913,
+    914,
+    915,
+    916,
+    919,
+    939,
+    943,
+    948,
+    949,
+    954,
+    958,
+    960,
+    962,
+    969,
+    971,
+    973,
+    986,
+    987,
+    993,
+    996,
+    997,
+    998,
+    999,
+    1000
+  ],
+  "placementChangedIds": [
+    16,
+    20,
+    21,
+    32,
+    47,
+    95,
+    97,
+    99,
+    100,
+    117,
+    123,
+    125,
+    126,
+    128,
+    129,
+    131,
+    133,
+    143,
+    144,
+    145,
+    151,
+    152,
+    153,
+    160,
+    161,
+    170,
+    171,
+    173,
+    178,
+    181,
+    182,
+    195,
+    198,
+    203,
+    215,
+    219,
+    220,
+    223,
+    228,
+    233,
+    245,
+    258,
+    261,
+    264,
+    266,
+    274,
+    275,
+    279,
+    280,
+    283,
+    285,
+    286,
+    289,
+    290,
+    291,
+    292,
+    301,
+    307,
+    327,
+    329,
+    379,
+    395,
+    414,
+    418,
+    422,
+    423,
+    460,
+    473,
+    483,
+    485,
+    486,
+    488,
+    491,
+    500,
+    515,
+    519,
+    520,
+    521,
+    531,
+    533,
+    538,
+    541,
+    542,
+    546,
+    556,
+    560,
+    569,
+    570,
+    572,
+    585,
+    587,
+    588,
+    610,
+    614,
+    618,
+    633,
+    636,
+    654,
+    677,
+    681,
+    741,
+    743,
+    744,
+    745,
+    747,
+    748,
+    751,
+    834,
+    948
+  ],
+  "identityReplacements": [
+    {
+      "id": 261,
+      "previousName": "Standing Bent-Elbow Reverse Fly",
+      "currentName": "Standing Bent-Elbow Chest Squeeze",
+      "reason": "Reverse fly replaced by chest squeeze."
+    },
+    {
+      "id": 266,
+      "previousName": "T-Arm Shoulder Hold",
+      "currentName": "Alternating Overhead Arm Raises",
+      "reason": "Static T-arm hold replaced by overhead raises."
+    },
+    {
+      "id": 289,
+      "previousName": "Fingertip Spider Presses",
+      "currentName": "Fist Opening and Closing with Arms Held Forward",
+      "reason": "Fingertip pressing replaced by fist opening and closing."
+    },
+    {
+      "id": 290,
+      "previousName": "Low Palm Scoop to Side Opening",
+      "currentName": "Thumb and Little-Finger Switches",
+      "reason": "Palm-scoop movement replaced by isolated digit switching."
+    },
+    {
+      "id": 301,
+      "previousName": "Overhead Arm Pumps",
+      "currentName": "Standing Side Arm Raises",
+      "reason": "Overhead breathing pumps replaced by lateral arm raises."
+    },
+    {
+      "id": 473,
+      "previousName": "Bouncing Uppercuts",
+      "currentName": "Boxing Lead-Hand Parry",
+      "reason": "Bouncing uppercuts replaced by lead-hand parry."
+    },
+    {
+      "id": 485,
+      "previousName": "Cupped-Palm Armpit Tapping",
+      "currentName": "Alternating Back Taps with Rowing Arms",
+      "reason": "Armpit tapping replaced by rowing back taps."
+    },
+    {
+      "id": 486,
+      "previousName": "Bent-Over Back-of-Knee Tapping",
+      "currentName": "Alternating Knee Lift with Two-Arm Pull-Down",
+      "reason": "Bent-over knee tapping replaced by knee lifts with arm pull-downs."
+    },
+    {
+      "id": 515,
+      "previousName": "Mirror One-Eyebrow Isolation Practice",
+      "currentName": "Raise Upper Lip and Scrunch Nose",
+      "reason": "One-eyebrow isolation replaced by upper-lip and nose articulation."
+    },
+    {
+      "id": 519,
+      "previousName": "Standing Yes Pullbacks",
+      "currentName": "Push Forearm Outward Against Other Hand",
+      "reason": "Yes pullbacks replaced by resisted shoulder external rotation."
+    },
+    {
+      "id": 520,
+      "previousName": "Mirror Facial-Expression Practice",
+      "currentName": "Raise Arms, Exhale Choo as Hips Sink",
+      "reason": "Facial-expression practice replaced by fountain breathing movement."
+    },
+    {
+      "id": 521,
+      "previousName": "Smile at Yourself in the Mirror",
+      "currentName": "Stretch and Scrunch Face",
+      "reason": "Mirror smile replaced by whole-face stretch and scrunch."
+    },
+    {
+      "id": 560,
+      "previousName": "Tiptoe Forward-and-Back Torso-and-Arm Sweep",
+      "currentName": "Try to Turn Palm Up Against Other Hand",
+      "reason": "Tiptoe torso sweep replaced by resisted forearm supination."
+    },
+    {
+      "id": 569,
+      "previousName": "Tiptoe Hip Hinge",
+      "currentName": "Unsupported Single-Leg Straight-Knee Calf Raise",
+      "reason": "Tiptoe hip hinge replaced by single-leg calf raises."
+    },
+    {
+      "id": 570,
+      "previousName": "Tiptoe Torso Twists",
+      "currentName": "Calf Raise with Arm Reach and Fist Close",
+      "reason": "Tiptoe torso twists replaced by calf raises with arm reach and fist closure."
+    },
+    {
+      "id": 614,
+      "previousName": "Alternating Reinforced Forearm Blocks",
+      "currentName": "Push Forearm Down Against Other Hand",
+      "reason": "Karate forearm blocks replaced by resisted elbow extension."
+    },
+    {
+      "id": 677,
+      "previousName": "Bent-Elbow Reverse-Fly Hold",
+      "currentName": "Standing Goalpost Arm Hold",
+      "reason": "Reverse-fly hold replaced by goalpost arm hold."
+    }
+  ],
+  "nameCorrections": [
+    {
+      "id": 16,
+      "previousName": "Split-Stance Toe Raises",
+      "currentName": "Split-Stance Calf Raises"
+    },
+    {
+      "id": 17,
+      "previousName": "Standing Toe-Touch Windmill",
+      "currentName": "Alternating Toe Touch with Overhead Reach"
+    },
+    {
+      "id": 19,
+      "previousName": "Wide Plie Squat Pulses",
+      "currentName": "Wide Squat with Hands on Hips"
+    },
+    {
+      "id": 20,
+      "previousName": "Standing Rear-Leg Pulses",
+      "currentName": "Standing Rear-Leg Raises"
+    },
+    {
+      "id": 21,
+      "previousName": "Standing-Scale Balance Hold",
+      "currentName": "Alternating Single-Leg Hinge with Forward Reach"
+    },
+    {
+      "id": 32,
+      "previousName": "Tandem Walk",
+      "currentName": "Tandem Walk Forward and Back"
+    },
+    {
+      "id": 97,
+      "previousName": "Standing Side-Kick Reach",
+      "currentName": "Knee Raise and Side-Kick Reach"
+    },
+    {
+      "id": 104,
+      "previousName": "Sumo Squat",
+      "currentName": "Sumo Squat with Pause"
+    },
+    {
+      "id": 111,
+      "previousName": "Rainbow Squat Thruster",
+      "currentName": "Squat with Overhead Reach and Arm Sweep"
+    },
+    {
+      "id": 112,
+      "previousName": "Wide Squat with Overhead Reach",
+      "currentName": "Wide Squat with Arms Held Overhead"
+    },
+    {
+      "id": 115,
+      "previousName": "Pistol Squat",
+      "currentName": "Pistol Squat with Bottom Pause"
+    },
+    {
+      "id": 116,
+      "previousName": "Alternating Cossack Squat",
+      "currentName": "Alternating Lateral Squat"
+    },
+    {
+      "id": 119,
+      "previousName": "Tiptoe Walk",
+      "currentName": "Tiptoe Walking Back and Forth"
+    },
+    {
+      "id": 125,
+      "previousName": "Alternating Reverse Lunge with Torso Twist",
+      "currentName": "Split Squat with Torso Twist"
+    },
+    {
+      "id": 126,
+      "previousName": "Squat to Alternating Side Kick",
+      "currentName": "Squat with Side Kick"
+    },
+    {
+      "id": 128,
+      "previousName": "Alternating Curtsy Squat with Arm Sweep",
+      "currentName": "Curtsy Squat with Arm Sweep"
+    },
+    {
+      "id": 129,
+      "previousName": "Squat to Alternating Front Kick",
+      "currentName": "Squat with Front Kick"
+    },
+    {
+      "id": 131,
+      "previousName": "Squat to Alternating Back Leg Lift",
+      "currentName": "Squat with Rear Leg Lift"
+    },
+    {
+      "id": 133,
+      "previousName": "Alternating Lateral Lunge with Overhead Reach",
+      "currentName": "Lateral Lunge with Overhead Reach"
+    },
+    {
+      "id": 135,
+      "previousName": "Overhead Squat Hold",
+      "currentName": "Wide Overhead Squat Hold"
+    },
+    {
+      "id": 136,
+      "previousName": "Wide Turned-Out Squat Hold",
+      "currentName": "Wide Squat Hold with Hands on Thighs"
+    },
+    {
+      "id": 137,
+      "previousName": "Wall Squat",
+      "currentName": "Shallow Wall Squat"
+    },
+    {
+      "id": 138,
+      "previousName": "Narrow-Squat Heel Raise",
+      "currentName": "Narrow Squat to Calf Raise"
+    },
+    {
+      "id": 140,
+      "previousName": "Sumo-Squat Calf Raise",
+      "currentName": "Tiptoe Sumo Squat"
+    },
+    {
+      "id": 141,
+      "previousName": "Squat with Alternating Heel Lift",
+      "currentName": "Squat Hold with Alternating Heel Raises"
+    },
+    {
+      "id": 144,
+      "previousName": "Alternating Standing Knee Lift",
+      "currentName": "Standing Knee Lift"
+    },
+    {
+      "id": 145,
+      "previousName": "Standing Knee-Extension Hold",
+      "currentName": "Wall-Supported Standing Knee-Extension Hold"
+    },
+    {
+      "id": 147,
+      "previousName": "Squat to Alternating Star Reach",
+      "currentName": "Shallow Squat with Overhead Reach"
+    },
+    {
+      "id": 148,
+      "previousName": "Straight-Leg Hip-Extension Lift",
+      "currentName": "Bent-Over Standing Bird Dog"
+    },
+    {
+      "id": 150,
+      "previousName": "Wide-Squat Side-to-Side Shifts",
+      "currentName": "Side-to-Side Lunge"
+    },
+    {
+      "id": 151,
+      "previousName": "Alternating Straight-Leg Front Raise",
+      "currentName": "Straight-Leg Front Raise"
+    },
+    {
+      "id": 152,
+      "previousName": "Side-Leg Raise Pulse",
+      "currentName": "Alternating Side-Leg Raise Pulses"
+    },
+    {
+      "id": 154,
+      "previousName": "Diagonal Leg Raise",
+      "currentName": "Standing Fire Hydrant"
+    },
+    {
+      "id": 159,
+      "previousName": "Standing Hamstring Curl to Diagonal Extension",
+      "currentName": "Standing Fire-Hydrant Kick"
+    },
+    {
+      "id": 161,
+      "previousName": "Alternating Standing Gate Opener",
+      "currentName": "Standing Gate Opener"
+    },
+    {
+      "id": 170,
+      "previousName": "Alternating Cross-Body Knee Drive",
+      "currentName": "Standing Cross-Body Knee Drive"
+    },
+    {
+      "id": 171,
+      "previousName": "Alternating Hamstring Sweep",
+      "currentName": "Standing Hamstring Sweep"
+    },
+    {
+      "id": 173,
+      "previousName": "Alternating Side Knee Lift",
+      "currentName": "Standing Side Knee Lift"
+    },
+    {
+      "id": 178,
+      "previousName": "Crescent Kick",
+      "currentName": "Outside Crescent Kick"
+    },
+    {
+      "id": 179,
+      "previousName": "Hip-Hinge Rear-Leg Raises",
+      "currentName": "Standing Rear Leg Raise"
+    },
+    {
+      "id": 182,
+      "previousName": "Capoeira Armada de Frente",
+      "currentName": "Capoeira Meia-Lua de Frente"
+    },
+    {
+      "id": 184,
+      "previousName": "Split-Squat Hold",
+      "currentName": "Split-Squat Pulse"
+    },
+    {
+      "id": 187,
+      "previousName": "Standing Heel-and-Toe Raises",
+      "currentName": "Standing Heel Raise"
+    },
+    {
+      "id": 193,
+      "previousName": "Wide-Stance Floor-to-Overhead Reach",
+      "currentName": "Hip Hinge with Overhead Reach"
+    },
+    {
+      "id": 197,
+      "previousName": "Parallel Squat-to-Calf Raise",
+      "currentName": "Squat to Calf Raise"
+    },
+    {
+      "id": 199,
+      "previousName": "Wide-Stance Side-to-Side Squat",
+      "currentName": "Horse-Stance Squat"
+    },
+    {
+      "id": 201,
+      "previousName": "Wide-Stance Tiptoe Hold",
+      "currentName": "Sumo Squat to Calf Raise"
+    },
+    {
+      "id": 211,
+      "previousName": "Bent-Elbow Wrist-Flexion Stretch",
+      "currentName": "Assisted Standing Wrist-Flexion Stretch"
+    },
+    {
+      "id": 213,
+      "previousName": "Bent-Elbow Wrist-Extension Stretch",
+      "currentName": "Assisted Standing Wrist-Extension Stretch"
+    },
+    {
+      "id": 214,
+      "previousName": "Inward Wrist Circles",
+      "currentName": "Single-Arm Wrist Circles"
+    },
+    {
+      "id": 219,
+      "previousName": "Alternating High-Knee Cross-Body Pull",
+      "currentName": "High-Knee Cross-Body Pull"
+    },
+    {
+      "id": 223,
+      "previousName": "Inward Controlled Wrist Circles",
+      "currentName": "Controlled Wrist Circles"
+    },
+    {
+      "id": 227,
+      "previousName": "Rotating Relaxed Arm Swings",
+      "currentName": "Arm Swings with Trunk Rotation"
+    },
+    {
+      "id": 228,
+      "previousName": "Bent-Elbow External Rotation",
+      "currentName": "Single-Arm Bent-Elbow External Rotation"
+    },
+    {
+      "id": 231,
+      "previousName": "Karate Reverse Punch",
+      "currentName": "Step-In Karate Reverse Punch"
+    },
+    {
+      "id": 236,
+      "previousName": "Bilateral Wrist Figure Eights",
+      "currentName": "Bilateral Wrist Circles"
+    },
+    {
+      "id": 239,
+      "previousName": "Standing Reverse Prayer Stretch",
+      "currentName": "Back-of-Hands Wrist Stretch"
+    },
+    {
+      "id": 245,
+      "previousName": "Straight-Punch to Shovel-Hook Combo",
+      "currentName": "Jab-Jab-Cross-Shovel-Hook Combo"
+    },
+    {
+      "id": 257,
+      "previousName": "Finger Spread to Interlace Stretch",
+      "currentName": "Finger Spreading with Arms Held Forward"
+    },
+    {
+      "id": 258,
+      "previousName": "Karate Downward Block",
+      "currentName": "Alternating Karate Downward Blocks"
+    },
+    {
+      "id": 268,
+      "previousName": "Goalpost-to-T Rotations",
+      "currentName": "Goalpost-to-T Arm Extensions"
+    },
+    {
+      "id": 269,
+      "previousName": "Standing Leg-Resistance Biceps Curl",
+      "currentName": "Wall-Supported Leg-Resistance Biceps Curl"
+    },
+    {
+      "id": 270,
+      "previousName": "Goalpost Chest-Opener Hold",
+      "currentName": "Goalpost Arm Hold"
+    },
+    {
+      "id": 271,
+      "previousName": "Standing Lumbar Extension",
+      "currentName": "Standing Lumbar Extension Hold"
+    },
+    {
+      "id": 273,
+      "previousName": "Bent-Knee Calf-Raise Hold",
+      "currentName": "Wall-Supported Bent-Knee Calf Raise Hold"
+    },
+    {
+      "id": 274,
+      "previousName": "Alternating Boxing Uppercuts",
+      "currentName": "Alternating Standing Uppercut Punches"
+    },
+    {
+      "id": 280,
+      "previousName": "Alternating Boxing Hook Punches",
+      "currentName": "Rear-Hand Boxing Hook"
+    },
+    {
+      "id": 283,
+      "previousName": "Alternating Palm Strikes",
+      "currentName": "Rear-Hand Palm Strike"
+    },
+    {
+      "id": 285,
+      "previousName": "Karate Inside Block",
+      "currentName": "Karate Outward Forearm Block"
+    },
+    {
+      "id": 286,
+      "previousName": "Karate Outside Block",
+      "currentName": "Alternating Karate Inward Forearm Blocks"
+    },
+    {
+      "id": 288,
+      "previousName": "Forward Knee-and-Ankle Circles",
+      "currentName": "Standing Knee-and-Ankle Circles"
+    },
+    {
+      "id": 293,
+      "previousName": "Opposite-Hand Finger-Web Stretches",
+      "currentName": "Opposite-Hand Thumb-Web Stretch"
+    },
+    {
+      "id": 294,
+      "previousName": "Outward Knife-Hand Strikes",
+      "currentName": "Rear-Hand Outward Knife-Hand Strike"
+    },
+    {
+      "id": 295,
+      "previousName": "Ankle Squat March",
+      "currentName": "Alternating Bent-Knee Heel Raises"
+    },
+    {
+      "id": 309,
+      "previousName": "Self-Resisted Neck Rotation Isometric",
+      "currentName": "Self-Resisted Neck Rotation Hold with Head Turned"
+    },
+    {
+      "id": 321,
+      "previousName": "Side-Tap Alternating Arm Raises",
+      "currentName": "Alternating Side Taps with Overhead Arm Raises"
+    },
+    {
+      "id": 379,
+      "previousName": "Alternating Qigong Drawing the Bow",
+      "currentName": "Qigong Drawing the Bow"
+    },
+    {
+      "id": 389,
+      "previousName": "First-Position Heel Raise with Elbow Pull-Down",
+      "currentName": "Toes-Out Heel Raise with Elbow Pull-Down"
+    },
+    {
+      "id": 390,
+      "previousName": "Inhale Arms Up, Exhale Step-Touch",
+      "currentName": "Step-Touch with Goalpost Arm Openings"
+    },
+    {
+      "id": 391,
+      "previousName": "Inhale Arms Open, Exhale High-Knee",
+      "currentName": "Alternating High-Knee Inner-Foot Taps"
+    },
+    {
+      "id": 394,
+      "previousName": "Inhale Open, Exhale Cross-Body Knee",
+      "currentName": "Alternating Cross-Body Knee with Arm Sweep"
+    },
+    {
+      "id": 395,
+      "previousName": "Single-Side Inhale Reach Up, Exhale Knee Lift",
+      "currentName": "Alternating Knee Lift and Overhead Reach"
+    },
+    {
+      "id": 396,
+      "previousName": "Single-Leg Knee-Lift Balance Hold",
+      "currentName": "Standing Front-to-Side Knee Lifts"
+    },
+    {
+      "id": 397,
+      "previousName": "Alternating Side Tap with Diagonal Arm Sweep",
+      "currentName": "Alternating Side Tap with Diagonal Reach"
+    },
+    {
+      "id": 398,
+      "previousName": "Inhale Arms Open, Exhale Self-Hug and Fold",
+      "currentName": "Inhale Arms Open, Exhale Arms Together"
+    },
+    {
+      "id": 403,
+      "previousName": "Alternating Weight Shift with Palm Push",
+      "currentName": "Alternating Palm Press with Weight Shift"
+    },
+    {
+      "id": 408,
+      "previousName": "Split-Squat Torso Rotation with Thumb Tracking",
+      "currentName": "Staggered-Stance Torso Rotation with Hand Tracking"
+    },
+    {
+      "id": 414,
+      "previousName": "Fixed-Thumb Head Turns",
+      "currentName": "Tiptoe Fixed-Thumb Head Turns"
+    },
+    {
+      "id": 415,
+      "previousName": "Fixed-Thumb Head Nods",
+      "currentName": "Tiptoe Fixed-Thumb Head Nods"
+    },
+    {
+      "id": 416,
+      "previousName": "Fixed-Thumb Head Tilts",
+      "currentName": "Tiptoe Fixed-Thumb Head Tilts"
+    },
+    {
+      "id": 417,
+      "previousName": "Narrow-Stance Overhead-to-Floor Reach",
+      "currentName": "Narrow-Stance Overhead-to-Toe Reach"
+    },
+    {
+      "id": 418,
+      "previousName": "Alternating-Thumb Head Turns",
+      "currentName": "Look Between Fingers with Head Turns"
+    },
+    {
+      "id": 419,
+      "previousName": "Vertical Thumb Tracking with Head Nods",
+      "currentName": "Track Thumb While Nodding the Opposite Way"
+    },
+    {
+      "id": 427,
+      "previousName": "Split Jacks",
+      "currentName": "Jumping Lunges with Alternating Overhead Reach"
+    },
+    {
+      "id": 437,
+      "previousName": "Alternating High-Knee Under-Thigh Claps",
+      "currentName": "Hopping High-Knee Under-Thigh Claps"
+    },
+    {
+      "id": 467,
+      "previousName": "Look Up and Down",
+      "currentName": "Standing Chin-to-Chest Nods"
+    },
+    {
+      "id": 470,
+      "previousName": "Windmill Jacks",
+      "currentName": "Alternating Windmill Toe Touch"
+    },
+    {
+      "id": 474,
+      "previousName": "Head Glide Forward and Back",
+      "currentName": "Chin Tucks with Hands Pulling Forward at Base of Neck"
+    },
+    {
+      "id": 484,
+      "previousName": "Goddess Squat with Lion's Breath",
+      "currentName": "Wide Squat with Tongue-Out Exhale"
+    },
+    {
+      "id": 490,
+      "previousName": "Track One Thumb Side to Side",
+      "currentName": "Track Finger Side to Side, Head Still"
+    },
+    {
+      "id": 491,
+      "previousName": "Keep Eyes on Thumb While Nodding",
+      "currentName": "Keep Eyes on Finger While Nodding"
+    },
+    {
+      "id": 501,
+      "previousName": "Keep Eyes on Thumb While Turning Head",
+      "currentName": "Keep Eyes on Finger While Turning Head"
+    },
+    {
+      "id": 505,
+      "previousName": "Jaw Side-to-Side Glides",
+      "currentName": "Jaw Side Glide and Relax"
+    },
+    {
+      "id": 508,
+      "previousName": "Side-Step with Two-Arm Overhead Reach",
+      "currentName": "Alternating Side Taps with Forward Overhead Raises"
+    },
+    {
+      "id": 522,
+      "previousName": "Mirror Tutting Box Sequence",
+      "currentName": "Tutting Box Sequence"
+    },
+    {
+      "id": 523,
+      "previousName": "Mirror Arm-Wave Isolation Practice",
+      "currentName": "Pass an Arm Wave from Hand to Hand"
+    },
+    {
+      "id": 524,
+      "previousName": "Mirror Front Double-Biceps Posing",
+      "currentName": "Front Double-Biceps Posing"
+    },
+    {
+      "id": 525,
+      "previousName": "Mirror Front Lat-Spread Posing",
+      "currentName": "Front Lat-Spread Posing"
+    },
+    {
+      "id": 526,
+      "previousName": "Mirror Side-Chest Posing",
+      "currentName": "Side-Chest Posing"
+    },
+    {
+      "id": 527,
+      "previousName": "Mirror Side-Triceps Posing",
+      "currentName": "Side-Triceps Posing"
+    },
+    {
+      "id": 528,
+      "previousName": "Mirror Abdominals-and-Thighs Posing",
+      "currentName": "Abdominals-and-Thighs Posing"
+    },
+    {
+      "id": 531,
+      "previousName": "Alternating Standing Shoulder CARs",
+      "currentName": "Single-Arm Shoulder CAR"
+    },
+    {
+      "id": 533,
+      "previousName": "Alternating Standing Donkey Kicks",
+      "currentName": "Standing Bent-Knee Hip Extension"
+    },
+    {
+      "id": 538,
+      "previousName": "Alternating Reverse Lunge to Front Kicks",
+      "currentName": "Reverse Lunge with Front Kick"
+    },
+    {
+      "id": 541,
+      "previousName": "Alternating Karate Inside Blocks",
+      "currentName": "Alternating Karate Cross-Body Forearm Blocks"
+    },
+    {
+      "id": 542,
+      "previousName": "Alternating Standing Bird Dogs",
+      "currentName": "Standing Bird-Dog Reach"
+    },
+    {
+      "id": 545,
+      "previousName": "Alternating Karate Outside Blocks",
+      "currentName": "Alternating Karate Outward Forearm Blocks"
+    },
+    {
+      "id": 547,
+      "previousName": "Alternating Standing Rotation Claps",
+      "currentName": "Standing Rotational Reach and Clap"
+    },
+    {
+      "id": 554,
+      "previousName": "Half Squat Arm Swing to Heel Raise",
+      "currentName": "Arm Raises in Shallow Squat"
+    },
+    {
+      "id": 556,
+      "previousName": "Alternating Backfists",
+      "currentName": "Single-Arm Backfist"
+    },
+    {
+      "id": 557,
+      "previousName": "Tiptoe Forward Punches",
+      "currentName": "Calf Raise with Double Forward Punch"
+    },
+    {
+      "id": 561,
+      "previousName": "Tiptoe Running Steps with Head Spot",
+      "currentName": "Tiptoe Turn with Head Spot"
+    },
+    {
+      "id": 562,
+      "previousName": "Ballet Calf Raises with Arm Sweeps",
+      "currentName": "First-Position Calf Raises"
+    },
+    {
+      "id": 577,
+      "previousName": "Single-Side Standing Side-Leg Raise with Side Reach",
+      "currentName": "Standing Side Crunch and Side Kick"
+    },
+    {
+      "id": 615,
+      "previousName": "Alternating Hamstring Curls with Prayer Hands",
+      "currentName": "Alternating Hamstring Curl with Prayer-to-Open Arms"
+    },
+    {
+      "id": 618,
+      "previousName": "Single-Side High-Knee Hold with Side Reach",
+      "currentName": "Single-Side Knee Raise with Torso Twist"
+    },
+    {
+      "id": 619,
+      "previousName": "Squat with Forward Scoop",
+      "currentName": "Mini Squat with Forward Scoop"
+    },
+    {
+      "id": 633,
+      "previousName": "Wall Calf Stretch",
+      "currentName": "Straight-Knee Toes-on-Wall Stretch"
+    },
+    {
+      "id": 636,
+      "previousName": "Curtsy-Lunge Hold",
+      "currentName": "Curtsy Lunge to Alternating Side Crunch"
+    },
+    {
+      "id": 647,
+      "previousName": "Alternating Knee Lift with Overhead Reach",
+      "currentName": "Alternating Heel Curl with Overhead Reach"
+    },
+    {
+      "id": 649,
+      "previousName": "Standing Bent-Knee Hip Abduction",
+      "currentName": "Standing Side-Leg Raise with Knee Extension"
+    },
+    {
+      "id": 654,
+      "previousName": "Single-Side Leg Lift to Overhead Knee Drive",
+      "currentName": "Alternating Side Leg Lifts and Heel Curls"
+    },
+    {
+      "id": 678,
+      "previousName": "Overhead Arm Figure Eight",
+      "currentName": "Overhead Arm Sways"
+    },
+    {
+      "id": 681,
+      "previousName": "Muay Thai Downward Elbow Strike",
+      "currentName": "Downward Elbow Strike"
+    },
+    {
+      "id": 733,
+      "previousName": "Alternating Side Lunge with Chest Push",
+      "currentName": "Alternating Side Lunge with Forward Arm Reach"
+    },
+    {
+      "id": 748,
+      "previousName": "Alternating Wide-Stance Groin-Hamstring Shift",
+      "currentName": "Wide-Stance Groin and Hamstring Stretch"
+    },
+    {
+      "id": 751,
+      "previousName": "Neck Side Stretch",
+      "currentName": "Standing Neck Half Rolls"
+    },
+    {
+      "id": 790,
+      "previousName": "Mirror Most-Muscular Posing",
+      "currentName": "Most-Muscular Posing, Hands on Thighs"
+    },
+    {
+      "id": 816,
+      "previousName": "Side-Step Overhead Reach",
+      "currentName": "Low-Impact Side-Step Jacks"
+    },
+    {
+      "id": 836,
+      "previousName": "Squat with Back Squeeze",
+      "currentName": "Alternating Side-Step Squat with Back Squeeze"
+    },
+    {
+      "id": 845,
+      "previousName": "Overhead Side Stretch",
+      "currentName": "Overhead Side-Bend Hold"
+    },
+    {
+      "id": 911,
+      "previousName": "Single-Side Wall Side-Plank Knee Drive",
+      "currentName": "Wall-Supported High-Knee Raise"
+    },
+    {
+      "id": 913,
+      "previousName": "Wall-Supported Vertical Dead Bug",
+      "currentName": "Shallow Wall Sit with Overhead Arm Raises"
+    },
+    {
+      "id": 914,
+      "previousName": "Alternating Diagonal Knee Pull-Down",
+      "currentName": "Single-Side Diagonal Knee Pull-Down"
+    },
+    {
+      "id": 919,
+      "previousName": "March in Place with Fixed-Gaze Head Turns",
+      "currentName": "Marching in Place with Head Turns"
+    },
+    {
+      "id": 939,
+      "previousName": "Hinge-to-Knee Drive",
+      "currentName": "Split-Stance Knee-to-Hand Crunch"
+    },
+    {
+      "id": 949,
+      "previousName": "Standing Reverse Wood Chop",
+      "currentName": "Standing Low-to-High Wood Chop"
+    },
+    {
+      "id": 958,
+      "previousName": "Standing Overhead Side Bend",
+      "currentName": "Standing Overhead Side-Stretch Hold"
+    },
+    {
+      "id": 962,
+      "previousName": "Alternating Standing Knee-to-Elbow Crunch",
+      "currentName": "Alternating Standing Knee Taps"
+    },
+    {
+      "id": 993,
+      "previousName": "Mirror Standing Vacuum Repetitions",
+      "currentName": "Standing Stomach Vacuum, Then Release"
+    }
+  ],
+  "retiredIds": [
+    412
+  ]
+}

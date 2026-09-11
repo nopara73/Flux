@@ -4,11 +4,13 @@
     # Runtime-facing labels for exercises whose lineage cannot be recovered
     # reliably from the display name alone.
     CatalogPracticeOverrides = @{
+        21 = 'Bodyweight conditioning'
         31 = 'Tai Chi'
         32 = 'Gait retraining'
         37 = 'Low-impact aerobics'
         58 = 'Bhangra'
         60 = 'Low-impact aerobics'
+        105 = 'Ballet'
         108 = 'Ballet'
         167 = 'Running drills'
         187 = 'Ballet'
@@ -36,6 +38,7 @@
         503 = 'Vestibular rehabilitation'
         504 = 'Vestibular rehabilitation'
         626 = 'Sumo'
+        939 = 'Pilates'
         960 = 'Fundamental movement skills'
         969 = 'Yoga'
 

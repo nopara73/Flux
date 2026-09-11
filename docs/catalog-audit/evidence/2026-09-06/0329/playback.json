@@ -1,0 +1,3020 @@
+{
+  "id": 329,
+  "fixture": {
+    "name": "Standing Shoulder CAR",
+    "group": {
+      "id": "r30.rotator-cuff.set1.block1",
+      "displayName": "Rotator cuff",
+      "order": 4,
+      "canonicalGroups": [
+        "RotatorCuff"
+      ],
+      "selectionGroupId": "r30.rotator-cuff",
+      "exerciseOverrideId": 329,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 4,
+      "name": "Standing Shoulder CAR",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1122,
+      "name": "Standing Shoulder CAR",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2130,
+      "name": "Standing Shoulder CAR",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3147,
+      "name": "Standing Shoulder CAR",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4156,
+      "name": "Standing Shoulder CAR",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5166,
+      "name": "Standing Shoulder CAR",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.16475,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6237,
+      "name": "Standing Shoulder CAR",
+      "countdown": "44",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.236192,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7248,
+      "name": "Standing Shoulder CAR",
+      "countdown": "43",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.246962,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8257,
+      "name": "Standing Shoulder CAR",
+      "countdown": "42",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.256252,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9272,
+      "name": "Standing Shoulder CAR",
+      "countdown": "41",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.270602,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10279,
+      "name": "Standing Shoulder CAR",
+      "countdown": "40",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.277866,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11341,
+      "name": "Standing Shoulder CAR",
+      "countdown": "39",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.339156,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12352,
+      "name": "Standing Shoulder CAR",
+      "countdown": "38",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.34971,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13364,
+      "name": "Standing Shoulder CAR",
+      "countdown": "37",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 8.362619,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14373,
+      "name": "Standing Shoulder CAR",
+      "countdown": "36",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 9.371633,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15383,
+      "name": "Standing Shoulder CAR",
+      "countdown": "35",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 10.381146,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16473,
+      "name": "Standing Shoulder CAR",
+      "countdown": "34",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 11.471164,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17484,
+      "name": "Standing Shoulder CAR",
+      "countdown": "33",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 12.482057,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18493,
+      "name": "Standing Shoulder CAR",
+      "countdown": "32",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 13.490832,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19507,
+      "name": "Standing Shoulder CAR",
+      "countdown": "31",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 14.505644,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20521,
+      "name": "Standing Shoulder CAR",
+      "countdown": "30",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 15.518634,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21597,
+      "name": "Standing Shoulder CAR",
+      "countdown": "29",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 16.596289,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22608,
+      "name": "Standing Shoulder CAR",
+      "countdown": "28",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 17.606001,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23617,
+      "name": "Standing Shoulder CAR",
+      "countdown": "27",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 18.615205,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24628,
+      "name": "Standing Shoulder CAR",
+      "countdown": "26",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.866018,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25638,
+      "name": "Standing Shoulder CAR",
+      "countdown": "25",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.876694,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26708,
+      "name": "Standing Shoulder CAR",
+      "countdown": "24",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.946587,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27715,
+      "name": "Standing Shoulder CAR",
+      "countdown": "23",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.953353,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28727,
+      "name": "Standing Shoulder CAR",
+      "countdown": "22",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.964368,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29741,
+      "name": "Standing Shoulder CAR",
+      "countdown": "21",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.979147,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30750,
+      "name": "Standing Shoulder CAR",
+      "countdown": "20",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.988154,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 31842,
+      "name": "Standing Shoulder CAR",
+      "countdown": "19",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 8.080021,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 32853,
+      "name": "Standing Shoulder CAR",
+      "countdown": "18",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 9.091144,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 33863,
+      "name": "Standing Shoulder CAR",
+      "countdown": "17",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 10.102015,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 34873,
+      "name": "Standing Shoulder CAR",
+      "countdown": "16",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 11.111544,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 35891,
+      "name": "Standing Shoulder CAR",
+      "countdown": "15",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 12.128957,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 36983,
+      "name": "Standing Shoulder CAR",
+      "countdown": "14",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 13.220661,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 37993,
+      "name": "Standing Shoulder CAR",
+      "countdown": "13",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 14.230541,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 39019,
+      "name": "Standing Shoulder CAR",
+      "countdown": "12",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 15.256328,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 40027,
+      "name": "Standing Shoulder CAR",
+      "countdown": "11",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 16.264967,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 41036,
+      "name": "Standing Shoulder CAR",
+      "countdown": "10",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 17.274087,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 42118,
+      "name": "Standing Shoulder CAR",
+      "countdown": "8",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 18.355741,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 43133,
+      "name": "Standing Shoulder CAR",
+      "countdown": "7",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.614589,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 44147,
+      "name": "Standing Shoulder CAR",
+      "countdown": "6",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.628955,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 45161,
+      "name": "Standing Shoulder CAR",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.643244,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 46179,
+      "name": "Standing Shoulder CAR",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.658368,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 47287,
+      "name": "Standing Shoulder CAR",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.769325,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 48300,
+      "name": "Standing Shoulder CAR",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.781521,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 49312,
+      "name": "Standing Shoulder CAR",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.791802,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 50321,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "15",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.253603,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 51383,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "14",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.315869,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 52446,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "13",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.378066,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 53469,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "12",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.400305,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 54481,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "11",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.412221,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 55489,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "10",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.421373,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 56500,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "9",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.431362,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 57622,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "8",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.547358,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 58633,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "7",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 8.565242,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 59643,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "6",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 9.574804,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 60652,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "5",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 10.58276,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 61670,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "4",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 11.599508,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 62778,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "3",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 12.709799,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 63785,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "2",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 13.716479,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 64794,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "1",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 14.724327,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 65801,
+      "name": "Standing Shoulder CAR",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.678923,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 66906,
+      "name": "Standing Shoulder CAR",
+      "countdown": "44",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.783856,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 67979,
+      "name": "Standing Shoulder CAR",
+      "countdown": "43",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.856615,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 68992,
+      "name": "Standing Shoulder CAR",
+      "countdown": "42",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.869315,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 69998,
+      "name": "Standing Shoulder CAR",
+      "countdown": "41",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.876154,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 71014,
+      "name": "Standing Shoulder CAR",
+      "countdown": "40",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.891829,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 72026,
+      "name": "Standing Shoulder CAR",
+      "countdown": "39",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.903396,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 73144,
+      "name": "Standing Shoulder CAR",
+      "countdown": "37",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 8.020926,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 74158,
+      "name": "Standing Shoulder CAR",
+      "countdown": "36",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 9.035609,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 75179,
+      "name": "Standing Shoulder CAR",
+      "countdown": "35",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 10.053094,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 76195,
+      "name": "Standing Shoulder CAR",
+      "countdown": "34",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 11.071822,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 77209,
+      "name": "Standing Shoulder CAR",
+      "countdown": "33",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 12.086239,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 78300,
+      "name": "Standing Shoulder CAR",
+      "countdown": "32",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 13.177112,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 79310,
+      "name": "Standing Shoulder CAR",
+      "countdown": "31",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 14.187487,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 80316,
+      "name": "Standing Shoulder CAR",
+      "countdown": "30",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 15.193412,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 81339,
+      "name": "Standing Shoulder CAR",
+      "countdown": "29",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 16.216782,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 82353,
+      "name": "Standing Shoulder CAR",
+      "countdown": "28",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 17.230021,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 83472,
+      "name": "Standing Shoulder CAR",
+      "countdown": "27",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 18.350373,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 84486,
+      "name": "Standing Shoulder CAR",
+      "countdown": "26",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.59239,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 85512,
+      "name": "Standing Shoulder CAR",
+      "countdown": "25",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.617597,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 86531,
+      "name": "Standing Shoulder CAR",
+      "countdown": "24",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.637206,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 87540,
+      "name": "Standing Shoulder CAR",
+      "countdown": "23",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.645705,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 88627,
+      "name": "Standing Shoulder CAR",
+      "countdown": "22",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.733058,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 89640,
+      "name": "Standing Shoulder CAR",
+      "countdown": "21",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.746761,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 90652,
+      "name": "Standing Shoulder CAR",
+      "countdown": "20",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.758132,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 91665,
+      "name": "Standing Shoulder CAR",
+      "countdown": "19",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.771332,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 92674,
+      "name": "Standing Shoulder CAR",
+      "countdown": "18",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 8.780316,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 93755,
+      "name": "Standing Shoulder CAR",
+      "countdown": "17",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 9.861942,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 94763,
+      "name": "Standing Shoulder CAR",
+      "countdown": "16",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 10.869465,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 95775,
+      "name": "Standing Shoulder CAR",
+      "countdown": "15",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 11.882,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 96781,
+      "name": "Standing Shoulder CAR",
+      "countdown": "14",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 12.888037,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 97789,
+      "name": "Standing Shoulder CAR",
+      "countdown": "13",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 13.895306,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 98874,
+      "name": "Standing Shoulder CAR",
+      "countdown": "12",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 14.980719,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 99881,
+      "name": "Standing Shoulder CAR",
+      "countdown": "11",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 15.987972,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 100892,
+      "name": "Standing Shoulder CAR",
+      "countdown": "10",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 16.998522,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 101904,
+      "name": "Standing Shoulder CAR",
+      "countdown": "9",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 18.009673,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 102915,
+      "name": "Standing Shoulder CAR",
+      "countdown": "8",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0.260159,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 104007,
+      "name": "Standing Shoulder CAR",
+      "countdown": "7",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 1.352393,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 105022,
+      "name": "Standing Shoulder CAR",
+      "countdown": "6",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 2.366931,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 106041,
+      "name": "Standing Shoulder CAR",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 3.386271,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 107051,
+      "name": "Standing Shoulder CAR",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 4.395661,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 108059,
+      "name": "Standing Shoulder CAR",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 5.403943,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 109142,
+      "name": "Standing Shoulder CAR",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 6.486563,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 110149,
+      "name": "Standing Shoulder CAR",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.494196,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 111160,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "15",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 112268,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "13",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 113278,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "12",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 114351,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "11",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 115357,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "10",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 116373,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "9",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 117378,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "8",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 118389,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "7",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 119440,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "6",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 120453,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "5",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 121457,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "4",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 122468,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "3",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 123477,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "2",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 124542,
+      "name": "Standing Shoulder CAR",
+      "countdown": "0",
+      "rest": "1",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 7.528664,
+        "duration": 18.75,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 125568,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 126664,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 127681,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 128689,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 129752,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 130768,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 131778,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 132793,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 133812,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 134889,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 135899,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 136907,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    },
+    {
+      "elapsedMs": 137926,
+      "name": "Standing Reverse Prayer Stretch",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0329.mp4?v=d6feb11b16bb80a941e2783536d1c8bcc04d6e68fccd6f9338f1bb35a00d05d7",
+        "time": 0,
+        "duration": null,
+        "rate": 1,
+        "paused": true,
+        "hidden": true,
+        "transform": "none"
+      },
+      "hold": {
+        "src": "http://127.0.0.1:4179/assets/exercise_hold_frames/exercise_0239.png?v=8aeb536125df81e608b4025a74b8a78a849f80c6c588f0186dd743523b13d88b",
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "00.png",
+      "elapsedMs": 116
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "05.png",
+      "elapsedMs": 5231
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "10.png",
+      "elapsedMs": 10319
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "15.png",
+      "elapsedMs": 15461
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "20.png",
+      "elapsedMs": 20580
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "25.png",
+      "elapsedMs": 25694
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "30.png",
+      "elapsedMs": 30826
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "35.png",
+      "elapsedMs": 35955
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "40.png",
+      "elapsedMs": 41096
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "45.png",
+      "elapsedMs": 46277
+    },
+    {
+      "phase": "Standing Shoulder CAR|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "49.png",
+      "elapsedMs": 50364
+    },
+    {
+      "phase": "Standing Shoulder CAR|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "50.png",
+      "elapsedMs": 51433
+    },
+    {
+      "phase": "Standing Shoulder CAR|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "55.png",
+      "elapsedMs": 56602
+    },
+    {
+      "phase": "Standing Shoulder CAR|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "60.png",
+      "elapsedMs": 61767
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "64.png",
+      "elapsedMs": 65896
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "65.png",
+      "elapsedMs": 66963
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "70.png",
+      "elapsedMs": 72134
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "75.png",
+      "elapsedMs": 77287
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "80.png",
+      "elapsedMs": 82456
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "85.png",
+      "elapsedMs": 87619
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "90.png",
+      "elapsedMs": 92742
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "95.png",
+      "elapsedMs": 97858
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "100.png",
+      "elapsedMs": 102999
+    },
+    {
+      "phase": "Standing Shoulder CAR|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "105.png",
+      "elapsedMs": 108129
+    },
+    {
+      "phase": "Standing Shoulder CAR|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "108.png",
+      "elapsedMs": 111258
+    },
+    {
+      "phase": "Standing Shoulder CAR|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "110.png",
+      "elapsedMs": 113338
+    },
+    {
+      "phase": "Standing Shoulder CAR|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "115.png",
+      "elapsedMs": 118435
+    },
+    {
+      "phase": "Standing Shoulder CAR|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "120.png",
+      "elapsedMs": 123534
+    },
+    {
+      "phase": "Standing Reverse Prayer Stretch|false|true|false|none",
+      "file": "122.png",
+      "elapsedMs": 125650
+    },
+    {
+      "phase": "Standing Reverse Prayer Stretch|false|true|false|none",
+      "file": "125.png",
+      "elapsedMs": 128729
+    },
+    {
+      "phase": "Standing Reverse Prayer Stretch|false|true|false|none",
+      "file": "130.png",
+      "elapsedMs": 133876
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

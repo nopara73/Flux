@@ -7,7 +7,7 @@ public sealed class WorkoutState
     [System.Text.Json.Serialization.JsonIgnore]
     public OuraRecoverySnapshot? OuraRecovery { get; set; }
 
-    public int Version { get; set; } = 29;
+    public int Version { get; set; } = 30;
 
     public int CatalogRevision { get; set; }
 
@@ -112,6 +112,8 @@ public sealed class WorkoutState
         WorkoutModifiers.UpperBodyClothing |
         WorkoutModifiers.HardFloor |
         WorkoutModifiers.Silence;
+
+    public bool WorkoutSetupReviewRequired { get; set; }
 
     public int ActiveWorkoutMinutes { get; set; }
 

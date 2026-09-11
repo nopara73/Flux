@@ -210,17 +210,7 @@ export const WORKOUT_MODIFIER_VALIDATION_PROFILES = Object.freeze(
 );
 const SELECTION_PROFILE_PREFIX = "p";
 const SELECTION_PROFILE_SEPARATOR = "|";
-const MINIMUM_CANONICAL_COVERAGE_PERCENT = 50;
 export const BROAD_COVERAGE_RESOLUTION_MINUTES = 3;
-export const MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP = 5;
-export const MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP = 1;
-export const MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP = 1;
-export const MINIMUM_EXERCISES_PER_MIRROR_CATEGORY = 5;
-export const MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS = 20;
-export const MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS = 5;
-export const MINIMUM_MODIFIER_MATERIALITY_EXERCISES = 5;
-export const MINIMUM_MODIFIER_MATERIALITY_PERCENT = 5;
-export const MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT = 10;
 export const MINIMUM_MUSCULAR_DEMAND = 0;
 export const MODERATE_MUSCULAR_DEMAND = 1;
 export const MAXIMUM_MUSCULAR_DEMAND = 2;
@@ -243,17 +233,6 @@ const WALL_FREE_INSECT_FINE_COVERAGE_EXCEPTION_SET = new Set(
   WALL_FREE_INSECT_FINE_COVERAGE_EXCEPTIONS,
 );
 
-// These isolated targets are floor-neutral: every honest standing version is
-// HardFloor-compatible. Do not invent unrelated footwork or secondary claims
-// solely to manufacture a HardFloor-incompatible variant.
-export const HARD_FLOOR_NEUTRAL_FINE_COVERAGE_EXCEPTIONS = Object.freeze([
-  "PelvicFloorAndPerineum",
-  "IntrinsicHand",
-]);
-const HARD_FLOOR_NEUTRAL_FINE_COVERAGE_EXCEPTION_SET = new Set(
-  HARD_FLOOR_NEUTRAL_FINE_COVERAGE_EXCEPTIONS,
-);
-
 function isWallFreeInsectFineCoverageException(group, profile) {
   if ((profile & WORKOUT_MODIFIERS.Insect) === 0 ||
       group.canonicalGroups.length === 0) {
@@ -271,22 +250,8 @@ export function isSelectionGroupAvailable(group, profile) {
   return !isWallFreeInsectFineCoverageException(group, profile);
 }
 
-function isHardFloorCategoryFineCoverageException(
-  group,
-  hardFloorCompatibility,
-) {
-  return hardFloorCompatibility ===
-      EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible &&
-    group.canonicalGroups.length > 0 &&
-    group.canonicalGroups.every((canonicalGroup) =>
-      HARD_FLOOR_NEUTRAL_FINE_COVERAGE_EXCEPTION_SET.has(canonicalGroup));
-}
 
-export function getMinimumExercisesPerModifierPairStatePerGroup(minutes) {
-  return minutes === BROAD_COVERAGE_RESOLUTION_MINUTES
-    ? MINIMUM_EXERCISES_PER_BROAD_MODIFIER_PAIR_STATE_PER_GROUP
-    : MINIMUM_EXERCISES_PER_FINE_MODIFIER_PAIR_STATE_PER_GROUP;
-}
+
 export const HARD_MUSCULAR_DEMAND = MAXIMUM_MUSCULAR_DEMAND;
 
 export function getMuscularDemandSchedulePriority(muscularDemand) {
@@ -348,8 +313,8 @@ export const DEFAULT_WORKOUT_MODIFIERS =
   WORKOUT_MODIFIERS.UpperBodyClothing |
   WORKOUT_MODIFIERS.HardFloor |
   WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 26;
-const DOMINANT_LIGHT_MODE_STATE_VERSION = 26;
+export const CURRENT_WORKOUT_STATE_VERSION = 27;
+const DOMINANT_LIGHT_MODE_STATE_VERSION = 27;
 const EXPLICIT_LIGHT_MODE_STATE_VERSION = 25;
 const IMPLICIT_UPPER_BODY_CLOTHING_STATE_VERSION = 24;
 const LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION = 22;
@@ -369,7 +334,7 @@ export const MINIMUM_LEGACY_HARD_PRIMARY_MUSCLES = 3;
 // Revisions 71-72 correct overlooked arm positions, lead stances, and one-way
 // demonstrations to complete atomic side/direction sequences. Rebuild affected
 // lineups without discarding saved feedback.
-export const CURRENT_CATALOG_REVISION = 72;
+export const CURRENT_CATALOG_REVISION = 73;
 const HARD_FLOOR_SLIPPERINESS_CATALOG_REVISION = 53;
 const REUSED_SHY_AUDIT_CATALOG_REVISION = 70;
 const REUSED_SHY_AUDIT_EXERCISE_IDS = new Set([202, 204, 205]);
@@ -398,6 +363,43 @@ const TRAINING_CLAIM_ASSOCIATION_CHANGES_BY_REVISION = new Map([
     462, 463, 464, 465, 469, 471, 472, 475, 476, 488, 523, 524,
     537, 541, 543, 545, 546, 548, 556, 561, 573, 575, 578, 583, 613,
     681, 685, 712, 745, 790,
+  ])],
+  [73, new Set([
+    15, 16, 17, 19, 20, 21, 31, 32, 37, 41, 47, 58, 59,
+    60, 93, 94, 95, 96, 97, 98, 99, 100, 102, 103, 104, 105,
+    107, 108, 109, 112, 113, 114, 115, 116, 117, 119, 120, 121, 122,
+    123, 124, 125, 126, 127, 128, 129, 130, 133, 134, 135, 136, 137,
+    138, 140, 142, 143, 145, 146, 147, 148, 149, 150, 152, 153, 154,
+    156, 159, 160, 163, 165, 166, 167, 168, 169, 170, 171, 172, 174,
+    175, 176, 177, 178, 179, 181, 182, 183, 184, 185, 186, 187, 188,
+    190, 192, 193, 195, 196, 197, 198, 199, 200, 201, 203, 204, 205,
+    214, 217, 218, 219, 220, 223, 227, 228, 230, 231, 232, 234, 237,
+    238, 240, 241, 242, 245, 246, 248, 251, 252, 253, 254, 256, 257,
+    258, 260, 261, 262, 263, 264, 265, 266, 268, 269, 270, 271, 272,
+    274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286,
+    287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 301, 302, 303,
+    304, 305, 307, 308, 309, 310, 311, 314, 315, 321, 326, 327, 329,
+    338, 340, 341, 367, 377, 379, 389, 390, 391, 392, 393, 394, 395,
+    396, 397, 398, 399, 400, 401, 402, 403, 404, 405, 406, 407, 408,
+    410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 424,
+    426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437, 438,
+    439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 452, 453,
+    454, 455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466,
+    467, 468, 469, 470, 471, 472, 473, 476, 478, 479, 480, 484, 485,
+    486, 487, 488, 489, 490, 491, 492, 493, 494, 495, 496, 499, 501,
+    502, 503, 504, 507, 508, 509, 510, 512, 513, 517, 518, 519, 520,
+    522, 523, 524, 525, 526, 527, 528, 529, 530, 531, 532, 533, 535,
+    536, 537, 538, 539, 540, 541, 542, 543, 544, 545, 546, 547, 548,
+    549, 550, 551, 552, 554, 555, 556, 557, 560, 561, 562, 563, 564,
+    565, 567, 568, 569, 570, 572, 574, 575, 576, 577, 578, 579, 580,
+    583, 584, 585, 586, 587, 588, 591, 603, 608, 609, 610, 611, 612,
+    613, 614, 615, 616, 617, 618, 619, 620, 625, 626, 632, 633, 636,
+    647, 649, 654, 666, 677, 678, 681, 683, 684, 685, 686, 687, 701,
+    702, 703, 704, 712, 733, 740, 741, 742, 743, 744, 745, 746, 747,
+    748, 750, 752, 755, 756, 758, 784, 790, 801, 804, 816, 818, 825,
+    831, 834, 835, 843, 845, 884, 885, 886, 887, 905, 906, 910, 911,
+    913, 914, 915, 916, 919, 939, 943, 948, 949, 954, 958, 960, 962,
+    969, 971, 973, 986, 987, 993, 996, 997, 998, 999, 1000,
   ])],
 ]);
 export const LAST_CUMULATIVE_CATALOG_REVISION = 3;
@@ -547,6 +549,17 @@ export const SCOPED_CATALOG_INVALIDATIONS_BY_REVISION = new Map([
   ])],
   [71, new Set([32, 483, 493])],
   [72, new Set([307, 490, 491, 492, 495, 499, 501, 520, 528, 561, 958])],
+  [73, new Set([
+    16, 20, 21, 32, 47, 95, 97, 99, 100, 117, 123, 125, 126,
+    128, 129, 131, 133, 143, 144, 145, 151, 152, 153, 160, 161, 170,
+    171, 173, 178, 181, 182, 195, 198, 203, 215, 219, 220, 223, 228,
+    233, 245, 258, 261, 264, 266, 274, 275, 279, 280, 283, 285, 286,
+    289, 290, 291, 292, 301, 307, 327, 329, 379, 395, 414, 418, 422, 423, 460, 473,
+    483, 485, 486, 488, 491, 500, 515, 519, 520, 521, 531, 533, 538,
+    541, 542, 546, 556, 560, 569, 570, 572, 585, 587, 588, 610, 614, 618,
+    633, 636, 654, 677, 681, 741, 743, 744, 745, 747, 748, 751, 834,
+    948,
+  ])],
 ]);
 export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [4, new Set([591])],
@@ -635,70 +648,74 @@ export const SCOPED_SCORE_INVALIDATIONS_BY_REVISION = new Map([
   [67, new Set([911, 913, 916, 917])],
   [69, new Set([918, 919])],
   [70, new Set([202, 204, 205])],
+  [73, new Set([
+    261, 266, 289, 290, 301, 473, 485, 486, 515, 519, 520, 521, 560,
+    569, 570, 614, 677,
+  ])],
 ]);
 const ALTERNATING_PREFIX = "Alternating ";
 const CONTINUOUS_ALTERNATION_NORMALIZATION_IDS = new Set();
 export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [31, ["High-Knee Overhead-Reach March", "Alternating Knee Raises with Two-Arm Pull-Down"]],
-  [21, ["Standing-Scale Balance", "Standing-Scale Balance Hold"]],
+  [21, ["Standing-Scale Balance", "Alternating Single-Leg Hinge with Forward Reach"]],
   [105, ["Plie Squat", "Wide Turned-Out Squat"]],
-  [119, ["Squat to Calf Raise", "Tiptoe Walk"]],
+  [119, ["Squat to Calf Raise", "Tiptoe Walking Back and Forth"]],
   [139, ["Wide-Squat Heel Raise", "Wide-Squat Alternating Heel Raises"]],
   [188, ["Parallel Demi-Plie", "Narrow Turned-Out Shallow Squat"]],
-  [197, ["First-Position Plie-Releve", "Parallel Squat-to-Calf Raise"]],
+  [197, ["First-Position Plie-Releve", "Squat to Calf Raise"]],
   [198, ["Second-Position Plie-Releve", "Wide Squat to Feet-Together Calf Raise"]],
-  [199, ["Alternating Deep Side Lunge", "Wide-Stance Side-to-Side Squat"]],
+  [199, ["Alternating Deep Side Lunge", "Horse-Stance Squat"]],
   [255, ["Standing Bent-Knee Calf Raise", "Deep-Squat Calf Raise"]],
-  [145, ["Standing Knee Extension", "Standing Knee-Extension Hold"]],
+  [145, ["Standing Knee Extension", "Wall-Supported Standing Knee-Extension Hold"]],
   [256, ["Self-Resisted Overhead Pull", "Self-Resisted Overhead Pull Hold"]],
-  [257, ["Self-Resisted Chest-Level Pull", "Self-Resisted Chest-Level Pull Hold"]],
-  [258, ["Self-Resisted Low Pull", "Self-Resisted Low Pull Hold"]],
+  [257, ["Self-Resisted Chest-Level Pull", "Finger Spreading with Arms Held Forward"]],
+  [258, ["Self-Resisted Low Pull", "Alternating Karate Downward Blocks"]],
   [262, ["Standing Hands-to-Thigh Abdominal Press", "Standing Hands-to-Thigh Abdominal Press Hold"]],
-  [270, ["Bodyweight Svend Press", "Palm-Squeeze Forward Press"]],
+  [270, ["Bodyweight Svend Press", "Goalpost Arm Hold"]],
   [282, ["High-Knee Horizontal Punches", "Side-Step Knee Drive with Alternating Side Punches"]],
-  [219, ["Single-Side High-Knee Cross-Body Pull", "Alternating High-Knee Cross-Body Pull"]],
+  [219, ["Single-Side High-Knee Cross-Body Pull", "High-Knee Cross-Body Pull"]],
   [684, ["Karate Step-Through Cross-Elbow Strike", "Knee Strike to Horizontal Elbow Strike"]],
-  [290, ["Universe-in-Motion Qigong", "Low Palm Scoop to Side Opening"]],
-  [231, ["Karate Reverse Punch", "Step-Through Karate Reverse Punch"]],
-  [394, ["Standing Arms Open and Close", "Inhale Arms Open, Exhale Arms Close and Round"]],
-  [395, ["Standing Overhead Arm Sweep", "Overhead Hold with Deep Ribcage Breaths"]],
-  [397, ["Inhale Open, Exhale Cross-Body Side Tap", "Alternating Side Tap with Diagonal Arm Sweep"]],
-  [398, ["Standing Hug and Arm Expansion", "Inhale Arms Open, Exhale Self-Hug and Fold"]],
+  [290, ["Universe-in-Motion Qigong", "Thumb and Little-Finger Switches"]],
+  [231, ["Karate Reverse Punch", "Step-In Karate Reverse Punch"]],
+  [394, ["Standing Arms Open and Close", "Alternating Cross-Body Knee with Arm Sweep"]],
+  [395, ["Standing Overhead Arm Sweep", "Alternating Knee Lift and Overhead Reach"]],
+  [397, ["Inhale Open, Exhale Cross-Body Side Tap", "Alternating Side Tap with Diagonal Reach"]],
+  [398, ["Standing Hug and Arm Expansion", "Inhale Arms Open, Exhale Arms Together"]],
   [399, ["Shallow Squat with Chest-Opening Arms", "Inhale Chest Open, Exhale Arms Close with Shallow Squat"]],
   [400, ["Shallow Squat with Overhead Arm Circle", "Inhale Rise and Lift Arms, Exhale Squat and Sweep Down"]],
   [401, ["Alternating Weight Shift with Arm Swing", "Alternating Inhale-Twist, Exhale-Push"]],
   [402, ["Shibashi Rowing-a-Boat Breathing", "Shallow Squat with Rowing Arm Circle"]],
-  [403, ["Shibashi Alternating Pushing-Palms Breathing", "Alternating Weight Shift with Palm Push"]],
+  [403, ["Shibashi Alternating Pushing-Palms Breathing", "Alternating Palm Press with Weight Shift"]],
   [404, ["Shibashi Alternating Punch Breathing", "Wide-Stance Alternating Slow Punch"]],
   [405, ["Shibashi Flying-Wild-Goose Breathing", "Shallow Squat with Wing Arm Raise"]],
   [406, ["Shibashi Spinning-Wheels Breathing", "Standing Wheel Arm Circles"]],
   [409, ["Neck Controlled Articular Rotation", "Full Neck Circles"]],
   [493, ["Track Finger Upper-Right to Lower-Left", "Diagonal Finger Tracking"]],
-  [958, ["Standing Alternating Side Bend", "Standing Overhead Side Bend"]],
+  [958, ["Standing Alternating Side Bend", "Standing Overhead Side-Stretch Hold"]],
   [425, ["Chin-Tuck Isometric", "Chin-Tuck Hold"]],
-  [396, ["Unsupported Single-Leg Balance", "Unsupported Single-Leg Balance Hold"]],
+  [396, ["Unsupported Single-Leg Balance", "Standing Front-to-Side Knee Lifts"]],
   [510, ["Clasped-Hands Chest-Opening Forward Fold", "Clasped-Hands Chest-Opening Forward-Fold Hold"]],
   [507, ["Hamstring Curl with Elbow Pull", "Knee Raise with Elbow Pull"]],
-  [508, ["Wide-Step Elbow Pull", "Side-Step with Two-Arm Overhead Reach"]],
+  [508, ["Wide-Step Elbow Pull", "Alternating Side Taps with Forward Overhead Raises"]],
   [588, ["Belly-Dance Alternating Shoulder Roll", "Belly-Dance Alternating Shoulder Rolls"]],
-  [577, ["High-Knee Goalpost Pull", "Standing Side-Leg Raise with Side Reach"]],
+  [577, ["High-Knee Goalpost Pull", "Standing Side Crunch and Side Kick"]],
   [915, ["Split-Stance Knee Drive with Overhead Reach", "Single-Side Split-Stance Knee Drive with Overhead Reach"]],
   [617, ["Standing Side-Leg Circles", "Standing Forward Side-Leg Circles"]],
   [626, ["Sumo Stance", "Sumo Squat Hold"]],
   [712, ["Standing Arms-Back Chest Opener", "Standing Arms-Back Chest-Opener Hold"]],
   [969, ["Chair-Pose Core Hold", "Chair-Pose Hold"]],
   [1000, ["Standing Forward Fold", "Standing Forward-Fold Hold"]],
-  [136, ["Goddess Pose", "Wide Turned-Out Squat Hold"]],
+  [136, ["Goddess Pose", "Wide Squat Hold with Hands on Thighs"]],
   [225, ["Clenched-Fist Wrist Extensor Stretch", "Opposite-Hand Fist-Down Wrist Stretch"]],
   [241, ["Hook-Fist Tendon Glide", "Open Hand to Hook Fist"]],
   [242, ["Full-Fist Tendon Glide", "Open Hand to Full Fist"]],
   [248, ["Side-Tap Palm Pushes", "Alternating Side-Tap Palm Pushes"]],
-  [283, ["Straight-Fist Tendon Glide", "Open Hand to Straight Fist"]],
+  [283, ["Straight-Fist Tendon Glide", "Rear-Hand Palm Strike"]],
   [291, ["Open-to-Claw Tendon Glide", "Open Hand to Claw Fist"]],
-  [293, ["Finger-Web Space Stretch", "Opposite-Hand Finger-Web Stretches"]],
+  [293, ["Finger-Web Space Stretch", "Opposite-Hand Thumb-Web Stretch"]],
   [683, ["Alternating Palm-Up T-Arm Flips", "Alternating Palm-Up Shoulder Rotations"]],
-  [214, ["Forward Wrist Circles", "Inward Wrist Circles"]],
-  [223, ["Forward Controlled Wrist Circles", "Inward Controlled Wrist Circles"]],
+  [214, ["Forward Wrist Circles", "Single-Arm Wrist Circles"]],
+  [223, ["Forward Controlled Wrist Circles", "Controlled Wrist Circles"]],
   [755, ["Reverse Wrist Circles", "Outward Wrist Circles"]],
   [756, ["Reverse Controlled Wrist Circles", "Outward Controlled Wrist Circles"]],
   [758, ["Reverse Knee-and-Ankle Circles", "Backward Knee-and-Ankle Circles"]],
@@ -711,56 +728,244 @@ export const APPROVED_EXERCISE_CORRECTIONS = new Map([
   [500, ["Mirror-Guided Straight Jaw Opening", "Straight Jaw Opening"]],
   [511, ["Mirror-Guided Lip Pucker", "Lip Pucker"]],
   [514, ["Mirror-Guided Symmetric Smile", "Symmetric Smile"]],
-  [515, ["One-Eyebrow Isolation Practice", "Mirror One-Eyebrow Isolation Practice"]],
-  [522, ["Tutting Box Sequence", "Mirror Tutting Box Sequence"]],
-  [523, ["Arm-Wave Isolation Practice", "Mirror Arm-Wave Isolation Practice"]],
-  [524, ["Mirror Front Double-Biceps Pose Hold", "Mirror Front Double-Biceps Posing"]],
-  [525, ["Mirror Front Lat-Spread Pose Hold", "Mirror Front Lat-Spread Posing"]],
-  [526, ["Mirror Side-Chest Pose Hold", "Mirror Side-Chest Posing"]],
-  [527, ["Mirror Side-Triceps Pose Hold", "Mirror Side-Triceps Posing"]],
-  [528, ["Mirror Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Posing"]],
-  [790, ["Mirror Most-Muscular Pose Hold", "Mirror Most-Muscular Posing"]],
-  [193, ["Wide-Squat Floor-to-Overhead Reach", "Wide-Stance Floor-to-Overhead Reach"]],
-  [417, ["Narrow Squat and Overhead Reach with Thumb Tracking", "Narrow-Stance Overhead-to-Floor Reach"]],
+  [515, ["One-Eyebrow Isolation Practice", "Raise Upper Lip and Scrunch Nose"]],
+  [522, ["Tutting Box Sequence", "Tutting Box Sequence"]],
+  [523, ["Arm-Wave Isolation Practice", "Pass an Arm Wave from Hand to Hand"]],
+  [524, ["Mirror Front Double-Biceps Pose Hold", "Front Double-Biceps Posing"]],
+  [525, ["Mirror Front Lat-Spread Pose Hold", "Front Lat-Spread Posing"]],
+  [526, ["Mirror Side-Chest Pose Hold", "Side-Chest Posing"]],
+  [527, ["Mirror Side-Triceps Pose Hold", "Side-Triceps Posing"]],
+  [528, ["Mirror Abdominals-and-Thighs Pose Hold", "Abdominals-and-Thighs Posing"]],
+  [790, ["Mirror Most-Muscular Pose Hold", "Most-Muscular Posing, Hands on Thighs"]],
+  [193, ["Wide-Squat Floor-to-Overhead Reach", "Hip Hinge with Overhead Reach"]],
+  [417, ["Narrow Squat and Overhead Reach with Thumb Tracking", "Narrow-Stance Overhead-to-Toe Reach"]],
   [439, ["Feet-Together Fixed-Gaze Head Turns", "Pogo Bounces with Fixed-Gaze Head Turns"]],
   [442, ["Feet-Together Fixed-Gaze Head Nods", "Pogo Bounces with Fixed-Gaze Head Nods"]],
   [444, ["Feet-Together Fixed-Gaze Head Tilts", "Pogo Bounces with Fixed-Gaze Head Tilts"]],
-  [556, ["Tiptoe Raises with Fist Clenches", "Standing Fist Clench and Release"]],
-  [561, ["Tiptoe Bourree Steps with Head Spot", "Tiptoe Running Steps with Head Spot"]],
-  [562, ["Ballet Rises with Arm Movement", "Ballet Calf Raises with Arm Sweeps"]],
+  [556, ["Tiptoe Raises with Fist Clenches", "Single-Arm Backfist"]],
+  [561, ["Tiptoe Bourree Steps with Head Spot", "Tiptoe Turn with Head Spot"]],
+  [562, ["Ballet Rises with Arm Movement", "First-Position Calf Raises"]],
   [564, ["Calf Raise with Pelvic Floor Contraction", "Parallel Calf Raises with Hands on Hips"]],
   [565, ["Pelvic-Floor Mini Squat to Calf Raise", "Mini-Squat Calf Raises with Forward Reach"]],
   [566, ["Parallel Calf Raises for Pelvic-Floor Support", "Parallel Calf Raises"]],
   [581, ["Toes-In Calf Raises for Pelvic-Floor Support", "Toes-In Calf Raises"]],
   [582, ["Toes-Out Calf Raises for Pelvic-Floor Support", "Toes-Out Calf Raises"]],
-  [615, ["Hamstring Curl with Prayer Hands", "Alternating Hamstring Curls with Prayer Hands"]],
+  [615, ["Hamstring Curl with Prayer Hands", "Alternating Hamstring Curl with Prayer-to-Open Arms"]],
+  [138, ["Narrow-Squat Heel Raise", "Narrow Squat to Calf Raise"]],
+  [140, ["Sumo-Squat Calf Raise", "Tiptoe Sumo Squat"]],
+  [152, ["Side-Leg Raise Pulse", "Alternating Side-Leg Raise Pulses"]],
+  [390, ["Inhale Arms Up, Exhale Step-Touch", "Step-Touch with Goalpost Arm Openings"]],
+  [391, ["Inhale Arms Open, Exhale High-Knee", "Alternating High-Knee Inner-Foot Taps"]],
+  [408, ["Split-Squat Torso Rotation with Thumb Tracking", "Staggered-Stance Torso Rotation with Hand Tracking"]],
+  [414, ["Fixed-Thumb Head Turns", "Tiptoe Fixed-Thumb Head Turns"]],
+  [415, ["Fixed-Thumb Head Nods", "Tiptoe Fixed-Thumb Head Nods"]],
+  [416, ["Fixed-Thumb Head Tilts", "Tiptoe Fixed-Thumb Head Tilts"]],
+  [531, ["Alternating Standing Shoulder CARs", "Single-Arm Shoulder CAR"]],
+  [533, ["Alternating Standing Donkey Kicks", "Standing Bent-Knee Hip Extension"]],
+  [557, ["Tiptoe Forward Punches", "Calf Raise with Double Forward Punch"]],
+  [618, ["Single-Side High-Knee Hold with Side Reach", "Single-Side Knee Raise with Torso Twist"]],
+  [649, ["Standing Bent-Knee Hip Abduction", "Standing Side-Leg Raise with Knee Extension"]],
+  [677, ["Bent-Elbow Reverse-Fly Hold", "Standing Goalpost Arm Hold"]],
+  [911, ["Single-Side Wall Side-Plank Knee Drive", "Wall-Supported High-Knee Raise"]],
+  [939, ["Hinge-to-Knee Drive", "Split-Stance Knee-to-Hand Crunch"]],
+  [542, ["Alternating Standing Bird Dogs", "Standing Bird-Dog Reach"]],
+  [269, ["Standing Leg-Resistance Biceps Curl", "Wall-Supported Leg-Resistance Biceps Curl"]],
+  [619, ["Squat with Forward Scoop", "Mini Squat with Forward Scoop"]],
+  [228, ["Bent-Elbow External Rotation", "Single-Arm Bent-Elbow External Rotation"]],
+  [274, ["Alternating Boxing Uppercuts", "Alternating Standing Uppercut Punches"]],
+  [285, ["Karate Inside Block", "Karate Outward Forearm Block"]],
+  [286, ["Karate Outside Block", "Alternating Karate Inward Forearm Blocks"]],
+  [541, ["Alternating Karate Inside Blocks", "Alternating Karate Cross-Body Forearm Blocks"]],
+  [545, ["Alternating Karate Outside Blocks", "Alternating Karate Outward Forearm Blocks"]],
+  [112, ["Wide Squat with Overhead Reach", "Wide Squat with Arms Held Overhead"]],
+  [171, ["Alternating Hamstring Sweep", "Standing Hamstring Sweep"]],
+  [748, ["Alternating Wide-Stance Groin-Hamstring Shift", "Wide-Stance Groin and Hamstring Stretch"]],
+  [116, ["Alternating Cossack Squat", "Alternating Lateral Squat"]],
+  [733, ["Alternating Side Lunge with Chest Push", "Alternating Side Lunge with Forward Arm Reach"]],
+  [16, ["Split-Stance Toe Raises", "Split-Stance Calf Raises"]],
+  [17, ["Standing Toe-Touch Windmill", "Alternating Toe Touch with Overhead Reach"]],
+  [19, ["Wide Plie Squat Pulses", "Wide Squat with Hands on Hips"]],
+  [20, ["Standing Rear-Leg Pulses", "Standing Rear-Leg Raises"]],
+  [104, ["Sumo Squat", "Sumo Squat with Pause"]],
+  [32, ["Tandem Walk", "Tandem Walk Forward and Back"]],
+  [97, ["Standing Side-Kick Reach", "Knee Raise and Side-Kick Reach"]],
+  [111, ["Rainbow Squat Thruster", "Squat with Overhead Reach and Arm Sweep"]],
+  [115, ["Pistol Squat", "Pistol Squat with Bottom Pause"]],
+  [125, ["Alternating Reverse Lunge with Torso Twist", "Split Squat with Torso Twist"]],
+  [126, ["Squat to Alternating Side Kick", "Squat with Side Kick"]],
+  [128, ["Alternating Curtsy Squat with Arm Sweep", "Curtsy Squat with Arm Sweep"]],
+  [129, ["Squat to Alternating Front Kick", "Squat with Front Kick"]],
+  [131, ["Squat to Alternating Back Leg Lift", "Squat with Rear Leg Lift"]],
+  [133, ["Alternating Lateral Lunge with Overhead Reach", "Lateral Lunge with Overhead Reach"]],
+  [135, ["Overhead Squat Hold", "Wide Overhead Squat Hold"]],
+  [137, ["Wall Squat", "Shallow Wall Squat"]],
+  [141, ["Squat with Alternating Heel Lift", "Squat Hold with Alternating Heel Raises"]],
+  [144, ["Alternating Standing Knee Lift", "Standing Knee Lift"]],
+  [147, ["Squat to Alternating Star Reach", "Shallow Squat with Overhead Reach"]],
+  [148, ["Straight-Leg Hip-Extension Lift", "Bent-Over Standing Bird Dog"]],
+  [150, ["Wide-Squat Side-to-Side Shifts", "Side-to-Side Lunge"]],
+  [151, ["Alternating Straight-Leg Front Raise", "Straight-Leg Front Raise"]],
+  [154, ["Diagonal Leg Raise", "Standing Fire Hydrant"]],
+  [159, ["Standing Hamstring Curl to Diagonal Extension", "Standing Fire-Hydrant Kick"]],
+  [161, ["Alternating Standing Gate Opener", "Standing Gate Opener"]],
+  [170, ["Alternating Cross-Body Knee Drive", "Standing Cross-Body Knee Drive"]],
+  [173, ["Alternating Side Knee Lift", "Standing Side Knee Lift"]],
+  [178, ["Crescent Kick", "Outside Crescent Kick"]],
+  [179, ["Hip-Hinge Rear-Leg Raises", "Standing Rear Leg Raise"]],
+  [182, ["Capoeira Armada de Frente", "Capoeira Meia-Lua de Frente"]],
+  [184, ["Split-Squat Hold", "Split-Squat Pulse"]],
+  [187, ["Standing Heel-and-Toe Raises", "Standing Heel Raise"]],
+  [201, ["Wide-Stance Tiptoe Hold", "Sumo Squat to Calf Raise"]],
+  [211, ["Bent-Elbow Wrist-Flexion Stretch", "Assisted Standing Wrist-Flexion Stretch"]],
+  [213, ["Bent-Elbow Wrist-Extension Stretch", "Assisted Standing Wrist-Extension Stretch"]],
+  [227, ["Rotating Relaxed Arm Swings", "Arm Swings with Trunk Rotation"]],
+  [236, ["Bilateral Wrist Figure Eights", "Bilateral Wrist Circles"]],
+  [239, ["Standing Reverse Prayer Stretch", "Back-of-Hands Wrist Stretch"]],
+  [245, ["Straight-Punch to Shovel-Hook Combo", "Jab-Jab-Cross-Shovel-Hook Combo"]],
+  [261, ["Standing Bent-Elbow Reverse Fly", "Standing Bent-Elbow Chest Squeeze"]],
+  [266, ["T-Arm Shoulder Hold", "Alternating Overhead Arm Raises"]],
+  [268, ["Goalpost-to-T Rotations", "Goalpost-to-T Arm Extensions"]],
+  [271, ["Standing Lumbar Extension", "Standing Lumbar Extension Hold"]],
+  [273, ["Bent-Knee Calf-Raise Hold", "Wall-Supported Bent-Knee Calf Raise Hold"]],
+  [280, ["Alternating Boxing Hook Punches", "Rear-Hand Boxing Hook"]],
+  [288, ["Forward Knee-and-Ankle Circles", "Standing Knee-and-Ankle Circles"]],
+  [289, ["Fingertip Spider Presses", "Fist Opening and Closing with Arms Held Forward"]],
+  [294, ["Outward Knife-Hand Strikes", "Rear-Hand Outward Knife-Hand Strike"]],
+  [295, ["Ankle Squat March", "Alternating Bent-Knee Heel Raises"]],
+  [301, ["Overhead Arm Pumps", "Standing Side Arm Raises"]],
+  [309, ["Self-Resisted Neck Rotation Isometric", "Self-Resisted Neck Rotation Hold with Head Turned"]],
+  [321, ["Side-Tap Alternating Arm Raises", "Alternating Side Taps with Overhead Arm Raises"]],
+  [379, ["Alternating Qigong Drawing the Bow", "Qigong Drawing the Bow"]],
+  [389, ["First-Position Heel Raise with Elbow Pull-Down", "Toes-Out Heel Raise with Elbow Pull-Down"]],
+  [418, ["Alternating-Thumb Head Turns", "Look Between Fingers with Head Turns"]],
+  [419, ["Vertical Thumb Tracking with Head Nods", "Track Thumb While Nodding the Opposite Way"]],
+  [427, ["Split Jacks", "Jumping Lunges with Alternating Overhead Reach"]],
+  [437, ["Alternating High-Knee Under-Thigh Claps", "Hopping High-Knee Under-Thigh Claps"]],
+  [467, ["Look Up and Down", "Standing Chin-to-Chest Nods"]],
+  [470, ["Windmill Jacks", "Alternating Windmill Toe Touch"]],
+  [473, ["Bouncing Uppercuts", "Boxing Lead-Hand Parry"]],
+  [474, ["Head Glide Forward and Back", "Chin Tucks with Hands Pulling Forward at Base of Neck"]],
+  [484, ["Goddess Squat with Lion's Breath", "Wide Squat with Tongue-Out Exhale"]],
+  [485, ["Cupped-Palm Armpit Tapping", "Alternating Back Taps with Rowing Arms"]],
+  [486, ["Bent-Over Back-of-Knee Tapping", "Alternating Knee Lift with Two-Arm Pull-Down"]],
+  [490, ["Track One Thumb Side to Side", "Track Finger Side to Side, Head Still"]],
+  [491, ["Keep Eyes on Thumb While Nodding", "Keep Eyes on Finger While Nodding"]],
+  [501, ["Keep Eyes on Thumb While Turning Head", "Keep Eyes on Finger While Turning Head"]],
+  [505, ["Jaw Side-to-Side Glides", "Jaw Side Glide and Relax"]],
+  [519, ["Standing Yes Pullbacks", "Push Forearm Outward Against Other Hand"]],
+  [520, ["Mirror Facial-Expression Practice", "Raise Arms, Exhale Choo as Hips Sink"]],
+  [521, ["Smile at Yourself in the Mirror", "Stretch and Scrunch Face"]],
+  [538, ["Alternating Reverse Lunge to Front Kicks", "Reverse Lunge with Front Kick"]],
+  [547, ["Alternating Standing Rotation Claps", "Standing Rotational Reach and Clap"]],
+  [554, ["Half Squat Arm Swing to Heel Raise", "Arm Raises in Shallow Squat"]],
+  [560, ["Tiptoe Forward-and-Back Torso-and-Arm Sweep", "Try to Turn Palm Up Against Other Hand"]],
+  [569, ["Tiptoe Hip Hinge", "Unsupported Single-Leg Straight-Knee Calf Raise"]],
+  [570, ["Tiptoe Torso Twists", "Calf Raise with Arm Reach and Fist Close"]],
+  [614, ["Alternating Reinforced Forearm Blocks", "Push Forearm Down Against Other Hand"]],
+  [633, ["Wall Calf Stretch", "Straight-Knee Toes-on-Wall Stretch"]],
+  [636, ["Curtsy-Lunge Hold", "Curtsy Lunge to Alternating Side Crunch"]],
+  [647, ["Alternating Knee Lift with Overhead Reach", "Alternating Heel Curl with Overhead Reach"]],
+  [654, ["Single-Side Leg Lift to Overhead Knee Drive", "Alternating Side Leg Lifts and Heel Curls"]],
+  [678, ["Overhead Arm Figure Eight", "Overhead Arm Sways"]],
+  [681, ["Muay Thai Downward Elbow Strike", "Downward Elbow Strike"]],
+  [751, ["Neck Side Stretch", "Standing Neck Half Rolls"]],
+  [816, ["Side-Step Overhead Reach", "Low-Impact Side-Step Jacks"]],
+  [836, ["Squat with Back Squeeze", "Alternating Side-Step Squat with Back Squeeze"]],
+  [845, ["Overhead Side Stretch", "Overhead Side-Bend Hold"]],
+  [913, ["Wall-Supported Vertical Dead Bug", "Shallow Wall Sit with Overhead Arm Raises"]],
+  [914, ["Alternating Diagonal Knee Pull-Down", "Single-Side Diagonal Knee Pull-Down"]],
+  [919, ["March in Place with Fixed-Gaze Head Turns", "Marching in Place with Head Turns"]],
+  [949, ["Standing Reverse Wood Chop", "Standing Low-to-High Wood Chop"]],
+  [962, ["Alternating Standing Knee-to-Elbow Crunch", "Alternating Standing Knee Taps"]],
+  [993, ["Mirror Standing Vacuum Repetitions", "Standing Stomach Vacuum, Then Release"]],
+]);
+
+// Exact historical actions that must never inherit a later replacement identity.
+export const DISCARDED_EXERCISE_IDENTITY_NAMES = new Map([
+  [202, new Set(["Finger Fan and Close — Four-Count Tempo", "Hook Fist"])],
+  [204, new Set(["Finger Fan and Close — Half Range", "Full Fist"])],
+  [205, new Set(["Finger Fan and Close — Full Range", "Tabletop Fist"])],
+  [218, new Set(["Cumbia Two-Step", "Sequential Finger Waves"])],
+  [234, new Set(["Merengue Six-Count Step", "Straight Fingers to Knuckle Bend"])],
+  [237, new Set(["Salsa Front-and-Back Basic", "Sequential Finger Curl Waves"])],
+  [239, new Set(["Reggaeton Single-Single-Double Step", "Tabletop Tendon Glide"])],
+  [240, new Set(["Hook Fingers to Full Fist"])],
+  [241, new Set(["Basic Mambo Step", "Hook-Fist Tendon Glide", "Ninja Water-Dragon 44 Hand-Seal Sequence", "Open Hand to Hook Fist"])],
+  [242, new Set(["Full-Fist Tendon Glide", "Ninja Shadow-Clone Hand-Seal Sequence", "Open Hand to Full Fist"])],
+  [256, new Set(["Self-Resisted Overhead Pull", "Self-Resisted Overhead Pull Hold"])],
+  [257, new Set(["Self-Resisted Chest-Level Pull", "Self-Resisted Chest-Level Pull Hold"])],
+  [258, new Set(["Self-Resisted Low Pull", "Self-Resisted Low Pull Hold"])],
+  [262, new Set(["Standing Hands-to-Thigh Abdominal Press", "Standing Scapular Depression"])],
+  [270, new Set(["Bodyweight Svend Press", "Palm-Squeeze Forward Press"])],
+  [283, new Set(["Cha-Cha Basic Step", "Open Hand to Straight Fist", "Qigong Fist Rotation", "Straight-Fist Tendon Glide"])],
+  [291, new Set(["Bachata Side-to-Side Basic", "Black Dragon Enters the Cave", "Open Hand to Claw Fist", "Open-to-Claw Tendon Glide"])],
+  [294, new Set(["Five-Position Tendon Glide"])],
+  [394, new Set(["Inhale Arms Open, Exhale Arms Close and Round", "Standing Arms Open and Close", "Standing Open-and-Close Breathing"])],
+  [395, new Set(["Overhead Hold with Deep Ribcage Breaths", "Standing Overhead Arm Sweep", "Standing Overhead Rib-Expansion Breathing"])],
+  [425, new Set(["Chin-Tuck Hold", "Chin-Tuck Isometric"])],
+  [497, new Set(["Forehead Finger Sweep", "Odissi Sundari Griva", "Track Finger in Circles"])],
+  [556, new Set(["Pony Step", "Standing Fist Clench and Release"])],
+  [563, new Set(["Single-Leg Calf Raise with Head Turns"])],
+  [564, new Set(["Parallel Calf Raises with Hands on Hips"])],
+  [567, new Set(["Breathing Calf Raises with Arm Folds"])],
+  [568, new Set(["Chest-Expansion Breathing Calf Raises"])],
+  [574, new Set(["Tiptoe Overhead Side Bends"])],
 ]);
 
 export const ADDITIONAL_APPROVED_EXERCISE_CORRECTION_NAMES = new Map([
-  [31, new Set([
-    "Knee Raise with Overhead Reach",
-    "Single-Side Knee Raise with Two-Arm Pull-Down",
-  ])],
-  [524, new Set(["Front Double-Biceps Pose Hold"])],
-  [525, new Set(["Front Lat-Spread Pose Hold"])],
-  [526, new Set(["Side-Chest Pose Hold"])],
-  [527, new Set(["Side-Triceps Pose Hold"])],
-  [528, new Set(["Abdominals-and-Thighs Pose Hold"])],
+  [31, new Set(["Knee Raise with Overhead Reach", "Single-Side Knee Raise with Two-Arm Pull-Down"])],
+  [524, new Set(["Front Double-Biceps Pose Hold", "Mirror Front Double-Biceps Posing"])],
+  [525, new Set(["Front Lat-Spread Pose Hold", "Mirror Front Lat-Spread Posing"])],
+  [526, new Set(["Side-Chest Pose Hold", "Mirror Side-Chest Posing"])],
+  [527, new Set(["Side-Triceps Pose Hold", "Mirror Side-Triceps Posing"])],
+  [528, new Set(["Abdominals-and-Thighs Pose Hold", "Mirror Abdominals-and-Thighs Posing"])],
   [565, new Set(["Mini Squat with Forward Reach"])],
-  [21, new Set(["Alternating Standing-Scale Balance"])],
-  [145, new Set(["Alternating Standing Knee Extension"])],
-  [231, new Set(["Alternating Karate Reverse Punch"])],
-  [394, new Set(["Standing Open-and-Close Breathing"])],
-  [395, new Set([
-    "Standing Overhead Rib-Expansion Breathing",
-  ])],
+  [21, new Set(["Alternating Standing-Scale Balance", "Standing-Scale Balance Hold"])],
+  [145, new Set(["Alternating Standing Knee Extension", "Standing Knee-Extension Hold"])],
+  [231, new Set(["Alternating Karate Reverse Punch", "Step-Through Karate Reverse Punch"])],
+  [394, new Set(["Standing Open-and-Close Breathing", "Inhale Open, Exhale Cross-Body Knee", "Inhale Arms Open, Exhale Arms Close and Round"])],
+  [395, new Set(["Standing Overhead Rib-Expansion Breathing", "Single-Side Inhale Reach Up, Exhale Knee Lift", "Overhead Hold with Deep Ribcage Breaths", "Single-Side Knee Lift with Overhead Reach"])],
   [500, new Set(["Controlled Jaw Open and Close"])],
-  [398, new Set(["Standing Arm-Expansion Breathing"])],
+  [398, new Set(["Standing Arm-Expansion Breathing", "Inhale Arms Open, Exhale Self-Hug and Fold"])],
   [399, new Set(["Shibashi Opening-the-Chest Breathing"])],
   [400, new Set(["Shibashi Separating-the-Clouds Breathing"])],
   [401, new Set(["Shibashi Alternating Swinging-Arms Breathing"])],
   [617, new Set(["Alternating Standing Side-Leg Circles"])],
   [95, new Set(["Single-Leg Pelvic Control"])],
+  [270, new Set(["Goalpost Chest-Opener Hold", "Palm-Squeeze Forward Press"])],
+  [556, new Set(["Alternating Backfists", "Standing Fist Clench and Release"])],
+  [615, new Set(["Alternating Hamstring Curls with Prayer Hands", "Heel Raise with Prayer-to-Open Arms"])],
+  [119, new Set(["Tiptoe Walk"])],
+  [136, new Set(["Wide Turned-Out Squat Hold"])],
+  [193, new Set(["Wide-Stance Floor-to-Overhead Reach"])],
+  [197, new Set(["Parallel Squat-to-Calf Raise"])],
+  [199, new Set(["Wide-Stance Side-to-Side Squat"])],
+  [214, new Set(["Inward Wrist Circles"])],
+  [219, new Set(["Alternating High-Knee Cross-Body Pull"])],
+  [223, new Set(["Inward Controlled Wrist Circles"])],
+  [257, new Set(["Finger Spread to Interlace Stretch", "Self-Resisted Chest-Level Pull Hold"])],
+  [258, new Set(["Karate Downward Block", "Self-Resisted Low Pull Hold"])],
+  [283, new Set(["Alternating Palm Strikes", "Open Hand to Straight Fist"])],
+  [290, new Set(["Low Palm Scoop to Side Opening"])],
+  [293, new Set(["Opposite-Hand Finger-Web Stretches"])],
+  [390, new Set(["Step-Touch with Overhead Arm Arcs"])],
+  [391, new Set(["Alternating High Knee with Arm Opening"])],
+  [396, new Set(["Single-Leg Knee-Lift Balance Hold", "Unsupported Single-Leg Balance Hold"])],
+  [397, new Set(["Alternating Side Tap with Diagonal Arm Sweep"])],
+  [403, new Set(["Alternating Weight Shift with Palm Push"])],
+  [408, new Set(["Split-Squat Torso Rotation with Hand Tracking"])],
+  [417, new Set(["Narrow-Stance Overhead-to-Floor Reach"])],
+  [508, new Set(["Side-Step with Two-Arm Overhead Reach"])],
+  [515, new Set(["Mirror One-Eyebrow Isolation Practice"])],
+  [522, new Set(["Mirror Tutting Box Sequence"])],
+  [523, new Set(["Mirror Arm-Wave Isolation Practice"])],
+  [561, new Set(["Tiptoe Running Steps with Head Spot"])],
+  [562, new Set(["Ballet Calf Raises with Arm Sweeps"])],
+  [577, new Set(["Single-Side Standing Side-Leg Raise with Side Reach", "Standing Side-Leg Raise with Side Reach"])],
+  [618, new Set(["Single-Side High-Knee Raise with Side Reach"])],
+  [790, new Set(["Mirror Most-Muscular Posing"])],
+  [939, new Set(["Split-Stance Knee-to-Hand Press"])],
+  [958, new Set(["Standing Overhead Side Bend"])],
 ]);
 
 const CANONICAL_GROUPS = Object.freeze([
@@ -1371,19 +1576,16 @@ export function normalizeMinutes(minutes) {
 }
 
 export function getCanonicalCoverage(exercise, group) {
-  const trained = new Set([
-    exercise.primaryCanonicalGroup,
-    ...(exercise.secondaryCanonicalGroups ?? []),
-  ]);
-  return group.canonicalGroups.filter((canonicalGroup) => trained.has(canonicalGroup)).length;
+  return isPrimaryForGroup(exercise, group) ? 1 : 0;
 }
 
 export function getRequiredCanonicalCoverage(group) {
-  return Math.ceil(group.canonicalGroups.length / 2);
+  if (!group.canonicalGroups.length) throw new RangeError("A workout group needs a primary target.");
+  return 1;
 }
 
 export function isSelectable(exercise, group) {
-  return getCanonicalCoverage(exercise, group) >= getRequiredCanonicalCoverage(group);
+  return isPrimaryForGroup(exercise, group);
 }
 
 function getSequenceMembers(root, exercisesById) {
@@ -1403,10 +1605,7 @@ function getSequenceMembers(root, exercisesById) {
 
 function getSequenceCanonicalCoverage(root, exercisesById, group) {
   const trained = new Set(getSequenceMembers(root, exercisesById)
-    .flatMap((member) => [
-      member.primaryCanonicalGroup,
-      ...(member.secondaryCanonicalGroups ?? []),
-    ]));
+    .map((member) => member.primaryCanonicalGroup));
   return group.canonicalGroups.filter((canonicalGroup) =>
     trained.has(canonicalGroup)).length;
 }
@@ -1429,22 +1628,8 @@ function getSequencePlacementOptions(root, exercisesById, groups) {
   if (!Array.isArray(root?.sequenceBlocks) || root.sequenceBlocks.length === 0) {
     return [];
   }
-  const eligibleAnchors = groups.filter((group) =>
-    getSequenceCanonicalCoverage(root, exercisesById, group) >=
-      getRequiredCanonicalCoverage(group));
   const primaryGroups = getSequencePrimaryGroups(root, exercisesById, groups);
-  const canClaimMultiplePrimarySlots = primaryGroups.length > 1 &&
-    primaryGroups.every((primaryGroup) => eligibleAnchors.some((anchor) =>
-      anchor.id === primaryGroup.id));
-  const options = eligibleAnchors.map((anchor) =>
-    canClaimMultiplePrimarySlots && primaryGroups.some((primaryGroup) =>
-      primaryGroup.id === anchor.id)
-      ? primaryGroups
-      : [anchor]);
-  return [...new Map(options.map((option) => [
-    option.map((group) => group.id).sort().join("|"),
-    [...option].sort((left, right) => left.order - right.order),
-  ])).values()];
+  return primaryGroups.length > 0 ? [primaryGroups] : [];
 }
 
 function getSelectedSequencePlacements(
@@ -1850,10 +2035,14 @@ export function isCompatibleWithWorkoutModifiers(exercise, modifiers) {
   const wallEquipment = getWallEquipment(normalized);
   return (exercise.wallRequired !== true ||
       wallEquipment !== WALL_EQUIPMENT.None) &&
+    ((normalized & WORKOUT_MODIFIERS.Insect) === 0 ||
+      exercise.primaryCanonicalGroup !== "PelvicFloorAndPerineum" &&
+      (exercise.primaryCanonicalGroup !== "IntrinsicHand" || wallEquipment !== WALL_EQUIPMENT.None)) &&
     (exercise.soleWallContactRequired !== true ||
       wallEquipment === WALL_EQUIPMENT.SolesMayTouch) &&
+    ((normalized & WORKOUT_MODIFIERS.Light) === 0 || exercise.muscularDemand === 0) &&
     MODIFIER_RULES.every((rule) =>
-    rule.isCompatibleForProfile(exercise, normalized));
+      rule.isReviewed(exercise) && rule.isCompatibleForProfile(exercise, normalized));
 }
 
 export function isWallPreferred(exercise, modifiers) {
@@ -1866,34 +2055,9 @@ export function getEquipmentPreferenceCount(exercise, modifiers) {
     Number(isMirrorPreferred(exercise, modifiers));
 }
 
-export function findWallRequiredCatalogDeficiencies(exercises) {
-  const movementCount = new Set(exercises
-    .filter((exercise) =>
-      exercise.wallRequired === true &&
-      exercise.soleWallContactRequired !== true)
-    .map(getSessionMovementId)).size;
-  return movementCount >= MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS
-    ? []
-    : [{
-        matchingSessionMovementCount: movementCount,
-        requiredSessionMovementCount:
-          MINIMUM_WALL_REQUIRED_SESSION_MOVEMENTS,
-      }];
-}
 
-export function findSoleWallContactRequiredCatalogDeficiencies(exercises) {
-  const movementCount = new Set(exercises
-    .filter((exercise) => exercise.soleWallContactRequired === true)
-    .map(getSessionMovementId)).size;
-  return movementCount >=
-      MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS
-    ? []
-    : [{
-        matchingSessionMovementCount: movementCount,
-        requiredSessionMovementCount:
-          MINIMUM_SOLE_WALL_CONTACT_REQUIRED_SESSION_MOVEMENTS,
-      }];
-}
+
+
 
 export function isMirrorRelevant(exercise) {
   return exercise.mirrorRelationship === EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly ||
@@ -1920,21 +2084,7 @@ export function isSelectableForWorkoutProfile(exercise, group, modifiers) {
     isCompatibleWithWorkoutModifiers(exercise, modifiers);
 }
 
-function isSequenceUnitEligible(
-  exercise,
-  exercisesById,
-  group,
-  modifiers,
-) {
-  if (!Array.isArray(exercise?.sequenceBlocks) ||
-      exercise.sequenceBlocks.length === 0 ||
-      getSequenceCanonicalCoverage(exercise, exercisesById, group) <
-      getRequiredCanonicalCoverage(group)) {
-    return false;
-  }
 
-  return isSequenceCompatible(exercise, exercisesById, modifiers);
-}
 
 function isSequenceCompatible(exercise, exercisesById, modifiers) {
   if (!Array.isArray(exercise?.sequenceBlocks) ||
@@ -1951,498 +2101,21 @@ function isSequenceCompatible(exercise, exercisesById, modifiers) {
   });
 }
 
-export function findWorkoutModifierPairCoverageDeficiencies(exercises) {
-  const exercisesById = new Map(exercises.map((exercise) =>
-    [exercise.id, exercise]));
-  const rulePairs = MODIFIER_RULES.flatMap((firstRule, firstIndex) =>
-    MODIFIER_RULES.slice(firstIndex + 1).map((secondRule) =>
-      ({ firstRule, secondRule })));
-  return [...RESOLUTIONS.entries()].flatMap(([minutes, resolution]) =>
-    resolution.groups.flatMap((group) =>
-      rulePairs.flatMap(({ firstRule, secondRule }) =>
-        getModifierRuleStateProfiles(firstRule).flatMap((firstState) =>
-          getModifierRuleStateProfiles(secondRule).map((secondState) => {
-            const profile = normalizeWorkoutModifiers(firstState | secondState);
-            const mirrorEquipment = getMirrorEquipment(profile);
-            // Mirror is a preference, not an eligibility filter for agnostic
-            // exercises. Broad-region coverage proves that enabling it has a
-            // material effect; fine buckets only prove workout viability.
-            const requiresMirrorRelevance =
-              minutes === BROAD_COVERAGE_RESOLUTION_MINUTES &&
-              mirrorEquipment !== MIRROR_EQUIPMENT.None;
-            return {
-              minutes,
-              groupId: group.id,
-              groupName: group.displayName,
-              firstModifier: firstRule.flag,
-              firstModifierEnabled: firstState !== WORKOUT_MODIFIERS.None,
-              secondModifier: secondRule.flag,
-              secondModifierEnabled: secondState !== WORKOUT_MODIFIERS.None,
-              mirrorEquipment,
-              requiredExerciseCount:
-                isWallFreeInsectFineCoverageException(group, profile)
-                  ? 0
-                  : getMinimumExercisesPerModifierPairStatePerGroup(minutes),
-              matchingExerciseCount: new Set(exercises
-                .filter((exercise) =>
-                  MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)) &&
-                  isSequenceUnitEligible(
-                    exercise,
-                    exercisesById,
-                    group,
-                    profile,
-                  ) &&
-                  (!requiresMirrorRelevance || isMirrorRelevant(exercise)))
-                .map(getSessionMovementId)).size,
-            };
-          })))
-        .filter((result) =>
-          result.matchingExerciseCount < result.requiredExerciseCount)));
-}
 
-export function findHardFloorCategoryCoverageDeficiencies(exercises) {
-  const exercisesById = new Map(exercises.map((exercise) =>
-    [exercise.id, exercise]));
-  const requiredCategories = [
-    EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible,
-    EXERCISE_HARD_FLOOR_COMPATIBILITY.Incompatible,
-  ];
-  const partnerStates = [
-    [WORKOUT_MODIFIERS.Insect, false],
-    [WORKOUT_MODIFIERS.Insect, true],
-    [WORKOUT_MODIFIERS.Silence, false],
-    [WORKOUT_MODIFIERS.Silence, true],
-    [WORKOUT_MODIFIERS.Mirror, false],
-  ];
 
-  return [...RESOLUTIONS.entries()].flatMap(([minutes, resolution]) =>
-    resolution.groups.flatMap((group) =>
-      requiredCategories.flatMap((hardFloorCompatibility) =>
-        partnerStates.map(([partnerModifier, partnerModifierEnabled]) => {
-          let profile = hardFloorCompatibility ===
-              EXERCISE_HARD_FLOOR_COMPATIBILITY.Compatible
-            ? WORKOUT_MODIFIERS.HardFloor
-            : WORKOUT_MODIFIERS.None;
-          if (partnerModifierEnabled) {
-            profile |= partnerModifier;
-          }
-          profile = normalizeWorkoutModifiers(profile);
 
-          const matchingExerciseCount = new Set(exercises
-            .filter((exercise) =>
-              exercise.hardFloorCompatibility === hardFloorCompatibility &&
-              isSequenceHardFloorCategory(
-                exercise,
-                exercisesById,
-                hardFloorCompatibility,
-              ) &&
-              isSequenceUnitEligible(
-                exercise,
-                exercisesById,
-                group,
-                profile,
-              ))
-            .map(getSessionMovementId)).size;
-          return {
-            minutes,
-            groupId: group.id,
-            groupName: group.displayName,
-            hardFloorCompatibility,
-            partnerModifier,
-            partnerModifierEnabled,
-            matchingExerciseCount,
-            requiredExerciseCount:
-              isWallFreeInsectFineCoverageException(group, profile) ||
-              isHardFloorCategoryFineCoverageException(
-                group,
-                hardFloorCompatibility,
-              )
-                ? 0
-                : getMinimumExercisesPerModifierPairStatePerGroup(minutes),
-          };
-        }))
-      .filter((result) =>
-        result.matchingExerciseCount < result.requiredExerciseCount)));
-}
 
-export function findMuscularDemandCoverageDeficiencies(exercises) {
-  const exercisesById = new Map(exercises.map((exercise) =>
-    [exercise.id, exercise]));
-  const requiredCategories = [
-    MINIMUM_MUSCULAR_DEMAND,
-    MAXIMUM_MUSCULAR_DEMAND,
-  ];
 
-  const minutes = BROAD_COVERAGE_RESOLUTION_MINUTES;
-  const resolution = RESOLUTIONS.get(minutes);
-  return resolution.groups.flatMap((group) =>
-      requiredCategories.flatMap((muscularDemand) =>
-        WORKOUT_MODIFIER_VALIDATION_PROFILES.map((profile) => {
-          const matchingExerciseCount = new Set(exercises
-            .filter((exercise) =>
-              isSequenceCompatible(
-                exercise,
-                exercisesById,
-                profile,
-              ) && isSequenceMuscularDemandCategoryForGroup(
-                exercise,
-                exercisesById,
-                group,
-                muscularDemand,
-              ))
-            .map(getSessionMovementId)).size;
-          return {
-            minutes,
-            groupId: group.id,
-            groupName: group.displayName,
-            muscularDemand,
-            profile,
-            matchingExerciseCount,
-            requiredExerciseCount:
-              MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
-          };
-        })))
-    .filter((result) =>
-      result.matchingExerciseCount < result.requiredExerciseCount);
-}
 
-function isSequenceHardFloorCategory(
-  exercise,
-  exercisesById,
-  hardFloorCompatibility,
-) {
-  return Array.isArray(exercise?.sequenceBlocks) &&
-    exercise.sequenceBlocks.length > 0 &&
-    [...new Set(exercise.sequenceBlocks.map((block) => block.exerciseId))]
-      .every((exerciseId) =>
-        exercisesById.get(exerciseId)?.hardFloorCompatibility ===
-          hardFloorCompatibility);
-}
 
-function isSequenceMuscularDemandCategoryForGroup(
-  exercise,
-  exercisesById,
-  group,
-  muscularDemand,
-) {
-  const members = [...new Set(exercise?.sequenceBlocks?.map((block) =>
-    block.exerciseId) ?? [])]
-    .map((exerciseId) => exercisesById.get(exerciseId))
-    .filter(Boolean);
-  if (members.length === 0) {
-    return false;
-  }
 
-  if (muscularDemand === MINIMUM_MUSCULAR_DEMAND) {
-    return members.every((member) =>
-      member.muscularDemand === MINIMUM_MUSCULAR_DEMAND) &&
-      members.some((member) =>
-        group.canonicalGroups.includes(member.primaryCanonicalGroup));
-  }
-  if (muscularDemand === MAXIMUM_MUSCULAR_DEMAND) {
-    return members.some((member) =>
-      member.muscularDemand === MAXIMUM_MUSCULAR_DEMAND &&
-      group.canonicalGroups.includes(member.primaryCanonicalGroup));
-  }
-  return false;
-}
 
-export function findMirrorCategoryDeficiencies(exercises) {
-  const categories = [
-    [EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly,
-      EXERCISE_MIRROR_COVERAGE.UpperBody],
-    [EXERCISE_MIRROR_RELATIONSHIP.MirrorOnly,
-      EXERCISE_MIRROR_COVERAGE.FullBody],
-    [EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
-      EXERCISE_MIRROR_COVERAGE.UpperBody],
-    [EXERCISE_MIRROR_RELATIONSHIP.BenefitsGreatly,
-      EXERCISE_MIRROR_COVERAGE.FullBody],
-    [EXERCISE_MIRROR_RELATIONSHIP.Agnostic,
-      EXERCISE_MIRROR_COVERAGE.None],
-  ];
-  return categories.map(([mirrorRelationship, minimumMirrorCoverage]) => ({
-    mirrorRelationship,
-    minimumMirrorCoverage,
-    matchingExerciseCount: new Set(exercises
-      .filter((exercise) => isMirrorMetadataReviewed(exercise) &&
-        exercise.mirrorRelationship === mirrorRelationship &&
-        exercise.minimumMirrorCoverage === minimumMirrorCoverage)
-      .map(getSessionMovementId)).size,
-    requiredExerciseCount: MINIMUM_EXERCISES_PER_MIRROR_CATEGORY,
-  })).filter((result) =>
-    result.matchingExerciseCount < result.requiredExerciseCount);
-}
 
-export function findWorkoutModifierMaterialityDeficiencies(exercises) {
-  const canonicalGroups = RESOLUTIONS.get(30).groups;
-  const exercisesById = new Map(exercises.map((exercise) =>
-    [exercise.id, exercise]));
-  const reviewedExercises = exercises.filter((exercise) =>
-    MODIFIER_RULES.every((rule) => rule.isReviewed(exercise)));
-  const materialityRules = MODIFIER_RULES.filter((rule) =>
-    rule.flag !== WORKOUT_MODIFIERS.UpperBodyClothing);
-  const rulePairs = materialityRules.flatMap((firstRule, firstIndex) =>
-    materialityRules.slice(firstIndex + 1).map((secondRule) =>
-      ({ firstRule, secondRule })));
-  const enabledStates = (rule) =>
-    getModifierRuleStateProfiles(rule).filter((state) =>
-      state !== WORKOUT_MODIFIERS.None);
-  const edges = materialityRules.flatMap((rule) =>
-    enabledStates(rule).map((enabledStateProfile) => ({
-      rule,
-      baseProfile: WORKOUT_MODIFIERS.None,
-      enabledStateProfile,
-    })));
-  for (const { firstRule, secondRule } of rulePairs) {
-    for (const firstState of enabledStates(firstRule)) {
-      for (const secondState of enabledStates(secondRule)) {
-        edges.push({
-          rule: firstRule,
-          baseProfile: secondState,
-          enabledStateProfile: firstState,
-        });
-        edges.push({
-          rule: secondRule,
-          baseProfile: firstState,
-          enabledStateProfile: secondState,
-        });
-      }
-    }
-  }
 
-  return edges.map(({ rule, baseProfile, enabledStateProfile }) => {
-    const enabledModifier = rule.flag;
-    const enabledProfile = normalizeWorkoutModifiers(
-      baseProfile | enabledStateProfile,
-    );
-    const beforeExerciseIds = new Set(reviewedExercises
-      .filter((exercise) => canonicalGroups.some((group) =>
-        isSequenceUnitEligible(
-          exercise,
-          exercisesById,
-          group,
-          baseProfile,
-        )))
-      .map(getSessionMovementId));
-    const afterExerciseIds = new Set(reviewedExercises
-      .filter((exercise) => canonicalGroups.some((group) =>
-        isSequenceUnitEligible(
-          exercise,
-          exercisesById,
-          group,
-          enabledProfile,
-        )))
-      .map(getSessionMovementId));
-    const isMirror = enabledModifier === WORKOUT_MODIFIERS.Mirror;
-    const materialExerciseIds = isMirror
-      ? new Set(reviewedExercises
-          .filter((exercise) =>
-            isMirrorPreferred(exercise, enabledProfile) &&
-              canonicalGroups.some((group) =>
-              isSequenceUnitEligible(
-                exercise,
-                exercisesById,
-                group,
-                enabledProfile,
-              )))
-          .map(getSessionMovementId))
-      : new Set([...beforeExerciseIds].filter((exerciseId) =>
-          !afterExerciseIds.has(exerciseId)));
-    const requiredMaterialExerciseCount = Math.max(
-      MINIMUM_MODIFIER_MATERIALITY_EXERCISES,
-      Math.ceil(
-        (isMirror ? afterExerciseIds.size : beforeExerciseIds.size) *
-          MINIMUM_MODIFIER_MATERIALITY_PERCENT / 100,
-      ),
-    );
-    const affectedGroupCount = canonicalGroups.filter((group) => {
-      if (isMirror) {
-        return reviewedExercises.some((exercise) =>
-          isMirrorPreferred(exercise, enabledProfile) &&
-          isSequenceUnitEligible(
-            exercise,
-            exercisesById,
-            group,
-            enabledProfile,
-          ));
-      }
-      const baselineMovementIds = new Set(reviewedExercises
-        .filter((exercise) =>
-          isSequenceUnitEligible(
-            exercise,
-            exercisesById,
-            group,
-            baseProfile,
-          ))
-        .map(getSessionMovementId));
-      const modifiedMovementIds = new Set(reviewedExercises
-        .filter((exercise) =>
-          isSequenceUnitEligible(
-            exercise,
-            exercisesById,
-            group,
-            enabledProfile,
-          ))
-        .map(getSessionMovementId));
-      return [...baselineMovementIds].some((movementId) =>
-        !modifiedMovementIds.has(movementId));
-    }).length;
-    const requiredAffectedGroupCount = Math.ceil(
-      canonicalGroups.length * MINIMUM_MODIFIER_MATERIALITY_GROUP_PERCENT / 100,
-    );
 
-    return {
-      baseProfile,
-      enabledModifier,
-      modifiedProfile: enabledProfile,
-      baselineExerciseCount: beforeExerciseIds.size,
-      modifiedExerciseCount: afterExerciseIds.size,
-      materialExerciseCount: materialExerciseIds.size,
-      requiredMaterialExerciseCount,
-      affectedGroupCount,
-      requiredAffectedGroupCount,
-    };
-  }).filter((result) =>
-    result.materialExerciseCount < result.requiredMaterialExerciseCount ||
-    result.affectedGroupCount < result.requiredAffectedGroupCount);
-}
 
-export function getMaximumDistinctLineupSize(
-  exercises,
-  groups,
-  modifiers,
-  workoutMinutes = groups.length,
-) {
-  if (!Number.isInteger(workoutMinutes) || workoutMinutes < groups.length) {
-    throw new RangeError("Workout minutes must fit every workout group.");
-  }
-  const exercisesById = new Map(exercises.map((exercise) =>
-    [exercise.id, exercise]));
-  const candidateOneBlockMovementsByGroupId = new Map(groups.map((group) =>
-    [group.id, new Set()]));
-  for (const exercise of exercises) {
-    if (exercise.sequenceBlocks?.length !== 1 ||
-        !isSequenceCompatible(exercise, exercisesById, modifiers)) {
-      continue;
-    }
-    const movementId = getSessionMovementId(exercise);
-    for (const option of getSequencePlacementOptions(
-      exercise,
-      exercisesById,
-      groups,
-    )) {
-      if (option.length === 1) {
-        candidateOneBlockMovementsByGroupId.get(option[0].id)?.add(movementId);
-      }
-    }
-  }
-  const candidateOneBlockMovementsByGroup = groups
-    .map((group) => [...candidateOneBlockMovementsByGroupId.get(group.id)])
-    .sort((left, right) => left.length - right.length);
-  const assignedOneBlockGroupByMovement = new Map();
-  const tryAssignOneBlockMovement = (groupIndex, visitedMovementIds) => {
-    for (const movementId of candidateOneBlockMovementsByGroup[groupIndex]) {
-      if (visitedMovementIds.has(movementId)) {
-        continue;
-      }
-      visitedMovementIds.add(movementId);
-      const assignedGroupIndex = assignedOneBlockGroupByMovement.get(movementId);
-      if (assignedGroupIndex === undefined ||
-          tryAssignOneBlockMovement(assignedGroupIndex, visitedMovementIds)) {
-        assignedOneBlockGroupByMovement.set(movementId, groupIndex);
-        return true;
-      }
-    }
-    return false;
-  };
-  let oneBlockLineupSize = 0;
-  for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
-    if (tryAssignOneBlockMovement(groupIndex, new Set())) {
-      oneBlockLineupSize += 1;
-    }
-  }
-  if (oneBlockLineupSize === groups.length) {
-    return groups.length;
-  }
 
-  const groupIndexes = new Map(groups.map((group, index) => [group.id, index]));
-  const candidates = [];
-  for (const exercise of exercises.filter((candidate) =>
-    isSequenceCompatible(candidate, exercisesById, modifiers))) {
-    for (const placement of getSequencePlacementOptions(
-      exercise,
-      exercisesById,
-      groups,
-    )) {
-      if (exercise.sequenceBlocks.length + groups.length - placement.length >
-          workoutMinutes) {
-        continue;
-      }
-      let coverageMask = 0n;
-      const utilitiesByGroup = Array(groups.length).fill(0n);
-      for (const group of placement) {
-        const groupIndex = groupIndexes.get(group.id);
-        coverageMask |= 1n << BigInt(groupIndex);
-        utilitiesByGroup[groupIndex] = 1n;
-      }
-      candidates.push({
-        exerciseId: exercise.id,
-        movementId: getSessionMovementId(exercise),
-        coverageMask,
-        blockCount: exercise.sequenceBlocks.length,
-        utilitiesByGroup,
-        tieOrder: exercise.id,
-      });
-    }
-  }
 
-  // One empty one-block placement per group makes this an exact maximum-
-  // coverage audit while still using the production atomic-capacity solver.
-  for (let groupIndex = 0; groupIndex < groups.length; groupIndex += 1) {
-    candidates.push({
-      exerciseId: -groupIndex - 1,
-      movementId: -groupIndex - 1,
-      coverageMask: 1n << BigInt(groupIndex),
-      blockCount: 1,
-      utilitiesByGroup: Array(groups.length).fill(0n),
-      tieOrder: Number.MAX_SAFE_INTEGER - groupIndex,
-    });
-  }
-
-  const solution = solveAtomicSequenceLineup(
-    groups.length,
-    workoutMinutes,
-    candidates,
-  );
-  if (!solution) {
-    throw new Error("Atomic lineup validation could not place empty muscle slots.");
-  }
-  return [...solution.exerciseIdByGroupIndex.values()]
-    .filter((exerciseId) => exerciseId > 0).length;
-}
-
-export function findWorkoutProfileLineupDeficiencies(exercises) {
-  return SUPPORTED_MINUTES.flatMap((minutes) => {
-    return WORKOUT_MODIFIER_VALIDATION_PROFILES
-      .map((profile) => {
-        const groups = getResolution(minutes > 30 ? 30 : minutes).groups
-          .filter((group) => isSelectionGroupAvailable(group, profile));
-        return {
-          minutes,
-          profile,
-          maximumDistinctExerciseCount: getMaximumDistinctLineupSize(
-            exercises,
-            groups,
-            profile,
-            minutes,
-          ),
-          requiredDistinctExerciseCount: groups.length,
-        };
-      })
-      .filter((result) =>
-        result.maximumDistinctExerciseCount < result.requiredDistinctExerciseCount);
-  });
-}
 
 export function evaluateRecoveryLightMode(
   exercises,
@@ -2523,10 +2196,7 @@ function isPrimaryMuscleWithinModerateRecovery(
   );
 }
 
-export function getRequiredDistinctLineupSize(groups, modifiers) {
-  return groups.filter((group) =>
-    isSelectionGroupAvailable(group, modifiers)).length;
-}
+
 
 function solveMaximumWeightAssignment(utilities, allowed, maximumUtility) {
   const groupCount = utilities.length;
@@ -2971,9 +2641,9 @@ export function getMovementPresentation(group, phase) {
 }
 
 export function getExerciseVideoPath(exercise, mediaSegment = "Full") {
-  return mediaSegment === "Full"
-    ? exercise.video
-    : `exercise_direction_videos/exercise_${formatExerciseId(exercise.id)}.mp4`;
+  return mediaSegment === "SecondDirection"
+    ? `exercise_direction_videos/exercise_${formatExerciseId(exercise.id)}.mp4`
+    : exercise.video;
 }
 
 export function getHoldFramePath(exercise) {
@@ -3021,6 +2691,7 @@ export function createDefaultState() {
     pendingRestKept: false,
     lastWorkoutMinutes: 10,
     lastWorkoutModifiers: DEFAULT_WORKOUT_MODIFIERS,
+    workoutSetupReviewRequired: false,
     activeWorkoutMinutes: 0,
     activeWorkoutModifiers: WORKOUT_MODIFIERS.None,
     activeWorkoutIsLightDay: false,
@@ -3065,6 +2736,7 @@ function normalizeStateShape(raw) {
   state.activeWorkoutModifiers = raw.activeWorkoutModifiers === undefined
     ? state.activeWorkoutModifiers
     : normalizeWorkoutModifiers(raw.activeWorkoutModifiers);
+  state.workoutSetupReviewRequired = raw.workoutSetupReviewRequired === true;
   state.activeWorkoutIsLightDay = raw.activeWorkoutIsLightDay === true;
   state.workoutCompleted = raw.workoutCompleted === true;
   state.completionAcknowledged = raw.completionAcknowledged === true;
@@ -3756,6 +3428,103 @@ export function inferLegacyCompletedTrainingDays(
   return inferred;
 }
 
+function getPrimaryTargetRecency(state, now) {
+  const lastWork = new Map();
+  for (const block of [...state.workoutHistory, state.activeWorkoutSession]
+    .filter(Boolean).flatMap((entry) => entry.blocks ?? [])) {
+    if (block.completedAtUnixMilliseconds > 0 && block.completedAtUnixMilliseconds <= now)
+      lastWork.set(block.primaryCanonicalGroup, Math.max(lastWork.get(block.primaryCanonicalGroup) ?? 0,
+        block.completedAtUnixMilliseconds));
+  }
+  return lastWork;
+}
+
+export class WorkoutUnavailableError extends Error {
+  constructor(availability) {
+    super(availability.canStart ? "Limited workout scope needs confirmation." :
+      "No complete workout fits this setup and duration.");
+    this.availability = availability;
+  }
+}
+
+export function findCatalogContractViolations(exercises) {
+  const violations = [];
+  if (!isModifierMetadataComplete(exercises)) violations.push("Unreviewed modifier metadata");
+  if (!isSessionMovementMetadataValid(exercises)) violations.push("Invalid session movement metadata");
+  for (const primary of getResolution(30).groups.flatMap((group) => group.canonicalGroups)) {
+    if (!exercises.some((exercise) => exercise.primaryCanonicalGroup === primary))
+      violations.push(`No primary movement for ${primary}`);
+  }
+  for (const exercise of exercises) {
+    if (!exercise.onlyFeetTouchGround || !exercise.shoeAgnostic || exercise.maxSpaceMeters > 2 ||
+        !["None", "Mirror"].includes(exercise.equipment))
+      violations.push(`Exercise ${exercise.id} violates the physical admission contract`);
+  }
+  return violations;
+}
+
+export function getWorkoutAvailability(exercises, minutes, modifiers) {
+  if (!SUPPORTED_MINUTES.includes(minutes)) throw new RangeError("Unsupported workout duration.");
+  const byId = new Map(exercises.map((exercise) => [exercise.id, exercise]));
+  const roots = exercises.filter((root) => root.sequenceBlocks?.length > 0 &&
+    root.sequenceBlocks.length <= minutes && isSequenceCompatible(root, byId, modifiers));
+  const primaries = new Set(roots.flatMap((root) => getSequenceMembers(root, byId))
+    .map((member) => member.primaryCanonicalGroup));
+  const broadGroups = getResolution(3).groups;
+  const regions = broadGroups.map((group) => ({
+    name: group.displayName,
+    availableTargets: group.canonicalGroups.filter((primary) => primaries.has(primary)).length,
+    totalTargets: group.canonicalGroups.length,
+  }));
+  const requestedResolution = Math.min(minutes, 30);
+  const canFill = (groups) => {
+    const candidates = roots.flatMap((root) => getSequencePlacementOptions(root, byId, groups)
+      .map((option) => {
+        let coverageMask = 0n;
+        const utilitiesByGroup = Array(groups.length).fill(0n);
+        for (const group of option) {
+          const index = groups.indexOf(group);
+          coverageMask |= 1n << BigInt(index);
+          utilitiesByGroup[index] = 1n;
+        }
+        return { exerciseId: root.id, movementId: getSessionMovementId(root), coverageMask,
+          blockCount: root.sequenceBlocks.length, utilitiesByGroup, tieOrder: root.id };
+      }));
+    return candidates.length > 0 && solveAtomicSequenceLineup(groups.length, minutes, candidates) !== null;
+  };
+  const result = (resolutionMinutes, groups, missingGroups, requiresAcceptance) => ({
+    minutes, resolutionMinutes, groups,
+    missingGroups: getResolution(30).groups.filter((group) =>
+      !group.canonicalGroups.some((primary) => primaries.has(primary)) ||
+      !groups.some((included) => included.canonicalGroups.some((primary) => group.canonicalGroups.includes(primary))))
+      .map((group) => group.displayName),
+    regions: regions.map((region, index) => ({...region,
+      included: groups.some((group) => group.canonicalGroups.some((primary) =>
+        broadGroups[index].canonicalGroups.includes(primary))),
+    })), requiresAcceptance,
+    canStart: groups.length > 0,
+  });
+  for (const resolution of [...RESOLUTIONS.keys()].filter((value) => value <= requestedResolution)
+    .sort((left, right) => right - left)) {
+    const requested = getResolution(resolution).groups;
+    const available = requested.filter((group) => roots.some((root) =>
+      getSequencePlacementOptions(root, byId, requested).some((option) => option.includes(group))));
+    if (available.length > 0 && canFill(available)) {
+      return result(resolution, available, requested.filter((group) => !available.includes(group))
+        .map((group) => group.displayName),
+      resolution !== requestedResolution || available.length !== requested.length);
+    }
+  }
+  // At most seven body-region subsets, independent of the number of modifiers.
+  for (const mask of [1, 2, 3, 4, 5, 6, 7].sort((a, b) =>
+    countMaskBits(BigInt(b)) - countMaskBits(BigInt(a)))) {
+    const groups = broadGroups.filter((_, index) => (mask & (1 << index)) !== 0);
+    if (canFill(groups)) return result(3, groups,
+      broadGroups.filter((group) => !groups.includes(group)).map((group) => group.displayName), true);
+  }
+  return result(requestedResolution, [], broadGroups.map((group) => group.displayName), true);
+}
+
 export class WorkoutSession {
   constructor(
     exercises,
@@ -3767,6 +3536,7 @@ export class WorkoutSession {
       throw new TypeError("Exercise catalog must be an array.");
     }
     this.exercises = exercises;
+    this.availabilityCache = new Map();
     this.exercisesById = new Map(exercises.map((exercise) => [exercise.id, exercise]));
     if (this.exercisesById.size !== exercises.length) {
       throw new Error("Exercise catalog contains duplicate IDs.");
@@ -3845,6 +3615,41 @@ export class WorkoutSession {
   }
 
   initialize() {
+    const upgradingActivePlan = this.loadedStateVersion < CURRENT_WORKOUT_STATE_VERSION &&
+      this.state.activeWorkoutSession && !this.state.workoutCompleted;
+    this.readingLegacyLightPlan = this.loadedStateVersion < DOMINANT_LIGHT_MODE_STATE_VERSION &&
+      this.state.activeWorkoutMinutes > 0 && (this.state.activeWorkoutModifiers & WORKOUT_MODIFIERS.Light) !== 0;
+    try {
+      if (upgradingActivePlan && !this.canRetainPrimaryPlan()) this.preserveHistoryForSetupReview();
+      this.initializeCore();
+    } catch (error) {
+      if (!upgradingActivePlan || !this.state.activeWorkoutSession) throw error;
+      this.preserveHistoryForSetupReview();
+      this.initializeCore();
+    } finally { this.readingLegacyLightPlan = false; }
+  }
+
+  canRetainPrimaryPlan() {
+    if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)) return false;
+    const resolution = RESOLUTIONS.get(Math.min(this.state.activeWorkoutMinutes, 30));
+    if (this.getAvailability(this.state.activeWorkoutMinutes, this.state.activeWorkoutModifiers).resolutionMinutes !== resolution.minutes)
+      return false;
+    return resolution.groups.every((group) => {
+      const id = this.state.selectedExerciseIds[this.getSelectionStorageKey(group.id)];
+      if (!id) return true;
+      const root = this.exercisesById.get(id);
+      return root && this.getSequencePlacementOptions(root, resolution.groups).some((option) => option.some((owned) => owned.id === group.id));
+    });
+  }
+
+  preserveHistoryForSetupReview() {
+    this.finalizeActiveWorkoutSession("Interrupted");
+    this.resetTransientState();
+    this.state.workoutSetupReviewRequired = true;
+    this.readingLegacyLightPlan = false;
+  }
+
+  initializeCore() {
     const currentUnixTimeMilliseconds = this.getCurrentUnixTimeMilliseconds();
     if (this.loadedStateVersion < LEGACY_TRAINING_DAY_INFERENCE_STATE_VERSION) {
       this.migrateLegacyCompletedTrainingDays(currentUnixTimeMilliseconds);
@@ -3913,6 +3718,7 @@ export class WorkoutSession {
     if (shouldMigrateActiveLightLineup) {
       this.migrateActiveLightLineup();
     } else {
+      this.readingLegacyLightPlan = false;
       this.repairActiveLineup(
         !shouldMigratePreparedLightDay &&
           !shouldMigratePreparedDominantLightLineup,
@@ -3943,9 +3749,26 @@ export class WorkoutSession {
     }
   }
 
-  startWorkout(minutes, modifiers = DEFAULT_WORKOUT_MODIFIERS) {
+  getAvailability(minutes, modifiers) {
+    const key = `${minutes}:${normalizeWorkoutModifiers(modifiers)}`;
+    if (!this.availabilityCache.has(key)) {
+      this.availabilityCache.set(key, getWorkoutAvailability(this.exercises, minutes, modifiers));
+    }
+    return this.availabilityCache.get(key);
+  }
+
+  getWorkoutAvailability(minutes, modifiers) {
+    if (this.isAutomaticLightDayDue()) modifiers |= WORKOUT_MODIFIERS.Light;
+    return this.getAvailability(minutes, modifiers);
+  }
+
+  startWorkout(minutes, modifiers = DEFAULT_WORKOUT_MODIFIERS, acceptLimitedCoverage = false) {
+    const availability = this.getWorkoutAvailability(minutes, modifiers);
+    if (!availability.canStart || availability.requiresAcceptance && !acceptLimitedCoverage) {
+      throw new WorkoutUnavailableError(availability);
+    }
     this.prepareWorkout(minutes, modifiers);
-    this.activatePreparedWorkout();
+    this.activatePreparedWorkout(acceptLimitedCoverage);
   }
 
   prepareWorkout(minutes, modifiers = DEFAULT_WORKOUT_MODIFIERS) {
@@ -3955,6 +3778,9 @@ export class WorkoutSession {
     if (this.state.activeWorkoutMinutes !== 0) {
       throw new Error("A workout is already active.");
     }
+
+    const availability = this.getWorkoutAvailability(minutes, modifiers);
+    if (!availability.canStart) throw new WorkoutUnavailableError(availability);
 
     this.normalizeSlotPreferences();
     const workoutStartedAtUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
@@ -3992,15 +3818,17 @@ export class WorkoutSession {
     // rejection feedback is stored by workout phase.
     this.state.nextWorkoutExcludedExerciseIds = [];
     this.carrySlotPreferencesForward();
-    this.repairActiveLineup(
-      (modifiers & WORKOUT_MODIFIERS.Light) === 0,
-    );
+    this.repairActiveLineup(false);
     this.rebalanceNewExercisesByMuscleBalance();
     this.setActiveLongWorkoutAllocation();
     this.reconcileLineupWithScheduledPhases();
   }
 
-  activatePreparedWorkout() {
+  activatePreparedWorkout(acceptLimitedCoverage = false) {
+    const availability = this.getWorkoutAvailability(this.state.activeWorkoutMinutes, this.state.activeWorkoutModifiers);
+    if (!availability.canStart || availability.requiresAcceptance && !acceptLimitedCoverage) {
+      throw new WorkoutUnavailableError(availability);
+    }
     if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes) ||
         this.state.activeWorkoutSession ||
         Object.keys(this.state.outcomes).length !== 0 ||
@@ -4038,6 +3866,7 @@ export class WorkoutSession {
     const priorRounds = this.getActiveGroups();
     const currentRound = this.getNextGroup();
     if (!currentRound) {
+      this.readingLegacyLightPlan = false;
       this.repairActiveLineup();
       this.normalizeActiveLongWorkoutAllocation();
       return;
@@ -4073,6 +3902,7 @@ export class WorkoutSession {
       ],
     ));
     const protectedBaseGroupIds = new Set(lockedExerciseIdsByGroup.keys());
+    this.readingLegacyLightPlan = false;
     const selectionGroups = this.getSelectionGroups();
     const replannedLineup = this.chooseBestDistinctLineup(
       selectionGroups,
@@ -4103,6 +3933,10 @@ export class WorkoutSession {
     ));
 
     const replannedRounds = this.getActiveGroups();
+    if (replannedRounds.some((round) => !Object.hasOwn(this.state.outcomes, round.id) &&
+        !(preserveCompletedCurrentSelection && round.id === currentRound.id) &&
+        !isCompatibleWithWorkoutModifiers(this.getSelectedExercise(round), this.state.activeWorkoutModifiers)))
+      throw new WorkoutUnavailableError({...this.getAvailability(this.state.activeWorkoutMinutes, this.state.activeWorkoutModifiers), groups: [], canStart: false});
     const changedLockedSelection = [...lockedExerciseIdsByGroup].some(
       ([groupId, exerciseId]) => this.state.selectedExerciseIds[
         this.getSelectionStorageKey(
@@ -4227,7 +4061,7 @@ export class WorkoutSession {
       protectedBaseGroupIds,
     );
     const retainedUnavailableSelectionGroupIds = selectionGroups
-      .filter((group) => !isSelectionGroupAvailable(group, modifiers))
+      .filter((group) => !this.getAvailability(this.state.activeWorkoutMinutes, modifiers).groups.some((available) => available.id === group.id))
       .map((group) => group.id);
     const currentSelectionGroupAvailable = selectionGroups.some((group) =>
       group.id === getSelectionKey(currentRound));
@@ -4279,6 +4113,10 @@ export class WorkoutSession {
       ));
 
       const replannedRounds = this.getActiveGroups();
+    if (replannedRounds.some((round) => !Object.hasOwn(this.state.outcomes, round.id) &&
+        !(preserveCompletedCurrentSelection && round.id === currentRound.id) &&
+        !isCompatibleWithWorkoutModifiers(this.getSelectedExercise(round), this.state.activeWorkoutModifiers)))
+      throw new WorkoutUnavailableError({...this.getAvailability(this.state.activeWorkoutMinutes, this.state.activeWorkoutModifiers), groups: [], canStart: false});
       const replannedCurrentPlacement = this.getSelectedSequencePlacements()
         .find((placement) => placement.coveredGroups.some((group) =>
           group.id === getSelectionKey(currentRound)));
@@ -4465,14 +4303,16 @@ export class WorkoutSession {
     modifiers = this.state.activeWorkoutModifiers,
     retainedSelectionGroupIds = this.state.activeModifierRetainedSelectionGroupIds,
   ) {
+    if (this.readingLegacyLightPlan && SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes))
+      return RESOLUTIONS.get(Math.min(this.state.activeWorkoutMinutes, 30)).groups.filter((group) =>
+        isSelectionGroupAvailable(group, modifiers));
     const retained = new Set(retainedSelectionGroupIds ?? []);
     return SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)
-      ? getResolution(
-          this.state.activeWorkoutMinutes > 30 ? 30 : this.state.activeWorkoutMinutes,
-        ).groups.filter((group) => isSelectionGroupAvailable(
-          group,
-          modifiers,
-        ) || retained.has(group.id))
+      ? [...new Map([
+          ...this.getAvailability(this.state.activeWorkoutMinutes, modifiers).groups,
+          ...[...RESOLUTIONS.values()].flatMap((resolution) => resolution.groups)
+            .filter((group) => retained.has(group.id)),
+        ].map((group) => [group.id, group])).values()].sort((a, b) => a.order - b.order)
       : [];
   }
 
@@ -4832,13 +4672,10 @@ export class WorkoutSession {
     }
 
     try {
-      const pendingExercise = this.getSelectedExercise(pendingGroup);
-      return isCompatibleWithWorkoutModifiers(
-          pendingExercise,
-          this.state.activeWorkoutModifiers,
-        ) && this.isAssignedToGroup(pendingExercise, pendingGroup)
-        ? pendingGroup
-        : null;
+      // The selected root and exact sequence block are validated together.
+      // An integration member need not independently target this fine slot.
+      this.getSelectedExercise(pendingGroup);
+      return pendingGroup;
     } catch {
       return null;
     }
@@ -5284,11 +5121,7 @@ export class WorkoutSession {
     );
     const protectedSelectionGroupId =
       this.state.activeModifierProtectedSelectionGroupId;
-    const validGroupIds = new Set(getResolution(
-      this.state.activeWorkoutMinutes > 30
-        ? 30
-        : this.state.activeWorkoutMinutes,
-    ).groups.map((group) => group.id));
+    const validGroupIds = new Set(ALL_GROUPS.keys());
     this.state.activeModifierRetainedSelectionGroupIds =
       this.state.activeModifierRetainedSelectionGroupIds.filter((groupId) => {
         const selectedRootId = this.state.selectedExerciseIds[
@@ -5498,6 +5331,10 @@ export class WorkoutSession {
     const freshHardMuscleRanks = new Map(
       freshHardMuscleTimestamps.map((timestamp, rank) => [timestamp, rank]),
     );
+    const lastTargetWork = getPrimaryTargetRecency(this.state, selectionTimeUnixMilliseconds);
+    const targetAgeRanks = new Map([...new Set(this.exercises.map((exercise) =>
+      lastTargetWork.get(exercise.primaryCanonicalGroup) ?? 0))]
+      .sort((a, b) => b - a).map((time, rank) => [time, rank]));
     const maximumCoverage = Math.max(...groups.map((group) => group.canonicalGroups.length));
     // These are exact lexicographic assignment dimensions, not hardness
     // points. BigInt keeps arbitrary saved-score histories lossless without
@@ -5512,6 +5349,7 @@ export class WorkoutSession {
     const primaryWeight = addPriorityDimension(1);
     const equipmentPreferenceWeight = addPriorityDimension(2);
     const currentSelectionWeight = addPriorityDimension(1);
+    const targetAgeWeight = addPriorityDimension(Math.max(0, targetAgeRanks.size - 1));
     const hardMuscleAgeWeight = addPriorityDimension(
       Math.max(0, freshHardMuscleRanks.size - 1),
     );
@@ -5573,6 +5411,9 @@ export class WorkoutSession {
         !isRecoveringModerate;
       const isCurrentSelection = includeSlotPreference &&
         currentExerciseIds.get(evaluationGroup.id) === exercise.id;
+      const lastTargetTime = Math.max(0, ...this.getSequenceExercises(exercise)
+        .filter((member) => evaluationGroup.canonicalGroups.includes(member.primaryCanonicalGroup))
+        .map((member) => lastTargetWork.get(member.primaryCanonicalGroup) ?? 0));
       return (allowSavedSelectionException && isCurrentSelection
         ? preservedActiveSelectionWeight
         : 0n) +
@@ -5592,6 +5433,7 @@ export class WorkoutSession {
           ? freshHardWeight
           : 0n) +
         BigInt(hardMuscleAgeRank) * hardMuscleAgeWeight +
+        BigInt(targetAgeRanks.get(lastTargetTime) ?? 0) * targetAgeWeight +
         (isCurrentSelection ? currentSelectionWeight : 0n) +
         BigInt(getEquipmentPreferenceCount(selectionExercise, modifiers)) *
           equipmentPreferenceWeight +
@@ -5821,8 +5663,8 @@ export class WorkoutSession {
   createDistinctLineupError(groups, movementCount) {
     return new Error(
       `No distinct exercise lineup exists for the active workout profile across ` +
-      `${groups.length} groups and ${movementCount} eligible session movements with at least ` +
-      `${MINIMUM_CANONICAL_COVERAGE_PERCENT}% coverage.`,
+      `${groups.length} groups and ${movementCount} eligible session movements ` +
+      `that fit the duration and selected constraints.`,
     );
   }
 
@@ -5837,7 +5679,7 @@ export class WorkoutSession {
   }
 
   isCompatibleWithModifiers(exercise, modifiers) {
-    return isCompatibleWithWorkoutModifiers(exercise, modifiers);
+    return isCompatibleWithWorkoutModifiers(exercise, this.readingLegacyLightPlan ? modifiers & ~WORKOUT_MODIFIERS.Light : modifiers);
   }
 
   getSequenceRoot(exercise) {
@@ -6642,6 +6484,10 @@ export class WorkoutSession {
     }
     const selectionTimeUnixMilliseconds = this.getCurrentUnixTimeMilliseconds();
     const allocationCache = new Map();
+    const lastTargetWork = getPrimaryTargetRecency(this.state, selectionTimeUnixMilliseconds);
+    const targetTime = (root, group) => Math.max(0, ...this.getSequenceExercises(root)
+      .filter((member) => group.canonicalGroups.includes(member.primaryCanonicalGroup))
+      .map((member) => lastTargetWork.get(member.primaryCanonicalGroup) ?? 0));
     const rebalanceRoots = this.exercises.filter((exercise) =>
       exercise.sequenceBlocks.length > 0 &&
       this.getSequenceRoot(exercise).id === exercise.id &&
@@ -6801,6 +6647,8 @@ export class WorkoutSession {
           if (!preservesScores) {
             continue;
           }
+          if (option.some((group) => targetTime(candidate, group) >
+              targetTime(placementByGroupId.get(group.id).root, group))) continue;
           let candidateBalance;
           const removedBlockCount = removedPlacements.reduce(
             (total, placement) =>
@@ -7735,8 +7583,13 @@ export class WorkoutSession {
         }
       }
     }
-    const shouldDiscardReusedExerciseKeeps =
-      this.state.catalogRevision < REUSED_SHY_AUDIT_CATALOG_REVISION;
+    const reusedExerciseIds = new Set([
+      ...(this.state.catalogRevision < REUSED_SHY_AUDIT_CATALOG_REVISION
+        ? REUSED_SHY_AUDIT_EXERCISE_IDS : []),
+      ...(this.state.catalogRevision < 73
+        ? SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(73) : []),
+    ]);
+    const shouldDiscardReusedExerciseKeeps = reusedExerciseIds.size > 0;
     const semanticallyInvalidSelectionStorageKeys =
       trainingClaimChangedExerciseIds.size > 0
         ? new Set(Object.entries(this.state.selectedExerciseIds)
@@ -7744,10 +7597,7 @@ export class WorkoutSession {
             const { selectionGroupId } =
               this.parseSelectionStorageKey(selectionStorageKey);
             return ALL_GROUPS.has(selectionGroupId) &&
-              this.isTrainingClaimAffectedRoot(
-              rootExerciseId,
-              trainingClaimChangedExerciseIds,
-            ) && !this.isValidPreferenceRoot(
+              !this.isValidPreferenceRoot(
               selectionGroupId,
               rootExerciseId,
             );
@@ -7781,7 +7631,8 @@ export class WorkoutSession {
         .filter(([selectionStorageKey, exerciseId]) =>
           semanticallyInvalidSelectionStorageKeys.has(selectionStorageKey) ||
           changedExerciseIds.has(exerciseId) ||
-          REUSED_SHY_AUDIT_EXERCISE_IDS.has(exerciseId) ||
+          (shouldDiscardReusedExerciseKeeps &&
+            reusedExerciseIds.has(exerciseId)) ||
           (shyAuditInvalidatedExerciseIds.has(exerciseId) &&
             (this.parseSelectionStorageKey(selectionStorageKey).modifiers &
               WORKOUT_MODIFIERS.Shy) !== 0) ||
@@ -7841,9 +7692,9 @@ export class WorkoutSession {
       )) {
         const retainedRootIds = uniquePositiveIntegers(rootIds).filter((rootId) => {
           const root = this.exercisesById.get(rootId);
-          return !REUSED_SHY_AUDIT_EXERCISE_IDS.has(rootId) &&
+          return !reusedExerciseIds.has(rootId) &&
             !root?.sequenceBlocks.some((block) =>
-              REUSED_SHY_AUDIT_EXERCISE_IDS.has(block.exerciseId));
+              reusedExerciseIds.has(block.exerciseId));
         });
         if (retainedRootIds.length === 0) {
           delete this.state.keptExerciseRootIdsBySelectionGroupId[selectionGroupId];
@@ -7853,7 +7704,7 @@ export class WorkoutSession {
         }
       }
       this.state.lastKeptExerciseIds = this.state.lastKeptExerciseIds.filter(
-        (exerciseId) => !REUSED_SHY_AUDIT_EXERCISE_IDS.has(exerciseId),
+        (exerciseId) => !reusedExerciseIds.has(exerciseId),
       );
     }
 
@@ -8196,11 +8047,19 @@ function isApprovedIdentityPreservingNameChange(exerciseId, previousIdentity, cu
   if (!currentExercise) {
     return false;
   }
+  // These reviewed replacements introduce a different action at the same ID.
+  // Ordinary anatomy and clarity corrections continue to preserve feedback.
+  if (SCOPED_SCORE_INVALIDATIONS_BY_REVISION.get(73).has(exerciseId)) {
+    return false;
+  }
   const separatorIndex = previousIdentity.indexOf("\u001f");
   if (separatorIndex < 0) {
     return false;
   }
   const previousName = previousIdentity.slice(0, separatorIndex);
+  if (DISCARDED_EXERCISE_IDENTITY_NAMES.get(exerciseId)?.has(previousName)) {
+    return false;
+  }
   const previousVideo = previousIdentity.slice(separatorIndex + 1);
   if (previousVideo !== currentExercise.video) {
     return false;

@@ -1,0 +1,3020 @@
+{
+  "id": 123,
+  "fixture": {
+    "name": "Lateral Lunge",
+    "group": {
+      "id": "r30.medial-deep-knee-extensors.set1.block1",
+      "displayName": "Medial and deep knee extensors",
+      "order": 36,
+      "canonicalGroups": [
+        "MedialAndDeepKneeExtensors"
+      ],
+      "selectionGroupId": "r30.medial-deep-knee-extensors",
+      "exerciseOverrideId": 123,
+      "sequenceBlockIndex": 0,
+      "sequenceBlockCount": 2,
+      "setNumber": 1,
+      "setCount": 1,
+      "sequenceSideCue": "ScreenLeft",
+      "sequenceDirectionCue": "None",
+      "mirrorSequenceMedia": false,
+      "sequenceMediaSegment": "Full"
+    }
+  },
+  "errors": [],
+  "frames": [
+    {
+      "elapsedMs": 62,
+      "name": "Lateral Lunge",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 1161,
+      "name": "Lateral Lunge",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 2169,
+      "name": "Lateral Lunge",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 3179,
+      "name": "Lateral Lunge",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 4195,
+      "name": "Lateral Lunge",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 5203,
+      "name": "Lateral Lunge",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.208378,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 6262,
+      "name": "Lateral Lunge",
+      "countdown": "44",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.268054,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 7278,
+      "name": "Lateral Lunge",
+      "countdown": "43",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.283544,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 8297,
+      "name": "Lateral Lunge",
+      "countdown": "42",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.302362,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 9312,
+      "name": "Lateral Lunge",
+      "countdown": "41",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 4.318028,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 10336,
+      "name": "Lateral Lunge",
+      "countdown": "40",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.925593,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 11431,
+      "name": "Lateral Lunge",
+      "countdown": "39",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.023061,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 12443,
+      "name": "Lateral Lunge",
+      "countdown": "38",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.035282,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 13453,
+      "name": "Lateral Lunge",
+      "countdown": "37",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 4.046842,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 14469,
+      "name": "Lateral Lunge",
+      "countdown": "36",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.65374,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 15479,
+      "name": "Lateral Lunge",
+      "countdown": "35",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.664478,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 16568,
+      "name": "Lateral Lunge",
+      "countdown": "34",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.75309,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 17581,
+      "name": "Lateral Lunge",
+      "countdown": "33",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.765387,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 18589,
+      "name": "Lateral Lunge",
+      "countdown": "32",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.356753,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 19596,
+      "name": "Lateral Lunge",
+      "countdown": "31",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.363868,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 20609,
+      "name": "Lateral Lunge",
+      "countdown": "30",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.37776,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 21690,
+      "name": "Lateral Lunge",
+      "countdown": "29",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.456923,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 22707,
+      "name": "Lateral Lunge",
+      "countdown": "28",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.059271,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 23714,
+      "name": "Lateral Lunge",
+      "countdown": "27",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.065509,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 24725,
+      "name": "Lateral Lunge",
+      "countdown": "26",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.076862,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 25736,
+      "name": "Lateral Lunge",
+      "countdown": "25",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.088408,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 26835,
+      "name": "Lateral Lunge",
+      "countdown": "24",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 4.187163,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 27844,
+      "name": "Lateral Lunge",
+      "countdown": "23",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.79154,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 28853,
+      "name": "Lateral Lunge",
+      "countdown": "22",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.800972,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 29873,
+      "name": "Lateral Lunge",
+      "countdown": "21",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.819295,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 30886,
+      "name": "Lateral Lunge",
+      "countdown": "20",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.833942,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 31995,
+      "name": "Lateral Lunge",
+      "countdown": "19",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.52282,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 33016,
+      "name": "Lateral Lunge",
+      "countdown": "18",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.544185,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 34039,
+      "name": "Lateral Lunge",
+      "countdown": "17",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.566986,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 35050,
+      "name": "Lateral Lunge",
+      "countdown": "16",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.577048,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 36059,
+      "name": "Lateral Lunge",
+      "countdown": "15",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.177137,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 37111,
+      "name": "Lateral Lunge",
+      "countdown": "13",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.229594,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 38118,
+      "name": "Lateral Lunge",
+      "countdown": "12",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.236412,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 39128,
+      "name": "Lateral Lunge",
+      "countdown": "11",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.246608,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 40137,
+      "name": "Lateral Lunge",
+      "countdown": "10",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 4.254923,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 41146,
+      "name": "Lateral Lunge",
+      "countdown": "9",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.851738,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 42212,
+      "name": "Lateral Lunge",
+      "countdown": "8",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.91756,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 43231,
+      "name": "Lateral Lunge",
+      "countdown": "7",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.935779,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 44238,
+      "name": "Lateral Lunge",
+      "countdown": "6",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.943597,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 45244,
+      "name": "Lateral Lunge",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.532321,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 46255,
+      "name": "Lateral Lunge",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.542217,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 47329,
+      "name": "Lateral Lunge",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.616493,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 48337,
+      "name": "Lateral Lunge",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.624576,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 49346,
+      "name": "Lateral Lunge",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.225724,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 50352,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "15",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.1831,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 51432,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "14",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.260765,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 52525,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "13",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.356228,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 53537,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "12",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.367433,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 54546,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "11",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 4.376653,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 55561,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "10",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.981443,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 56582,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "9",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.005233,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 57686,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "8",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.10748,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 58707,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "7",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 4.130743,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 59717,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "6",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.738145,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 60743,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "5",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.762405,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 61750,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "4",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.770762,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 62812,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "3",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.832521,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 63823,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "2",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.439876,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 64842,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "1",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.458207,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 65854,
+      "name": "Lateral Lunge",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.61097,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 66964,
+      "name": "Lateral Lunge",
+      "countdown": "44",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.72073,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 68040,
+      "name": "Lateral Lunge",
+      "countdown": "43",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.798332,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 69049,
+      "name": "Lateral Lunge",
+      "countdown": "42",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.805027,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 70054,
+      "name": "Lateral Lunge",
+      "countdown": "41",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.394614,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 71069,
+      "name": "Lateral Lunge",
+      "countdown": "40",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.408159,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 72082,
+      "name": "Lateral Lunge",
+      "countdown": "39",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.420947,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 73215,
+      "name": "Lateral Lunge",
+      "countdown": "38",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.555166,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 74220,
+      "name": "Lateral Lunge",
+      "countdown": "37",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.140052,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 75227,
+      "name": "Lateral Lunge",
+      "countdown": "36",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.146113,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 76236,
+      "name": "Lateral Lunge",
+      "countdown": "35",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.155082,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 77247,
+      "name": "Lateral Lunge",
+      "countdown": "34",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.165377,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 78347,
+      "name": "Lateral Lunge",
+      "countdown": "32",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 4.265614,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 79357,
+      "name": "Lateral Lunge",
+      "countdown": "31",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.86179,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 80365,
+      "name": "Lateral Lunge",
+      "countdown": "30",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.868782,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 81374,
+      "name": "Lateral Lunge",
+      "countdown": "29",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.875833,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 82385,
+      "name": "Lateral Lunge",
+      "countdown": "28",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.889076,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 83465,
+      "name": "Lateral Lunge",
+      "countdown": "27",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.557148,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 84474,
+      "name": "Lateral Lunge",
+      "countdown": "26",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.564258,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 85495,
+      "name": "Lateral Lunge",
+      "countdown": "25",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.587481,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 86513,
+      "name": "Lateral Lunge",
+      "countdown": "24",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.605775,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 87522,
+      "name": "Lateral Lunge",
+      "countdown": "23",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.19173,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 88617,
+      "name": "Lateral Lunge",
+      "countdown": "22",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.287375,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 89627,
+      "name": "Lateral Lunge",
+      "countdown": "21",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.298131,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 90636,
+      "name": "Lateral Lunge",
+      "countdown": "20",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.307259,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 91646,
+      "name": "Lateral Lunge",
+      "countdown": "19",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 4.31657,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 92660,
+      "name": "Lateral Lunge",
+      "countdown": "18",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.915697,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 93777,
+      "name": "Lateral Lunge",
+      "countdown": "17",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.031359,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 94788,
+      "name": "Lateral Lunge",
+      "countdown": "16",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.04345,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 95804,
+      "name": "Lateral Lunge",
+      "countdown": "15",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 4.060278,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 96824,
+      "name": "Lateral Lunge",
+      "countdown": "14",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.662588,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 97831,
+      "name": "Lateral Lunge",
+      "countdown": "13",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.66907,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 98915,
+      "name": "Lateral Lunge",
+      "countdown": "12",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.752187,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 99930,
+      "name": "Lateral Lunge",
+      "countdown": "11",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.767908,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 100941,
+      "name": "Lateral Lunge",
+      "countdown": "10",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.362899,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 101948,
+      "name": "Lateral Lunge",
+      "countdown": "9",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.369714,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 102968,
+      "name": "Lateral Lunge",
+      "countdown": "8",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.390359,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 104046,
+      "name": "Lateral Lunge",
+      "countdown": "7",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.468181,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 105057,
+      "name": "Lateral Lunge",
+      "countdown": "6",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.061693,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 106068,
+      "name": "Lateral Lunge",
+      "countdown": "5",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.071816,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 107087,
+      "name": "Lateral Lunge",
+      "countdown": "4",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 2.090584,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 108098,
+      "name": "Lateral Lunge",
+      "countdown": "3",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 3.101254,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 109175,
+      "name": "Lateral Lunge",
+      "countdown": "2",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 4.179781,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 110191,
+      "name": "Lateral Lunge",
+      "countdown": "1",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 0.784968,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(-1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 111206,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "15",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 112295,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "14",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 113311,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "13",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 114395,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "12",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 115404,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "11",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 116419,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "10",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 117426,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "9",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 118432,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "8",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 119495,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "7",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 120515,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "6",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 121521,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "5",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 122538,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "4",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 123557,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "3",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 124661,
+      "name": "Lateral Lunge",
+      "countdown": "0",
+      "rest": "1",
+      "restVisible": true,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0123.mp4?v=416b753df121ce791d8dcb6c9126078db4761cbe079cbef71a00763dd7fa8eb6",
+        "time": 1.134733,
+        "duration": 4.4,
+        "rate": 1,
+        "paused": true,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 125676,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 0.035605,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 126764,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 1.12242,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 127777,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 2.135439,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 128787,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 3.146168,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 129860,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 4.219434,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 130868,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 5.227172,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 131881,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 6.238847,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 132906,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 7.26403,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 133924,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 8.283388,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 135032,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 9.391375,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 136051,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 0.20589,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 137066,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 1.221612,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    },
+    {
+      "elapsedMs": 138091,
+      "name": "Standing Pelvic-Floor Slow Squeeze and Release",
+      "countdown": "45",
+      "rest": "15",
+      "restVisible": false,
+      "video": {
+        "src": "http://127.0.0.1:4179/assets/exercise_videos/exercise_0918.mp4?v=a9aa217d0edc2ae16bbcabe2c9895e3172dd127688748e23d8386121616dbcb1",
+        "time": 2.246639,
+        "duration": 10.2,
+        "rate": 1,
+        "paused": false,
+        "hidden": false,
+        "transform": "matrix(1, 0, 0, 1, 0, 0)"
+      },
+      "hold": {
+        "src": "",
+        "hidden": true,
+        "transform": "none"
+      }
+    }
+  ],
+  "phases": [
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "00.png",
+      "elapsedMs": 134
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "05.png",
+      "elapsedMs": 5257
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "10.png",
+      "elapsedMs": 10419
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "15.png",
+      "elapsedMs": 15556
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "20.png",
+      "elapsedMs": 20675
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "25.png",
+      "elapsedMs": 25828
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "30.png",
+      "elapsedMs": 30982
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "35.png",
+      "elapsedMs": 36102
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "40.png",
+      "elapsedMs": 41196
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "45.png",
+      "elapsedMs": 46324
+    },
+    {
+      "phase": "Lateral Lunge|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "49.png",
+      "elapsedMs": 50408
+    },
+    {
+      "phase": "Lateral Lunge|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "50.png",
+      "elapsedMs": 51519
+    },
+    {
+      "phase": "Lateral Lunge|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "55.png",
+      "elapsedMs": 56666
+    },
+    {
+      "phase": "Lateral Lunge|true|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "60.png",
+      "elapsedMs": 61793
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "64.png",
+      "elapsedMs": 65949
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "65.png",
+      "elapsedMs": 67033
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "70.png",
+      "elapsedMs": 72203
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "75.png",
+      "elapsedMs": 77337
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "80.png",
+      "elapsedMs": 82448
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "85.png",
+      "elapsedMs": 87606
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "90.png",
+      "elapsedMs": 92761
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "95.png",
+      "elapsedMs": 97905
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "100.png",
+      "elapsedMs": 103034
+    },
+    {
+      "phase": "Lateral Lunge|false|false|true|matrix(-1, 0, 0, 1, 0, 0)",
+      "file": "105.png",
+      "elapsedMs": 108167
+    },
+    {
+      "phase": "Lateral Lunge|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "108.png",
+      "elapsedMs": 111282
+    },
+    {
+      "phase": "Lateral Lunge|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "110.png",
+      "elapsedMs": 113381
+    },
+    {
+      "phase": "Lateral Lunge|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "115.png",
+      "elapsedMs": 118483
+    },
+    {
+      "phase": "Lateral Lunge|true|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "120.png",
+      "elapsedMs": 123646
+    },
+    {
+      "phase": "Standing Pelvic-Floor Slow Squeeze and Release|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "122.png",
+      "elapsedMs": 125749
+    },
+    {
+      "phase": "Standing Pelvic-Floor Slow Squeeze and Release|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "125.png",
+      "elapsedMs": 128840
+    },
+    {
+      "phase": "Standing Pelvic-Floor Slow Squeeze and Release|false|false|true|matrix(1, 0, 0, 1, 0, 0)",
+      "file": "130.png",
+      "elapsedMs": 134019
+    }
+  ],
+  "reviewStatus": "AWAITING_VISUAL_REVIEW"
+}

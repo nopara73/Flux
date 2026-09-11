@@ -1,7 +1,7 @@
 {
-  "catalogRevision": 72,
-  "catalogRecordCount": 517,
-  "catalogSha256": "7027156b7eb415fb9b91f186cca9a447e83d6e340894df936a47758cd21f9351",
+  "catalogRevision": 73,
+  "catalogRecordCount": 539,
+  "catalogSha256": "b5a2da6ec5f2af8e5004479816bf038dddfa2f2766c308ccd49bbbae92c9a58b",
   "policy": {
     "treatment": "Every enforceable coverage category must have zero deficits; the ledger is diagnostic and cannot authorize catalog debt.",
     "broadCoverageResolutionMinutes": 3,
@@ -10,24 +10,2568 @@
     "muscularDemandMinimumPerCategoryPerGroup": 1
   },
   "summary": {
-    "pairwiseDeficiencyCount": 0,
-    "pairwiseAffectedGroupCount": 0,
-    "hardFloorCategoryDeficiencyCount": 0,
-    "hardFloorCategoryAffectedGroupCount": 0,
-    "muscularDemandDeficiencyCount": 0,
-    "muscularDemandAffectedGroupCount": 0,
+    "pairwiseDeficiencyCount": 144,
+    "pairwiseAffectedGroupCount": 25,
+    "hardFloorCategoryDeficiencyCount": 31,
+    "hardFloorCategoryAffectedGroupCount": 23,
+    "muscularDemandDeficiencyCount": 8,
+    "muscularDemandAffectedGroupCount": 2,
     "demandZeroDeficiencyCount": 0,
     "demandZeroAffectedGroupCount": 0,
-    "demandTwoDeficiencyCount": 0,
-    "demandTwoAffectedGroupCount": 0,
-    "materialityDeficiencyCount": 0,
-    "mirrorCategoryDeficiencyCount": 0,
-    "distinctLineupDeficiencyCount": 0
+    "demandTwoDeficiencyCount": 8,
+    "demandTwoAffectedGroupCount": 2,
+    "materialityDeficiencyCount": 1,
+    "distinctLineupDeficiencyCount": 70
   },
-  "pairwise": [],
-  "hardFloorCategory": [],
-  "muscularDemand": [],
-  "materiality": [],
-  "mirrorCategory": [],
-  "distinctLineup": []
+  "pairwise": [
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 16,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 16,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 16,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 16,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 1,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 2,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 2,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 1,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 2,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 2,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": false,
+      "secondModifier": 2,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": false,
+      "secondModifier": 2,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 2,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 2,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 2,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 2,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 2,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 2,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 2,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 2,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 2,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 2,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 512,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 512,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 512,
+      "firstModifierEnabled": false,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 512,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 512,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 512,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 2
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 4
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 4
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 4
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 4
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 4
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 1,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 4
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 4
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 4
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 4
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 2,
+      "firstModifierEnabled": false,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 2,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 512,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 512,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "firstModifier": 512,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 16,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 16,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 5,
+      "matchingExerciseCount": 3
+    },
+    {
+      "minutes": 5,
+      "groupId": "r5.upper-limbs",
+      "groupName": "Upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 5,
+      "groupId": "r5.torso",
+      "groupName": "Torso",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 7,
+      "groupId": "r7.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 7,
+      "groupId": "r7.torso",
+      "groupName": "Torso",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 10,
+      "groupId": "r10.anterior-lateral-lower-leg-dorsal-foot",
+      "groupName": "Anterior/lateral lower leg and dorsal foot",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 10,
+      "groupId": "r10.upper-limbs",
+      "groupName": "Upper limbs",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.anterior-lateral-lower-leg-dorsal-foot",
+      "groupName": "Anterior/lateral lower leg and dorsal foot",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.shoulder",
+      "groupName": "Shoulder",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.arm-forearm-hand",
+      "groupName": "Arm, forearm and hand",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 20,
+      "groupId": "r20.accessory-hip-adductors",
+      "groupName": "Accessory hip adductors",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 20,
+      "groupId": "r20.forearm-hand",
+      "groupName": "Forearm and hand",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 20,
+      "groupId": "r20.anterior-lateral-lower-leg-dorsal-foot",
+      "groupName": "Anterior/lateral lower leg and dorsal foot",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 20,
+      "groupId": "r20.shoulder-adduction-extension",
+      "groupName": "Shoulder adduction and extension",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.accessory-hip-adductors",
+      "groupName": "Accessory hip adductors",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.rotator-cuff",
+      "groupName": "Rotator cuff",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.forearm-extensors-supinators",
+      "groupName": "Forearm extensors and supinators",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 128,
+      "firstModifierEnabled": false,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 128,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 16,
+      "firstModifierEnabled": false,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 2,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 512,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": false,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Compact",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "firstModifier": 1,
+      "firstModifierEnabled": true,
+      "secondModifier": 4,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "Tall",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.elbow-flexors",
+      "groupName": "Elbow flexors",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.forearm-flexors-pronators",
+      "groupName": "Forearm flexors and pronators",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.anterior-lateral-lower-leg-dorsal-foot",
+      "groupName": "Anterior/lateral lower leg and dorsal foot",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.shoulder-adductors-extensors",
+      "groupName": "Shoulder adductors and extensors",
+      "firstModifier": 16,
+      "firstModifierEnabled": true,
+      "secondModifier": 1,
+      "secondModifierEnabled": true,
+      "mirrorEquipment": "None",
+      "requiredExerciseCount": 1,
+      "matchingExerciseCount": 0
+    }
+  ],
+  "hardFloorCategory": [
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": false,
+      "matchingExerciseCount": 1,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 2,
+      "partnerModifierEnabled": false,
+      "matchingExerciseCount": 1,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 2,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 1,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 4,
+      "partnerModifierEnabled": false,
+      "matchingExerciseCount": 1,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 3,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": false,
+      "matchingExerciseCount": 3,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 3,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 2,
+      "partnerModifierEnabled": false,
+      "matchingExerciseCount": 3,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 2,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 3,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.lower-limbs",
+      "groupName": "Lower limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 4,
+      "partnerModifierEnabled": false,
+      "matchingExerciseCount": 3,
+      "requiredExerciseCount": 5
+    },
+    {
+      "minutes": 5,
+      "groupId": "r5.upper-limbs",
+      "groupName": "Upper limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 7,
+      "groupId": "r7.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 10,
+      "groupId": "r10.anterior-lateral-lower-leg-dorsal-foot",
+      "groupName": "Anterior/lateral lower leg and dorsal foot",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 10,
+      "groupId": "r10.upper-limbs",
+      "groupName": "Upper limbs",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.anterior-lateral-lower-leg-dorsal-foot",
+      "groupName": "Anterior/lateral lower leg and dorsal foot",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.shoulder",
+      "groupName": "Shoulder",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.arm-forearm-hand",
+      "groupName": "Arm, forearm and hand",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 15,
+      "groupId": "r15.scapular-chest-breathing",
+      "groupName": "Scapular girdle, chest and breathing",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 20,
+      "groupId": "r20.accessory-hip-adductors",
+      "groupName": "Accessory hip adductors",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 20,
+      "groupId": "r20.forearm-hand",
+      "groupName": "Forearm and hand",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 20,
+      "groupId": "r20.anterior-lateral-lower-leg-dorsal-foot",
+      "groupName": "Anterior/lateral lower leg and dorsal foot",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 20,
+      "groupId": "r20.shoulder-adduction-extension",
+      "groupName": "Shoulder adduction and extension",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.accessory-hip-adductors",
+      "groupName": "Accessory hip adductors",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.rotator-cuff",
+      "groupName": "Rotator cuff",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.forearm-extensors-supinators",
+      "groupName": "Forearm extensors and supinators",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.breathing-muscles",
+      "groupName": "Breathing muscles",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.elbow-flexors",
+      "groupName": "Elbow flexors",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.forearm-flexors-pronators",
+      "groupName": "Forearm flexors and pronators",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.anterior-lateral-lower-leg-dorsal-foot",
+      "groupName": "Anterior/lateral lower leg and dorsal foot",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 30,
+      "groupId": "r30.shoulder-adductors-extensors",
+      "groupName": "Shoulder adductors and extensors",
+      "hardFloorCompatibility": "Compatible",
+      "partnerModifier": 1,
+      "partnerModifierEnabled": true,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    }
+  ],
+  "muscularDemand": [
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "muscularDemand": 2,
+      "profile": 1,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "muscularDemand": 2,
+      "profile": 129,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "muscularDemand": 2,
+      "profile": 17,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "muscularDemand": 2,
+      "profile": 3,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "muscularDemand": 2,
+      "profile": 513,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "muscularDemand": 2,
+      "profile": 5,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.head-neck-upper-limbs",
+      "groupName": "Head, neck and upper limbs",
+      "muscularDemand": 2,
+      "profile": 13,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    },
+    {
+      "minutes": 3,
+      "groupId": "r3.torso-pelvic-complex",
+      "groupName": "Torso and pelvic complex",
+      "muscularDemand": 2,
+      "profile": 17,
+      "matchingExerciseCount": 0,
+      "requiredExerciseCount": 1
+    }
+  ],
+  "materiality": [
+    {
+      "baseProfile": 16,
+      "enabledModifier": 2,
+      "modifiedProfile": 18,
+      "baselineExerciseCount": 263,
+      "modifiedExerciseCount": 250,
+      "materialExerciseCount": 13,
+      "requiredMaterialExerciseCount": 14,
+      "affectedGroupCount": 7,
+      "requiredAffectedGroupCount": 3
+    }
+  ],
+  "distinctLineup": [
+    {
+      "minutes": 3,
+      "profile": 16,
+      "maximumDistinctExerciseCount": 2,
+      "requiredDistinctExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "profile": 144,
+      "maximumDistinctExerciseCount": 2,
+      "requiredDistinctExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "profile": 17,
+      "maximumDistinctExerciseCount": 2,
+      "requiredDistinctExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "profile": 18,
+      "maximumDistinctExerciseCount": 2,
+      "requiredDistinctExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "profile": 528,
+      "maximumDistinctExerciseCount": 2,
+      "requiredDistinctExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "profile": 20,
+      "maximumDistinctExerciseCount": 2,
+      "requiredDistinctExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "profile": 28,
+      "maximumDistinctExerciseCount": 2,
+      "requiredDistinctExerciseCount": 3
+    },
+    {
+      "minutes": 3,
+      "profile": 513,
+      "maximumDistinctExerciseCount": 2,
+      "requiredDistinctExerciseCount": 3
+    },
+    {
+      "minutes": 5,
+      "profile": 17,
+      "maximumDistinctExerciseCount": 4,
+      "requiredDistinctExerciseCount": 5
+    },
+    {
+      "minutes": 5,
+      "profile": 528,
+      "maximumDistinctExerciseCount": 4,
+      "requiredDistinctExerciseCount": 5
+    },
+    {
+      "minutes": 5,
+      "profile": 513,
+      "maximumDistinctExerciseCount": 4,
+      "requiredDistinctExerciseCount": 5
+    },
+    {
+      "minutes": 7,
+      "profile": 16,
+      "maximumDistinctExerciseCount": 6,
+      "requiredDistinctExerciseCount": 7
+    },
+    {
+      "minutes": 7,
+      "profile": 144,
+      "maximumDistinctExerciseCount": 6,
+      "requiredDistinctExerciseCount": 7
+    },
+    {
+      "minutes": 7,
+      "profile": 17,
+      "maximumDistinctExerciseCount": 6,
+      "requiredDistinctExerciseCount": 7
+    },
+    {
+      "minutes": 7,
+      "profile": 18,
+      "maximumDistinctExerciseCount": 6,
+      "requiredDistinctExerciseCount": 7
+    },
+    {
+      "minutes": 7,
+      "profile": 528,
+      "maximumDistinctExerciseCount": 6,
+      "requiredDistinctExerciseCount": 7
+    },
+    {
+      "minutes": 7,
+      "profile": 20,
+      "maximumDistinctExerciseCount": 6,
+      "requiredDistinctExerciseCount": 7
+    },
+    {
+      "minutes": 7,
+      "profile": 28,
+      "maximumDistinctExerciseCount": 6,
+      "requiredDistinctExerciseCount": 7
+    },
+    {
+      "minutes": 7,
+      "profile": 513,
+      "maximumDistinctExerciseCount": 6,
+      "requiredDistinctExerciseCount": 7
+    },
+    {
+      "minutes": 10,
+      "profile": 17,
+      "maximumDistinctExerciseCount": 8,
+      "requiredDistinctExerciseCount": 10
+    },
+    {
+      "minutes": 10,
+      "profile": 528,
+      "maximumDistinctExerciseCount": 9,
+      "requiredDistinctExerciseCount": 10
+    },
+    {
+      "minutes": 15,
+      "profile": 1,
+      "maximumDistinctExerciseCount": 14,
+      "requiredDistinctExerciseCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 129,
+      "maximumDistinctExerciseCount": 14,
+      "requiredDistinctExerciseCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 17,
+      "maximumDistinctExerciseCount": 11,
+      "requiredDistinctExerciseCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 528,
+      "maximumDistinctExerciseCount": 14,
+      "requiredDistinctExerciseCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 3,
+      "maximumDistinctExerciseCount": 14,
+      "requiredDistinctExerciseCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 513,
+      "maximumDistinctExerciseCount": 14,
+      "requiredDistinctExerciseCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 5,
+      "maximumDistinctExerciseCount": 14,
+      "requiredDistinctExerciseCount": 15
+    },
+    {
+      "minutes": 15,
+      "profile": 13,
+      "maximumDistinctExerciseCount": 14,
+      "requiredDistinctExerciseCount": 15
+    },
+    {
+      "minutes": 20,
+      "profile": 16,
+      "maximumDistinctExerciseCount": 19,
+      "requiredDistinctExerciseCount": 20
+    },
+    {
+      "minutes": 20,
+      "profile": 144,
+      "maximumDistinctExerciseCount": 19,
+      "requiredDistinctExerciseCount": 20
+    },
+    {
+      "minutes": 20,
+      "profile": 17,
+      "maximumDistinctExerciseCount": 16,
+      "requiredDistinctExerciseCount": 20
+    },
+    {
+      "minutes": 20,
+      "profile": 18,
+      "maximumDistinctExerciseCount": 19,
+      "requiredDistinctExerciseCount": 20
+    },
+    {
+      "minutes": 20,
+      "profile": 528,
+      "maximumDistinctExerciseCount": 19,
+      "requiredDistinctExerciseCount": 20
+    },
+    {
+      "minutes": 20,
+      "profile": 20,
+      "maximumDistinctExerciseCount": 19,
+      "requiredDistinctExerciseCount": 20
+    },
+    {
+      "minutes": 20,
+      "profile": 28,
+      "maximumDistinctExerciseCount": 19,
+      "requiredDistinctExerciseCount": 20
+    },
+    {
+      "minutes": 30,
+      "profile": 16,
+      "maximumDistinctExerciseCount": 29,
+      "requiredDistinctExerciseCount": 30
+    },
+    {
+      "minutes": 30,
+      "profile": 1,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 30,
+      "profile": 144,
+      "maximumDistinctExerciseCount": 29,
+      "requiredDistinctExerciseCount": 30
+    },
+    {
+      "minutes": 30,
+      "profile": 129,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 30,
+      "profile": 17,
+      "maximumDistinctExerciseCount": 20,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 30,
+      "profile": 18,
+      "maximumDistinctExerciseCount": 29,
+      "requiredDistinctExerciseCount": 30
+    },
+    {
+      "minutes": 30,
+      "profile": 528,
+      "maximumDistinctExerciseCount": 29,
+      "requiredDistinctExerciseCount": 30
+    },
+    {
+      "minutes": 30,
+      "profile": 20,
+      "maximumDistinctExerciseCount": 29,
+      "requiredDistinctExerciseCount": 30
+    },
+    {
+      "minutes": 30,
+      "profile": 28,
+      "maximumDistinctExerciseCount": 29,
+      "requiredDistinctExerciseCount": 30
+    },
+    {
+      "minutes": 30,
+      "profile": 3,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 30,
+      "profile": 513,
+      "maximumDistinctExerciseCount": 24,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 30,
+      "profile": 5,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 30,
+      "profile": 13,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 45,
+      "profile": 1,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 45,
+      "profile": 129,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 45,
+      "profile": 17,
+      "maximumDistinctExerciseCount": 20,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 45,
+      "profile": 3,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 45,
+      "profile": 513,
+      "maximumDistinctExerciseCount": 24,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 45,
+      "profile": 5,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 45,
+      "profile": 13,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 60,
+      "profile": 1,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 60,
+      "profile": 129,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 60,
+      "profile": 17,
+      "maximumDistinctExerciseCount": 20,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 60,
+      "profile": 3,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 60,
+      "profile": 513,
+      "maximumDistinctExerciseCount": 24,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 60,
+      "profile": 5,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 60,
+      "profile": 13,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 90,
+      "profile": 1,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 90,
+      "profile": 129,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 90,
+      "profile": 17,
+      "maximumDistinctExerciseCount": 20,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 90,
+      "profile": 3,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 90,
+      "profile": 513,
+      "maximumDistinctExerciseCount": 24,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 90,
+      "profile": 5,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    },
+    {
+      "minutes": 90,
+      "profile": 13,
+      "maximumDistinctExerciseCount": 26,
+      "requiredDistinctExerciseCount": 28
+    }
+  ]
 }

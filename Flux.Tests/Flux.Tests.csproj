@@ -63,6 +63,7 @@
     <Compile Include="..\Flux\Services\MovementPhaseSchedule.cs" Link="Production\Services\MovementPhaseSchedule.cs" />
     <Compile Include="..\Flux\Services\MovementPhasePresentationPolicy.cs" Link="Production\Services\MovementPhasePresentationPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutCoveragePolicy.cs" Link="Production\Services\WorkoutCoveragePolicy.cs" />
+    <Compile Include="..\Flux\Services\WorkoutAvailabilityPolicy.cs" Link="Production\Services\WorkoutAvailabilityPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutDisplayPolicy.cs" Link="Production\Services\WorkoutDisplayPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutLightDayPolicy.cs" Link="Production\Services\WorkoutLightDayPolicy.cs" />
     <Compile Include="..\Flux\Services\WorkoutModifierPolicy.cs" Link="Production\Services\WorkoutModifierPolicy.cs" />
@@ -74,10 +75,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\docs\catalog-audit\training-claim-corrections-2026-09-05.json"
+          Link="Assets\training-claim-corrections-2026-09-05.json"
+          CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\docs\catalog-audit\migration-2026-09-05.json"
+          Link="Assets\migration-2026-09-05.json"
+          CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\Flux\Assets\exercises.json"
           Link="Assets\exercises.json"
           CopyToOutputDirectory="PreserveNewest" />
     <None Update="Fixtures\oura-recovery-cases.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="Fixtures\workout-availability-cases.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\Flux\Assets\exercise_hold_frames\*.png"
           Link="Assets\exercise_hold_frames\%(Filename)%(Extension)"
           CopyToOutputDirectory="PreserveNewest" />

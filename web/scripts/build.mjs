@@ -3,20 +3,8 @@ import { cp, mkdir, readFile, readdir, rm, stat, writeFile } from "node:fs/promi
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import {
-  CURRENT_CATALOG_REVISION,
-  MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP,
-  findHardFloorCategoryCoverageDeficiencies,
-  findMirrorCategoryDeficiencies,
-  findMuscularDemandCoverageDeficiencies,
-  findSoleWallContactRequiredCatalogDeficiencies,
-  findWallRequiredCatalogDeficiencies,
-  findWorkoutModifierMaterialityDeficiencies,
-  findWorkoutModifierPairCoverageDeficiencies,
-  findWorkoutProfileLineupDeficiencies,
-  isModifierMetadataComplete,
-  isSessionMovementMetadataValid,
-} from "../workout.js";
+import { findCatalogContractViolations } from "../workout.js";
+import { createAvailabilityReport } from "./workout-availability-report.mjs";
 
 const scriptDirectory = path.dirname(fileURLToPath(import.meta.url));
 const webRoot = path.resolve(scriptDirectory, "..");
@@ -183,98 +171,17 @@ const catalog = JSON.parse(
   await readFile(path.join(outputRoot, "data", "exercises.json"), "utf8"),
 );
 
-if (!Array.isArray(catalog) || catalog.length !== 517) {
-  throw new Error(`Expected 517 exercises, found ${catalog?.length ?? "invalid data"}.`);
+if (!Array.isArray(catalog) || catalog.length !== 539) {
+  throw new Error(`Expected 539 exercises, found ${catalog?.length ?? "invalid data"}.`);
 }
 
-const pairwiseDeficiencies =
-  findWorkoutModifierPairCoverageDeficiencies(catalog);
-const hardFloorCategoryDeficiencies =
-  findHardFloorCategoryCoverageDeficiencies(catalog);
-const muscularDemandDeficiencies =
-  findMuscularDemandCoverageDeficiencies(catalog);
-const materialityDeficiencies =
-  findWorkoutModifierMaterialityDeficiencies(catalog);
-const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(catalog);
-const wallCatalogDeficiencies = findWallRequiredCatalogDeficiencies(catalog);
-const soleWallCatalogDeficiencies =
-  findSoleWallContactRequiredCatalogDeficiencies(catalog);
-const distinctLineupDeficiencies =
-  findWorkoutProfileLineupDeficiencies(catalog);
-const integrityDeficitReport = JSON.parse(await readFile(
-  path.join(
-    repositoryRoot,
-    "docs",
-    "catalog-audit",
-    "modifier_coverage_deficits_current.json",
-  ),
-  "utf8",
-));
-const catalogSha256 = createHash("sha256")
-  .update(normalizeLineEndings(catalogSource))
-  .digest("hex");
-const expectedIntegritySummary = {
-  pairwiseDeficiencyCount: pairwiseDeficiencies.length,
-  pairwiseAffectedGroupCount: affectedGroupCount(pairwiseDeficiencies),
-  hardFloorCategoryDeficiencyCount: hardFloorCategoryDeficiencies.length,
-  hardFloorCategoryAffectedGroupCount:
-    affectedGroupCount(hardFloorCategoryDeficiencies),
-  muscularDemandDeficiencyCount: muscularDemandDeficiencies.length,
-  muscularDemandAffectedGroupCount:
-    affectedGroupCount(muscularDemandDeficiencies),
-  demandZeroDeficiencyCount: muscularDemandDeficiencies.filter((item) =>
-    item.muscularDemand === 0).length,
-  demandZeroAffectedGroupCount: affectedGroupCount(
-    muscularDemandDeficiencies.filter((item) => item.muscularDemand === 0),
-  ),
-  demandTwoDeficiencyCount: muscularDemandDeficiencies.filter((item) =>
-    item.muscularDemand === 2).length,
-  demandTwoAffectedGroupCount: affectedGroupCount(
-    muscularDemandDeficiencies.filter((item) => item.muscularDemand === 2),
-  ),
-  materialityDeficiencyCount: materialityDeficiencies.length,
-  mirrorCategoryDeficiencyCount: mirrorCategoryDeficiencies.length,
-  distinctLineupDeficiencyCount: distinctLineupDeficiencies.length,
-};
-const integrityDebtMatches =
-  integrityDeficitReport.catalogRevision === CURRENT_CATALOG_REVISION &&
-  integrityDeficitReport.catalogRecordCount === catalog.length &&
-  integrityDeficitReport.catalogSha256 === catalogSha256 &&
-  integrityDeficitReport.policy
-    ?.muscularDemandMinimumPerCategoryPerGroup ===
-      MINIMUM_EXERCISES_PER_MUSCULAR_DEMAND_CATEGORY_PER_GROUP &&
-  exactlyEqual(integrityDeficitReport.summary, expectedIntegritySummary) &&
-  exactlyEqual(integrityDeficitReport.pairwise, pairwiseDeficiencies) &&
-  exactlyEqual(
-    integrityDeficitReport.hardFloorCategory,
-    hardFloorCategoryDeficiencies,
-  ) &&
-  exactlyEqual(
-    integrityDeficitReport.muscularDemand,
-    muscularDemandDeficiencies,
-  ) &&
-  exactlyEqual(integrityDeficitReport.materiality, materialityDeficiencies) &&
-  exactlyEqual(integrityDeficitReport.mirrorCategory, mirrorCategoryDeficiencies) &&
-  exactlyEqual(integrityDeficitReport.distinctLineup, distinctLineupDeficiencies);
-
-const catalogInvariantChecks = [
-  ["modifier metadata completeness", isModifierMetadataComplete(catalog)],
-  ["session movement metadata", isSessionMovementMetadataValid(catalog)],
-  ["hierarchical modifier-pair coverage", pairwiseDeficiencies.length === 0],
-  ["hierarchical hard-floor category coverage",
-    hardFloorCategoryDeficiencies.length === 0],
-  ["broad muscular-demand coverage", muscularDemandDeficiencies.length === 0],
-  ["wall-required session-movement floor", wallCatalogDeficiencies.length === 0],
-  ["sole-wall session-movement floor", soleWallCatalogDeficiencies.length === 0],
-  ["explicit catalog-integrity deficit ledger", integrityDebtMatches],
-];
-const failedCatalogInvariants = catalogInvariantChecks
-  .filter(([, valid]) => !valid)
-  .map(([name]) => name);
-if (failedCatalogInvariants.length > 0) {
-  throw new Error(
-    `Catalog failed build-time invariants: ${failedCatalogInvariants.join(", ")}.`,
-  );
+const violations = findCatalogContractViolations(catalog);
+if (violations.length) throw new Error(`Catalog contract failed: ${violations.join(", ")}`);
+const availabilityReport = createAvailabilityReport(catalog, catalogSource);
+const savedAvailabilityReport = JSON.parse(await readFile(path.join(repositoryRoot,
+  "docs/catalog-audit/workout_availability_current.json"), "utf8"));
+if (JSON.stringify(availabilityReport) !== JSON.stringify(savedAvailabilityReport)) {
+  throw new Error("Workout availability report is stale. Regenerate it and review the actual limitations.");
 }
 
 for (const exercise of catalog) {

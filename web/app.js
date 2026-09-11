@@ -8,9 +8,7 @@ import {
   SUPPORTED_MINUTES,
   WORKOUT_MODIFIERS,
   WorkoutSession,
-  findSoleWallContactRequiredCatalogDeficiencies,
-  findWallRequiredCatalogDeficiencies,
-  findMirrorCategoryDeficiencies,
+  findCatalogContractViolations,
   getExerciseVideoPath,
   getHoldFramePath,
   getMovementCountdownDurationMs,
@@ -31,7 +29,6 @@ import {
 const STORAGE_KEY = "flux.workout.state.v1";
 const TIMER_INTERVAL_MS = 100;
 const MEDIA_RECOVERY_TIMEOUT_MS = 12_000;
-const DIRECTION_SEGMENT_SECONDS = 20;
 const MODIFIER_FEEDBACK_DURATION_MS = 2_040;
 const EXERCISE_NAME_LONG_PRESS_MS = 500;
 const EXERCISE_NAME_LONG_PRESS_MOVE_TOLERANCE_PX = 12;
@@ -197,16 +194,7 @@ async function bootstrap() {
       throw new Error("Asset-version manifest is invalid.");
     }
     assetVersions = Object.freeze({ ...loadedAssetVersions });
-    const mirrorCategoryDeficiencies = findMirrorCategoryDeficiencies(exercises);
-    const wallCatalogDeficiencies =
-      findWallRequiredCatalogDeficiencies(exercises);
-    const soleWallCatalogDeficiencies =
-      findSoleWallContactRequiredCatalogDeficiencies(exercises);
-    if (!isModifierMetadataComplete(exercises) ||
-        !isSessionMovementMetadataValid(exercises) ||
-        mirrorCategoryDeficiencies.length > 0 ||
-        wallCatalogDeficiencies.length > 0 ||
-        soleWallCatalogDeficiencies.length > 0) {
+    if (findCatalogContractViolations(exercises).length > 0) {
       throw new Error("Catalog does not satisfy workout invariants.");
     }
     session = new WorkoutSession(exercises, loadState());
@@ -231,7 +219,13 @@ async function bootstrap() {
     startupControls?.setSelection(selectedMinutes, selectedModifiers);
     performance.mark?.("flux-session-ready");
 
-    if (session.state.workoutCompleted && !session.state.completionAcknowledged) {
+    if (session.state.workoutSetupReviewRequired) {
+      cancelQueuedWorkoutStart();
+      showDuration({ preserveSelection: startupSelectionChanged });
+      await reviewWorkoutScope({...session.getWorkoutAvailability(selectedMinutes, selectedModifiers), canStart: false}, true);
+      session.state.workoutSetupReviewRequired = false;
+      persistState();
+    } else if (session.state.workoutCompleted && !session.state.completionAcknowledged) {
       cancelQueuedWorkoutStart();
       showCompletion(false);
     } else if (pendingRestGroup) {
@@ -1109,6 +1103,16 @@ async function startWorkout() {
     const modifiers = selectedModifiers;
     const isReconfiguration = activeWorkoutSetup;
     const currentWorkoutGroupId = workoutSetupCurrentGroupId;
+    const availability = session.getWorkoutAvailability(minutes, modifiers);
+    let acceptedLimitedCoverage = false;
+    if (!availability.canStart || availability.requiresAcceptance) {
+      acceptedLimitedCoverage = await reviewWorkoutScope(availability);
+      if (!acceptedLimitedCoverage) {
+        elements.beginWorkout.disabled = false;
+        startupControls?.markReady();
+        return;
+      }
+    }
     const prepared = await ensureWorkoutPrepared(
       minutes,
       modifiers,
@@ -1119,13 +1123,20 @@ async function startWorkout() {
       throw new Error("The selected workout could not be prepared.");
     }
     cancelWorkoutPreparation();
-    session = new WorkoutSession(exerciseCatalog, prepared.state);
+    const preparedSession = new WorkoutSession(exerciseCatalog, prepared.state);
     if (prepared.isReconfiguration) {
+      session = preparedSession;
       persistState();
       restoreWorkoutAfterSetup();
       return;
     }
-    session.activatePreparedWorkout();
+    const finalScope = preparedSession.getWorkoutAvailability(minutes, preparedSession.state.activeWorkoutModifiers);
+    if (finalScope.requiresAcceptance && JSON.stringify(finalScope) !== JSON.stringify(availability)) {
+      acceptedLimitedCoverage = await reviewWorkoutScope(finalScope);
+      if (!acceptedLimitedCoverage) { elements.beginWorkout.disabled = false; return; }
+    }
+    preparedSession.activatePreparedWorkout(acceptedLimitedCoverage);
+    session = preparedSession;
     persistState();
     showNextExercise();
     performance.mark?.("flux-workout-visible");
@@ -1138,7 +1149,58 @@ async function startWorkout() {
     console.error(error);
     elements.beginWorkout.disabled = false;
     startupControls?.markReady();
+    await reviewWorkoutScope(error.availability ?? {
+      minutes: selectedMinutes, canStart: false, regions: [], missingGroups: [],
+    });
   }
+}
+
+function reviewWorkoutScope(availability, preservedWork = false) {
+  return new Promise((resolve) => {
+    const dialog = document.createElement("dialog");
+    dialog.className = "workout-scope";
+    dialog.setAttribute("aria-labelledby", "workout-scope-title");
+    dialog.innerHTML = `<h2 id="workout-scope-title"></h2>
+      <p class="scope-summary"></p><div class="scope-regions"></div>
+      <details class="scope-details"><summary>Unavailable targets</summary><p></p></details>
+      <div class="scope-actions"><button class="scope-adjust" type="button">Adjust setup</button>
+      <button class="primary-button scope-start" type="button">Start limited</button></div>`;
+    dialog.querySelector("h2").textContent = preservedWork ? "Review your workout" : availability.canStart ? "Limited coverage" : "Adjust your setup";
+    dialog.querySelector(".scope-summary").textContent = preservedWork ? "Your completed work is saved. Review your setup to continue." : availability.canStart
+      ? `${availability.minutes} min · fewer targets, complete movements`
+      : "No complete workout fits these settings and duration.";
+    const names = ["Upper body", "Torso", "Lower body"];
+    availability.regions.forEach((region, index) => {
+      const cell = document.createElement("div");
+      cell.className = `scope-region${region.included ? "" : " omitted"}`;
+      const label = document.createElement("span");
+      label.textContent = names[index];
+      const bar = document.createElement("meter");
+      bar.min = 0; bar.max = region.totalTargets;
+      bar.value = region.included ? region.availableTargets : 0;
+      bar.setAttribute("aria-label", `${names[index]}: ${region.included
+        ? `${region.availableTargets} of ${region.totalTargets} targets available` : "left out"}`);
+      const count = document.createElement("small");
+      count.textContent = region.included ? `${region.availableTargets}/${region.totalTargets} available` : "left out";
+      cell.append(label, bar, count);
+      dialog.querySelector(".scope-regions").append(cell);
+    });
+    const details = dialog.querySelector("details");
+    details.hidden = !availability.missingGroups.length;
+    details.querySelector("p").textContent = availability.missingGroups.join(" · ");
+    const start = dialog.querySelector(".scope-start");
+    start.hidden = !availability.canStart;
+    start.addEventListener("click", () => dialog.close("accept"));
+    dialog.querySelector(".scope-adjust").addEventListener("click", () => dialog.close("adjust"));
+    dialog.addEventListener("close", () => {
+      const accepted = dialog.returnValue === "accept";
+      dialog.remove();
+      resolve(accepted);
+    }, { once: true });
+    document.body.append(dialog);
+    dialog.showModal();
+    dialog.querySelector(".scope-adjust").focus();
+  });
 }
 
 function cancelQueuedWorkoutStart() {
@@ -1468,8 +1530,7 @@ function loadExerciseMedia(
 
   elements.video.hidden = false;
   elements.video.preload = "auto";
-  elements.video.loop =
-    (group.sequenceMediaSegment ?? "Full") === "Full";
+  elements.video.loop = true;
   elements.video.onloadedmetadata = () => prepareSequenceMediaSegment();
   elements.video.oncanplay = () => {
     prepareSequenceMediaSegment();
@@ -1489,7 +1550,6 @@ function loadExerciseMedia(
   };
   elements.video.onerror = () => showMediaError(generation);
   elements.video.onended = handleVideoEnded;
-  elements.video.ontimeupdate = enforceDirectionMediaSegment;
   elements.video.src = assetUrl(getExerciseVideoPath(
     exercise,
     group.sequenceMediaSegment ?? "Full",
@@ -1688,7 +1748,6 @@ function updateMovement() {
   if (state.phase !== lastMovementPhase && state.phase !== "Complete") {
     applyMovementPhase(state.phase);
   }
-  enforceDirectionMediaSegment();
   if (movementRemaining <= 0) {
     completeMovement();
   }
@@ -1744,16 +1803,9 @@ function restartMediaForPhase() {
   elements.holdFrame.hidden = true;
   elements.video.hidden = false;
   elements.video.loop =
-    mediaExercise.mode !== "Hold" &&
-    (mediaGroup?.sequenceMediaSegment ?? "Full") === "Full";
+    mediaExercise.mode !== "Hold";
   prepareSequenceMediaSegment(true);
   playVideo();
-}
-
-function getSequenceMediaSegmentStart() {
-  return mediaGroup?.sequenceMediaSegment === "SecondDirection"
-    ? DIRECTION_SEGMENT_SECONDS
-    : 0;
 }
 
 function prepareSequenceMediaSegment(force = false) {
@@ -1761,7 +1813,7 @@ function prepareSequenceMediaSegment(force = false) {
       !Number.isFinite(elements.video.duration)) {
     return;
   }
-  const segmentStart = getSequenceMediaSegmentStart();
+  const segmentStart = 0;
   if (!force && Math.abs(elements.video.currentTime - segmentStart) < 0.05) {
     return;
   }
@@ -1772,41 +1824,7 @@ function prepareSequenceMediaSegment(force = false) {
   }
 }
 
-function enforceDirectionMediaSegment() {
-  if (
-    (mediaGroup?.sequenceMediaSegment ?? "Full") === "Full" ||
-    !Number.isFinite(elements.video.currentTime)
-  ) {
-    return;
-  }
-
-  const segmentStart = getSequenceMediaSegmentStart();
-  const segmentEnd = segmentStart + DIRECTION_SEGMENT_SECONDS;
-  if (
-    elements.video.currentTime >= segmentStart &&
-    elements.video.currentTime < segmentEnd
-  ) {
-    return;
-  }
-
-  try {
-    elements.video.currentTime = segmentStart;
-  } catch {
-    return;
-  }
-  playVideo();
-}
-
 function handleVideoEnded() {
-  if (
-    (mediaGroup?.sequenceMediaSegment ?? "Full") !== "Full" &&
-    (!elements.movePanel.hidden ||
-      (restActive && previewingUpcomingSequenceBlock))
-  ) {
-    enforceDirectionMediaSegment();
-    return;
-  }
-
   if (mediaExercise?.mode === "Hold" && !elements.movePanel.hidden) {
     showReviewedHoldFrame();
   }

@@ -3,6 +3,6 @@
     # to contact the wall. Every ID must also appear in
     # ExerciseWallRequirements.psd1.
     Required = @(
-        563, 564, 567, 568, 574
+        563, 564, 567, 568, 574, 633
     )
 }

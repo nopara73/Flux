@@ -5,51 +5,21 @@ namespace Flux.Tests;
 
 public sealed class WorkoutCoveragePolicyTests
 {
-    [Theory]
-    [InlineData(3, "r3.lower-limbs", 6)]
-    [InlineData(3, "r3.torso-pelvic-complex", 3)]
-    [InlineData(5, "r5.hips-thighs", 5)]
-    [InlineData(7, "r7.lower-legs-feet", 2)]
-    [InlineData(20, "r20.back-spinal-stabilization", 1)]
-    [InlineData(30, "r30.medial-deep-knee-extensors", 1)]
-    public void RequiredCoverageRoundsHalfUpToWholeCanonicalLeaves(
-        int minutes,
-        string groupId,
-        int expected)
-    {
-        WorkoutGroup group = MassGroupingTaxonomy.GetGroup(minutes, groupId);
-
-        Assert.Equal(
-            expected,
-            WorkoutCoveragePolicy.GetRequiredCanonicalCoverage(group));
-    }
-
     [Fact]
-    public void SelectabilityRequiresMeaningfulCoverageAndTracksPrimaryOwnershipSeparately()
+    public void PrimaryAloneEstablishesRegionAndSecondaryClaimsNeverChangeIt()
     {
-        WorkoutGroup group = MassGroupingTaxonomy.GetGroup(3, "r3.lower-limbs");
-        CanonicalMuscleGroup[] leaves = group.CanonicalGroups.ToArray();
-        Exercise belowThreshold = Exercise(
-            1,
-            leaves[0],
-            leaves.Skip(1).Take(4).ToArray());
-        Exercise exactlyHalf = Exercise(
-            2,
-            leaves[0],
-            leaves.Skip(1).Take(5).ToArray());
-        Exercise secondaryOnly = Exercise(
-            3,
-            CanonicalMuscleGroup.SpinalExtensors,
-            leaves.Take(6).ToArray());
-
-        Assert.Equal(5, WorkoutCoveragePolicy.GetCanonicalCoverage(belowThreshold, group));
-        Assert.False(WorkoutCoveragePolicy.IsSelectable(belowThreshold, group));
-        Assert.Equal(6, WorkoutCoveragePolicy.GetCanonicalCoverage(exactlyHalf, group));
-        Assert.True(WorkoutCoveragePolicy.IsSelectable(exactlyHalf, group));
-        Assert.Equal(6, WorkoutCoveragePolicy.GetCanonicalCoverage(secondaryOnly, group));
-        Assert.True(WorkoutCoveragePolicy.IsSelectable(secondaryOnly, group));
-        Assert.True(WorkoutCoveragePolicy.IsPrimaryForGroup(exactlyHalf, group));
-        Assert.False(WorkoutCoveragePolicy.IsPrimaryForGroup(secondaryOnly, group));
+        foreach (int minutes in MassGroupingTaxonomy.SupportedMinutes)
+        {
+            foreach (WorkoutGroup group in MassGroupingTaxonomy.GetResolution(minutes).Groups)
+            {
+                CanonicalMuscleGroup primary = group.CanonicalGroups.First();
+                Exercise direct = Exercise(1, primary, []);
+                Assert.True(WorkoutCoveragePolicy.IsSelectable(direct, group));
+                CanonicalMuscleGroup outside = Enum.GetValues<CanonicalMuscleGroup>().First(muscle => !group.CanonicalGroups.Contains(muscle));
+                Exercise indirect = Exercise(2, outside, group.CanonicalGroups.ToArray());
+                Assert.False(WorkoutCoveragePolicy.IsSelectable(indirect, group));
+            }
+        }
     }
 
     private static Exercise Exercise(

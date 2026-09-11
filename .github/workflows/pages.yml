@@ -13,6 +13,9 @@ on:
       - "Flux/Resources/raw/**"
       - "Flux/Flux.csproj"
       - "Flux/MainActivity.cs"
+      - "Flux/MainActivity.Availability.cs"
+      - "Flux.Tests/Fixtures/**"
+      - "docs/catalog-audit/workout_availability_current.json"
       - "Flux/MainActivity.Recovery.cs"
       - "Flux/RecoveryPrivacyActivity.cs"
       - "Flux/AndroidManifest.xml"
@@ -26,6 +29,8 @@ on:
       - "Flux/Resources/values/**"
       - "docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json"
       - "docs/catalog-audit/modifier_coverage_deficits_current.json"
+      - "docs/catalog-audit/migration-2026-09-05.json"
+      - "docs/catalog-audit/training-claim-corrections-2026-09-05.json"
       - "tools/flux_appicon.svg"
       - "tools/ExerciseMirrorRelationships.psd1"
       - "tools/Test-ExerciseMirrorRelationshipAudit.ps1"
@@ -34,6 +39,12 @@ on:
       - "tools/CanonicalMuscleGroups.psd1"
       - "tools/ExerciseSecondaryTrainingClaims.psd1"
       - "tools/Test-ExerciseSecondaryTrainingClaimAudit.ps1"
+      - "tools/RealExerciseCatalog.psd1"
+      - "tools/AdditionalExerciseCatalog.psd1"
+      - "tools/ExerciseCatalogDefinitions.ps1"
+      - "tools/Test-ExerciseCatalogDefinitions.ps1"
+      - "tools/ExerciseHardFloorCompatibility.psd1"
+      - "tools/Test-ExerciseHardFloorCompatibilityAudit.ps1"
   workflow_dispatch:
 
 permissions:
@@ -65,6 +76,9 @@ jobs:
             /Flux.Tests/CatalogInvariantTests.cs
             /Flux/Flux.csproj
             /Flux/MainActivity.cs
+            /Flux/MainActivity.Availability.cs
+            /Flux.Tests/Fixtures/**
+            /docs/catalog-audit/workout_availability_current.json
             /Flux/MainActivity.Recovery.cs
             /Flux/RecoveryPrivacyActivity.cs
             /Flux/AndroidManifest.xml
@@ -79,6 +93,8 @@ jobs:
             /Flux/Resources/values/**
             /docs/catalog-audit/modifier_coverage_deficits_2026-08-29.json
             /docs/catalog-audit/modifier_coverage_deficits_current.json
+            /docs/catalog-audit/migration-2026-09-05.json
+            /docs/catalog-audit/training-claim-corrections-2026-09-05.json
             /tools/flux_appicon.svg
             /tools/ExerciseMirrorRelationships.psd1
             /tools/Test-ExerciseMirrorRelationshipAudit.ps1
@@ -87,6 +103,12 @@ jobs:
             /tools/CanonicalMuscleGroups.psd1
             /tools/ExerciseSecondaryTrainingClaims.psd1
             /tools/Test-ExerciseSecondaryTrainingClaimAudit.ps1
+            /tools/RealExerciseCatalog.psd1
+            /tools/AdditionalExerciseCatalog.psd1
+            /tools/ExerciseCatalogDefinitions.ps1
+            /tools/Test-ExerciseCatalogDefinitions.ps1
+            /tools/ExerciseHardFloorCompatibility.psd1
+            /tools/Test-ExerciseHardFloorCompatibilityAudit.ps1
           sparse-checkout-cone-mode: false
 
       - name: Validate mirror relationship audit
@@ -100,6 +122,10 @@ jobs:
       - name: Validate muscle training claims
         shell: pwsh
         run: ./tools/Test-ExerciseSecondaryTrainingClaimAudit.ps1
+
+      - name: Validate stable exercise identities
+        shell: pwsh
+        run: ./tools/Test-ExerciseCatalogDefinitions.ps1
 
       - name: Set up Node.js
         uses: actions/setup-node@v6

@@ -23,7 +23,7 @@ export function registerProductionCatalogProfileShard(shardIndex, shardCount) {
     for (const profile of profiles) {
       for (const minutes of SUPPORTED_MINUTES) {
         const session = new WorkoutSession(catalog, createDefaultState(), () => 0);
-        session.startWorkout(minutes, profile);
+        session.startWorkout(minutes, profile, true);
         assert.ok(session.getActiveGroups().every((group) => {
           const selected = session.getSelectedExercise(group);
           return isSelectableForWorkoutProfile(

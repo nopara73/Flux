@@ -1,104 +1,65 @@
 # Mirror relationship audit
 
-The 508 retained exercises are reviewed against physical mirror equipment, not
-against whether a timed second-side demonstration is horizontally flipped.
+The 534 retained exercises are reviewed against physical mirror equipment.
+Timed side/direction demonstrations have a separate media contract.
 
-Mirror has three equipment states:
-
-- `None`: no physical mirror is available;
-- `Compact`: roughly the upper body is visible;
-- `Tall`: the full body is visible.
-
-Each exercise has both a relationship and a minimum useful coverage:
+Mirror has three actual equipment states: `None`, `Compact` (upper-body view),
+and `Tall` (full-body view). Each exercise declares a relationship and its
+minimum useful mirror coverage.
 
 | Relationship | Coverage | Runtime behavior | Count |
 | --- | --- | --- | ---: |
-| `MirrorOnly` | `UpperBody` | Requires compact or tall | 6 |
-| `MirrorOnly` | `FullBody` | Requires tall | 6 |
-| `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 31 |
-| `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 50 |
-| `Agnostic` | `None` | Unaffected | 415 |
+| `MirrorOnly` | `UpperBody` | Requires compact or tall | 0 |
+| `MirrorOnly` | `FullBody` | Requires tall | 0 |
+| `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 39 |
+| `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 58 |
+| `Agnostic` | `None` | Unaffected | 437 |
 
-The first four cells declare `UpperBody` or `FullBody`; `Agnostic` must declare
-`None`. `MirrorOnly` requires `equipment: "Mirror"`; the other relationships
-require `equipment: "None"`.
+These are audit results. No relationship/coverage cell has a population minimum,
+and any permitted BenefitsGreatly criterion may be empty. The exhaustive lists
+in `tools/ExerciseMirrorRelationships.psd1` must still partition the catalog
+exactly, without missing or duplicate IDs, invalid coverage, contradictory
+equipment, or disagreement between linked directions.
 
-## Mirror-only inventory
+## Semantic criteria
 
-The upper-body set is:
+A reflection must be essential to the actual exercise for `MirrorOnly`.
+Ordinary posing, imitation, and optional form checking do not establish that
+requirement. No current demonstration supports a MirrorOnly classification.
 
-- `Mirror One-Eyebrow Isolation Practice`
-- `Mirror Facial-Expression Practice`
-- `Smile at Yourself in the Mirror`
-- `Mirror Tutting Box Sequence`
-- `Mirror Arm-Wave Isolation Practice`
-- `Mirror Standing Vacuum Repetitions`
+Continuous self-view must substantially change execution under one of the six
+narrow audited criteria for `BenefitsGreatly`:
 
-The full-body set is:
+1. Technique-sensitive martial arts.
+2. Dance or alignment-sensitive poses.
+3. Complex single-leg alignment.
+4. Live plane, path, or symmetry correction.
+5. Gaze-stability feedback.
+6. Subtle pelvic-position feedback.
 
-- `Mirror Front Double-Biceps Posing`
-- `Mirror Front Lat-Spread Posing`
-- `Mirror Side-Chest Posing`
-- `Mirror Side-Triceps Posing`
-- `Mirror Abdominals-and-Thighs Posing`
-- `Mirror Most-Muscular Posing`
+The 97 assignments and their coverage split are explicitly reviewed results,
+never targets or a means of filling a coverage shortage. The criterion keys
+remain mandatory even when their lists are empty.
 
-These are established reflection practices with exact human demonstrations.
-The compact-mirror set uses live self-view to isolate an eyebrow, practise
-facial expressions, smile at one's own reflection, and correct the visual
-geometry of tutting and arm-wave illusions. The tall-mirror set contains six standard
-bodybuilding poses whose intended whole-body line and contraction are judged
-through live full-body view. The reflection is part of each practice; ordinary
-movements do not become `MirrorOnly` merely because a mirror could offer
-optional form checking.
+## Availability and materiality
 
-## Benefits-greatly guardrails
+Under the user-authorized 2026-09-10 policy, pairwise coverage counts every
+actually selectable session movement, including Agnostic movements while
+Mirror is available. Each broad 3-minute region requires five distinct
+movements; each finer 5- through 30-minute bucket requires one. Compact/tall
+equipment restrictions and all other profile predicates still apply.
 
-Continuous live self-view must substantially change execution under exactly one
-of four audited reasons:
+Materiality is independent and unchanged. Compact must actually prefer a
+meaningful, anatomically broad upper-body set; full-body BenefitsGreatly
+exercises receive no preference credit there. Tall includes the compatible
+upper- and full-body set. These checks also run when the other modifier in a
+pair is already enabled. The current catalog has zero materiality deficits.
 
-1. technique-sensitive martial arts;
-2. dance or alignment-sensitive poses;
-3. complex single-leg alignment;
-4. live plane, path, or symmetry correction.
+The validation remains quadratic in the quota-bearing logical modifiers.
+Wall has its separate global inventory floor and is outside pairwise quotas.
+All enforceable coverage and distinct-lineup deficits must be zero before
+release; the current unresolved counts are in the
+[current deficit ledger](catalog-audit/modifier_coverage_deficits_current.json).
 
-Merely seeing oneself, comparing oneself with the demonstration, or receiving
-ordinary optional form feedback does not qualify. The current 81 assignments
-are an audit result, never a quota, target, cap, or reason to promote or demote
-an exercise. Their coverage split is independently reviewed and must exactly
-partition the same 81 IDs.
-
-## Catalog guarantees
-
-Every one of the five relationship/coverage cells must contain at least five
-reviewed exercises. This is a direct category floor, separate from pairwise
-workout viability.
-
-For every modifier pair, workout duration, and muscle bucket, at least five
-qualifying exercises must exist in every real state. A binary/binary pair has
-four states. A pair involving Mirror has six: the other modifier is off/on and
-Mirror is off/compact/tall. In a mirror-equipped state, only `MirrorOnly` and
-`BenefitsGreatly` count toward the five-exercise relevance floor, after actual
-equipment compatibility is applied. `Agnostic` exercises remain runtime
-candidates but cannot make Mirror coverage appear complete.
-
-Materiality is checked independently for compact and tall mirrors. Compact must
-actually prefer a meaningful, anatomically broad upper-body set; full-body
-`BenefitsGreatly` exercises do not receive credit there. Tall must actually
-prefer the compatible upper- and full-body set. These checks also run when
-either other modifier is already enabled.
-
-The guarantees remain quadratic in the number of quota-bearing logical
-modifiers. The separate Wall equipment modifier has only its own global
-distinct-movement floor and does not add pairwise Mirror states. Mirror's
-extra equipment state enlarges the states of a pair but does not create an
-all-modifier power set.
-
-The authoritative exhaustive lists live in
-`tools/ExerciseMirrorRelationships.psd1`. Generation and Android/web tests fail
-on missing or duplicate IDs, criterion/coverage drift, contradictory equipment,
-an undersized cell, linked-direction disagreement, pairwise deficiencies,
-materiality deficiencies, or infeasible distinct lineups.
-
-Mirror equipment never transforms demonstration media. Horizontal playback
-mirroring remains confined to the timed second-side protocol.
+Mirror equipment never transforms media. Timed side mirroring and explicitly
+reviewed direction assets follow the exercise's actual sequence independently.
