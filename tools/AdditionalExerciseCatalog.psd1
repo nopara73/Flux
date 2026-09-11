@@ -157,6 +157,12 @@
         Practice = 'Standing aerobic warm-up'
         MotionProfile = 'AlternatingToeUpHeelTaps'
     }
+    1032 = @{
+        Name = 'Spinal Wave with Arm Spirals'
+        Region = 'BACK'
+        Practice = 'Qigong spinal and arm mobility'
+        MotionProfile = 'WhiteCraneSpinalWaveArmSpirals'
+    }
     1031 = @{
         Name = 'Chair Squats with Thigh Squeeze'
         Region = 'LEGS'

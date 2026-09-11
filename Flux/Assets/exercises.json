@@ -24206,5 +24206,52 @@
     "equipment": "None",
     "silent": true,
     "sessionMovementId": 969
+  },
+  {
+    "id": 1032,
+    "name": "Spinal Wave with Arm Spirals",
+    "retiredName": null,
+    "video": "exercise_videos/exercise_1032.mp4",
+    "primaryCanonicalGroup": "DeepAndIntersegmentalBack",
+    "secondaryCanonicalGroups": [
+      "AbdominalWall",
+      "SpinalExtensors",
+      "ShoulderAbductors",
+      "ElbowFlexors",
+      "ElbowExtensors",
+      "ForearmFlexorsAndPronators",
+      "ForearmExtensorsAndSupinators"
+    ],
+    "practice": "Qigong spinal and arm mobility",
+    "motionProfile": "WhiteCraneSpinalWaveArmSpirals",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Continuous",
+    "directionSequence": "None",
+    "sequenceBlocks": [
+      {
+        "exerciseId": 1032,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
+    "insectCompatibility": "Compatible",
+    "hardFloorCompatibility": "Compatible",
+    "upperBodyClothingRequirement": "Agnostic",
+    "shyCompatibility": "Compatible",
+    "wallRequired": false,
+    "soleWallContactRequired": false,
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 0,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
   }
 ]

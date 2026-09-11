@@ -131,3 +131,35 @@ return. The narrow planted stance, shoes and unsupported body remain visible.
 Admitted as 1031 after all 53 packaged frames and the natural target-round
 workout phases passed review. The entry shares chair movement family 969.
 See the completion record and hash-bound review ledger.
+
+### Forearm and shoulder sources after the 1031 checkpoint
+
+- Hardstyle Kettlebell Pro `T7QmnVH3dtE`: the teacup segment uses shoes/objects balanced in the hands; subsequent work is partner-assisted on the floor. No equipment-free runtime excerpt selected.
+- Leda Elliott `JlPU5mwgZ1A`: full source and a 144-176-second detail sheet inspected. The later prop-free arm/waist coil keeps the lower body largely stationary, with arm-only setup between coils. It does not resolve Insect, and another teacup demonstration would share family 1026.
+- San San Tai Chi `PQ_9I7iVpVo`: wrist rotations are visible, but the source repeatedly crops the feet/lower legs and the standing arm sequence lacks substantial continuous whole-body motion.
+- Chinese Health Qigong `p63dqQsHlWM`: Tiger Springing on Its Prey uses a deep split stance and hand-to-floor contact; its explanatory anatomy overlay is not an acceptable human runtime demonstration.
+- Pr1me Movement `12HW240qnmo`: the dynamic lat stretch requires holding a rack upright. The Running PTs `05u_K6iilU0` uses elbow support on a treatment table and later a dowel. Neither supplies equipment-free movement.
+- Lee Holden's PBS episode `Arms, Wrists and Hands` has a useful public transcript, but the actual player was confirmed behind VPM Passport membership. The generic and PBS download attempts failed; no further access attempt or runtime use was made after the membership gate was confirmed. Separate public demonstrations are being assessed independently.
+- MVP Zone Fitness `https://vimeo.com/489982004`: download failed with a connection error. Media has not been inspected or approved.
+- Accelerate Sport Performance `2CYZmTxB_yA`: the parallel-stance lat/triceps stretch has an ordinary overhead side bend, but the legs remain stationary and it does not provide Insect's substantial continuous whole-body movement.
+- Todd Kuslikis `B7et8bi8w4Q`: the isolated wrist-wave demonstration is framed above the legs. Natural Movement Chi Kung `tNk1Wpx8cY0` shows low arm/wrist circles with a largely stationary torso and legs. Neither resolves Insect.
+- Lee Holden `Z6ete74sURw`: Great Bear Swims in the Ocean was inspected as a full-source contact sheet. It does not demonstrate the missing specific forearm/rotator-cuff/lat targets; no entry or anatomy claim was added.
+
+### Spinal-wave source admitted after midnight
+
+Lee Holden's separately public White Crane sample `YcGUb96CLzo` teaches a
+substantial sagittal spinal wave and knee bend with bilateral arm spirals.
+Detailed source sheets and high-resolution frames established the complete
+arm extension/curl and deliberate palm/wrist rotation. The 201.2-205.0-second
+cycle preserves a normal warm-up repetition and the full rear-arm return.
+The earlier 3.6-second draft was replaced before approval; final generation
+explicitly used `-Force` because the ordinary generator preserves existing
+runtime media. The final video was then confirmed as 76 frames and 3.8 seconds.
+
+Admitted as 1032, Spinal Wave with Arm Spirals, after every final frame and
+actual-workout timer phase were inspected. Deep spinal mobility is primary;
+the seven secondaries describe the deliberate spinal flexion/extension,
+shoulder elevation, elbow extension/curl and forearm rotation. No breathing,
+lat or rotator-cuff claim was inferred. The continuous planted movement is
+Hard Floor, Insect, Silence and Shy compatible. All 544 prior catalog objects
+remain unchanged. See the completion record and hash-bound review ledger.

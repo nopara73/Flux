@@ -348,3 +348,69 @@ coverage hierarchy and five affected workout-profile shards. The production
 web build stops at the three expected availability and distinct-lineup gates.
 The Debug build succeeds with zero warnings and errors in 4m13s. No deployment
 or phone installation was performed while these release gates remain open.
+
+## Spinal Wave with Arm Spirals, 1032 — 12 September
+
+[Lee Holden's public White Crane sample](https://www.youtube.com/watch?v=YcGUb96CLzo)
+provides a complete sagittal spinal wave with knee flexion and bilateral arm
+spirals. The retained source window is 201.2-205.0 seconds, 114 frames at
+29.97 fps. Its source SHA-256 is
+`2af0ce5f406904f20de0b5e592d29f09b336e43c902668e352a11afda417a587`.
+
+The final 720-pixel square keeps the complete body, hands and feet visible.
+Every one of the 76 frames was inspected. The 3.8-second loop preserves the
+full rear-arm return; an earlier shorter draft was replaced before approval.
+The runtime SHA-256 is
+`711d833ae9e98461fc4156e542480cd32ffbf87c3fde26c53ed6c6790a03fbdb`.
+Metadata review SHA-256 is
+`4f6b976f455aea4d3014d494bd72b6d653176298e33c52e4649e8870cbd9cca6`.
+
+DeepAndIntersegmentalBack is primary. AbdominalWall, SpinalExtensors,
+ShoulderAbductors, ElbowFlexors, ElbowExtensors, ForearmFlexorsAndPronators and
+ForearmExtensorsAndSupinators are secondary mobility targets from the repeated
+spinal wave and deliberate arm/palm spiral. No breathing, lat or rotator-cuff
+claim was added. Demand is 0. The planted parallel stance and substantial
+continuous spinal, knee and arm motion are Hard Floor, Insect, Shy and Silence
+compatible. Clothing and mirror relationships are agnostic. The barefoot
+source uses no foot-specific action and is compatible with ordinary shoes.
+This is a distinct spinal-wave movement, not another teacup identity.
+
+Actual-workout evidence is in `evidence/2026-09-11/spinal-wave`. The real
+ten-minute planner used profile 659 and selected 1032 as its first round via
+a saved-score fixture. No previous outcomes were synthesized. Preparation,
+45-second work and 15-second rest elapsed naturally, followed by exercise 202.
+Captured playback stayed at rate 1 with no media or console errors. This is
+target-round review; no complete ten-minute workout or public deployment is
+claimed.
+
+All 544 prior runtime catalog objects are unchanged. All 545 current records
+have passing hash-bound reviews. The original audit baseline remains 517
+records plus one reviewed retirement. There are 1,056 exact secondary claims
+and primary work for all 30 canonical muscles; 47 explicit identity families
+cover 120 records. Demand counts are 119 / 289 / 137, Hard Floor 353 / 192,
+Insect 242 / 303, Shy 428 / 117, and Mirror 446 agnostic / 99 BenefitsGreatly.
+
+This closes the Hard Floor/Insect arm/forearm availability gaps at 15, 20 and
+30 minutes. Pairwise deficits decrease from 21 to 17, and overlapping Hard
+Floor deficits from 9 to 5. The 20 incomplete distinct lineups remain. Eight
+demand-category and one materiality findings remain diagnostic only.
+
+Catalog revision is 79, database version 95 and app version 3.16 / 130. State
+schemas remain 29 / 26. Catalog LF SHA-256 is
+`aa22b43af06c145760dbd79f40e1223947b8788c0d9f8d538f58ff92c8965ad9`.
+The reviewed 132-file parity lock is
+`6c8ffe85a7daa53c4e62607a8184804297457babbfef0361d46a42f393c48e9e`.
+
+The full test runs passed 823/825 native tests and 368/375 web tests. Each
+included one explicit reviewed-abdominal-secondary expectation that had not
+yet listed 1032. Both lists were corrected; the subsequent focused runs pass
+26 native tests, the web training-claim invariant, and all 25 web catalog
+completion tests. The other failures are the existing coverage invariant and
+five affected web workout-profile shards. The production web build stops at
+the three availability and distinct-lineup gates. Debug builds with zero
+warnings and errors in 4m41s. No deployment or phone installation was performed.
+
+The coordinator subsequently relayed the owner's instruction that separate
+slots need not require different movements. The runtime uniqueness policy and
+its associated release gate are being reviewed separately; the 17 actual
+availability deficits above are unaffected by that distinction.

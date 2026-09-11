@@ -6168,6 +6168,24 @@
         PingPong = $false
         MirrorForAlternation = $false
     }
+    1032 = @{
+        LocalSourceFile = 'white-crane-holden-201.2-3.8.mp4'
+        LocalSourceSha256 = '2af0ce5f406904f20de0b5e592d29f09b336e43c902668e352a11afda417a587'
+        File = 'white-crane-holden.mp4'
+        Url = 'https://www.youtube.com/watch?v=YcGUb96CLzo'
+        SourcePage = 'https://www.youtube.com/watch?v=YcGUb96CLzo'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 3.8
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:360:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
     1031 = @{
         LocalSourceFile = 'chair-squat-squeeze-melissa-388-2.7.mp4'
         LocalSourceSha256 = 'a40d1f9bc18572412ff52dd94d5b7a069412816ef55c4e083f3003dbc4a784ff'

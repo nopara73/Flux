@@ -7,6 +7,7 @@
     # Incompatible
     # exercises remain available when the user selects a stable soft surface.
     Compatible = @(
+        1032,
         1031,
         1030,
         1028, 1029,

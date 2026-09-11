@@ -31699,6 +31699,64 @@
           "reason": "Inspected paused preparation, resumed preparation, work with 27 and 2 seconds remaining, rest with 7 seconds remaining, and the next exercise (1029) in the actual web workout player. All timers elapsed naturally with rate 1 and no video or console errors. The real 10-minute planner used profile 659 (Insect, Silence, Hard Floor, Upper Body Clothing, Shy), target round 6. Five previous outcomes were synthetic setup; this is exact target-round review, not a claimed full real ten-minute workout."
         }
       }
+    },
+    {
+      "id": 1032,
+      "metadataSha256": "4f6b976f455aea4d3014d494bd72b6d653176298e33c52e4649e8870cbd9cca6",
+      "assets": {
+        "exercise_videos/exercise_1032.mp4": "711d833ae9e98461fc4156e542480cd32ffbf87c3fde26c53ed6c6790a03fbdb"
+      },
+      "reviewedAt": "2026-09-12T00:05:15.8515754+08:00",
+      "method": "Explicit public source, every final frame, anatomy, constraints, identity and natural-timer actual-workout review.",
+      "observedAction": "Wave the spine forward as the knees bend and arms spiral out, turn the palms up and curl the arms in as the back rounds, then roll upright and return the arms behind the hips.",
+      "evidence": [
+        "docs/catalog-audit/evidence/2026-09-11/spinal-wave/1032-all-76-frames.jpg",
+        "docs/catalog-audit/evidence/2026-09-11/spinal-wave/playback.json",
+        "docs/catalog-audit/evidence/2026-09-11/spinal-wave/1032-console.json",
+        "tools/ReviewedSourceMedia/white-crane-holden-201.2-3.8.mp4"
+      ],
+      "checks": {
+        "Metadata": {
+          "status": "PASS",
+          "reason": "The source explicitly teaches a spinal wave with spiraling arms. DeepAndIntersegmentalBack is primary; deliberate spinal flexion/extension supports AbdominalWall and SpinalExtensors. The repeated forward/outward arm path, elbow opening/curl and visible palm/wrist rotation support ShoulderAbductors, ElbowFlexors, ElbowExtensors, ForearmFlexorsAndPronators and ForearmExtensorsAndSupinators as mobility secondaries. These are repeated components of the taught spiral, not static bracing. No breathing, lat, rotator-cuff, hand, neck or incidental lower-body training claim is added. Demand 0 reflects unresisted fluid mobility. Substantial spinal/hip/knee motion and the arm cycle remain continuous at the demonstrated ordinary warm-up pace: Insect compatible. The parallel planted stance has no impact or lateral/pivoting drive: Hard Floor compatible. The visible movement reads as ordinary standing mobility, without theatrical gesture or vocalization: Shy and Silence compatible. Mirror/clothing agnostic. This sagittal spinal-wave/forward-spiral exercise is a distinct movement from overhead teacup circles, split-stance crocodile circles, and stepping tiger/deer sequences."
+        },
+        "FullLoop": {
+          "status": "PASS",
+          "reason": "Inspected all 76 packaged frames, retaining one full natural spinal wave, outward/forward arm spiral, palm-up elbow curl, upright return and rear arm return. The first 3.6-second draft omitted the end of the return; it was replaced by the complete 201.2-205.0-second source cycle before approval."
+        },
+        "Crop": {
+          "status": "PASS",
+          "reason": "The 720-pixel square at x=360 retains the complete head, hands and feet in all 76 frames. The side view clearly shows the spinal wave and knee bend; the nearer arm makes the bilateral spiral and palm rotation visible. No source attribution is removed."
+        },
+        "LoopSeam": {
+          "status": "PASS",
+          "reason": "The final upright rear-arm position returns to the matching first position. Both boundary frames and the moving final loop in the actual workout were inspected. No reversal, artificial return, compositing or hold is used."
+        },
+        "PlaybackSpeed": {
+          "status": "PASS",
+          "reason": "The preserved source is 114 frames at 29.97 fps, 3.8038 seconds; the runtime is 76 frames at 20 fps, 3.8 seconds. Frame resampling does not alter the demonstrated movement speed. Actual playback was rate 1 and the five-second preparation, 45-second work and 15-second rest elapsed without timer acceleration."
+        },
+        "Mirroring": {
+          "status": "PASS",
+          "reason": "The simultaneous bilateral movement retains the original orientation. No mirrored side or manufactured alternation is added."
+        },
+        "Travel": {
+          "status": "PASS",
+          "reason": "The parallel feet stay planted. The small forward spinal wave and arm reach fit within 2 m by 2 m; there is no advancing or retreating."
+        },
+        "HoldFrame": {
+          "status": "NOT_APPLICABLE",
+          "reason": "This is a moving repetition with no displayed hold frame."
+        },
+        "Equipment": {
+          "status": "PASS",
+          "reason": "Only the feet touch the floor. There is no external support or equipment. The barefoot source requires no toe articulation or foot-specific action and can be copied in ordinary shoes."
+        },
+        "Workout": {
+          "status": "PASS",
+          "reason": "Inspected paused and resumed five-second preparation, moving work with six seconds remaining, rest with two seconds remaining, and the next exercise 202 in the actual web workout player. Playback rate stayed 1, with no media or console errors. The real ten-minute planner used profile 659; a high saved-score fixture selected 1032 as the first round, so no prior outcomes were synthesized. This is exact target-round review, not a full ten-minute workout or public deployment."
+        }
+      }
     }
   ]
 }

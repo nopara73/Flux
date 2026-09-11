@@ -1,7 +1,7 @@
 {
-  "catalogRevision": 78,
-  "catalogRecordCount": 544,
-  "catalogSha256": "d93b3bb58b7002bc63afe1f0c9b26cd80f77cf188753aef8ae9c806c25aad9af",
+  "catalogRevision": 79,
+  "catalogRecordCount": 545,
+  "catalogSha256": "aa22b43af06c145760dbd79f40e1223947b8788c0d9f8d538f58ff92c8965ad9",
   "policy": {
     "treatment": "Availability and complete atomic lineups must have zero deficits. Demand-category and percentage materiality arrays are historical inventory diagnostics, not release gates.",
     "diagnosticOnly": [
@@ -14,10 +14,10 @@
     "muscularDemandMinimumPerCategoryPerGroup": 1
   },
   "summary": {
-    "pairwiseDeficiencyCount": 21,
-    "pairwiseAffectedGroupCount": 10,
-    "hardFloorCategoryDeficiencyCount": 9,
-    "hardFloorCategoryAffectedGroupCount": 9,
+    "pairwiseDeficiencyCount": 17,
+    "pairwiseAffectedGroupCount": 6,
+    "hardFloorCategoryDeficiencyCount": 5,
+    "hardFloorCategoryAffectedGroupCount": 5,
     "muscularDemandDeficiencyCount": 8,
     "muscularDemandAffectedGroupCount": 2,
     "demandZeroDeficiencyCount": 0,
@@ -32,18 +32,6 @@
       "minutes": 15,
       "groupId": "r15.shoulder",
       "groupName": "Shoulder",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.arm-forearm-hand",
-      "groupName": "Arm, forearm and hand",
       "firstModifier": 16,
       "firstModifierEnabled": true,
       "secondModifier": 1,
@@ -186,18 +174,6 @@
     },
     {
       "minutes": 20,
-      "groupId": "r20.forearm-hand",
-      "groupName": "Forearm and hand",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 20,
       "groupId": "r20.shoulder-adduction-extension",
       "groupName": "Shoulder adduction and extension",
       "firstModifier": 16,
@@ -212,18 +188,6 @@
       "minutes": 30,
       "groupId": "r30.rotator-cuff",
       "groupName": "Rotator cuff",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.forearm-extensors-supinators",
-      "groupName": "Forearm extensors and supinators",
       "firstModifier": 16,
       "firstModifierEnabled": true,
       "secondModifier": 1,
@@ -258,18 +222,6 @@
     },
     {
       "minutes": 30,
-      "groupId": "r30.forearm-flexors-pronators",
-      "groupName": "Forearm flexors and pronators",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
       "groupId": "r30.shoulder-adductors-extensors",
       "groupName": "Shoulder adductors and extensors",
       "firstModifier": 16,
@@ -294,28 +246,8 @@
     },
     {
       "minutes": 15,
-      "groupId": "r15.arm-forearm-hand",
-      "groupName": "Arm, forearm and hand",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
       "groupId": "r15.scapular-chest-breathing",
       "groupName": "Scapular girdle, chest and breathing",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.forearm-hand",
-      "groupName": "Forearm and hand",
       "hardFloorCompatibility": "Compatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
@@ -336,26 +268,6 @@
       "minutes": 30,
       "groupId": "r30.rotator-cuff",
       "groupName": "Rotator cuff",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.forearm-extensors-supinators",
-      "groupName": "Forearm extensors and supinators",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.forearm-flexors-pronators",
-      "groupName": "Forearm flexors and pronators",
       "hardFloorCompatibility": "Compatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
@@ -452,8 +364,8 @@
       "baseProfile": 16,
       "enabledModifier": 2,
       "modifiedProfile": 18,
-      "baselineExerciseCount": 267,
-      "modifiedExerciseCount": 254,
+      "baselineExerciseCount": 268,
+      "modifiedExerciseCount": 255,
       "materialExerciseCount": 13,
       "requiredMaterialExerciseCount": 14,
       "affectedGroupCount": 7,
@@ -476,7 +388,7 @@
     {
       "minutes": 15,
       "profile": 17,
-      "maximumDistinctExerciseCount": 12,
+      "maximumDistinctExerciseCount": 13,
       "requiredDistinctExerciseCount": 15
     },
     {
@@ -506,13 +418,13 @@
     {
       "minutes": 20,
       "profile": 17,
-      "maximumDistinctExerciseCount": 18,
+      "maximumDistinctExerciseCount": 19,
       "requiredDistinctExerciseCount": 20
     },
     {
       "minutes": 30,
       "profile": 17,
-      "maximumDistinctExerciseCount": 24,
+      "maximumDistinctExerciseCount": 25,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -524,13 +436,13 @@
     {
       "minutes": 30,
       "profile": 513,
-      "maximumDistinctExerciseCount": 25,
+      "maximumDistinctExerciseCount": 26,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 45,
       "profile": 17,
-      "maximumDistinctExerciseCount": 24,
+      "maximumDistinctExerciseCount": 25,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -542,13 +454,13 @@
     {
       "minutes": 45,
       "profile": 513,
-      "maximumDistinctExerciseCount": 25,
+      "maximumDistinctExerciseCount": 26,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 60,
       "profile": 17,
-      "maximumDistinctExerciseCount": 24,
+      "maximumDistinctExerciseCount": 25,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -560,13 +472,13 @@
     {
       "minutes": 60,
       "profile": 513,
-      "maximumDistinctExerciseCount": 25,
+      "maximumDistinctExerciseCount": 26,
       "requiredDistinctExerciseCount": 28
     },
     {
       "minutes": 90,
       "profile": 17,
-      "maximumDistinctExerciseCount": 24,
+      "maximumDistinctExerciseCount": 25,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -578,7 +490,7 @@
     {
       "minutes": 90,
       "profile": 513,
-      "maximumDistinctExerciseCount": 25,
+      "maximumDistinctExerciseCount": 26,
       "requiredDistinctExerciseCount": 28
     }
   ]

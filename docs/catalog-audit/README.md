@@ -9,7 +9,7 @@ the action, name, muscular demand, anatomy, structure, and presentation.
 
 Current integration status is recorded in
 [`completion-2026-09-11.md`](completion-2026-09-11.md). The original planner is
-restored, and the catalog now has 544 retained, hash-reviewed exercises.
+restored, and the catalog now has 545 retained, hash-reviewed exercises.
 The earlier checkpoints below are historical; they do not establish release.
 
 ### Historical stable handoff checkpoint

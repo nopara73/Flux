@@ -142,6 +142,50 @@ public sealed class CatalogCompletionTests
         }
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SpinalWaveSuppliesHardFloorInsectForearmSlotsAndCompletesAUniqueLineup(bool light)
+    {
+        foreach (int seed in new[] { 1, 2, 4 })
+        {
+            Exercise[] catalog = LoadCatalog();
+            Exercise wave = catalog.Single(exercise => exercise.Id == 1032);
+            WorkoutModifiers profile = WorkoutModifiers.HardFloor | WorkoutModifiers.Insect |
+                WorkoutModifiers.Silence | WorkoutModifiers.Shy | WorkoutModifiers.UpperBodyClothing |
+                (light ? WorkoutModifiers.Light : WorkoutModifiers.None);
+            Assert.True(WorkoutModifierPolicy.IsCompatible(wave, profile));
+            foreach ((int minutes, string key) in new[]
+            {
+                (15, "r15.arm-forearm-hand"), (20, "r20.forearm-hand"),
+                (30, "r30.forearm-flexors-pronators"), (30, "r30.forearm-extensors-supinators"),
+            })
+                Assert.True(WorkoutCoveragePolicy.IsSelectable(wave,
+                    MassGroupingTaxonomy.GetGroup(minutes, key)));
+            Assert.NotEqual(1026, WorkoutModifierPolicy.GetSessionMovementId(wave));
+
+            wave.Score = 10000;
+            var state = new WorkoutState();
+            var service = new ExerciseSessionService(catalog, new Random(seed));
+            service.StartWorkout(state, 10, profile);
+            WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+            Assert.Contains(rounds, round => service.GetSelectedExercise(state, round).Id == 1032);
+            WorkoutGroup[] roots = rounds.Where(round => round.SequenceBlockIndex == 0).ToArray();
+            Assert.Equal(roots.Length, roots.Select(round => WorkoutModifierPolicy.GetSessionMovementId(
+                service.GetSelectedExercise(state, round))).Distinct().Count());
+            Assert.All(rounds, round => Assert.True(WorkoutModifierPolicy.IsCompatible(
+                service.GetSelectedExercise(state, round), profile)));
+            foreach (WorkoutGroup round in rounds)
+            {
+                service.BeginRest(state, round, DateTimeOffset.UtcNow.AddSeconds(15).ToUnixTimeMilliseconds());
+                if (service.IsIntermediateSequenceBlock(state, round)) service.AdvanceSequence(state, round);
+                else service.RecordOutcome(state, round, keep: true);
+                service.ClearPendingRest(state);
+            }
+            Assert.True(state.WorkoutCompleted);
+        }
+    }
+
     [Fact]
     public void NewDirectMovementsPreserveExistingAnatomySequenceAndFeedback()
     {

@@ -122,6 +122,42 @@ for (const light of [false, true]) {
   });
 }
 
+for (const light of [false, true]) {
+  test(`spinal wave supplies Hard Floor/Insect forearm slots and completes a unique lineup, Light=${light}`, () => {
+    const wave = catalog.find((exercise) => exercise.id === 1032);
+    const profile = WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Insect |
+      WORKOUT_MODIFIERS.Silence | WORKOUT_MODIFIERS.Shy | WORKOUT_MODIFIERS.UpperBodyClothing |
+      (light ? WORKOUT_MODIFIERS.Light : 0);
+    assert.equal(isCompatibleWithWorkoutModifiers(wave, profile), true);
+    for (const [minutes, key] of [
+      [15, "r15.arm-forearm-hand"], [20, "r20.forearm-hand"],
+      [30, "r30.forearm-flexors-pronators"], [30, "r30.forearm-extensors-supinators"],
+    ]) assert.equal(isSelectable(wave,
+      RESOLUTIONS.get(minutes).groups.find((group) => group.id === key)), true);
+    assert.notEqual(getSessionMovementId(wave), 1026);
+    for (const randomValue of [0.01, 0.2, 0.4]) {
+      const state = createDefaultState();
+      state.scores[1032] = 10000;
+      const session = new WorkoutSession(catalog, state, () => randomValue);
+      session.startWorkout(10, profile);
+      const rounds = session.getActiveGroups();
+      assert.ok(rounds.some((round) => session.getSelectedExercise(round).id === 1032));
+      const roots = rounds.filter((round) => (round.sequenceBlockIndex ?? 0) === 0);
+      assert.equal(new Set(roots.map((round) => getSessionMovementId(
+        session.getSelectedExercise(round)))).size, roots.length);
+      assert.ok(rounds.every((round) => isCompatibleWithWorkoutModifiers(
+        session.getSelectedExercise(round), profile)));
+      for (const round of rounds) {
+        session.beginRest(round, Date.now() + 15_000);
+        if (session.isIntermediateSequenceBlock(round)) session.advanceSequence(round);
+        else session.recordOutcome(round, true);
+        session.clearPendingRest();
+      }
+      assert.equal(session.state.workoutCompleted, true);
+    }
+  });
+}
+
 test("new direct movements preserve existing anatomy, sequence and feedback", () => {
   const chair = catalog.find((exercise) => exercise.id === 1028);
   const heel = catalog.find((exercise) => exercise.id === 1029);

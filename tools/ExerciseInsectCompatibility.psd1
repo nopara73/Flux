@@ -4,6 +4,7 @@
     # sufficient by itself; assess the complete action, pace and range.
     # The two lists must partition the retained catalog.
     Compatible = @(
+        1032,
         1031,
         1030,
         1029,
