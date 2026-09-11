@@ -86,3 +86,48 @@ Megan Anne `EMB65BDZxac` uses wide/lateral work and floor exercises. Rosalie Bro
 `oo8mwUdMbnc` describes seated/pillow work; its inaccessible video was not
 bypassed. UNC Cancer Rehab `10sqHBv0zL4` is a supine crisscross-kick demonstration.
 None supplies a new feet-only, Hard Floor/Insect-compatible thigh squeeze.
+
+## Additional source review after reverse rowing
+
+The following sources were inspected as source contact sheets, with closer
+frame inspection where a candidate appeared promising. None of these checks
+is a packaged-media approval.
+
+- Paul Nathan `TQzIKKnjqlM`: the knee-bend portion is followed by extended arm-only pressing; hand-shape changes do not establish a forearm primary target.
+- Marcus Santer `hk-Gkp5edVQ`: wide lateral loading and clipped reaching hands. His `qMcJoLUNOe4` keeps the lower body stationary during the arm opening.
+- Ric Bolzan `evF5_VDKjzo`: partly cropped feet and extended arm-only phases.
+- Olly Hermon-Taylor `BDp3hxG7NR0`: the teacup demonstration is framed above the hips.
+- Jingjin Movement Training `TQC8SdoyVko`: the tiger-claw action uses a loaded split stance and substantial rotation; it does not solve Hard Floor.
+- Qi Wellness Way `41oY_h4-TwM`: the torso and legs remain upright during the arm raises.
+- Lee Holden `FGSwqLn7Ugc`: full-source and close wave/squat sheets inspected. The wave is largely arm-dominant; the later deep-squat demonstration places fingertips on the floor. Neither excerpt was admitted.
+- Ben McDonald / 2B Free Therapies `i6oZEN_iHr8`: long standing side-bend holds, then equipment-supported stretching; no qualifying continuous whole-body lat flow.
+- Tamsey Smith `1aH2Nnv1FA4`: the chair-squat demonstration relies on a barre/sink support and has poor backlit contrast.
+- Lia Montelongo / eHow `0cWUyv1XOxw`: side-lying and chair-supported leg exercises.
+- Heath Matthews `488DygSxrsI`: despite the Tea Cups title, the demonstrated rotations use an anchored resistance band.
+- John Weiss `h5-J-y7iXKk`: the feet-together swimming-dragon exercise is largely framed above the feet. His rainbow source `EaIbZ_IsFsE` likewise crops the lower legs and raised hand.
+- Qigong Michael `U1ejQbgZ8fI`: group-class footage with obscured participants and a distant instructor.
+- Tai Chi App `IM8jE-53-qo`: the rainbow demonstration was inspected, but it does not establish the missing direct forearm or lat training claims. No duplicate rainbow identity was added.
+
+### Dynamic thigh-squeeze source selection
+
+[Jodi Sussner's free Pilates/yoga workout](https://www.gethealthyutv.com/video/10-minute-pilates-yoga-fusion-015208/)
+was verified playing publicly without sign-in. The later chair repetitions
+include an explicit inner-thigh squeeze cue, but crop the hands and toes.
+The earlier wide shot is intact. An initial concern about its upright reset
+was overly strict: existing approved squat demonstrations also contain normal
+standing resets. This was checked against the complete packaged 101 squat;
+the Insect definition was not changed. The later cropped excerpt remains
+unsuitable. No Jodi excerpt was added to the runtime catalog.
+
+[Melissa Villagomez's bodyweight legs workout](https://www.gethealthyutv.com/video/10-minute-bodyweight-legs-butt-workout-049376)
+provides clearer full-body chair-squat repetitions. The public Play Video
+control loaded the full-duration player but its HLS playback failed with a
+network error. A normal public-page download obtained the publisher's MP4
+without credentials, cookies, DRM handling or an access-control workaround.
+At 6:17-6:21 the instructor cues keeping the feet pressed together and legs
+tight; at 6:48-6:52 she explicitly cues the inner-thigh squeeze. The 6:28-6:30.7
+side-view cycle preserves the full squat, arm reach and ordinary upright
+return. The narrow planted stance, shoes and unsupported body remain visible.
+Admitted as 1031 after all 53 packaged frames and the natural target-round
+workout phases passed review. The entry shares chair movement family 969.
+See the completion record and hash-bound review ledger.

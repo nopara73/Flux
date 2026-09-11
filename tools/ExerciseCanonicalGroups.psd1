@@ -549,5 +549,6 @@
     1027 = @{ Primary = 'RotatorCuff'; Secondary = @('ShoulderAbductors', 'ElbowFlexors', 'ElbowExtensors', 'ForearmFlexorsAndPronators', 'ForearmExtensorsAndSupinators') }
     1028 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors') }
     1029 = @{ Primary = 'HipFlexors'; Secondary = @('AnteriorLateralLowerLegAndDorsalFoot') }
+    1031 = @{ Primary = 'MedialAndDeepKneeExtensors'; Secondary = @('LateralKneeExtensors', 'GlutealExtensors', 'MajorHipAdductors', 'AccessoryHipAdductors') }
     1030 = @{ Primary = 'ElbowFlexors'; Secondary = @() }
 }

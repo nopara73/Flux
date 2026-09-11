@@ -28,6 +28,7 @@ public sealed class CatalogCompletionTests
         foreach (int seed in new[] { 1, 2, 4 })
         {
             Exercise[] catalog = LoadCatalog();
+            catalog.Single(exercise => exercise.Id == expectedId).Score = 10000;
             var service = new ExerciseSessionService(catalog, new Random(seed));
             var state = new WorkoutState();
             WorkoutModifiers profile = WorkoutModifiers.HardFloor | WorkoutModifiers.Silence |
@@ -82,6 +83,49 @@ public sealed class CatalogCompletionTests
             WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
             Assert.Equal(1030, service.GetSelectedExercise(state,
                 rounds.Single(round => round.SelectionKey == "r30.elbow-flexors")).Id);
+            WorkoutGroup[] roots = rounds.Where(round => round.SequenceBlockIndex == 0).ToArray();
+            Assert.Equal(roots.Length, roots.Select(round => WorkoutModifierPolicy.GetSessionMovementId(
+                service.GetSelectedExercise(state, round))).Distinct().Count());
+            Assert.All(rounds, round => Assert.True(WorkoutModifierPolicy.IsCompatible(
+                service.GetSelectedExercise(state, round), profile)));
+            foreach (WorkoutGroup round in rounds)
+            {
+                service.BeginRest(state, round, DateTimeOffset.UtcNow.AddSeconds(15).ToUnixTimeMilliseconds());
+                if (service.IsIntermediateSequenceBlock(state, round)) service.AdvanceSequence(state, round);
+                else service.RecordOutcome(state, round, keep: true);
+                service.ClearPendingRest(state);
+            }
+            Assert.True(state.WorkoutCompleted);
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ChairSquatSqueezeSuppliesHardFloorInsectAdductorSlotsWithoutDuplicateFamily(bool light)
+    {
+        foreach (int seed in new[] { 1, 2, 4 })
+        {
+            Exercise[] catalog = LoadCatalog();
+            Exercise chair = catalog.Single(exercise => exercise.Id == 1031);
+            Assert.Equal(969, chair.SessionMovementId);
+            Assert.Single(chair.SequenceBlocks);
+            WorkoutModifiers profile = WorkoutModifiers.HardFloor | WorkoutModifiers.Insect |
+                WorkoutModifiers.Silence | WorkoutModifiers.Shy | WorkoutModifiers.UpperBodyClothing |
+                (light ? WorkoutModifiers.Light : WorkoutModifiers.None);
+            Assert.True(WorkoutModifierPolicy.IsCompatible(chair, profile));
+            foreach (int minutes in new[] { 20, 30 })
+                Assert.True(WorkoutCoveragePolicy.IsSelectable(chair,
+                    MassGroupingTaxonomy.GetGroup(minutes, $"r{minutes}.accessory-hip-adductors")));
+            Assert.False(WorkoutModifierPolicy.IsCompatible(
+                catalog.Single(exercise => exercise.Id == 1028), profile));
+
+            chair.Score = 10000;
+            var state = new WorkoutState();
+            var service = new ExerciseSessionService(catalog, new Random(seed));
+            service.StartWorkout(state, 10, profile);
+            WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+            Assert.Contains(rounds, round => service.GetSelectedExercise(state, round).Id == 1031);
             WorkoutGroup[] roots = rounds.Where(round => round.SequenceBlockIndex == 0).ToArray();
             Assert.Equal(roots.Length, roots.Select(round => WorkoutModifierPolicy.GetSessionMovementId(
                 service.GetSelectedExercise(state, round))).Distinct().Count());

@@ -24161,5 +24161,50 @@
     "maxSpaceMeters": 2,
     "equipment": "None",
     "silent": true
+  },
+  {
+    "id": 1031,
+    "name": "Chair Squats with Thigh Squeeze",
+    "retiredName": null,
+    "video": "exercise_videos/exercise_1031.mp4",
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "MajorHipAdductors",
+      "AccessoryHipAdductors"
+    ],
+    "practice": "Standing bodyweight strengthening",
+    "motionProfile": "BilateralChairSquatAdduction",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Continuous",
+    "directionSequence": "None",
+    "sequenceBlocks": [
+      {
+        "exerciseId": 1031,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
+    "insectCompatibility": "Compatible",
+    "hardFloorCompatibility": "Compatible",
+    "upperBodyClothingRequirement": "Agnostic",
+    "shyCompatibility": "Compatible",
+    "wallRequired": false,
+    "soleWallContactRequired": false,
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 2,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true,
+    "sessionMovementId": 969
   }
 ]

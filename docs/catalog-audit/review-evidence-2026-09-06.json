@@ -31641,6 +31641,64 @@
           "reason": "Inspected final-media paused preparation, resumed five-second preparation, early/middle/late work, rest and next movement in the actual web workout player. The entire 45-second target work and 15-second rest elapsed without acceleration; rate 1, no media error and no console warnings/errors. The isolated 30-minute fixture uses the real planner and advances previous rounds synthetically; this is exact target-round review, not a claimed full real 30-minute workout."
         }
       }
+    },
+    {
+      "id": 1031,
+      "metadataSha256": "8efb0cd18698c400dffc1ce8c993dbb497b4fad77f076c41d5091081b7dfe24f",
+      "assets": {
+        "exercise_videos/exercise_1031.mp4": "b4efecc1acfcc66ca3d4335e9d9b04e35c488fe061b5f5bc128196c058e54815"
+      },
+      "reviewedAt": "2026-09-11T23:35:47.2176057+08:00",
+      "method": "Explicit publisher-source, every packaged frame, anatomy, constraints, identity and natural-timer actual-workout review.",
+      "observedAction": "Keep feet and thighs pressed together, sit the hips down and back while raising the arms, then stand and lower the arms before repeating.",
+      "evidence": [
+        "docs/catalog-audit/evidence/2026-09-11/chair-squat/1031-all-53-frames.jpg",
+        "docs/catalog-audit/evidence/2026-09-11/chair-squat/playback.json",
+        "docs/catalog-audit/evidence/2026-09-11/chair-squat/1031-console.json",
+        "tools/ReviewedSourceMedia/chair-squat-squeeze-melissa-388-2.7.mp4"
+      ],
+      "checks": {
+        "Metadata": {
+          "status": "PASS",
+          "reason": "The narrow chair squat directly loads the knee and hip extensors: MedialAndDeepKneeExtensors primary, LateralKneeExtensors and GlutealExtensors secondary. The instructor explicitly cues pressed-together feet and tight legs before these repetitions, then inner-thigh squeezing in the same chair-squat series; deliberate bilateral pressure supports MajorHipAdductors and AccessoryHipAdductors secondary claims. This is not a generic squat adductor inference. Demand 2 reflects repeated loaded knee/hip flexion plus sustained pressure over 45 seconds. Counterbalancing arm position does not add a shoulder claim. The substantial repeated squat/arm cycle qualifies for Insect; the ordinary brief upright reset is consistent with the existing approved squat demonstrations, not a slow balance hold. The narrow planted stance has no impact, travel or lateral/pivoting drive. Hard Floor, Silence and Shy compatible, clothing/mirror agnostic. Family 969 preserves one chair movement identity across holds and repetitions."
+        },
+        "FullLoop": {
+          "status": "PASS",
+          "reason": "Inspected every one of the 53 final frames. The excerpt retains one full squat descent, forward/upward arm reach, ascent and ordinary upright return from the continuous source. It does not splice the later pulse or hold phase into the repetition."
+        },
+        "Crop": {
+          "status": "PASS",
+          "reason": "The 720-pixel square at x=280 retains the complete head, hands, knees and both shoes in every final frame. The source has ample clear floor around the feet. The unrelated source countdown is outside the crop; no source attribution is removed."
+        },
+        "LoopSeam": {
+          "status": "PASS",
+          "reason": "The final upright low-arm position returns naturally into the next descent. Inspected the loop throughout the actual 45-second work interval. No temporal reversal, artificial return, compositing or freeze was used."
+        },
+        "PlaybackSpeed": {
+          "status": "PASS",
+          "reason": "The original 29.97-fps excerpt is sampled at 20 fps without speed adjustment. The packaged 53-frame video lasts 2.65 seconds, reflecting frame-boundary quantization of the 2.7-second requested source window. Actual workout playback remained rate 1 with ordinary five-second preparation, 45-second work and 15-second rest."
+        },
+        "Mirroring": {
+          "status": "PASS",
+          "reason": "The bilateral unsided movement keeps its original source orientation. No mirrored side or manufactured alternation is added."
+        },
+        "Travel": {
+          "status": "PASS",
+          "reason": "The narrow parallel feet remain planted throughout. The body stays within a small standing area below 2 m by 2 m."
+        },
+        "HoldFrame": {
+          "status": "NOT_APPLICABLE",
+          "reason": "This is a moving repetition with no displayed hold frame."
+        },
+        "Equipment": {
+          "status": "PASS",
+          "reason": "Only the shoes touch the floor. No mat, support, wall, mirror, chair, weight or other equipment is used. Chair describes the squat shape, not a physical chair."
+        },
+        "Workout": {
+          "status": "PASS",
+          "reason": "Inspected paused preparation, resumed preparation, work with 27 and 2 seconds remaining, rest with 7 seconds remaining, and the next exercise (1029) in the actual web workout player. All timers elapsed naturally with rate 1 and no video or console errors. The real 10-minute planner used profile 659 (Insect, Silence, Hard Floor, Upper Body Clothing, Shy), target round 6. Five previous outcomes were synthetic setup; this is exact target-round review, not a claimed full real ten-minute workout."
+        }
+      }
     }
   ]
 }

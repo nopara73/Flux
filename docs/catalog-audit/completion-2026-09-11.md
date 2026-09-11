@@ -281,3 +281,70 @@ the availability invariant and five affected production-profile shards
 failing. The production web build rejects the same three real coverage gates.
 The Debug build succeeds with zero warnings and errors in 3m01s. This remains
 an unpublished catalog checkpoint.
+## Chair Squats with Thigh Squeeze, 1031
+
+[Melissa Villagomez's source workout](https://www.gethealthyutv.com/video/10-minute-bodyweight-legs-butt-workout-049376)
+explicitly teaches pressed-together feet and tight legs before the chair-squat
+repetitions, then inner-thigh pressure during the same series. The side-view
+6:28-6:30.7 excerpt retains a complete squat, arm reach and upright return.
+The source is preserved in
+`tools/ReviewedSourceMedia/chair-squat-squeeze-melissa-388-2.7.mp4`, SHA-256
+`a40d1f9bc18572412ff52dd94d5b7a069412816ef55c4e083f3003dbc4a784ff`.
+
+The ordinary brief standing reset was assessed against the existing approved
+bodyweight squat. Substantial repeated knee/hip motion and the coordinated arm
+cycle qualify for Insect; this does not change the Insect definition. The
+narrow planted stance requires neither impact cushioning nor lateral/pivoting
+traction. Both shoes and the complete body remain visible. The movement is
+Hard Floor, Silence and Shy compatible, clothing/mirror agnostic, and uses no
+equipment. Chair describes the body position.
+
+MedialAndDeepKneeExtensors remains the primary training target. The four
+secondary claims are LateralKneeExtensors, GlutealExtensors, MajorHipAdductors
+and AccessoryHipAdductors. The deliberate bilateral squeeze, not incidental
+squat stabilization, supports the adductor claims. Demand is 2. Counterbalancing
+arms do not add a shoulder claim. The hold and repetition variants 969, 1028
+and 1031 share SessionMovementId 969. Existing three-block sequence
+784 -> 969 -> 1000 is unchanged.
+
+Every one of the 53 final frames was inspected. The runtime lasts 2.65 seconds
+at 20 fps, reflecting frame-boundary quantization of the requested 2.7-second
+source window. It preserves normal speed and the natural return; no temporal
+reversal, compositing or fabricated alternation was used. The final MP4 hash is
+`b4efecc1acfcc66ca3d4335e9d9b04e35c488fe061b5f5bc128196c058e54815`;
+the metadata review hash is
+`8efb0cd18698c400dffc1ce8c993dbb497b4fad77f076c41d5091081b7dfe24f`.
+
+Actual-workout evidence in `evidence/2026-09-11/chair-squat` covers paused and
+resumed preparation, normal 45-second work, 15-second rest and the next
+exercise, 1029. Playback remained rate 1 with no media or console errors. The
+real ten-minute planner used profile 659, target round 6; five previous round
+outcomes were synthetic fixture setup. This is target-round review, not an
+entire real ten-minute workout or production deployment.
+
+All 543 previous catalog objects are unchanged. The catalog now has 544
+approved records, 47 explicit identity families covering 120 records, and
+1,049 exact secondary claims with primary work for all 30 canonical muscles.
+The preserved audit baseline remains 517 records plus one reviewed retirement.
+Demand counts are 118 / 289 / 137. Hard Floor is 352 compatible / 192
+incompatible; Shy is 427 / 117; Mirror is 445 agnostic / 99 BenefitsGreatly.
+
+The addition closes the 20- and 30-minute Hard Floor/Insect accessory-adductor
+availability gaps. Pairwise gaps decrease from 23 to 21 and overlapping Hard
+Floor gaps from 11 to 9. The 20 incomplete distinct lineups remain, so release
+is still blocked. Eight demand-category and one materiality findings remain
+diagnostic only.
+
+Catalog revision is 78, database version 94, and Debug app version 3.15 / 129.
+State schemas remain 29 / 26. Android and web continue to use the same Android
+runtime catalog and media. The catalog LF SHA-256 is
+`d93b3bb58b7002bc63afe1f0c9b26cd80f77cf188753aef8ae9c806c25aad9af`;
+the reviewed 132-file parity lock is
+`cc7c461678455b81f5ad75a0d63d2b88ff529258467ad2edf311d606c53040dd`.
+
+Validation: native 820/821 and web 367/373 pass. The remaining native failure
+is the actual catalog coverage invariant; the six web failures are the same
+coverage hierarchy and five affected workout-profile shards. The production
+web build stops at the three expected availability and distinct-lineup gates.
+The Debug build succeeds with zero warnings and errors in 4m13s. No deployment
+or phone installation was performed while these release gates remain open.

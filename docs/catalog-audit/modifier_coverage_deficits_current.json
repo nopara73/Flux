@@ -1,7 +1,7 @@
 {
-  "catalogRevision": 77,
-  "catalogRecordCount": 543,
-  "catalogSha256": "12c143d4f5f85d3a6e6d43d98f1cb01de03cfc692fc9615a1697b97fc21704c5",
+  "catalogRevision": 78,
+  "catalogRecordCount": 544,
+  "catalogSha256": "d93b3bb58b7002bc63afe1f0c9b26cd80f77cf188753aef8ae9c806c25aad9af",
   "policy": {
     "treatment": "Availability and complete atomic lineups must have zero deficits. Demand-category and percentage materiality arrays are historical inventory diagnostics, not release gates.",
     "diagnosticOnly": [
@@ -14,10 +14,10 @@
     "muscularDemandMinimumPerCategoryPerGroup": 1
   },
   "summary": {
-    "pairwiseDeficiencyCount": 23,
-    "pairwiseAffectedGroupCount": 12,
-    "hardFloorCategoryDeficiencyCount": 11,
-    "hardFloorCategoryAffectedGroupCount": 11,
+    "pairwiseDeficiencyCount": 21,
+    "pairwiseAffectedGroupCount": 10,
+    "hardFloorCategoryDeficiencyCount": 9,
+    "hardFloorCategoryAffectedGroupCount": 9,
     "muscularDemandDeficiencyCount": 8,
     "muscularDemandAffectedGroupCount": 2,
     "demandZeroDeficiencyCount": 0,
@@ -186,18 +186,6 @@
     },
     {
       "minutes": 20,
-      "groupId": "r20.accessory-hip-adductors",
-      "groupName": "Accessory hip adductors",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 20,
       "groupId": "r20.forearm-hand",
       "groupName": "Forearm and hand",
       "firstModifier": 16,
@@ -212,18 +200,6 @@
       "minutes": 20,
       "groupId": "r20.shoulder-adduction-extension",
       "groupName": "Shoulder adduction and extension",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.accessory-hip-adductors",
-      "groupName": "Accessory hip adductors",
       "firstModifier": 16,
       "firstModifierEnabled": true,
       "secondModifier": 1,
@@ -338,16 +314,6 @@
     },
     {
       "minutes": 20,
-      "groupId": "r20.accessory-hip-adductors",
-      "groupName": "Accessory hip adductors",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
       "groupId": "r20.forearm-hand",
       "groupName": "Forearm and hand",
       "hardFloorCompatibility": "Compatible",
@@ -360,16 +326,6 @@
       "minutes": 20,
       "groupId": "r20.shoulder-adduction-extension",
       "groupName": "Shoulder adduction and extension",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.accessory-hip-adductors",
-      "groupName": "Accessory hip adductors",
       "hardFloorCompatibility": "Compatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
@@ -550,13 +506,13 @@
     {
       "minutes": 20,
       "profile": 17,
-      "maximumDistinctExerciseCount": 17,
+      "maximumDistinctExerciseCount": 18,
       "requiredDistinctExerciseCount": 20
     },
     {
       "minutes": 30,
       "profile": 17,
-      "maximumDistinctExerciseCount": 23,
+      "maximumDistinctExerciseCount": 24,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -574,7 +530,7 @@
     {
       "minutes": 45,
       "profile": 17,
-      "maximumDistinctExerciseCount": 23,
+      "maximumDistinctExerciseCount": 24,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -592,7 +548,7 @@
     {
       "minutes": 60,
       "profile": 17,
-      "maximumDistinctExerciseCount": 23,
+      "maximumDistinctExerciseCount": 24,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -610,7 +566,7 @@
     {
       "minutes": 90,
       "profile": 17,
-      "maximumDistinctExerciseCount": 23,
+      "maximumDistinctExerciseCount": 24,
       "requiredDistinctExerciseCount": 28
     },
     {

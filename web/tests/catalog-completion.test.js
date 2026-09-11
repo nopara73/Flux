@@ -24,6 +24,7 @@ for (const [minutes, insect, expectedId, selectionKey] of [
   test(`reviewed heel digs and chair squeeze complete ${minutes}-minute Hard Floor workout, Light=${light}`, () => {
     for (const randomValue of [0.01, 0.2, 0.4]) {
       const state = createDefaultState();
+      state.scores[expectedId] = 10000;
       const profile = WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence |
         WORKOUT_MODIFIERS.Shy | WORKOUT_MODIFIERS.UpperBodyClothing |
         (insect ? WORKOUT_MODIFIERS.Insect : WORKOUT_MODIFIERS.None) |
@@ -69,6 +70,42 @@ for (const light of [false, true]) {
       const rounds = session.getActiveGroups();
       assert.equal(session.getSelectedExercise(rounds.find((round) =>
         getSelectionKey(round) === "r30.elbow-flexors")).id, 1030);
+      const roots = rounds.filter((round) => (round.sequenceBlockIndex ?? 0) === 0);
+      assert.equal(new Set(roots.map((round) => getSessionMovementId(
+        session.getSelectedExercise(round)))).size, roots.length);
+      assert.ok(rounds.every((round) => isCompatibleWithWorkoutModifiers(
+        session.getSelectedExercise(round), profile)));
+      for (const round of rounds) {
+        session.beginRest(round, Date.now() + 15_000);
+        if (session.isIntermediateSequenceBlock(round)) session.advanceSequence(round);
+        else session.recordOutcome(round, true);
+        session.clearPendingRest();
+      }
+      assert.equal(session.state.workoutCompleted, true);
+    }
+  });
+}
+
+for (const light of [false, true]) {
+  test(`chair-squat squeeze supplies Hard Floor/Insect adductor slots without duplicate family, Light=${light}`, () => {
+    const chair = catalog.find((exercise) => exercise.id === 1031);
+    assert.equal(getSessionMovementId(chair), 969);
+    assert.equal(chair.sequenceBlocks.length, 1);
+    const profile = WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Insect |
+      WORKOUT_MODIFIERS.Silence | WORKOUT_MODIFIERS.Shy | WORKOUT_MODIFIERS.UpperBodyClothing |
+      (light ? WORKOUT_MODIFIERS.Light : 0);
+    assert.equal(isCompatibleWithWorkoutModifiers(chair, profile), true);
+    for (const minutes of [20, 30]) assert.equal(isSelectable(chair,
+      RESOLUTIONS.get(minutes).groups.find((group) =>
+        group.id === `r${minutes}.accessory-hip-adductors`)), true);
+    assert.equal(isCompatibleWithWorkoutModifiers(catalog.find((exercise) => exercise.id === 1028), profile), false);
+    for (const randomValue of [0.01, 0.2, 0.4]) {
+      const state = createDefaultState();
+      state.scores[1031] = 10000;
+      const session = new WorkoutSession(catalog, state, () => randomValue);
+      session.startWorkout(10, profile);
+      const rounds = session.getActiveGroups();
+      assert.ok(rounds.some((round) => session.getSelectedExercise(round).id === 1031));
       const roots = rounds.filter((round) => (round.sequenceBlockIndex ?? 0) === 0);
       assert.equal(new Set(roots.map((round) => getSessionMovementId(
         session.getSelectedExercise(round)))).size, roots.length);

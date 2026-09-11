@@ -157,6 +157,12 @@
         Practice = 'Standing aerobic warm-up'
         MotionProfile = 'AlternatingToeUpHeelTaps'
     }
+    1031 = @{
+        Name = 'Chair Squats with Thigh Squeeze'
+        Region = 'LEGS'
+        Practice = 'Standing bodyweight strengthening'
+        MotionProfile = 'BilateralChairSquatAdduction'
+    }
     1030 = @{
         Name = 'Reverse Rowing with Knee Bends'
         Region = 'ARMS'

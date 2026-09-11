@@ -6168,6 +6168,24 @@
         PingPong = $false
         MirrorForAlternation = $false
     }
+    1031 = @{
+        LocalSourceFile = 'chair-squat-squeeze-melissa-388-2.7.mp4'
+        LocalSourceSha256 = 'a40d1f9bc18572412ff52dd94d5b7a069412816ef55c4e083f3003dbc4a784ff'
+        File = 'leg-butt-ghutv-full.mp4'
+        Url = 'https://www.gethealthyutv.com/video/10-minute-bodyweight-legs-butt-workout-049376'
+        SourcePage = 'https://www.gethealthyutv.com/video/10-minute-bodyweight-legs-butt-workout-049376'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $false
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 2.7
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:280:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
     1030 = @{
         LocalSourceFile = 'reverse-row-aileen-17.4-3.1.mp4'
         LocalSourceSha256 = '68c616f56576e8d262bb2c056bfc676f84d6b8c23aae02e91d0b41866f3b97e1'
