@@ -23,6 +23,7 @@
         )
 
         MajorHipAdductors = @(
+            1028,
             19, 93, 101, 102, 103, 104, 105, 107, 108, 109, 111, 112,
             113, 116, 117, 118, 123, 126, 129, 130, 132, 133, 135, 136,
             138, 139, 140, 150, 178, 182, 183, 190, 192, 195, 197, 198,
@@ -32,6 +33,7 @@
         )
 
         LateralKneeExtensors = @(
+            1028,
             19, 37, 41, 60, 92, 96, 97, 98, 101, 103, 104, 105,
             107, 108, 109, 111, 112, 114, 116, 118, 120, 121, 122, 123,
             124, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136,
@@ -46,6 +48,7 @@
         )
 
         GlutealExtensors = @(
+            1028,
         1022,
             19, 21, 37, 60, 93, 96, 98, 99, 100, 101, 102, 103,
             104, 105, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116,
@@ -129,7 +132,9 @@
             636, 906, 910, 914, 939, 971, 996, 997, 1001
         )
 
-        AnteriorLateralLowerLegAndDorsalFoot = @()
+        # Each heel dig deliberately raises the forefoot against its own weight;
+        # this is repeated ankle dorsiflexion, not an incidental gait claim.
+        AnteriorLateralLowerLegAndDorsalFoot = @(1029)
 
         DeepHipRotators = @(
             96, 177, 186, 217, 391, 396, 453, 540, 563
@@ -186,6 +191,8 @@
         )
 
         AccessoryHipAdductors = @(
+            # The source explicitly cues continuous bilateral thigh pressure.
+            1028,
             117, 123, 133, 150, 192, 195, 1009,
             572, 748
         )

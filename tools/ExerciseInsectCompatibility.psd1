@@ -4,6 +4,7 @@
     # sufficient by itself; assess the complete action, pace and range.
     # The two lists must partition the retained catalog.
     Compatible = @(
+        1029,
         # Breath of Joy repeats three arm sweeps, a substantial forward fold,
         # and the return without a held phase. Planted feet do not negate the
         # continuous complete-body cycle; both records remain one movement.
@@ -35,6 +36,7 @@
         1002, 1008, 1009, 1011
     )
     Incompatible = @(
+        1028,
         1027,
         1025,
         389, 549, 552, 555,

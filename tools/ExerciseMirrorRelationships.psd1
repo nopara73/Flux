@@ -89,6 +89,7 @@
     # oneself or being able to compare against the demo does not qualify by
     # itself.
     Agnostic = @(
+        1028, 1029,
         1027,
         1026,
         1025,

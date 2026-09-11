@@ -1,7 +1,8 @@
 # Candidate research, 11 September 2026
 
-This records inspected leads, not admissions. Exact final media, truthful
-training claims and actual-workout review remain necessary before promotion.
+This records inspected leads and explicitly identified admissions. Exact final
+media, truthful training claims and actual-workout review are required before
+promotion; an inspected lead alone is not an admission.
 
 ## Moving breathing protocols
 
@@ -31,7 +32,7 @@ unverified shaking. The owner's Heel Walks (194) Hard Floor exclusion stands.
 - CBC/Crawley `eIXr7dAvjUk`: standing instructor interrupts the leg motion while explaining arm options in inspected segments.
 - Fitness Academy `5kgfcAIlI24`: complete source inspected; the lower caption overlaps the shoes/forward-foot region.
 - Aquamoves `gEjNLgrkAbM`: inspected; the demonstrated heel contact uses an elevated step.
-- Debbie Fleming `YiIKEhQjdkg`: source and an 80-frame cycle inspected; alternating toe-up heel placements with arm motion are a promising lead, pending full final-media and anatomy review.
+- Debbie Fleming `YiIKEhQjdkg`: admitted as 1029 Alternating Heel Digs after all 70 final frames and natural workout phases passed review. The deliberate raised forefoot supports the anterior-leg secondary claim. [NHS Fife's standing heel-dig instruction](https://www.nhsfife.org/media/pfznv3st/prehab-booklet.pdf) also pairs the unsupported heel placements with arm movement; see the completion record for the exact source, claims and playback evidence.
 - Aurora `WHuwrG1mVZU`: inspected shaking does not establish deliberate toe lifting.
 - Bates `5ciztpqIpYY`: grass obscures foot action.
 - Perline `cOjwvGI6_tU`: inspected rocking is staggered, traction-loaded and sided; it does not solve the Hard Floor combination.
@@ -43,12 +44,12 @@ The owner suggested pressing the inner thighs together while standing. Exact
 source instruction matters: an ordinary chair pose does not establish that
 deliberate isometric action.
 
-- Existing 969, `7ODQ2H35X10`: source captions give general active-leg and chair-position cues, without an explicit squeeze. Existing metadata is unchanged.
+- Existing 969, `7ODQ2H35X10`: source captions give general active-leg and chair-position cues, without an explicit squeeze. Its anatomy, demonstration and original three-block sequence remain unchanged. Its movement-family field now explicitly groups it with 1028, preventing duplicate chair identities.
 - Jenni Rawlings `k1CqOxlUKCE`: inspected; relevant squeezes use a block on the floor, while standing work is wide/traction-loaded.
 - Pamela Reif `rNWBdTgTj0Q`: inspected; wide sumo, side squats and tiptoe work do not establish a narrow thigh squeeze.
 - Yoga With Adriene `ySafTekJ3Ls`: source and captions inspected; inward rotation is not the same as pressing thighs together.
 - [Alo chair-pose instruction](https://blog.alomoves.com/movement/how-to-do-chair-pose-yoga-tutorial) explicitly cues the squeeze, but its embedded `tEZhXr0FuAQ` video is private. No access bypass was attempted.
-- Strong With Nature Yoga `W-X4Mnv_grg`: source and captions inspected; at 17-21 seconds the instructor explicitly says the thighs are “squeezing towards each other” during the feet-together chair pose. This is a promising exact lead, pending packaged hold, anatomy, movement-family and actual-workout review.
+- Strong With Nature Yoga `W-X4Mnv_grg`: at 17-21 seconds the instructor explicitly says the thighs are “squeezing towards each other” during the feet-together chair pose. Admitted as 1028 Chair-Pose Thigh Squeeze Hold after final hold/frame, anatomy, shared chair-family and natural workout-phase review. The quadriceps remain primary; the deliberately cued adductors are secondary.
 
 Clinical [isometric adduction research](https://pubmed.ncbi.nlm.nih.gov/22814446/)
 measures gracilis and pectineus alongside the major adductors in resisted holds.

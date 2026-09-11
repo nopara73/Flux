@@ -4,6 +4,7 @@
     # record is a hold, repetition, or naming variant. A workout may select at
     # most one member of a family as a base muscle-group slot.
     Families = @{
+        '969' = @(969, 1028) # Chair holds, including the explicitly cued thigh-squeeze variant
         '1026' = @(1026, 1027) # Teacup arm circles: alternating and simultaneous bilateral demonstrations
         '625' = @(625, 1021) # Segmental standing roll-down: halfway-lift and continuous variants share one identity
         '327' = @(327, 546) # Horizontal elbow strikes: single-side pivoting and alternating planted demonstrations

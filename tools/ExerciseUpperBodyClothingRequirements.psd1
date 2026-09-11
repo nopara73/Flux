@@ -14,6 +14,7 @@
     # demonstrated exercise. Keep this exhaustive so new catalog records fail
     # generation until they receive a real review.
     Agnostic = @(
+        1028, 1029,
         1027,
         1026,
         1025,

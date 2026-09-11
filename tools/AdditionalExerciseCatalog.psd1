@@ -145,4 +145,16 @@
         Practice = 'Qigong arm mobility'
         MotionProfile = 'BilateralTeacupArmCircles'
     }
+    1028 = @{
+        Name = 'Chair-Pose Thigh Squeeze Hold'
+        Region = 'LEGS'
+        Practice = 'Yoga'
+        MotionProfile = 'BilateralChairAdductionHold'
+    }
+    1029 = @{
+        Name = 'Alternating Heel Digs'
+        Region = 'LEGS'
+        Practice = 'Standing aerobic warm-up'
+        MotionProfile = 'AlternatingToeUpHeelTaps'
+    }
 }

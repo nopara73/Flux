@@ -29401,24 +29401,25 @@
     },
     {
       "id": 969,
-      "metadataSha256": "aad9ff05dd14b0c7d8de5044c0acd056ed1c95c0427000695e59a454d5f59dce",
+      "metadataSha256": "ef58992f0f217c9ec56ebd5ca5c19037a087c02a17bb85dbe4a54a7cafb546b5",
       "assets": {
         "exercise_videos/exercise_0969.mp4": "675cd99f03ac6b05bc3fd2040832b0af0fd958e51a300cba84748ab1ec3b5bc4",
         "exercise_hold_frames/exercise_0969.png": "73ae918d46ac2f5f833b92786aa00680301c447beec1884aeb60c54a51a3b284"
       },
-      "reviewedAt": "2026-09-09T11:16:02.253277+08:00",
-      "method": "Explicit native-source, packaged-frame, metadata and actual-workout inspection. Complete real-time media loops; controlled application clock for remaining timer transitions. No inferred approvals.",
+      "reviewedAt": "2026-09-11T22:08:20.2705363+08:00",
+      "method": "Movement-family metadata re-review. The unchanged source, packaged-frame and actual-workout checks from the prior review are preserved; no new playback of the old sequence is claimed.",
       "observedAction": "The performer holds a bent-knee chair pose with arms raised diagonally forward and heels down.",
       "evidence": [
         "docs/catalog-audit/evidence/2026-09-06/0969/0000-0016.jpg",
         "docs/catalog-audit/evidence/2026-09-06/0969/playback.json",
         "docs/catalog-audit/evidence/2026-09-06/0969/phase-sheet.jpg",
-        "docs/catalog-audit/evidence/2026-09-06/0969/exercise_0969.png"
+        "docs/catalog-audit/evidence/2026-09-06/0969/exercise_0969.png",
+        "docs/catalog-audit/evidence/2026-09-11/chair-and-heel/0969-preserved-hold.png"
       ],
       "checks": {
         "Metadata": {
           "status": "PASS",
-          "reason": "Chair-Pose Hold: primary MedialAndDeepKneeExtensors; secondary LateralKneeExtensors, GlutealExtensors, ShoulderAbductors; demand 2; Continuous; Insect Incompatible; hard floor Compatible; Shy Compatible; mirror Agnostic. Sustained knee and hip flexion warrants demand 2 quadriceps and gluteal loading; sustained raised arms support shoulder work."
+          "reason": "Chair-Pose Hold: primary MedialAndDeepKneeExtensors; secondary LateralKneeExtensors, GlutealExtensors, ShoulderAbductors; demand 2; Continuous; Insect Incompatible; hard floor Compatible; Shy Compatible; mirror Agnostic. Sustained knee and hip flexion warrants demand 2 quadriceps and gluteal loading; sustained raised arms support shoulder work. Chair variants 969 and 1028 now share SessionMovementId 969. Both are the same fundamental knee-and-hip-flexed chair hold; the new variant explicitly adds inner-thigh pressure. Original anatomy, source, static frame and mandatory 784/969/1000 sequence remain unchanged."
         },
         "FullLoop": {
           "status": "PASS",
@@ -31466,6 +31467,121 @@
       "metadataSha256": "c3625bea25d2488a9baeab7720d2bdee79e5bae627b8ce12ee7eefc0e270c118",
       "assets": {
         "exercise_videos/exercise_1027.mp4": "3b8f6f1c9800bc79bea6c01bf48af2a2cb4a62e60e568550bc5078ad36fd343d"
+      }
+    },
+    {
+      "id": 1028,
+      "metadataSha256": "4bbb8ddac254ffb28f30e08b9abfd1daa9b1533ed453abb962fedfd7a04d628b",
+      "assets": {
+        "exercise_videos/exercise_1028.mp4": "5f65195cf792280a073a48a62e184812b569ca02c8e9f3e1c281ceb9ae7f6a2a",
+        "exercise_hold_frames/exercise_1028.png": "7bc44afc883ed9c7a0f13473e701f5eab41e8fcbbbf4e08035731fbd697747eb"
+      },
+      "reviewedAt": "2026-09-11T22:08:20.4189542+08:00",
+      "method": "Explicit source, every packaged frame, anatomy, constraints and normal-timer actual-workout review. No inferred approval from successful decoding.",
+      "observedAction": "Hold a feet-together chair squat while pressing the inner thighs together, as explicitly cued at 17-21 seconds in the source.",
+      "evidence": [
+        "docs/catalog-audit/evidence/2026-09-11/chair-and-heel/1028-all-17-frames.jpg",
+        "docs/catalog-audit/evidence/2026-09-11/chair-and-heel/playback.json",
+        "docs/catalog-audit/evidence/2026-09-11/chair-and-heel/1028-console.json"
+      ],
+      "checks": {
+        "Metadata": {
+          "status": "PASS",
+          "reason": "Knee-extensor loading is the main demanding target: MedialAndDeepKneeExtensors primary, LateralKneeExtensors and GlutealExtensors secondary. The explicitly cued bilateral thigh pressure directly trains MajorHipAdductors and AccessoryHipAdductors as secondaries. Demand 2 remains assigned to the knee-extensor hold, not to a fabricated adductor primary. Still, one continuous block; Insect incompatible, Hard Floor and Shy compatible, quiet, clothing and mirror agnostic. SessionMovementId 969 preserves the common chair identity."
+        },
+        "FullLoop": {
+          "status": "PASS",
+          "reason": "All 17 packaged MP4 frames and the final static PNG were inspected. The 0.85-second auxiliary MP4 shows the same held chair posture; the workout displays the selected still throughout the 45-second hold, with no motion loop."
+        },
+        "Crop": {
+          "status": "PASS",
+          "reason": "Every packaged frame and the actual workout preserve the complete head, hands, trained joints and feet; no equipment or source caption obscures the action."
+        },
+        "LoopSeam": {
+          "status": "PASS",
+          "reason": "Still presentation has no visible video loop seam. The held posture stays unchanged through the complete workout timer."
+        },
+        "PlaybackSpeed": {
+          "status": "PASS",
+          "reason": "The final workout is a static held posture. No moving demonstration is accelerated; the ordinary five-second preparation, 45-second work and 15-second rest elapsed naturally."
+        },
+        "Mirroring": {
+          "status": "PASS",
+          "reason": "The unsided/bilateral action retains its native orientation. No mirrored, reversed or manufactured side is added."
+        },
+        "Travel": {
+          "status": "PASS",
+          "reason": "The complete demonstrated action stays within one small standing area, below 2 m by 2 m."
+        },
+        "HoldFrame": {
+          "status": "PASS",
+          "reason": "The actual displayed 256-pixel human hold frame shows the complete chair posture with head, hands, knees and feet visible. The exact source explicitly prescribes thighs squeezing toward each other."
+        },
+        "Equipment": {
+          "status": "PASS",
+          "reason": "No actual chair, mat or other equipment supports the posture. Only the feet contact the ground. Ordinary shoes fit the planted stance; internal bilateral thigh pressure does not require dependable lateral floor traction."
+        },
+        "Workout": {
+          "status": "PASS",
+          "reason": "Inspected the actual name-specific workout preparation, work, rest and next movement. Target rounds elapsed without clock acceleration. Captures cover every phase; the chair was run twice to obtain its work capture. Static and moving media behaved correctly with no console or asset error. The fixture advances prior rounds; this is target playback review, not a claimed complete real 10- or 20-minute workout."
+        }
+      }
+    },
+    {
+      "id": 1029,
+      "metadataSha256": "6945714f5d3391113bde22c7d76340c5961433c8a3b6cf53c53c7cddc230c0f8",
+      "assets": {
+        "exercise_videos/exercise_1029.mp4": "78dd684bc0f915b7d3d6e790acba7cc0dbf9cf845907e89b6a3295f5b764c1ed"
+      },
+      "reviewedAt": "2026-09-11T22:08:20.4372014+08:00",
+      "method": "Explicit source, every packaged frame, anatomy, constraints and normal-timer actual-workout review. No inferred approval from successful decoding.",
+      "observedAction": "Alternately place one heel forward with its toes lifted, return it underneath the body and repeat on the other side while moving the arms.",
+      "evidence": [
+        "docs/catalog-audit/evidence/2026-09-11/chair-and-heel/1029-all-70-frames.jpg",
+        "docs/catalog-audit/evidence/2026-09-11/chair-and-heel/playback.json",
+        "docs/catalog-audit/evidence/2026-09-11/chair-and-heel/1029-console.json"
+      ],
+      "checks": {
+        "Metadata": {
+          "status": "PASS",
+          "reason": "HipFlexors primary for repeatedly lifting and advancing the leg. The deliberate repeated toe-up action is direct ankle dorsiflexion against foot/shoe weight, supporting AnteriorLateralLowerLegAndDorsalFoot as the sole secondary. It is not inferred from ordinary gait. No incidental arm, balance, breathing or bracing claims are added. Demand 1; naturally alternating within one 45-second block. Continuous arms and alternating leg action qualify for Insect. Controlled taps, no hop, pivot or lateral drive make the demonstrated version Hard Floor compatible. Quiet, Shy compatible, clothing and mirror agnostic. Heel Walks 194 remains Hard Floor incompatible."
+        },
+        "FullLoop": {
+          "status": "PASS",
+          "reason": "All 70 frames of the 3.5-second packaged loop were inspected. The naturally alternating cycles include both heel placements and returns at source speed, with no freeze, reverse or composited motion."
+        },
+        "Crop": {
+          "status": "PASS",
+          "reason": "Every packaged frame and the actual workout preserve the complete head, hands, trained joints and feet; no equipment or source caption obscures the action."
+        },
+        "LoopSeam": {
+          "status": "PASS",
+          "reason": "The clip returns to the matching forward-heel phase and repeats naturally. The complete frame sequence and repeated actual-workout loops were inspected."
+        },
+        "PlaybackSpeed": {
+          "status": "PASS",
+          "reason": "The 3.5-second excerpt is preserved at 20 fps and played at rate 1 during the full 45-second work interval. No clock acceleration was used."
+        },
+        "Mirroring": {
+          "status": "PASS",
+          "reason": "The unsided/bilateral action retains its native orientation. No mirrored, reversed or manufactured side is added."
+        },
+        "Travel": {
+          "status": "PASS",
+          "reason": "The complete demonstrated action stays within one small standing area, below 2 m by 2 m."
+        },
+        "HoldFrame": {
+          "status": "NOT_APPLICABLE",
+          "reason": "A moving repetition uses video; no hold PNG is displayed."
+        },
+        "Equipment": {
+          "status": "PASS",
+          "reason": "Only the feet touch the floor. Both ordinary shoes and each toe-up placement remain visible. The small alternating step stays in place; background gym equipment is unused. No elevated step, wall, support, hop or traction-loaded pivot is required."
+        },
+        "Workout": {
+          "status": "PASS",
+          "reason": "Inspected the actual name-specific workout preparation, work, rest and next movement. Target rounds elapsed without clock acceleration. Captures cover every phase; the chair was run twice to obtain its work capture. Static and moving media behaved correctly with no console or asset error. The fixture advances prior rounds; this is target playback review, not a claimed complete real 10- or 20-minute workout."
+        }
       }
     }
   ]

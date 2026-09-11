@@ -16,6 +16,74 @@ import {
 const catalog = JSON.parse(await readFile(
   new URL("../../Flux/Assets/exercises.json", import.meta.url), "utf8"));
 
+for (const [minutes, insect, expectedId, selectionKey] of [
+  [10, true, 1029, "r10.anterior-lateral-lower-leg-dorsal-foot"],
+  [20, false, 1028, "r20.accessory-hip-adductors"],
+  [30, false, 1028, "r30.accessory-hip-adductors"],
+]) for (const light of [false, true]) {
+  test(`reviewed heel digs and chair squeeze complete ${minutes}-minute Hard Floor workout, Light=${light}`, () => {
+    for (const randomValue of [0.01, 0.2, 0.4]) {
+      const state = createDefaultState();
+      const profile = WORKOUT_MODIFIERS.HardFloor | WORKOUT_MODIFIERS.Silence |
+        WORKOUT_MODIFIERS.Shy | WORKOUT_MODIFIERS.UpperBodyClothing |
+        (insect ? WORKOUT_MODIFIERS.Insect : WORKOUT_MODIFIERS.None) |
+        (light ? WORKOUT_MODIFIERS.Light : WORKOUT_MODIFIERS.None);
+      const session = new WorkoutSession(catalog, state, () => randomValue);
+      session.startWorkout(minutes, profile);
+      const rounds = session.getActiveGroups();
+      const target = rounds.find((round) => getSelectionKey(round) === selectionKey);
+      assert.equal(session.getSelectedExercise(target).id, expectedId);
+      assert.ok(rounds.every((round) => isCompatibleWithWorkoutModifiers(
+        session.getSelectedExercise(round), profile)));
+      const baseRounds = rounds.filter((round) => (round.sequenceBlockIndex ?? 0) === 0);
+      assert.equal(new Set(baseRounds.map((round) => getSessionMovementId(
+        session.getSelectedExercise(round)))).size, baseRounds.length);
+      for (const round of rounds) {
+        session.beginRest(round, Date.now() + 15_000);
+        if (session.isIntermediateSequenceBlock(round)) session.advanceSequence(round);
+        else session.recordOutcome(round, true);
+        session.clearPendingRest();
+      }
+      assert.equal(session.state.workoutCompleted, true);
+    }
+  });
+}
+
+test("new direct movements preserve existing anatomy, sequence and feedback", () => {
+  const chair = catalog.find((exercise) => exercise.id === 1028);
+  const heel = catalog.find((exercise) => exercise.id === 1029);
+  assert.equal(chair.primaryCanonicalGroup, "MedialAndDeepKneeExtensors");
+  assert.ok(chair.secondaryCanonicalGroups.includes("AccessoryHipAdductors"));
+  assert.equal(chair.muscularDemand, 2);
+  assert.equal(getSessionMovementId(chair), 969);
+  assert.equal(getSessionMovementId(catalog.find((exercise) => exercise.id === 969)), 969);
+  assert.deepEqual(catalog.find((exercise) => exercise.id === 784).sequenceBlocks
+    .map((block) => block.exerciseId), [784, 969, 1000]);
+  assert.equal(heel.primaryCanonicalGroup, "HipFlexors");
+  assert.deepEqual(heel.secondaryCanonicalGroups, ["AnteriorLateralLowerLegAndDorsalFoot"]);
+  assert.equal(heel.muscularDemand, 1);
+  assert.equal(heel.sideSequence, "Alternating");
+  assert.equal(chair.sequenceBlocks.length, 1);
+  assert.equal(heel.sequenceBlocks.length, 1);
+  assert.equal(isCompatibleWithWorkoutModifiers(chair, WORKOUT_MODIFIERS.Insect), false);
+  assert.equal(isCompatibleWithWorkoutModifiers(catalog.find((exercise) => exercise.id === 194),
+    WORKOUT_MODIFIERS.HardFloor), false);
+  const state = createDefaultState();
+  state.catalogRevision = 75;
+  const oldCatalog = catalog.filter((exercise) => ![1028, 1029].includes(exercise.id));
+  state.scores = Object.fromEntries(oldCatalog.map((exercise) => [exercise.id, exercise.id % 41 - 20]));
+  state.catalogIdentities = Object.fromEntries(oldCatalog.map((exercise) =>
+    [exercise.id, `${exercise.name}\u001f${exercise.video}`]));
+  state.keptExerciseRootIdsBySelectionGroupId = { "r30.rotator-cuff": [1026] };
+  state.lastKeptExerciseIds = [1026];
+  const saved = structuredClone(state);
+  const session = new WorkoutSession(catalog, state, () => 0);
+  session.initialize();
+  for (const [id, score] of Object.entries(saved.scores)) assert.equal(session.state.scores[id], score);
+  assert.deepEqual(session.state.keptExerciseRootIdsBySelectionGroupId, saved.keptExerciseRootIdsBySelectionGroupId);
+  assert.deepEqual(session.state.lastKeptExerciseIds, saved.lastKeptExerciseIds);
+});
+
 for (const exerciseId of [480, 517]) {
   test(`Breath of Joy ${exerciseId} Insect correction preserves identity and feedback`, () => {
     const exercise = catalog.find((item) => item.id === exerciseId);

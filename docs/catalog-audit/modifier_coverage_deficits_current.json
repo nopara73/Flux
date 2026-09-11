@@ -1,7 +1,7 @@
 {
-  "catalogRevision": 75,
-  "catalogRecordCount": 540,
-  "catalogSha256": "50087bd17a12ca8293dc8d16ae93d314a812273f60d62a7c89fed2869b9aa533",
+  "catalogRevision": 76,
+  "catalogRecordCount": 542,
+  "catalogSha256": "23d7e4e0ef97a1d2489c2ea569b26ed16722b0515d540ff96eb7a645bef885f4",
   "policy": {
     "treatment": "Availability and complete atomic lineups must have zero deficits. Demand-category and percentage materiality arrays are historical inventory diagnostics, not release gates.",
     "diagnosticOnly": [
@@ -14,10 +14,10 @@
     "muscularDemandMinimumPerCategoryPerGroup": 1
   },
   "summary": {
-    "pairwiseDeficiencyCount": 28,
-    "pairwiseAffectedGroupCount": 17,
-    "hardFloorCategoryDeficiencyCount": 16,
-    "hardFloorCategoryAffectedGroupCount": 16,
+    "pairwiseDeficiencyCount": 24,
+    "pairwiseAffectedGroupCount": 13,
+    "hardFloorCategoryDeficiencyCount": 12,
+    "hardFloorCategoryAffectedGroupCount": 12,
     "muscularDemandDeficiencyCount": 8,
     "muscularDemandAffectedGroupCount": 2,
     "demandZeroDeficiencyCount": 0,
@@ -25,33 +25,9 @@
     "demandTwoDeficiencyCount": 8,
     "demandTwoAffectedGroupCount": 2,
     "materialityDeficiencyCount": 1,
-    "distinctLineupDeficiencyCount": 49
+    "distinctLineupDeficiencyCount": 36
   },
   "pairwise": [
-    {
-      "minutes": 10,
-      "groupId": "r10.anterior-lateral-lower-leg-dorsal-foot",
-      "groupName": "Anterior/lateral lower leg and dorsal foot",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.anterior-lateral-lower-leg-dorsal-foot",
-      "groupName": "Anterior/lateral lower leg and dorsal foot",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
     {
       "minutes": 15,
       "groupId": "r15.shoulder",
@@ -234,18 +210,6 @@
     },
     {
       "minutes": 20,
-      "groupId": "r20.anterior-lateral-lower-leg-dorsal-foot",
-      "groupName": "Anterior/lateral lower leg and dorsal foot",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 20,
       "groupId": "r20.shoulder-adduction-extension",
       "groupName": "Shoulder adduction and extension",
       "firstModifier": 16,
@@ -342,18 +306,6 @@
     },
     {
       "minutes": 30,
-      "groupId": "r30.anterior-lateral-lower-leg-dorsal-foot",
-      "groupName": "Anterior/lateral lower leg and dorsal foot",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 30,
       "groupId": "r30.shoulder-adductors-extensors",
       "groupName": "Shoulder adductors and extensors",
       "firstModifier": 16,
@@ -366,26 +318,6 @@
     }
   ],
   "hardFloorCategory": [
-    {
-      "minutes": 10,
-      "groupId": "r10.anterior-lateral-lower-leg-dorsal-foot",
-      "groupName": "Anterior/lateral lower leg and dorsal foot",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 15,
-      "groupId": "r15.anterior-lateral-lower-leg-dorsal-foot",
-      "groupName": "Anterior/lateral lower leg and dorsal foot",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
     {
       "minutes": 15,
       "groupId": "r15.shoulder",
@@ -430,16 +362,6 @@
       "minutes": 20,
       "groupId": "r20.forearm-hand",
       "groupName": "Forearm and hand",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 20,
-      "groupId": "r20.anterior-lateral-lower-leg-dorsal-foot",
-      "groupName": "Anterior/lateral lower leg and dorsal foot",
       "hardFloorCompatibility": "Compatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
@@ -500,16 +422,6 @@
       "minutes": 30,
       "groupId": "r30.forearm-flexors-pronators",
       "groupName": "Forearm flexors and pronators",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 30,
-      "groupId": "r30.anterior-lateral-lower-leg-dorsal-foot",
-      "groupName": "Anterior/lateral lower leg and dorsal foot",
       "hardFloorCompatibility": "Compatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
@@ -606,8 +518,8 @@
       "baseProfile": 16,
       "enabledModifier": 2,
       "modifiedProfile": 18,
-      "baselineExerciseCount": 264,
-      "modifiedExerciseCount": 251,
+      "baselineExerciseCount": 266,
+      "modifiedExerciseCount": 253,
       "materialExerciseCount": 13,
       "requiredMaterialExerciseCount": 14,
       "affectedGroupCount": 7,
@@ -616,12 +528,6 @@
   ],
   "distinctLineup": [
     {
-      "minutes": 10,
-      "profile": 17,
-      "maximumDistinctExerciseCount": 9,
-      "requiredDistinctExerciseCount": 10
-    },
-    {
       "minutes": 15,
       "profile": 1,
       "maximumDistinctExerciseCount": 14,
@@ -636,7 +542,7 @@
     {
       "minutes": 15,
       "profile": 17,
-      "maximumDistinctExerciseCount": 11,
+      "maximumDistinctExerciseCount": 12,
       "requiredDistinctExerciseCount": 15
     },
     {
@@ -665,63 +571,15 @@
     },
     {
       "minutes": 20,
-      "profile": 16,
-      "maximumDistinctExerciseCount": 19,
-      "requiredDistinctExerciseCount": 20
-    },
-    {
-      "minutes": 20,
-      "profile": 144,
-      "maximumDistinctExerciseCount": 19,
-      "requiredDistinctExerciseCount": 20
-    },
-    {
-      "minutes": 20,
       "profile": 17,
-      "maximumDistinctExerciseCount": 16,
+      "maximumDistinctExerciseCount": 17,
       "requiredDistinctExerciseCount": 20
-    },
-    {
-      "minutes": 20,
-      "profile": 18,
-      "maximumDistinctExerciseCount": 19,
-      "requiredDistinctExerciseCount": 20
-    },
-    {
-      "minutes": 20,
-      "profile": 528,
-      "maximumDistinctExerciseCount": 19,
-      "requiredDistinctExerciseCount": 20
-    },
-    {
-      "minutes": 20,
-      "profile": 20,
-      "maximumDistinctExerciseCount": 19,
-      "requiredDistinctExerciseCount": 20
-    },
-    {
-      "minutes": 20,
-      "profile": 28,
-      "maximumDistinctExerciseCount": 19,
-      "requiredDistinctExerciseCount": 20
-    },
-    {
-      "minutes": 30,
-      "profile": 16,
-      "maximumDistinctExerciseCount": 29,
-      "requiredDistinctExerciseCount": 30
     },
     {
       "minutes": 30,
       "profile": 1,
       "maximumDistinctExerciseCount": 27,
       "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 30,
-      "profile": 144,
-      "maximumDistinctExerciseCount": 29,
-      "requiredDistinctExerciseCount": 30
     },
     {
       "minutes": 30,
@@ -732,32 +590,8 @@
     {
       "minutes": 30,
       "profile": 17,
-      "maximumDistinctExerciseCount": 21,
+      "maximumDistinctExerciseCount": 22,
       "requiredDistinctExerciseCount": 28
-    },
-    {
-      "minutes": 30,
-      "profile": 18,
-      "maximumDistinctExerciseCount": 29,
-      "requiredDistinctExerciseCount": 30
-    },
-    {
-      "minutes": 30,
-      "profile": 528,
-      "maximumDistinctExerciseCount": 29,
-      "requiredDistinctExerciseCount": 30
-    },
-    {
-      "minutes": 30,
-      "profile": 20,
-      "maximumDistinctExerciseCount": 29,
-      "requiredDistinctExerciseCount": 30
-    },
-    {
-      "minutes": 30,
-      "profile": 28,
-      "maximumDistinctExerciseCount": 29,
-      "requiredDistinctExerciseCount": 30
     },
     {
       "minutes": 30,
@@ -798,7 +632,7 @@
     {
       "minutes": 45,
       "profile": 17,
-      "maximumDistinctExerciseCount": 21,
+      "maximumDistinctExerciseCount": 22,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -840,7 +674,7 @@
     {
       "minutes": 60,
       "profile": 17,
-      "maximumDistinctExerciseCount": 21,
+      "maximumDistinctExerciseCount": 22,
       "requiredDistinctExerciseCount": 28
     },
     {
@@ -882,7 +716,7 @@
     {
       "minutes": 90,
       "profile": 17,
-      "maximumDistinctExerciseCount": 21,
+      "maximumDistinctExerciseCount": 22,
       "requiredDistinctExerciseCount": 28
     },
     {

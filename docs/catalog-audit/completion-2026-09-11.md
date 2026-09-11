@@ -154,3 +154,79 @@ profile-lineup checks. The Debug Android 3.12/126 build succeeds with zero
 warnings and errors; the web production build still rejects the same three
 coverage gate categories. All 540 metadata/media review hashes pass. The
 reviewed parity lock covers 132 files, SHA-256 prefix `05a9dd7907d6`.
+
+## Chair squeeze and alternating heel digs
+
+1028 Chair-Pose Thigh Squeeze Hold uses the exact feet-together hold and
+explicit sustained thigh-pressure cue in
+[Strong With Nature Yoga's demonstration](https://www.youtube.com/watch?v=W-X4Mnv_grg).
+The unaltered source excerpt at 30–31 seconds is preserved in
+`tools/ReviewedSourceMedia/chair-thigh-squeeze-strong-nature-30-1.mp4`, SHA-256
+`810b5a20b110300e9b1cb6b95e71d3c8a07b967f2c5b4621db815df2d350328d`.
+The source has 638×360 pixels; the reviewed crop retains the complete person,
+hands and feet. The runtime uses the reviewed static hold frame throughout
+the round. All 17 frames of its 0.85-second packaged fallback video were also
+inspected. The hold-frame SHA-256 is
+`7bc44afc883ed9c7a0f13473e701f5eab41e8fcbbbf4e08035731fbd697747eb`.
+
+Medial/deep knee extensors remain primary. Lateral knee extensors, gluteal
+extensors and both adductor groups receive the four reviewed secondary claims.
+The adductor claims come from the explicit squeeze, not ordinary balance or
+an inferred instruction for every chair pose. Demand is 2; the still pose is
+Insect incompatible and Hard Floor compatible. It requires no equipment and
+is quiet and Shy compatible. It is a single block sharing SessionMovementId
+969 with the existing chair hold. Existing 969 retains its anatomy and media,
+and the original 784→969→1000 sequence remains three blocks. Only 969's family
+field changed; its prior source and workout review are preserved, not reported
+as a newly replayed sequence.
+
+1029 Alternating Heel Digs uses three complete natural cycles from
+[Debbie Fleming's demonstration](https://www.youtube.com/watch?v=YiIKEhQjdkg),
+at 5.75–9.25 seconds. The source excerpt is preserved in
+`tools/ReviewedSourceMedia/heel-digs-debbie-5.75-3.5.mp4`, SHA-256
+`ff4a79ffa57ae6dd5d5d766c78726adc12c34bee15dbe6a9d3594fbecb9342fe`.
+All 70 final frames and the natural loop seam were inspected. Its runtime
+SHA-256 is `78dd684bc0f915b7d3d6e790acba7cc0dbf9cf845907e89b6a3295f5b764c1ed`.
+The person alternates gentle forward heel placements with deliberately raised
+toes and continuous arm movement; one foot remains supporting throughout.
+There is no hop, pivot, room travel or lateral drive. Hip flexors are primary;
+the anterior lower leg/dorsal foot is the sole secondary claim because each
+forefoot is deliberately raised against foot and shoe weight. Demand is 1.
+The single alternating block is Insect, Hard Floor, Silence and Shy compatible.
+The owner's separate Heel Walks (194) Hard Floor exclusion remains unchanged.
+
+Both additions passed actual-workout review with normal preparation, a full
+45-second work interval, rest and transition to the next exercise. 1028 was
+selected naturally for the 20-minute accessory-adductor slot with Hard Floor,
+Silence, Shy and Upper Body Clothing enabled. Two target-round runs together
+captured its preparation, work, rest and next-exercise phases. 1029 was
+selected in the 10-minute anterior-leg slot with the same setup plus Insect.
+Its observed video rate was 1, and neither review produced console or media
+errors. The isolated local fixtures advance preceding rounds to reach these
+targets; this does not claim complete real 10- or 20-minute workouts.
+Evidence is in
+[`evidence/2026-09-11/chair-and-heel`](evidence/2026-09-11/chair-and-heel).
+
+The paired completion and migration tests pass 19/19 on each platform. They
+exercise the affected 10-, 20- and 30-minute profiles with Light on and off,
+three selection seeds, distinct movement families, ordinary sequence feedback
+and completion. Existing exercise scores and valid Keeps survive migration.
+Catalog revision 76 and database version 92 deliver the two additions without
+changing the saved-state schema or recovery behavior. All 542 retained entries
+have current passing review hashes; the integrity CSV preserves the original
+517-entry audit baseline and one retirement. There are 1,045 exact approved
+secondary claims. The reviewed parity lock covers 132 files, SHA-256 prefix
+`40c492eb6418`.
+
+These additions close four pairwise zero-choice failures, four overlapping
+Hard Floor failures and 13 complete-lineup failures. The remaining 24 pairwise,
+12 Hard Floor and 36 complete-lineup failures still block release. Eight demand
+and one materiality diagnostic remain nonblocking. This is a catalog checkpoint,
+not a deployment.
+
+Full Android validation passes 812 of 813 tests; its sole failure is the
+remaining catalog-availability invariant. Full web validation passes 363 of
+369 tests; the six failures are the coverage invariant and affected production
+profile shards. The production web build rejects exactly modifier-pair
+availability, Hard Floor availability and distinct lineups. The Debug Android
+3.13/127 build succeeds with zero warnings and errors.

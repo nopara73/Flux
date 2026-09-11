@@ -6132,4 +6132,40 @@
         PingPong = $false
         MirrorForAlternation = $false
     }
+    1028 = @{
+        LocalSourceFile = 'chair-thigh-squeeze-strong-nature-30-1.mp4'
+        LocalSourceSha256 = '810b5a20b110300e9b1cb6b95e71d3c8a07b967f2c5b4621db815df2d350328d'
+        File = 'chair-pose-strong-nature.mp4'
+        Url = 'https://www.youtube.com/watch?v=W-X4Mnv_grg'
+        SourcePage = 'https://www.youtube.com/watch?v=W-X4Mnv_grg'
+        SourceWidth = 638
+        SourceHeight = 360
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 1
+        FramesPerSecond = 20
+        Crop = 'crop=360:360:180:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
+    1029 = @{
+        LocalSourceFile = 'heel-digs-debbie-5.75-3.5.mp4'
+        LocalSourceSha256 = 'ff4a79ffa57ae6dd5d5d766c78726adc12c34bee15dbe6a9d3594fbecb9342fe'
+        File = 'heel-dig-debbie.mp4'
+        Url = 'https://www.youtube.com/watch?v=YiIKEhQjdkg'
+        SourcePage = 'https://www.youtube.com/watch?v=YiIKEhQjdkg'
+        SourceWidth = 1280
+        SourceHeight = 720
+        Human = $true
+        Youtube = $true
+        Video = $true
+        StartSeconds = 0
+        DurationSeconds = 3.5
+        FramesPerSecond = 20
+        Crop = 'crop=720:720:230:0'
+        PingPong = $false
+        MirrorForAlternation = $false
+    }
 }

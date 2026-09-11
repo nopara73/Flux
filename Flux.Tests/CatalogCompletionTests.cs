@@ -16,6 +16,88 @@ public sealed class CatalogCompletionTests
         })!;
 
     [Theory]
+    [InlineData(10, true, false, 1029, "r10.anterior-lateral-lower-leg-dorsal-foot")]
+    [InlineData(10, true, true, 1029, "r10.anterior-lateral-lower-leg-dorsal-foot")]
+    [InlineData(20, false, false, 1028, "r20.accessory-hip-adductors")]
+    [InlineData(20, false, true, 1028, "r20.accessory-hip-adductors")]
+    [InlineData(30, false, false, 1028, "r30.accessory-hip-adductors")]
+    [InlineData(30, false, true, 1028, "r30.accessory-hip-adductors")]
+    public void ReviewedHeelDigsAndChairSqueezeCompleteHardFloorWorkouts(
+        int minutes, bool insect, bool light, int expectedId, string selectionKey)
+    {
+        foreach (int seed in new[] { 1, 2, 4 })
+        {
+            Exercise[] catalog = LoadCatalog();
+            var service = new ExerciseSessionService(catalog, new Random(seed));
+            var state = new WorkoutState();
+            WorkoutModifiers profile = WorkoutModifiers.HardFloor | WorkoutModifiers.Silence |
+                WorkoutModifiers.Shy | WorkoutModifiers.UpperBodyClothing |
+                (insect ? WorkoutModifiers.Insect : WorkoutModifiers.None) |
+                (light ? WorkoutModifiers.Light : WorkoutModifiers.None);
+            service.StartWorkout(state, minutes, profile);
+            WorkoutGroup[] rounds = service.GetActiveGroups(state).ToArray();
+            WorkoutGroup target = rounds.Single(round => round.SelectionKey == selectionKey);
+            Assert.Equal(expectedId, service.GetSelectedExercise(state, target).Id);
+            Assert.All(rounds, round => Assert.True(WorkoutModifierPolicy.IsCompatible(
+                service.GetSelectedExercise(state, round), profile)));
+            WorkoutGroup[] baseRounds = rounds.Where(round => round.SequenceBlockIndex == 0).ToArray();
+            Assert.Equal(baseRounds.Length, baseRounds.Select(round =>
+                WorkoutModifierPolicy.GetSessionMovementId(service.GetSelectedExercise(state, round)))
+                .Distinct().Count());
+            foreach (WorkoutGroup round in rounds)
+            {
+                service.BeginRest(state, round, DateTimeOffset.UtcNow.AddSeconds(15).ToUnixTimeMilliseconds());
+                if (service.IsIntermediateSequenceBlock(state, round)) service.AdvanceSequence(state, round);
+                else service.RecordOutcome(state, round, keep: true);
+                service.ClearPendingRest(state);
+            }
+            Assert.True(state.WorkoutCompleted);
+        }
+    }
+
+    [Fact]
+    public void NewDirectMovementsPreserveExistingAnatomySequenceAndFeedback()
+    {
+        Exercise[] catalog = LoadCatalog();
+        Exercise chair = catalog.Single(exercise => exercise.Id == 1028);
+        Exercise heel = catalog.Single(exercise => exercise.Id == 1029);
+        Assert.Equal(CanonicalMuscleGroup.MedialAndDeepKneeExtensors, chair.PrimaryCanonicalGroup);
+        Assert.Contains(CanonicalMuscleGroup.AccessoryHipAdductors, chair.SecondaryCanonicalGroups);
+        Assert.Equal(2, chair.MuscularDemand);
+        Assert.Equal(969, chair.SessionMovementId);
+        Assert.Equal(969, catalog.Single(exercise => exercise.Id == 969).SessionMovementId);
+        Assert.Equal(new[] { 784, 969, 1000 }, catalog.Single(exercise => exercise.Id == 784)
+            .SequenceBlocks.Select(block => block.ExerciseId));
+        Assert.Equal(CanonicalMuscleGroup.HipFlexors, heel.PrimaryCanonicalGroup);
+        Assert.Equal(new[] { CanonicalMuscleGroup.AnteriorLateralLowerLegAndDorsalFoot },
+            heel.SecondaryCanonicalGroups);
+        Assert.Equal(1, heel.MuscularDemand);
+        Assert.Equal(ExerciseSideSequence.Alternating, heel.SideSequence);
+        Assert.Single(chair.SequenceBlocks);
+        Assert.Single(heel.SequenceBlocks);
+        Assert.False(WorkoutModifierPolicy.IsCompatible(chair, WorkoutModifiers.Insect));
+        Assert.False(WorkoutModifierPolicy.IsCompatible(
+            catalog.Single(exercise => exercise.Id == 194), WorkoutModifiers.HardFloor));
+
+        Dictionary<int, StoredExerciseSnapshot> stored = catalog
+            .Where(exercise => exercise.Id is not (1028 or 1029))
+            .ToDictionary(exercise => exercise.Id, exercise =>
+                new StoredExerciseSnapshot(exercise.Name, exercise.Video, exercise.Id % 41 - 20));
+        Assert.Equal(stored.Keys.ToHashSet(), CatalogMigrationRules.ValidatePreservedCatalog(catalog, stored));
+        var state = new WorkoutState
+        {
+            CatalogRevision = 75,
+            SelectedExerciseIds = new() { ["r30.rotator-cuff"] = 1026 },
+            KeptExerciseRootIdsBySelectionGroupId = new() { ["r30.rotator-cuff"] = [1026] },
+            LastKeptExerciseIds = [1026],
+        };
+        Assert.True(CatalogMigrationRules.ReconcileWorkoutState(state, catalog.ToDictionary(exercise => exercise.Id)));
+        Assert.Equal(1026, state.SelectedExerciseIds["r30.rotator-cuff"]);
+        Assert.Equal(new HashSet<int> { 1026 }, state.KeptExerciseRootIdsBySelectionGroupId["r30.rotator-cuff"]);
+        Assert.Equal(new HashSet<int> { 1026 }, state.LastKeptExerciseIds);
+    }
+
+    [Theory]
     [InlineData(480)]
     [InlineData(517)]
     public void BreathOfJoyInsectCorrectionPreservesIdentityAndFeedback(int exerciseId)

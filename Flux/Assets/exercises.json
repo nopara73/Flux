@@ -22505,7 +22505,8 @@
     "shoeAgnostic": true,
     "maxSpaceMeters": 2,
     "equipment": "None",
-    "silent": true
+    "silent": true,
+    "sessionMovementId": 969
   },
   {
     "id": 971,
@@ -24035,5 +24036,91 @@
     "equipment": "None",
     "silent": true,
     "sessionMovementId": 1026
+  },
+  {
+    "id": 1028,
+    "name": "Chair-Pose Thigh Squeeze Hold",
+    "retiredName": null,
+    "video": "exercise_videos/exercise_1028.mp4",
+    "primaryCanonicalGroup": "MedialAndDeepKneeExtensors",
+    "secondaryCanonicalGroups": [
+      "LateralKneeExtensors",
+      "GlutealExtensors",
+      "MajorHipAdductors",
+      "AccessoryHipAdductors"
+    ],
+    "practice": "Yoga",
+    "motionProfile": "BilateralChairAdductionHold",
+    "mode": "Hold",
+    "presentation": "Still",
+    "holdFramePercent": 50,
+    "sideSequence": "Continuous",
+    "directionSequence": "None",
+    "sequenceBlocks": [
+      {
+        "exerciseId": 1028,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
+    "insectCompatibility": "Incompatible",
+    "hardFloorCompatibility": "Compatible",
+    "upperBodyClothingRequirement": "Agnostic",
+    "shyCompatibility": "Compatible",
+    "wallRequired": false,
+    "soleWallContactRequired": false,
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 2,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true,
+    "sessionMovementId": 969
+  },
+  {
+    "id": 1029,
+    "name": "Alternating Heel Digs",
+    "retiredName": null,
+    "video": "exercise_videos/exercise_1029.mp4",
+    "primaryCanonicalGroup": "HipFlexors",
+    "secondaryCanonicalGroups": [
+      "AnteriorLateralLowerLegAndDorsalFoot"
+    ],
+    "practice": "Standing aerobic warm-up",
+    "motionProfile": "AlternatingToeUpHeelTaps",
+    "mode": "Repetition",
+    "presentation": "Motion",
+    "holdFramePercent": 0,
+    "sideSequence": "Alternating",
+    "directionSequence": "None",
+    "sequenceBlocks": [
+      {
+        "exerciseId": 1029,
+        "sideCue": "None",
+        "directionCue": "None",
+        "mirrorMedia": false,
+        "mediaSegment": "Full"
+      }
+    ],
+    "insectCompatibility": "Compatible",
+    "hardFloorCompatibility": "Compatible",
+    "upperBodyClothingRequirement": "Agnostic",
+    "shyCompatibility": "Compatible",
+    "wallRequired": false,
+    "soleWallContactRequired": false,
+    "mirrorRelationship": "Agnostic",
+    "minimumMirrorCoverage": "None",
+    "score": 0,
+    "muscularDemand": 1,
+    "onlyFeetTouchGround": true,
+    "shoeAgnostic": true,
+    "maxSpaceMeters": 2,
+    "equipment": "None",
+    "silent": true
   }
 ]
