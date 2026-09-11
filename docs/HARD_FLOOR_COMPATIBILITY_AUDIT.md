@@ -44,8 +44,8 @@ sequence must use one consistent floor classification across all of its blocks.
 
 ## Current result
 
-- `Compatible`: 312 exercises
-- `Incompatible`: 222 exercises
+- `Compatible`: 348 exercises
+- `Incompatible`: 192 exercises
 - `Unreviewed`: 0 exercises
 
 ## Earlier migrations

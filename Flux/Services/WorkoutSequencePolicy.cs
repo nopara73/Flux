@@ -97,8 +97,7 @@ public static class WorkoutSequencePolicy
         }
 
         WorkoutGroup[] eligibleAnchors = groups
-            .Where(group => GetCanonicalCoverage(root, exercisesById, group) >=
-                WorkoutCoveragePolicy.GetRequiredCanonicalCoverage(group))
+            .Where(group => IsSelectable(root, exercisesById, group))
             .ToArray();
         WorkoutGroup[] primaryGroups = GetPrimaryCoverageGroups(
             root,
@@ -119,5 +118,17 @@ public static class WorkoutSequencePolicy
                 option.OrderBy(group => group.Order).Select(group => group.Id)))
             .Select(option => option.OrderBy(group => group.Order).ToArray())
             .ToArray();
+    }
+
+    public static bool IsSelectable(
+        Exercise root,
+        IReadOnlyDictionary<int, Exercise> exercisesById,
+        WorkoutGroup group)
+    {
+        Exercise[] members = GetMembers(root, exercisesById);
+        return members.Length > 0 &&
+            (group.CanonicalGroups.Count(muscle => members.Any(member => member.Trains(muscle))) >=
+                WorkoutCoveragePolicy.GetRequiredCanonicalCoverage(group) ||
+                members.All(member => WorkoutCoveragePolicy.IsRegionalCompound(member, group)));
     }
 }

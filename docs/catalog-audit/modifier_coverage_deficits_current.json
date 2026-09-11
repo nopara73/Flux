@@ -14,10 +14,10 @@
     "muscularDemandMinimumPerCategoryPerGroup": 1
   },
   "summary": {
-    "pairwiseDeficiencyCount": 44,
-    "pairwiseAffectedGroupCount": 24,
-    "hardFloorCategoryDeficiencyCount": 21,
-    "hardFloorCategoryAffectedGroupCount": 21,
+    "pairwiseDeficiencyCount": 37,
+    "pairwiseAffectedGroupCount": 17,
+    "hardFloorCategoryDeficiencyCount": 17,
+    "hardFloorCategoryAffectedGroupCount": 17,
     "muscularDemandDeficiencyCount": 8,
     "muscularDemandAffectedGroupCount": 2,
     "demandZeroDeficiencyCount": 0,
@@ -25,97 +25,13 @@
     "demandTwoDeficiencyCount": 8,
     "demandTwoAffectedGroupCount": 2,
     "materialityDeficiencyCount": 1,
-    "distinctLineupDeficiencyCount": 55
+    "distinctLineupDeficiencyCount": 49
   },
   "pairwise": [
-    {
-      "minutes": 3,
-      "groupId": "r3.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 3,
-      "groupId": "r3.torso-pelvic-complex",
-      "groupName": "Torso and pelvic complex",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 512,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.upper-limbs",
-      "groupName": "Upper limbs",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.torso",
-      "groupName": "Torso",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 512,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.torso",
-      "groupName": "Torso",
-      "firstModifier": 1,
-      "firstModifierEnabled": true,
-      "secondModifier": 512,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
     {
       "minutes": 10,
       "groupId": "r10.anterior-lateral-lower-leg-dorsal-foot",
       "groupName": "Anterior/lateral lower leg and dorsal foot",
-      "firstModifier": 16,
-      "firstModifierEnabled": true,
-      "secondModifier": 1,
-      "secondModifierEnabled": true,
-      "mirrorEquipment": "None",
-      "requiredExerciseCount": 1,
-      "matchingExerciseCount": 0
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.upper-limbs",
-      "groupName": "Upper limbs",
       "firstModifier": 16,
       "firstModifierEnabled": true,
       "secondModifier": 1,
@@ -559,49 +475,9 @@
   ],
   "hardFloorCategory": [
     {
-      "minutes": 3,
-      "groupId": "r3.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 5,
-      "groupId": "r5.upper-limbs",
-      "groupName": "Upper limbs",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 7,
-      "groupId": "r7.head-neck-upper-limbs",
-      "groupName": "Head, neck and upper limbs",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
       "minutes": 10,
       "groupId": "r10.anterior-lateral-lower-leg-dorsal-foot",
       "groupName": "Anterior/lateral lower leg and dorsal foot",
-      "hardFloorCompatibility": "Compatible",
-      "partnerModifier": 1,
-      "partnerModifierEnabled": true,
-      "matchingExerciseCount": 0,
-      "requiredExerciseCount": 1
-    },
-    {
-      "minutes": 10,
-      "groupId": "r10.upper-limbs",
-      "groupName": "Upper limbs",
       "hardFloorCompatibility": "Compatible",
       "partnerModifier": 1,
       "partnerModifierEnabled": true,
@@ -858,45 +734,9 @@
   ],
   "distinctLineup": [
     {
-      "minutes": 3,
-      "profile": 17,
-      "maximumDistinctExerciseCount": 2,
-      "requiredDistinctExerciseCount": 3
-    },
-    {
-      "minutes": 3,
-      "profile": 513,
-      "maximumDistinctExerciseCount": 2,
-      "requiredDistinctExerciseCount": 3
-    },
-    {
-      "minutes": 5,
-      "profile": 17,
-      "maximumDistinctExerciseCount": 4,
-      "requiredDistinctExerciseCount": 5
-    },
-    {
-      "minutes": 5,
-      "profile": 513,
-      "maximumDistinctExerciseCount": 4,
-      "requiredDistinctExerciseCount": 5
-    },
-    {
-      "minutes": 7,
-      "profile": 17,
-      "maximumDistinctExerciseCount": 6,
-      "requiredDistinctExerciseCount": 7
-    },
-    {
-      "minutes": 7,
-      "profile": 513,
-      "maximumDistinctExerciseCount": 6,
-      "requiredDistinctExerciseCount": 7
-    },
-    {
       "minutes": 10,
       "profile": 17,
-      "maximumDistinctExerciseCount": 8,
+      "maximumDistinctExerciseCount": 9,
       "requiredDistinctExerciseCount": 10
     },
     {

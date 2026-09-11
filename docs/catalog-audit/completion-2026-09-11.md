@@ -68,5 +68,52 @@ remaining test fails on the recorded zero-choice catalog gaps. Seventeen web
 policy/metadata checks and the 132-source parity lock pass. The Debug Android
 3.11/125 build succeeds with zero warnings and errors, and all 540 retained
 entries still have current passing metadata and runtime-media review hashes.
-These checks validate the checkpoint; the remaining coverage failures still
-prevent release.
+The full Android run now passes 792 of 793 tests; its sole failure is the
+recorded catalog availability invariant. The production web build also rejects
+exactly the three remaining gate categories: modifier-pair availability,
+Hard Floor availability and complete lineups. These checks validate the
+checkpoint; the remaining coverage failures still prevent release.
+
+## Reviewed compound eligibility
+
+The owner clarified that meaningful broad training is the requirement, not an
+exact six-of-twelve or three-of-six count of unequally sized anatomical leaves.
+Android and web now additionally accept a dynamic compound shoulder-and-elbow
+movement with a proximal primary target in broad upper-body rounds, or direct
+front-and-back trunk work in broad torso rounds. Fine buckets retain their
+existing coverage rule. Every distinct member of an atomic sequence must meet
+this compound rule; appending an isolated wrist movement cannot inherit it.
+Static stretches and poses do not qualify through this additional path.
+
+The reviewed Alternating Side-Tap Palm Pushes (248) and Alternating Deadlift
+with Body Twist (825) now fill the appropriate broad rounds. Shadow Boxing
+(591) qualifies anatomically but retains its Hard Floor incompatibility and
+two lead blocks. No anatomy, media, timing, ranking, saved-state version,
+catalog revision, recovery or Oura changes were needed. Isolated wrist, neck,
+shoulder and triceps-stretch negative cases are pinned alongside accepted
+movements in one fixture consumed by Android and web tests.
+
+This closes six complete-lineup failures using existing reviewed movements:
+49 remain, alongside 37 pairwise zero-choice failures and 17 overlapping Hard
+Floor zero-choice failures. These are eligibility corrections, not new catalog
+admissions. The catalog remains 540 entries with unchanged media and training
+claims. Eight demand and one materiality diagnostic remain nonblocking.
+
+The actual three-minute Insect + Hard Floor + Shy workout completed with 138,
+248 and 825, using the ordinary preparation, work and rest transitions without
+clock acceleration. All packaged frames of 248 and 825 were reinspected.
+Observed playback rates were 1; the browser recorded no warnings or errors.
+Screenshots and observations are saved in
+[`evidence/2026-09-11/regional-compound`](evidence/2026-09-11/regional-compound).
+
+Focused checks pass 19 Android and 62 web/contract tests, including reload of
+recorded decisions before Done and committed Keeps after Done. Full Android
+validation passes 799 of 800 tests; the sole failure is the catalog availability
+invariant. Full web validation passes 351 of 360 tests; the nine failures are
+the remaining catalog coverage and profile-lineup checks. The Debug Android
+build succeeds with zero warnings and errors. The production web build still
+rejects the same three actual coverage gate categories. The reviewed parity
+lock covers 132 source files, SHA-256 prefix `e67c331107b9`.
+
+This checkpoint is not a release. Candidate research continues for the
+remaining fine-muscle and duration-specific gaps.

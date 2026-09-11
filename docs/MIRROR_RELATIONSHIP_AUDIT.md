@@ -1,6 +1,6 @@
 # Mirror relationship audit
 
-The 534 retained exercises are reviewed against physical mirror equipment.
+The 540 retained exercises are reviewed against physical mirror equipment.
 Timed side/direction demonstrations have a separate media contract.
 
 Mirror has three actual equipment states: `None`, `Compact` (upper-body view),
@@ -11,9 +11,9 @@ minimum useful mirror coverage.
 | --- | --- | --- | ---: |
 | `MirrorOnly` | `UpperBody` | Requires compact or tall | 0 |
 | `MirrorOnly` | `FullBody` | Requires tall | 0 |
-| `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 39 |
-| `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 58 |
-| `Agnostic` | `None` | Unaffected | 437 |
+| `BenefitsGreatly` | `UpperBody` | Preferred with compact or tall | 40 |
+| `BenefitsGreatly` | `FullBody` | Preferred with tall; selectable without preference with compact | 59 |
+| `Agnostic` | `None` | Unaffected | 441 |
 
 These are audit results. No relationship/coverage cell has a population minimum,
 and any permitted BenefitsGreatly criterion may be empty. The exhaustive lists
@@ -37,7 +37,7 @@ narrow audited criteria for `BenefitsGreatly`:
 5. Gaze-stability feedback.
 6. Subtle pelvic-position feedback.
 
-The 97 assignments and their coverage split are explicitly reviewed results,
+The 99 assignments and their coverage split are explicitly reviewed results,
 never targets or a means of filling a coverage shortage. The criterion keys
 remain mandatory even when their lists are empty.
 

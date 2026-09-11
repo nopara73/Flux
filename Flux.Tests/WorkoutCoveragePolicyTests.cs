@@ -52,10 +52,25 @@ public sealed class WorkoutCoveragePolicyTests
         Assert.False(WorkoutCoveragePolicy.IsPrimaryForGroup(secondaryOnly, group));
     }
 
+    [Fact]
+    public void CompoundSequenceCannotHideAnIsolatedMemberInABroadRound()
+    {
+        WorkoutGroup upper = MassGroupingTaxonomy.GetGroup(3, "r3.head-neck-upper-limbs");
+        Exercise compound = Exercise(10, CanonicalMuscleGroup.ShoulderAbductors,
+            [CanonicalMuscleGroup.ElbowExtensors], [10, 11]);
+        Exercise wrist = Exercise(11, CanonicalMuscleGroup.ForearmExtensorsAndSupinators, []);
+        var catalog = new[] { compound, wrist }.ToDictionary(exercise => exercise.Id);
+
+        Assert.True(WorkoutCoveragePolicy.IsSelectable(compound, upper));
+        Assert.False(WorkoutSequencePolicy.IsSelectable(compound, catalog, upper));
+        Assert.Empty(WorkoutSequencePolicy.GetPlacementOptions(compound, catalog, [upper]));
+    }
+
     private static Exercise Exercise(
         int id,
         CanonicalMuscleGroup primary,
-        CanonicalMuscleGroup[] secondary)
+        CanonicalMuscleGroup[] secondary,
+        int[]? sequenceIds = null)
     {
         return new Exercise
         {
@@ -70,6 +85,8 @@ public sealed class WorkoutCoveragePolicyTests
             Presentation = ExercisePresentation.Motion,
             HoldFramePercent = 0,
             SideSequence = ExerciseSideSequence.Continuous,
+            SequenceBlocks = (sequenceIds ?? [id]).Select(memberId =>
+                new ExerciseSequenceBlock { ExerciseId = memberId, MirrorMedia = false }).ToArray(),
             UpperBodyClothingRequirement =
                 ExerciseUpperBodyClothingRequirement.Agnostic,
             ShyCompatibility = ExerciseShyCompatibility.Compatible,

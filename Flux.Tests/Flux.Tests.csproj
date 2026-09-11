@@ -74,6 +74,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\web\tests\fixtures\regional-compound-cases.json"
+          Link="Assets\regional-compound-cases.json"
+          CopyToOutputDirectory="PreserveNewest" />
     <None Include="..\docs\catalog-audit\training-claim-corrections-2026-09-05.json"
           Link="Assets\training-claim-corrections-2026-09-05.json"
           CopyToOutputDirectory="PreserveNewest" />

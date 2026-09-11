@@ -940,11 +940,7 @@ public static class WorkoutModifierPolicy
         WorkoutGroup group,
         WorkoutModifiers profile)
     {
-        if (exercise.SequenceBlocks.Length == 0 ||
-            WorkoutSequencePolicy.GetCanonicalCoverage(
-                exercise,
-                exercisesById,
-                group) < WorkoutCoveragePolicy.GetRequiredCanonicalCoverage(group))
+        if (!WorkoutSequencePolicy.IsSelectable(exercise, exercisesById, group))
         {
             return false;
         }

@@ -1601,7 +1601,43 @@ export function getRequiredCanonicalCoverage(group) {
 }
 
 export function isSelectable(exercise, group) {
-  return getCanonicalCoverage(exercise, group) >= getRequiredCanonicalCoverage(group);
+  return getCanonicalCoverage(exercise, group) >= getRequiredCanonicalCoverage(group) ||
+    isRegionalCompound(exercise, group);
+}
+
+const REGIONAL_SHOULDER_TARGETS = new Set([
+  "ShoulderAbductors", "ShoulderAdductorsAndExtensors", "RotatorCuff", "ScapularGirdle", "Chest",
+]);
+const REGIONAL_ELBOW_TARGETS = new Set(["ElbowFlexors", "ElbowExtensors"]);
+const ANTERIOR_TRUNK_TARGETS = new Set(["AbdominalWall", "Chest"]);
+const POSTERIOR_TRUNK_TARGETS = new Set(["SpinalExtensors", "DeepAndIntersegmentalBack"]);
+const COMPOUND_UPPER_BUCKET_MEMBERS = [
+  "ShoulderAbductors", "ShoulderAdductorsAndExtensors", "RotatorCuff", "ElbowFlexors", "ElbowExtensors",
+];
+const COMPOUND_TORSO_BUCKET_MEMBERS = [
+  "SpinalExtensors", "DeepAndIntersegmentalBack", "AbdominalWall", "Chest", "BreathingMuscles", "PelvicFloorAndPerineum",
+];
+
+export function isRegionalCompound(exercise, group) {
+  if (exercise.mode !== "Repetition" || exercise.presentation !== "Motion") return false;
+  const trained = [exercise.primaryCanonicalGroup, ...(exercise.secondaryCanonicalGroups ?? [])];
+  // Broad rounds must recognize reviewed work across the shoulder and elbow,
+  // without treating fine hand, face and neck subdivisions as equal-sized regions.
+  if (COMPOUND_UPPER_BUCKET_MEMBERS.every((muscle) => group.canonicalGroups.includes(muscle))) {
+    return (REGIONAL_SHOULDER_TARGETS.has(exercise.primaryCanonicalGroup) ||
+      REGIONAL_ELBOW_TARGETS.has(exercise.primaryCanonicalGroup)) &&
+      trained.some((muscle) => REGIONAL_SHOULDER_TARGETS.has(muscle)) &&
+      trained.some((muscle) => REGIONAL_ELBOW_TARGETS.has(muscle));
+  }
+  // Direct front-and-back trunk work does not need an invented breathing,
+  // pelvic-floor or incidental stabilization claim to be a broad torso movement.
+  if (COMPOUND_TORSO_BUCKET_MEMBERS.every((muscle) => group.canonicalGroups.includes(muscle))) {
+    return (ANTERIOR_TRUNK_TARGETS.has(exercise.primaryCanonicalGroup) ||
+      POSTERIOR_TRUNK_TARGETS.has(exercise.primaryCanonicalGroup)) &&
+      trained.some((muscle) => ANTERIOR_TRUNK_TARGETS.has(muscle)) &&
+      trained.some((muscle) => POSTERIOR_TRUNK_TARGETS.has(muscle));
+  }
+  return false;
 }
 
 function getSequenceMembers(root, exercisesById) {
@@ -1629,6 +1665,17 @@ function getSequenceCanonicalCoverage(root, exercisesById, group) {
     trained.has(canonicalGroup)).length;
 }
 
+function isSequenceSelectable(root, exercisesById, group) {
+  const members = getSequenceMembers(root, exercisesById);
+  if (members.length === 0) return false;
+  const trained = new Set(members.flatMap((member) => [
+    member.primaryCanonicalGroup, ...(member.secondaryCanonicalGroups ?? []),
+  ]));
+  return group.canonicalGroups.filter((muscle) => trained.has(muscle)).length >=
+    getRequiredCanonicalCoverage(group) ||
+    members.every((member) => isRegionalCompound(member, group));
+}
+
 function getSequencePrimaryGroups(root, exercisesById, groups) {
   const coveredGroupIds = new Set();
   for (const block of root?.sequenceBlocks ?? []) {
@@ -1648,8 +1695,7 @@ function getSequencePlacementOptions(root, exercisesById, groups) {
     return [];
   }
   const eligibleAnchors = groups.filter((group) =>
-    getSequenceCanonicalCoverage(root, exercisesById, group) >=
-      getRequiredCanonicalCoverage(group));
+    isSequenceSelectable(root, exercisesById, group));
   const primaryGroups = getSequencePrimaryGroups(root, exercisesById, groups);
   const canClaimMultiplePrimarySlots = primaryGroups.length > 1 &&
     primaryGroups.every((primaryGroup) => eligibleAnchors.some((anchor) =>
@@ -2144,10 +2190,7 @@ function isSequenceUnitEligible(
   group,
   modifiers,
 ) {
-  if (!Array.isArray(exercise?.sequenceBlocks) ||
-      exercise.sequenceBlocks.length === 0 ||
-      getSequenceCanonicalCoverage(exercise, exercisesById, group) <
-      getRequiredCanonicalCoverage(group)) {
+  if (!isSequenceSelectable(exercise, exercisesById, group)) {
     return false;
   }
 

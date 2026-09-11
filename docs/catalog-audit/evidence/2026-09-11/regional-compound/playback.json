@@ -1,0 +1,210 @@
+{
+  "origin": "http://127.0.0.1:36744/",
+  "durationMinutes": 3,
+  "modifiers": {
+    "Insect": true,
+    "Shy": true,
+    "HardFloor": true,
+    "Silence": true,
+    "Clothing": true,
+    "Light": false,
+    "Wall": false,
+    "Mirror": false
+  },
+  "observedMovementIds": [
+    138,
+    248,
+    825
+  ],
+  "clockAcceleration": false,
+  "frames": [
+    {
+      "label": "lower-ready",
+      "capturedAt": "2026-09-11T12:58:18.424Z",
+      "filename": "01-lower-ready.png",
+      "name": "Narrow Squat to Calf Raise",
+      "progress": "01  /  03",
+      "videos": [
+        {
+          "duration": 2.9,
+          "error": null,
+          "paused": false,
+          "rate": 1,
+          "readyState": 4,
+          "src": "http://127.0.0.1:36744/assets/exercise_videos/exercise_0138.mp4",
+          "time": 0.009405
+        }
+      ]
+    },
+    {
+      "label": "lower-preparation",
+      "capturedAt": "2026-09-11T12:58:18.854Z",
+      "filename": "02-lower-preparation.png",
+      "name": "Narrow Squat to Calf Raise",
+      "progress": "01  /  03",
+      "videos": [
+        {
+          "duration": 2.9,
+          "error": null,
+          "paused": true,
+          "rate": 1,
+          "readyState": 4,
+          "src": "http://127.0.0.1:36744/assets/exercise_videos/exercise_0138.mp4",
+          "time": 0.187221
+        }
+      ]
+    },
+    {
+      "label": "lower-rest",
+      "capturedAt": "2026-09-11T12:59:13.022Z",
+      "filename": "03-lower-rest.png",
+      "name": "Narrow Squat to Calf Raise",
+      "progress": "01  /  03",
+      "videos": [
+        {
+          "duration": 2.9,
+          "error": null,
+          "paused": true,
+          "rate": 1,
+          "readyState": 4,
+          "src": "http://127.0.0.1:36744/assets/exercise_videos/exercise_0138.mp4",
+          "time": 1.622424
+        }
+      ]
+    },
+    {
+      "label": "upper-ready",
+      "capturedAt": "2026-09-11T13:00:19.104Z",
+      "filename": "04-upper-ready.png",
+      "name": "Alternating Side-Tap Palm Pushes",
+      "progress": "02  /  03",
+      "videos": [
+        {
+          "duration": 1.8,
+          "error": null,
+          "paused": false,
+          "rate": 1,
+          "readyState": 4,
+          "src": "http://127.0.0.1:36744/assets/exercise_videos/exercise_0248.mp4",
+          "time": 0.92474
+        }
+      ]
+    },
+    {
+      "label": "upper-preparation",
+      "capturedAt": "2026-09-11T13:00:19.586Z",
+      "filename": "05-upper-preparation.png",
+      "name": "Alternating Side-Tap Palm Pushes",
+      "progress": "02  /  03",
+      "videos": [
+        {
+          "duration": 1.8,
+          "error": null,
+          "paused": true,
+          "rate": 1,
+          "readyState": 4,
+          "src": "http://127.0.0.1:36744/assets/exercise_videos/exercise_0248.mp4",
+          "time": 1.072725
+        }
+      ]
+    },
+    {
+      "label": "upper-work-start",
+      "capturedAt": "2026-09-11T13:00:25.698Z",
+      "filename": "06-upper-work-start.png",
+      "name": "Alternating Side-Tap Palm Pushes",
+      "progress": "02  /  03",
+      "videos": [
+        {
+          "duration": 1.8,
+          "error": null,
+          "paused": false,
+          "rate": 1,
+          "readyState": 4,
+          "src": "http://127.0.0.1:36744/assets/exercise_videos/exercise_0248.mp4",
+          "time": 0.705986
+        }
+      ]
+    },
+    {
+      "label": "upper-checkpoint",
+      "capturedAt": "2026-09-11T13:00:59.222Z",
+      "filename": "07-upper-checkpoint.png",
+      "name": "Alternating Side-Tap Palm Pushes",
+      "progress": "02  /  03",
+      "videos": [
+        {
+          "duration": 1.8,
+          "error": null,
+          "paused": false,
+          "rate": 1,
+          "readyState": 4,
+          "src": "http://127.0.0.1:36744/assets/exercise_videos/exercise_0248.mp4",
+          "time": 1.64527
+        }
+      ]
+    },
+    {
+      "label": "upper-complete-torso-ready",
+      "capturedAt": "2026-09-11T13:01:34.640Z",
+      "filename": "08-upper-complete-torso-ready.png",
+      "name": "Alternating Deadlift with Body Twist",
+      "progress": "03  /  03",
+      "videos": [
+        {
+          "duration": 7.25,
+          "error": null,
+          "paused": false,
+          "rate": 1,
+          "readyState": 4,
+          "src": "http://127.0.0.1:36744/assets/exercise_videos/exercise_0825.mp4",
+          "time": 2.869728
+        }
+      ]
+    },
+    {
+      "label": "torso-preparation",
+      "capturedAt": "2026-09-11T13:02:33.059Z",
+      "filename": "09-torso-preparation.png",
+      "name": "Alternating Deadlift with Body Twist",
+      "progress": "03  /  03",
+      "videos": [
+        {
+          "duration": 7.25,
+          "error": null,
+          "paused": true,
+          "rate": 1,
+          "readyState": 4,
+          "src": "http://127.0.0.1:36744/assets/exercise_videos/exercise_0825.mp4",
+          "time": 2.933342
+        }
+      ]
+    },
+    {
+      "label": "torso-work-start",
+      "capturedAt": "2026-09-11T13:02:39.172Z",
+      "filename": "10-torso-work-start.png",
+      "name": "Alternating Deadlift with Body Twist",
+      "progress": "03  /  03",
+      "videos": [
+        {
+          "duration": 7.25,
+          "error": null,
+          "paused": false,
+          "rate": 1,
+          "readyState": 4,
+          "src": "http://127.0.0.1:36744/assets/exercise_videos/exercise_0825.mp4",
+          "time": 4.291473
+        }
+      ]
+    },
+    {
+      "label": "workout-complete",
+      "capturedAt": "2026-09-11T13:07:27.232Z",
+      "filename": "11-workout-complete.png",
+      "name": "Alternating Deadlift with Body Twist",
+      "progress": "03  /  03",
+      "videos": []
+    }
+  ]
+}

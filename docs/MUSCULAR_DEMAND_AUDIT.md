@@ -1,15 +1,15 @@
 # Muscular-demand audit
 
-The 508 catalog records were individually reviewed against one frozen,
+The 540 catalog records were individually reviewed against one frozen,
 three-level rubric. The rating estimates the demonstrated movement's inherent
 local muscular demand when an average healthy adult repeats the shown range and
 cadence continuously for 45 seconds. It is not a personalized RPE prediction.
 
 | Rating | Contract | Current count |
 | --- | --- | ---: |
-| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 122 |
-| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 234 |
-| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 152 |
+| `0` | Muscular loading is incidental; mobility, motor control, balance skill, breathing, or relaxation is the principal demand. | 117 |
+| `1` | Muscular loading is meaningful, but local force or fatigue is not expected to be the principal limiter. | 288 |
+| `2` | Hard muscular work; local force or fatigue is expected to be the principal limiter. | 135 |
 
 Ratings were assigned exercise by exercise. There is no desired overall
 distribution or balancing target. Stretching and mobility are not promoted merely
@@ -18,17 +18,14 @@ because a muscle is named; unloaded striking and rhythmic cardio do not become
 bodyweight isometrics, self-resistance, and repeated plyometric work qualify
 when local force or fatigue is the limiting demand.
 
-The complete 2026-08-29 demonstration-integrity review corrected three demand
-ratings strictly from the then-current final loops. Later semantic replacements
-are rated from their replacement demonstrations rather than inheriting those
-historical values. The current cleanup rates fingertip wall push-ups and the
-isometric palm press at `2`; the standing upper-body drills and martial strikes
-at `1`; and the reverse-prayer stretch at `0`. Exercise 565 is also rated `2`
-because its loop repeatedly raises both heels while sustaining a mini squat.
-The reduced-floor follow-up adds one standing march-and-twist at `0`, two
-direction-specific marching arm-circle blocks at `1`, and four established
-self-resisted neck isometrics at `2`. No distribution was targeted. See
-[`CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md`](CATALOG_DEMONSTRATION_INTEGRITY_AUDIT.md).
+The 2026-08-29 demonstration-integrity review is a historical checkpoint.
+Later reviews follow the final packaged action rather than inheriting a rating
+from an older name, source or classification. For example, the current mini-squat
+calf raises with forward reach (565) and march with torso twist (305) are both
+`1`. The current per-exercise evidence is bound to metadata and runtime-media
+hashes in
+[`catalog-audit/review-evidence-2026-09-06.json`](catalog-audit/review-evidence-2026-09-06.json).
+No distribution was targeted.
 
 The authoritative reviewed ID lists and rubric live in
 [`tools/ExerciseMuscularDemand.psd1`](../tools/ExerciseMuscularDemand.psd1).
