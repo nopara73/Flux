@@ -279,6 +279,20 @@ test("startup locks Light for the existing nearly completed hour history", () =>
   assert.equal(controls.selectedModifiers & light, light);
 });
 
+test("mid-workout settings allow duration edits without crossing the protected prefix", () => {
+  const { controls, element } = startup([], 30);
+  controls.setActiveWorkoutSetup(true, 15);
+  assert.equal(element("duration-range").disabled, false);
+  element("duration-decrease").fire("click");
+  assert.equal(controls.selectedMinutes, 20);
+  element("duration-decrease").fire("click");
+  assert.equal(controls.selectedMinutes, 15);
+  assert.equal(element("duration-decrease").disabled, true);
+  element("duration-increase").fire("click");
+  assert.equal(controls.selectedMinutes, 20);
+  assert.equal(element("begin-workout").getAttribute("aria-label"), "Resume workout");
+});
+
 test("startup countdown responds to duration and manual Light hides it", () => {
   const { controls, element } = startup([], 10);
   assert.equal(element("light-workout-countdown").textContent, "18");

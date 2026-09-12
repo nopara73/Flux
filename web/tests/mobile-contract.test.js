@@ -574,8 +574,8 @@ test("web and mobile persist one combined duration and modifier selection contex
     shyCompatibilityModel,
     /Unreviewed[\s\S]*Compatible[\s\S]*Incompatible/,
   );
-  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 26);
-  assert.match(workoutState, /public int Version[^=]*=\s*29/);
+  assert.equal(CURRENT_WORKOUT_STATE_VERSION, 27);
+  assert.match(workoutState, /public int Version[^=]*=\s*30/);
   assert.match(workoutState, /KeptExerciseRootIdsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsBySelectionGroupId/);
   assert.match(workoutState, /ExerciseScoreAdjustmentsByPhase/);
@@ -854,7 +854,7 @@ test("web and mobile persist one combined duration and modifier selection contex
   );
   assert.match(
     webApp,
-    /await ensureWorkoutPrepared\([\s\S]*session\.activatePreparedWorkout\(\)/,
+    /await ensureWorkoutPrepared\([\s\S]*nextSession\.activatePreparedWorkout\(\)/,
   );
   assert.match(durationLayout, /@\+id\/upper_body_clothing_modifier_button/);
   assert.match(durationLayout, /@\+id\/hard_floor_modifier_button/);
@@ -1886,8 +1886,9 @@ test("mid-workout modifiers revalidate the active exercise on both platforms", (
     webRestore,
     /restorePendingMovement\(\)[\s\S]*showNextExercise\(\)/,
   );
-  assert.match(instantControls, /setActiveWorkoutSetup\(enabled\)/);
-  assert.match(instantControls, /elements\.range\.disabled = activeWorkoutSetup/);
+  assert.match(instantControls, /setActiveWorkoutSetup\(enabled, minimumMinutes = 3\)/);
+  assert.match(instantControls, /elements\.range\.disabled = false/);
+  assert.match(mainActivity, /_durationSeekBar.Enabled = true/);
   assert.match(preparationWorker, /mode === "reconfigure"[\s\S]*reconfigureActiveWorkout/);
 
   assert.match(workoutState, /ActiveSelectionGroupOrder/);
@@ -1911,6 +1912,28 @@ test("mid-workout modifiers revalidate the active exercise on both platforms", (
     /preserveCompletedCurrentSelection[\s\S]*lockedSelectionGroupIds\.delete[\s\S]*currentSelectionChanged[\s\S]*clearPendingMovement/,
   );
   assert.doesNotMatch(workoutModule, /currentSelectionFitsModifiers/);
+});
+
+test("session continuity, editable duration, and explicit end stay in parity", async () => {
+  const editing = await readFile(new URL("../../Flux/Services/WorkoutSessionEditing.cs", import.meta.url), "utf8");
+  assert.match(mainActivity, /sessionService\.RestoreAfterReopen\(_state\)/);
+  const startup = methodBody(mainActivity, "private ApplicationStartupResult InitializeApplication(", "private void CompleteApplicationStartup(");
+  assert.doesNotMatch(startup, /FinishInterruptedWorkout|FinalizeCurrentWorkout|PrepareWorkout/);
+  assert.doesNotMatch(webApp, /session\.finishInterruptedWorkout\(\)/);
+  for (const name of ["RestoreAfterReopen", "ResizeActiveWorkout", "EndActiveWorkout"])
+    assert.ok(editing.includes(name));
+  assert.match(mainActivity, /ConfirmEndSession[\s\S]*SetNegativeButton[\s\S]*SetPositiveButton/);
+  assert.match(webIndex, /<dialog id="end-session-dialog"/);
+  assert.match(webApp, /returnValue === "end"\) endActiveWorkout/);
+  const nativeEnd = methodBody(mainActivity, "private async void EndActiveWorkout()", "private void RestoreWorkoutAfterSetup()");
+  assert.match(nativeEnd, /ShowDurationSelection\(\)/);
+  assert.doesNotMatch(nativeEnd, /ActivatePreparedWorkout|PrepareWorkout|LogOuraDecision/);
+  const webEnd = methodBody(webApp, "function endActiveWorkout()", "function restoreWorkoutAfterSetup()");
+  assert.match(webEnd, /showDuration\(\)/);
+  assert.doesNotMatch(webEnd, /activatePreparedWorkout|prepareWorkout|new Worker/);
+  assert.match(preparationWorker, /resizeActiveWorkout\(minutes\)/);
+  assert.match(workoutState, /ActiveDurationSelectionGroupIds/);
+  assert.match(workoutSessionLog, /DurationChanges/);
 });
 
 test("duration modifiers separate workout context from available equipment", () => {
@@ -1989,7 +2012,7 @@ test("active movement checkpoints and invalid media recovery match across platfo
   );
   assert.match(
     mobileCreate,
-    /GetPendingMovementGroup[\s\S]*GetPendingRestGroup[\s\S]*pendingMovementGroup is null[\s\S]*pendingRestGroup is null[\s\S]*FinishInterruptedWorkout[\s\S]*RestorePendingMovement[\s\S]*RestorePendingRest/,
+    /RestoreAfterReopen[\s\S]*GetPendingMovementGroup[\s\S]*GetPendingRestGroup[\s\S]*RestorePendingMovement[\s\S]*RestorePendingRest[\s\S]*_state.ActiveWorkoutMinutes != 0[\s\S]*ShowNextExercise/,
   );
   assert.match(stateStoreContract, /void SaveDeferred\(WorkoutState state\)/);
   assert.match(
@@ -2026,7 +2049,7 @@ test("active movement checkpoints and invalid media recovery match across platfo
   );
   assert.match(
     webApp,
-    /pendingRestGroup = session\.getPendingRestGroup\(\)[\s\S]*pendingMovementGroup = session\.getPendingMovementGroup\(\)[\s\S]*activeWorkoutMinutes !== 0[\s\S]*!pendingRestGroup[\s\S]*!pendingMovementGroup[\s\S]*session\.finishInterruptedWorkout\(\)/,
+    /session\.restoreAfterReopen\(\)[\s\S]*pendingRestGroup = session\.getPendingRestGroup\(\)[\s\S]*pendingMovementGroup = session\.getPendingMovementGroup\(\)[\s\S]*activeWorkoutMinutes !== 0[\s\S]*showNextExercise\(\)/,
   );
   assert.match(
     mainActivity,

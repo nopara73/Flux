@@ -176,14 +176,34 @@ button:disabled {
   stroke-linejoin: round;
 }
 
-.duration-screen.active-workout-setup .duration-lock {
-  display: block;
+.end-session { display: none; }
+.active-workout-setup .end-session {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  padding: 13px;
+  border: 1px solid var(--outline);
+  border-radius: 16px;
+  background: var(--surface);
+  color: var(--graphite);
+  box-shadow: 0 2px 4px rgb(18 20 22 / 10%);
 }
-
-.duration-screen.active-workout-setup .duration-step-row,
-.duration-screen.active-workout-setup .duration-labels {
-  opacity: 0.38;
+.end-session svg { width: 100%; fill: currentColor; }
+.end-session-dialog {
+  max-width: min(380px, calc(100vw - 40px));
+  border: 1px solid var(--outline);
+  border-radius: 24px;
+  padding: 28px;
+  background: var(--surface);
+  color: var(--graphite);
+  box-shadow: 0 16px 64px rgb(0 0 0 / 24%);
 }
+.end-session-dialog::backdrop { background: rgb(18 20 22 / 40%); }
+.end-session-dialog h2 { margin: 0 0 12px; font-size: 22px; }
+.end-session-dialog p { margin: 0 0 24px; line-height: 1.5; }
+.end-session-dialog-actions { display: flex; gap: 12px; justify-content: flex-end; }
+.end-session-dialog-actions button { min-height: 48px; padding: 0 22px; border-radius: 16px; }
 
 .duration-screen.active-workout-setup .forward-arrow::before {
   width: 0;
@@ -607,6 +627,14 @@ button.modifier-tile:not(:disabled):active {
   border-top: 1px solid var(--outline);
   background: var(--surface);
 }
+
+.active-workout-setup .duration-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.active-workout-setup .begin-workout { margin: 0; flex: 1; }
 
 .primary-button,
 .completion-button {
@@ -2054,6 +2082,11 @@ input:focus-visible {
     height: 48px;
     padding: 10px;
   }
+}
+
+@media (orientation: landscape) and (max-width: 999px) {
+  .active-workout-setup .duration-action-bar { flex-direction: column; gap: 24px; }
+  .active-workout-setup .begin-workout { flex: 0 0 auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {

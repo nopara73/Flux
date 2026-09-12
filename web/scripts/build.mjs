@@ -338,7 +338,7 @@ const fingerprintedAppSource = appSource
     '"data/asset-versions.json"',
     `"data/asset-versions.json?v=${assetVersionsVersion}"`,
   )
-  .replace(
+  .replaceAll(
     '"./workout-preparation-worker.js"',
     `"./${preparationWorkerOutputName}"`,
   );

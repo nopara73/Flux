@@ -343,7 +343,7 @@ export const DEFAULT_WORKOUT_MODIFIERS =
   WORKOUT_MODIFIERS.UpperBodyClothing |
   WORKOUT_MODIFIERS.HardFloor |
   WORKOUT_MODIFIERS.Silence;
-export const CURRENT_WORKOUT_STATE_VERSION = 26;
+export const CURRENT_WORKOUT_STATE_VERSION = 27;
 const DOMINANT_LIGHT_MODE_STATE_VERSION = 26;
 const EXPLICIT_LIGHT_MODE_STATE_VERSION = 25;
 const IMPLICIT_UPPER_BODY_CLOTHING_STATE_VERSION = 24;
@@ -1475,6 +1475,7 @@ export function createWorkoutSchedule(
   isRelaxedSingletonValid = null,
   frozenSelectionGroupIds = [],
   selectionGroups = null,
+  simpleRoundSelectionGroupIds = null,
 ) {
   if (!SUPPORTED_MINUTES.includes(minutes)) {
     throw new RangeError("Unsupported workout duration.");
@@ -1522,7 +1523,9 @@ export function createWorkoutSchedule(
         if (!blockExercise || !blockGroup) {
           throw new Error(`${anchor.displayName} has an invalid sequence block.`);
         }
-        if (minutes <= 30 && blocks.length === 1 && setCount === 1) {
+        if ((simpleRoundSelectionGroupIds === null ? minutes <= 30 :
+            simpleRoundSelectionGroupIds.includes(anchor.id)) &&
+            blocks.length === 1 && setCount === 1) {
           rounds.push(Object.freeze({
             ...blockGroup,
             order: rounds.length + 1,
@@ -3272,6 +3275,8 @@ export function createDefaultState() {
     activeExtraSetSelectionGroupIds: [],
     activeSetCountsBySelectionGroupId: {},
     activeSelectionGroupOrder: [],
+    activeDurationSelectionGroupIds: null,
+    activeSimpleRoundSelectionGroupIds: [],
     activeModifierRetainedSelectionGroupIds: [],
     activeModifierProtectedSelectionGroupId: null,
     activeDirectionPartnerExerciseIds: {},
@@ -3455,6 +3460,9 @@ function normalizeStateShape(raw) {
   state.activeSelectionGroupOrder = uniqueStrings(
     raw.activeSelectionGroupOrder,
   );
+  state.activeDurationSelectionGroupIds = Array.isArray(raw.activeDurationSelectionGroupIds)
+    ? uniqueStrings(raw.activeDurationSelectionGroupIds).filter(id => ALL_GROUPS.has(id)) : null;
+  state.activeSimpleRoundSelectionGroupIds = uniqueStrings(raw.activeSimpleRoundSelectionGroupIds);
   state.activeModifierRetainedSelectionGroupIds = uniqueStrings(
     raw.activeModifierRetainedSelectionGroupIds,
   );
@@ -3828,6 +3836,12 @@ function normalizeWorkoutSessionLog(raw) {
           setCount: positiveIntegerOrZero(selection.setCount),
           wasKeptAtWorkoutStart: selection.wasKeptAtWorkoutStart === true,
         })),
+    })),
+    durationChanges: normalizeObjectArray(session.durationChanges).map(change => ({
+      changedAtUnixMilliseconds: positiveSafeIntegerOrZero(change.changedAtUnixMilliseconds),
+      previousMinutes: positiveIntegerOrZero(change.previousMinutes),
+      newMinutes: positiveIntegerOrZero(change.newMinutes),
+      plannedSelections: normalizeObjectArray(change.plannedSelections),
     })),
     blocks: normalizeObjectArray(session.blocks).map((block) => ({
       completedAtUnixMilliseconds: positiveSafeIntegerOrZero(
@@ -4247,6 +4261,8 @@ export class WorkoutSession {
     this.state.activeWorkoutIsLightDay =
       (modifiers & WORKOUT_MODIFIERS.Light) !== 0;
     this.state.activeSelectionGroupOrder = [];
+    this.state.activeDurationSelectionGroupIds = null;
+    this.state.activeSimpleRoundSelectionGroupIds = [];
     this.state.activeModifierRetainedSelectionGroupIds = [];
     this.state.activeModifierProtectedSelectionGroupId = null;
     this.state.outcomes = {};
@@ -4421,6 +4437,128 @@ export class WorkoutSession {
     });
   }
 
+  restoreAfterReopen() {
+    if (this.state.pendingMovementMillisecondsRemaining > 0) {
+      this.state.pendingMovementEndsAtUnixMilliseconds = 0;
+      this.state.pendingMovementPausedByUser = true;
+    }
+    if (this.state.pendingRestGroupId) {
+      this.state.pendingRestMillisecondsRemaining =
+        this.state.pendingRestMillisecondsRemaining || 15_000;
+      this.state.pendingRestEndsAtUnixMilliseconds = 0;
+      this.state.pendingRestPausedByUser = true;
+    }
+    this.initialize();
+  }
+
+  getMinimumActiveWorkoutMinutes() {
+    const current = this.getNextGroup();
+    if (!current) return SUPPORTED_MINUTES[0];
+    const end = Math.max(...this.getActiveGroups()
+      .filter(r => getSelectionKey(r) === getSelectionKey(current)).map(r => r.order));
+    return SUPPORTED_MINUTES.find(minutes => minutes >= end);
+  }
+
+  endActiveWorkout() {
+    if (!this.state.activeWorkoutMinutes || this.state.workoutCompleted) return;
+    this.finalizeCurrentWorkout();
+  }
+
+  resizeActiveWorkout(minutes) {
+    if (this.state.activeWorkoutMinutes === minutes) return;
+    if (!SUPPORTED_MINUTES.includes(minutes) || this.state.workoutCompleted ||
+        !this.state.activeWorkoutMinutes || minutes < this.getMinimumActiveWorkoutMinutes()) {
+      throw new Error("The duration must include the current exercise sequence.");
+    }
+    const current = this.getNextGroup();
+    const priorRounds = this.getActiveGroups();
+    const prior = this.getScheduleOrderedPlacements();
+    const prefix = prior.slice(0, prior.findIndex(p => p.anchor.id === getSelectionKey(current)) + 1);
+    const lockedIds = prefix.map(p => p.anchor.id);
+    const locked = new Set(lockedIds);
+    const lockedExercises = new Map(prefix.flatMap(p => p.coveredGroups.map(g => [g.id, p.root.id])));
+    const protectedGroups = new Set(lockedExercises.keys());
+    const protectedCount = priorRounds.filter(r => locked.has(getSelectionKey(r))).length;
+    const freeMinutes = minutes - protectedCount;
+    const covered = new Set(prefix.flatMap(p => this.getSequenceExercises(p.root)
+      .flatMap(e => [e.primaryCanonicalGroup, ...e.secondaryCanonicalGroups])));
+    let candidates = getResolution(Math.min(minutes, 30)).groups
+      .filter(g => !protectedGroups.has(g.id) && isSelectionGroupAvailable(g, this.state.activeWorkoutModifiers))
+      .sort((a, b) => a.canonicalGroups.filter(m => covered.has(m)).length / a.canonicalGroups.length -
+        b.canonicalGroups.filter(m => covered.has(m)).length / b.canonicalGroups.length || a.order - b.order);
+    if (freeMinutes > 0 && candidates.length === 0) {
+      candidates = [...ALL_GROUPS.values()]
+        .filter(g => !protectedGroups.has(g.id) && isSelectionGroupAvailable(g, this.state.activeWorkoutModifiers))
+        .sort((a, b) => a.canonicalGroups.length - b.canonicalGroups.length || a.id.localeCompare(b.id));
+    }
+    const before = {
+      activeWorkoutMinutes: this.state.activeWorkoutMinutes,
+      lastWorkoutMinutes: this.state.lastWorkoutMinutes,
+      activeDurationSelectionGroupIds: this.state.activeDurationSelectionGroupIds,
+      activeSimpleRoundSelectionGroupIds: this.state.activeSimpleRoundSelectionGroupIds,
+      selectedExerciseIds: this.state.selectedExerciseIds,
+      activeSetCountsBySelectionGroupId: this.state.activeSetCountsBySelectionGroupId,
+      activeExtraSetSelectionGroupIds: this.state.activeExtraSetSelectionGroupIds,
+      activeSelectionGroupOrder: this.state.activeSelectionGroupOrder,
+      activeModifierRetainedSelectionGroupIds: this.state.activeModifierRetainedSelectionGroupIds,
+    };
+    try {
+      this.state.activeWorkoutMinutes = minutes;
+      this.state.activeSimpleRoundSelectionGroupIds = priorRounds
+        .filter(r => r.id === getSelectionKey(r) && locked.has(getSelectionKey(r)))
+        .map(getSelectionKey);
+      this.state.activeModifierRetainedSelectionGroupIds = [...protectedGroups];
+      let applied = false;
+      let lastError;
+      const maximumCount = Math.min(freeMinutes, candidates.length, 63 - protectedGroups.size);
+      for (let count = maximumCount; count >= (freeMinutes > 0 ? 1 : 0); count--) {
+        this.state.selectedExerciseIds = { ...before.selectedExerciseIds };
+        this.state.activeSetCountsBySelectionGroupId = { ...before.activeSetCountsBySelectionGroupId };
+        this.state.activeExtraSetSelectionGroupIds = [...before.activeExtraSetSelectionGroupIds];
+        this.state.activeSelectionGroupOrder = [];
+        const groups = [...prefix.flatMap(p => p.coveredGroups), ...candidates.slice(0, count)];
+        this.state.activeDurationSelectionGroupIds = [...new Set(groups.map(g => g.id))];
+        try {
+          const lineup = this.chooseBestDistinctLineup(groups, this.state.activeWorkoutModifiers, {
+            currentExerciseIds: lockedExercises,
+            allowSavedSelectionException: true,
+            modifierTransitionProtectedGroupIds: protectedGroups,
+            reservedRepeatMinutes: protectedCount - prefix.reduce((sum, p) => sum + p.root.sequenceBlocks.length, 0),
+          });
+          this.applyDistinctLineup(groups, lineup, false);
+          this.rebalanceNewExercisesByMuscleBalance(locked);
+          this.setEditedSelectionOrder(lockedIds);
+          this.applyLongWorkoutAllocation(this.chooseLongWorkoutAllocation(locked));
+          this.reconcileLineupWithScheduledPhases(locked);
+          if (JSON.stringify(priorRounds.slice(0, protectedCount)) !==
+              JSON.stringify(this.getActiveGroups().slice(0, protectedCount)) ||
+              this.getNextGroup()?.id !== current.id) {
+            throw new Error("A duration edit changed protected workout blocks.");
+          }
+          applied = true;
+          break;
+        } catch (error) { lastError ??= error; }
+      }
+      if (!applied) throw new Error("The new duration could not preserve this workout.", { cause: lastError });
+      this.state.lastWorkoutMinutes = minutes;
+      const session = this.ensureActiveWorkoutSession(true);
+      session.workoutMinutes = minutes;
+      session.durationChanges.push({
+        changedAtUnixMilliseconds: this.getCurrentUnixTimeMilliseconds(), previousMinutes: before.activeWorkoutMinutes,
+        newMinutes: minutes, plannedSelections: this.createCurrentSelectionSnapshots(session),
+      });
+    } catch (error) { Object.assign(this.state, before); throw error; }
+  }
+
+  setEditedSelectionOrder(prefixOrder) {
+    this.state.activeSelectionGroupOrder = [...prefixOrder,
+      ...this.getSelectedSequencePlacements()
+        .filter(p => !prefixOrder.includes(p.anchor.id))
+        .sort((a, b) => getMuscularDemandSchedulePriority(getSequenceMuscularDemand(a.root, this.exercisesById)) -
+          getMuscularDemandSchedulePriority(getSequenceMuscularDemand(b.root, this.exercisesById)) || a.anchor.order - b.anchor.order)
+        .map(p => p.anchor.id)];
+  }
+
   reconfigureActiveWorkout(modifiers, currentWorkoutGroupId) {
     if (!SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes) ||
         this.state.workoutCompleted || this.state.completionAcknowledged) {
@@ -4504,6 +4642,8 @@ export class WorkoutSession {
         currentExerciseIds: lockedExerciseIdsByGroup,
         allowSavedSelectionException: true,
         modifierTransitionProtectedGroupIds: protectedBaseGroupIds,
+        reservedRepeatMinutes: lockedPlacements.reduce((sum, p) => sum +
+          (lockedSetCountsBySelectionGroupId.get(p.anchor.id) - 1) * p.root.sequenceBlocks.length, 0),
       },
     );
 
@@ -4552,10 +4692,10 @@ export class WorkoutSession {
         !replannedCurrentPlacement ||
         replannedCurrentPlacement.root.id !== currentPlacement.root.id;
       if (currentSelectionChanged) {
-        const replannedRoundIds = new Set(replannedRounds.map((round) => round.id));
+        // Position IDs cannot transfer completed work to a new exercise.
+        // The original movement's actual work remains in the session log.
         for (const priorRound of priorActiveRounds.filter((round) =>
-          getSelectionKey(round) === getSelectionKey(currentRound) &&
-          !replannedRoundIds.has(round.id))) {
+          getSelectionKey(round) === getSelectionKey(currentRound))) {
           delete this.state.outcomes[priorRound.id];
         }
 
@@ -4724,6 +4864,8 @@ export class WorkoutSession {
         : this.state.activeWorkoutSession?.initialSelections?.map((selection) =>
           selection.selectionGroupId) ?? [],
       this.getSelectionGroups(),
+      this.state.activeDurationSelectionGroupIds === null
+        ? null : this.state.activeSimpleRoundSelectionGroupIds,
     );
   }
 
@@ -4733,9 +4875,9 @@ export class WorkoutSession {
   ) {
     const retained = new Set(retainedSelectionGroupIds ?? []);
     return SUPPORTED_MINUTES.includes(this.state.activeWorkoutMinutes)
-      ? getResolution(
+      ? (this.state.activeDurationSelectionGroupIds?.map(id => ALL_GROUPS.get(id)) ?? getResolution(
           this.state.activeWorkoutMinutes > 30 ? 30 : this.state.activeWorkoutMinutes,
-        ).groups.filter((group) => isSelectionGroupAvailable(
+        ).groups).filter((group) => isSelectionGroupAvailable(
           group,
           modifiers,
         ) || retained.has(group.id))
@@ -5517,7 +5659,7 @@ export class WorkoutSession {
     );
     const protectedSelectionGroupId =
       this.state.activeModifierProtectedSelectionGroupId;
-    const validGroupIds = new Set(getResolution(
+    const validGroupIds = new Set(this.state.activeDurationSelectionGroupIds ?? getResolution(
       this.state.activeWorkoutMinutes > 30
         ? 30
         : this.state.activeWorkoutMinutes,
@@ -5636,6 +5778,7 @@ export class WorkoutSession {
       carriedKeepRootIdsBySelectionGroupId = new Map(),
       modifierTransitionProtectedGroupIds = new Set(),
       scheduledPhaseByGroupId = new Map(),
+      reservedRepeatMinutes = 0,
     } = {},
   ) {
     if (groups.length === 0) {
@@ -5925,15 +6068,18 @@ export class WorkoutSession {
 
     const solution = solveAtomicSequenceLineup(
       groups.length,
-      this.state.activeWorkoutMinutes,
+      this.state.activeWorkoutMinutes - reservedRepeatMinutes,
       atomicCandidates,
     ) ?? solveAtomicSequenceLineupAllowingRepeatedMovements(
-      groups.length, this.state.activeWorkoutMinutes, atomicCandidates,
+      groups.length, this.state.activeWorkoutMinutes - reservedRepeatMinutes, atomicCandidates,
     );
     if (!solution) {
       const movementCount = new Set(atomicCandidates.map((candidate) =>
         candidate.movementId)).size;
-      throw this.createDistinctLineupError(groups, movementCount);
+      throw new Error(this.createDistinctLineupError(groups, movementCount).message +
+        ` Budget: ${this.state.activeWorkoutMinutes - reservedRepeatMinutes}; unavailable slots: ` +
+        groups.filter((g, i) => !atomicCandidates.some(c => (c.coverageMask & (1n << BigInt(i))) !== 0n))
+          .map(g => g.id).join(","));
     }
     return new Map([...solution.exerciseIdByGroupIndex].map(
       ([groupIndex, exerciseId]) => [groups[groupIndex].id, exerciseId],
@@ -7354,7 +7500,7 @@ export class WorkoutSession {
     this.applyLongWorkoutAllocation(this.chooseLongWorkoutAllocation());
   }
 
-  reconcileLineupWithScheduledPhases() {
+  reconcileLineupWithScheduledPhases(lockedSelectionGroupIds = null) {
     const hasPhaseScoreAdjustments = Object.values(
       this.state.exerciseScoreAdjustmentsByPhase,
     ).some((adjustments) => Object.keys(adjustments).length > 0);
@@ -7371,6 +7517,9 @@ export class WorkoutSession {
     // sequence actually ends. Iterate to a stable lineup so a phase-local
     // downvote is never evaluated from the unrelated anatomical bucket order.
     const seenLineups = new Set();
+    const prefixOrder = this.state.activeSelectionGroupOrder.filter(id => lockedSelectionGroupIds?.has(id));
+    const protectedGroups = new Set(this.getSelectedSequencePlacements()
+      .filter(p => lockedSelectionGroupIds?.has(p.anchor.id)).flatMap(p => p.coveredGroups.map(g => g.id)));
     for (let pass = 0; pass < selectionGroups.length; pass += 1) {
       const currentLineup = new Map(selectionGroups.map((group) => [
         group.id,
@@ -7387,22 +7536,33 @@ export class WorkoutSession {
       }
       seenLineups.add(signature);
 
-      const allocation = this.chooseLongWorkoutAllocation();
+      const allocation = this.chooseLongWorkoutAllocation(lockedSelectionGroupIds ?? undefined);
       this.applyLongWorkoutAllocation(allocation);
       const scheduledPhaseByGroupId = this.getScheduledPhaseByGroupId(allocation);
       const nextLineup = this.chooseBestDistinctLineup(
         selectionGroups,
         this.state.activeWorkoutModifiers,
-        { currentExerciseIds: currentLineup, scheduledPhaseByGroupId },
+        {
+          currentExerciseIds: lockedSelectionGroupIds === null ? currentLineup :
+            new Map([...currentLineup].filter(([id]) => protectedGroups.has(id))),
+          allowSavedSelectionException: lockedSelectionGroupIds !== null,
+          modifierTransitionProtectedGroupIds: protectedGroups,
+          reservedRepeatMinutes: this.getSelectedSequencePlacements()
+            .filter(p => lockedSelectionGroupIds?.has(p.anchor.id))
+            .reduce((sum, p) => sum + ((this.state.activeSetCountsBySelectionGroupId[p.anchor.id] ?? 1) - 1) *
+              p.root.sequenceBlocks.length, 0),
+          scheduledPhaseByGroupId,
+        },
       );
       if (selectionGroups.every((group) =>
         nextLineup.get(group.id) === currentLineup.get(group.id))) {
         return;
       }
       this.applyDistinctLineup(selectionGroups, nextLineup, false);
+      if (lockedSelectionGroupIds !== null) this.setEditedSelectionOrder(prefixOrder);
     }
 
-    this.setActiveLongWorkoutAllocation();
+    this.applyLongWorkoutAllocation(this.chooseLongWorkoutAllocation(lockedSelectionGroupIds ?? undefined));
   }
 
   getScheduledPhaseByGroupId(allocation) {
@@ -8194,6 +8354,7 @@ export class WorkoutSession {
         })),
       selectionChanges: [],
       modifierChanges: [],
+      durationChanges: [],
       blocks: [],
       decisions: [],
     };
@@ -8378,6 +8539,8 @@ export class WorkoutSession {
   }
 
   resetTransientState() {
+    this.state.activeDurationSelectionGroupIds = null;
+    this.state.activeSimpleRoundSelectionGroupIds = [];
     this.state.activeWorkoutSession = null;
     this.state.activeWorkoutMinutes = 0;
     this.state.activeWorkoutModifiers = WORKOUT_MODIFIERS.None;

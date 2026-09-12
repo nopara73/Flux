@@ -460,6 +460,18 @@
             android:paddingEnd="24dp"
             android:paddingBottom="16dp">
 
+            <ImageButton
+                android:id="@+id/end_session_button"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_gravity="start|center_vertical"
+                android:background="@drawable/duration_modifier_background"
+                android:contentDescription="@string/end_session_description"
+                android:padding="14dp"
+                android:src="@drawable/ic_end_session"
+                android:tint="@color/primary_text"
+                android:visibility="gone" />
+
             <Button
                 android:id="@+id/begin_workout_button"
                 style="@style/FluxPrimaryButton"

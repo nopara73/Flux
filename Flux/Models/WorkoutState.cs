@@ -7,7 +7,7 @@ public sealed class WorkoutState
     [System.Text.Json.Serialization.JsonIgnore]
     public OuraRecoverySnapshot? OuraRecovery { get; set; }
 
-    public int Version { get; set; } = 29;
+    public int Version { get; set; } = 30;
 
     public int CatalogRevision { get; set; }
 
@@ -63,6 +63,14 @@ public sealed class WorkoutState
     // The active schedule keeps a stable logical order even when unfinished
     // selections are rebuilt after a mid-workout equipment change.
     public List<string> ActiveSelectionGroupOrder { get; set; } = [];
+
+    // A duration edit retains completed/current slots at their original
+    // resolution and replans only the remaining slots. Null is the ordinary
+    // duration-derived plan, including every pre-version-30 workout.
+    public List<string>? ActiveDurationSelectionGroupIds { get; set; }
+
+    // Preserve legacy short-workout round IDs across the 30-minute boundary.
+    public HashSet<string> ActiveSimpleRoundSelectionGroupIds { get; set; } = [];
 
     // Modifier changes may make an already completed anatomical slot
     // unavailable for the new profile. Retain only those completed slots in

@@ -108,6 +108,8 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                 state.ActiveSetCountsBySelectionGroupId,
                 StringComparer.Ordinal),
             ActiveSelectionGroupOrder = [.. state.ActiveSelectionGroupOrder],
+            ActiveDurationSelectionGroupIds = state.ActiveDurationSelectionGroupIds?.ToList(),
+            ActiveSimpleRoundSelectionGroupIds = [.. state.ActiveSimpleRoundSelectionGroupIds],
             ActiveModifierProtectedSelectionGroupId =
                 state.ActiveModifierProtectedSelectionGroupId,
             ActiveDirectionPartnerExerciseIds = new Dictionary<string, int>(
@@ -226,6 +228,23 @@ internal sealed class FakeWorkoutStateStore : IWorkoutStateStore
                         .ToList(),
                 })
                 .ToList(),
+            DurationChanges = session.DurationChanges.Select(change => new WorkoutDurationChangeLog
+            {
+                ChangedAtUnixMilliseconds = change.ChangedAtUnixMilliseconds,
+                PreviousMinutes = change.PreviousMinutes,
+                NewMinutes = change.NewMinutes,
+                PlannedSelections = change.PlannedSelections.Select(selection => new WorkoutSelectionSnapshot
+                {
+                    SelectionGroupId = selection.SelectionGroupId,
+                    CoveredWorkoutGroupIds = [.. selection.CoveredWorkoutGroupIds],
+                    RootExerciseId = selection.RootExerciseId,
+                    RootExerciseName = selection.RootExerciseName,
+                    SelectionScoreAtStart = selection.SelectionScoreAtStart,
+                    SequenceBlockCount = selection.SequenceBlockCount,
+                    SetCount = selection.SetCount,
+                    WasKeptAtWorkoutStart = selection.WasKeptAtWorkoutStart,
+                }).ToList(),
+            }).ToList(),
             Blocks = session.Blocks
                 .Select(block => new WorkoutBlockLog
                 {

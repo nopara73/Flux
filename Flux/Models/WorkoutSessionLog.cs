@@ -47,9 +47,19 @@ public sealed class WorkoutSessionLog
 
     public List<WorkoutModifierChangeLog> ModifierChanges { get; set; } = [];
 
+    public List<WorkoutDurationChangeLog> DurationChanges { get; set; } = [];
+
     public List<WorkoutBlockLog> Blocks { get; set; } = [];
 
     public List<WorkoutDecisionLog> Decisions { get; set; } = [];
+}
+
+public sealed class WorkoutDurationChangeLog
+{
+    public long ChangedAtUnixMilliseconds { get; set; }
+    public int PreviousMinutes { get; set; }
+    public int NewMinutes { get; set; }
+    public List<WorkoutSelectionSnapshot> PlannedSelections { get; set; } = [];
 }
 
 public sealed class WorkoutModifierChangeLog

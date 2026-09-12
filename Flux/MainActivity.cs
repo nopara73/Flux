@@ -97,6 +97,7 @@ public partial class MainActivity : Activity
     private Button _durationIncreaseButton = null!;
     private LinearLayout _durationOptionSegments = null!;
     private Button _beginWorkoutButton = null!;
+    private ImageButton _endSessionButton = null!;
     private View _workoutScreen = null!;
     private View _workoutPhaseSurface = null!;
     private View _workoutPhaseLeft = null!;
@@ -252,7 +253,7 @@ public partial class MainActivity : Activity
         try
         {
             var sessionService = new ExerciseSessionService(database.Exercises);
-            sessionService.Initialize(_state);
+            sessionService.RestoreAfterReopen(_state);
             RecoverPendingScoreUpdate(database, _state);
 
             WorkoutGroup? pendingMovementGroup =
@@ -260,23 +261,7 @@ public partial class MainActivity : Activity
             WorkoutGroup? pendingRestGroup =
                 sessionService.GetPendingRestGroup(_state);
 
-            if (!_state.WorkoutCompleted &&
-                _state.ActiveWorkoutMinutes != 0 &&
-                pendingMovementGroup is null &&
-                pendingRestGroup is null)
-            {
-                IReadOnlyList<Exercise> scoreUpdates = sessionService
-                    .FinishInterruptedWorkoutWithScoreUpdates(_state);
-                SaveStateAndScores(
-                    database,
-                    _stateStore,
-                    _state,
-                    scoreUpdates);
-            }
-            else
-            {
-                _stateStore.Save(_state);
-            }
+            _stateStore.Save(_state);
 
             return new ApplicationStartupResult(
                 database,
@@ -317,6 +302,11 @@ public partial class MainActivity : Activity
         {
             CancelQueuedWorkoutStart();
             RestorePendingRest(startup.PendingRestGroup);
+        }
+        else if (_state.ActiveWorkoutMinutes != 0)
+        {
+            CancelQueuedWorkoutStart();
+            ShowNextExercise();
         }
         else
         {
@@ -406,6 +396,7 @@ public partial class MainActivity : Activity
                     preparedState,
                     modifiers,
                     currentWorkoutGroupId!);
+                preparationService.ResizeActiveWorkout(preparedState, minutes);
             }
             else
             {
@@ -452,7 +443,7 @@ public partial class MainActivity : Activity
                     prepared.CurrentWorkoutGroupId ==
                         _workoutSetupCurrentGroupId &&
                     (_editingActiveWorkoutSetup
-                        ? _state.ActiveWorkoutMinutes == prepared.Minutes
+                        ? _state.ActiveWorkoutMinutes != 0
                         : _state.ActiveWorkoutMinutes == 0) &&
                     _selectedWorkoutMinutes == prepared.Minutes &&
                     WorkoutModifierPolicy.Normalize(
@@ -655,6 +646,7 @@ public partial class MainActivity : Activity
         _durationOptionSegments = FindRequiredView<LinearLayout>(
             Resource.Id.duration_option_segments);
         _beginWorkoutButton = FindRequiredView<Button>(Resource.Id.begin_workout_button);
+        _endSessionButton = FindRequiredView<ImageButton>(Resource.Id.end_session_button);
         _workoutScreen = FindRequiredView<View>(Resource.Id.workout_screen);
         _workoutPhaseSurface = FindRequiredView<View>(
             Resource.Id.workout_phase_surface);
@@ -872,6 +864,7 @@ public partial class MainActivity : Activity
                 GetMirrorFeedbackResourceId(nextEquipment));
         };
         _beginWorkoutButton.Click += (_, _) => StartSelectedWorkout();
+        _endSessionButton.Click += (_, _) => ConfirmEndSession();
         _workoutSetupButton.Click += (_, _) => ShowActiveWorkoutSetup();
         _exerciseName.LongClick += (_, eventArgs) =>
         {
@@ -1183,6 +1176,7 @@ public partial class MainActivity : Activity
                 DpInt(compactLandscape ? 60 : 68),
                 GravityFlags.Center);
             _durationOptionLabels.Post(AlignDurationOptionLabels);
+            UpdateWorkoutSettingsActions();
             return;
         }
 
@@ -1264,6 +1258,7 @@ public partial class MainActivity : Activity
             matchParent,
             DpInt(68));
         _durationOptionLabels.Post(AlignDurationOptionLabels);
+        UpdateWorkoutSettingsActions();
     }
 
     private void AlignDurationOptionLabels()
@@ -2174,10 +2169,10 @@ public partial class MainActivity : Activity
 
     private void ConfigureDurationScreenForActiveWorkout(bool editing)
     {
-        _durationSeekBar.Enabled = !editing;
-        _durationDecreaseButton.Enabled = !editing &&
-            GetSupportedMinuteIndex(_selectedWorkoutMinutes) > 0;
-        _durationIncreaseButton.Enabled = !editing &&
+        _durationSeekBar.Enabled = true;
+        _durationDecreaseButton.Enabled = _selectedWorkoutMinutes >
+            (editing ? _sessionService.GetMinimumActiveWorkoutMinutes(_state) : 3);
+        _durationIncreaseButton.Enabled =
             GetSupportedMinuteIndex(_selectedWorkoutMinutes) <
                 ExerciseSessionService.SupportedWorkoutMinutes.Count - 1;
         _durationDecreaseButton.Alpha = _durationDecreaseButton.Enabled
@@ -2186,17 +2181,92 @@ public partial class MainActivity : Activity
         _durationIncreaseButton.Alpha = _durationIncreaseButton.Enabled
             ? 1f
             : 0.34f;
-        _durationStepRow.Alpha = editing ? 0.34f : 1f;
-        _durationOptionLabels.Alpha = editing ? 0.42f : 1f;
-        _durationLockIcon.Visibility = editing
-            ? ViewStates.Visible
-            : ViewStates.Gone;
+        _durationStepRow.Alpha = 1f;
+        _durationOptionLabels.Alpha = 1f;
+        _durationLockIcon.Visibility = ViewStates.Gone;
+        UpdateWorkoutSettingsActions();
         _durationActionIcon.SetImageResource(editing
             ? Resource.Drawable.ic_phase_active
             : Resource.Drawable.ic_arrow_forward);
         _beginWorkoutButton.ContentDescription = editing
             ? GetString(Resource.String.resume_workout_description)
             : $"Continue with a {_selectedWorkoutMinutes} minute workout";
+    }
+
+    private void UpdateWorkoutSettingsActions()
+    {
+        if (_endSessionButton is null) return;
+        _endSessionButton.Visibility = _editingActiveWorkoutSetup
+            ? ViewStates.Visible : ViewStates.Gone;
+        bool landscape = Resources?.Configuration?.Orientation ==
+            Android.Content.Res.Orientation.Landscape;
+        var restartLayout = new FrameLayout.LayoutParams(DpInt(52), DpInt(52),
+            landscape ? GravityFlags.Top | GravityFlags.CenterHorizontal :
+                GravityFlags.Start | GravityFlags.CenterVertical);
+        _endSessionButton.LayoutParameters = restartLayout;
+        if (_beginWorkoutButton.LayoutParameters is FrameLayout.LayoutParams beginLayout)
+        {
+            beginLayout.MarginStart = _editingActiveWorkoutSetup && !landscape ? DpInt(72) : 0;
+            _beginWorkoutButton.LayoutParameters = beginLayout;
+        }
+        _durationActionIcon.TranslationX = _editingActiveWorkoutSetup && !landscape ? DpInt(36) : 0;
+    }
+
+    private void ConfirmEndSession()
+    {
+        if (!_editingActiveWorkoutSetup || !_beginWorkoutButton.Enabled) return;
+        var dialog = new AlertDialog.Builder(this);
+        dialog.SetTitle(Resource.String.end_session_confirmation);
+        dialog.SetMessage(Resource.String.end_session_explanation);
+        dialog.SetNegativeButton(Resource.String.cancel_action, (_, _) => { });
+        dialog.SetPositiveButton(Resource.String.end_session_action, (_, _) => EndActiveWorkout());
+        dialog.Show();
+    }
+
+    private async void EndActiveWorkout()
+    {
+        if (!_editingActiveWorkoutSetup || !_beginWorkoutButton.Enabled) return;
+        _beginWorkoutButton.Enabled = false;
+        _endSessionButton.Enabled = false;
+        _workoutPreparationCancellation?.Cancel();
+        _preparedWorkout = null;
+        string json = JsonSerializer.Serialize(_state, WorkoutJsonContext.Default.WorkoutState);
+        OuraRecoverySnapshot? recovery = _state.OuraRecovery;
+        IReadOnlyList<Exercise> exercises = _exerciseDatabase.Exercises;
+        try
+        {
+            WorkoutState ended = await Task.Run(() =>
+            {
+                WorkoutState copy = JsonSerializer.Deserialize(json, WorkoutJsonContext.Default.WorkoutState)!;
+                copy.OuraRecovery = recovery;
+                new ExerciseSessionService(exercises).EndActiveWorkout(copy);
+                return copy;
+            });
+            if (_activityDestroyed || !_editingActiveWorkoutSetup) return;
+            _stateStore.Save(ended);
+            _state = ended;
+            _editingActiveWorkoutSetup = false;
+            _workoutSetupCurrentGroupId = null;
+            _workoutSetupShouldResume = false;
+            StopCountdownTimer();
+            _restActive = false;
+            ConfigureDurationScreenForActiveWorkout(false);
+            CancelQueuedWorkoutStart();
+            ShowDurationSelection();
+        }
+        catch (Exception error)
+        {
+            Android.Util.Log.Error("Flux", $"Unable to end session: {error}");
+            Toast.MakeText(this, Resource.String.workout_change_failed, ToastLength.Long)?.Show();
+        }
+        finally
+        {
+            if (!_activityDestroyed)
+            {
+                _beginWorkoutButton.Enabled = true;
+                _endSessionButton.Enabled = true;
+            }
+        }
     }
 
     private void RestoreWorkoutAfterSetup()
@@ -2515,12 +2585,10 @@ public partial class MainActivity : Activity
 
     private void SetSelectedWorkoutMinutes(int minutes, bool userInitiated = false)
     {
-        if (userInitiated && _editingActiveWorkoutSetup)
-        {
-            return;
-        }
         int previousOptionIndex = GetSupportedMinuteIndex(_selectedWorkoutMinutes);
         int normalizedMinutes = ExerciseSessionService.NormalizeLastWorkoutMinutes(minutes);
+        if (_editingActiveWorkoutSetup)
+            normalizedMinutes = Math.Max(normalizedMinutes, _sessionService.GetMinimumActiveWorkoutMinutes(_state));
         _selectedWorkoutMinutes = normalizedMinutes;
         int optionIndex = GetSupportedMinuteIndex(normalizedMinutes);
 
@@ -2585,6 +2653,7 @@ public partial class MainActivity : Activity
             AnimateDurationSelectionChange(optionIndex);
             QueueWorkoutPreparation();
         }
+        if (_editingActiveWorkoutSetup) ConfigureDurationScreenForActiveWorkout(true);
     }
 
     private void AnimateDurationSelectionChange(int optionIndex)
@@ -2721,18 +2790,28 @@ public partial class MainActivity : Activity
             _workoutPreparationCancellation = null;
             _workoutPreparationTask = null;
             _preparedWorkout = null;
-            _state = prepared.State;
-            _state.OuraRecovery = GetAvailableOuraSnapshot();
+            if (minutes != _selectedWorkoutMinutes || modifiers != _selectedWorkoutModifiers ||
+                prepared.IsReconfiguration != _editingActiveWorkoutSetup ||
+                prepared.CurrentWorkoutGroupId != _workoutSetupCurrentGroupId)
+            {
+                _beginWorkoutButton.Enabled = true;
+                _beginWorkoutButton.Alpha = 1f;
+                return;
+            }
+            WorkoutState nextState = prepared.State;
+            nextState.OuraRecovery = GetAvailableOuraSnapshot();
             if (prepared.IsReconfiguration)
             {
-                _stateStore.Save(_state);
+                _stateStore.Save(nextState);
+                _state = nextState;
                 RestoreWorkoutAfterSetup();
                 return;
             }
 
-            _sessionService.ActivatePreparedWorkout(_state);
+            _sessionService.ActivatePreparedWorkout(nextState);
+            _stateStore.Save(nextState);
+            _state = nextState;
             LogOuraDecision(workoutStarted: true);
-            _stateStore.Save(_state);
             ShowNextExercise();
         }
         catch (OperationCanceledException)
@@ -2745,6 +2824,7 @@ public partial class MainActivity : Activity
             _beginWorkoutButton.Enabled = true;
             _beginWorkoutButton.Alpha = 1f;
             Android.Util.Log.Error("Flux", $"Unable to start workout: {error}");
+            Toast.MakeText(this, Resource.String.workout_change_failed, ToastLength.Long)?.Show();
         }
     }
 
@@ -2775,7 +2855,7 @@ public partial class MainActivity : Activity
 
         state.PendingScoreExerciseId = 0;
         state.PendingScoreValue = 0;
-        // OnCreate saves after legacy conversion/interruption finalization. Saving
+        // OnCreate saves after legacy conversion/restoration. Saving
         // here would serialize away the compatibility-only legacy fields.
     }
 

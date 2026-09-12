@@ -523,6 +523,24 @@ ledger is documented in
 
 ## Persistence and upgrades
 
+Unfinished workouts never expire. Reopening Flux restores the same session at
+Ready, movement, or rest, paused at its saved checkpoint even years later.
+Elapsed time outside the app is never treated as performed work. Completed
+history, preferences and the session's frozen automatic-Light decision survive.
+
+Workout settings let you change total duration without starting over. Completed
+selections and the whole current selection (all sides/directions and allocated
+sets) stay intact. The normal planner rebuilds the remaining budget using the
+new duration's anatomical resolution. Durations shorter than that preserved
+prefix are unavailable. Stable slot/round IDs and duration-change plan snapshots
+keep the workout resumable and its history reconstructable after repeated edits.
+
+The stop icon appears only in workout settings and requires confirmation.
+End session archives the session as interrupted, retains actual completed
+work, Keeps and feedback, and returns to setup without starting another session.
+Unfinished exercises are not downvoted. Repeated confirmation is harmless;
+app lifecycle events must never call this explicit ending path.
+
 Duration, modifier profile, lineups, keeps, scores, active progress, active
 movement checkpoints, and pending rest are stored locally. Modifier combinations
 retain separate stable lineups while sharing durable keeps. The active session

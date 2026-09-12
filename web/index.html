@@ -216,6 +216,9 @@
         </div>
 
         <div class="duration-action-bar">
+          <button id="end-session" class="end-session" type="button" aria-label="End session" title="End session">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2" /></svg>
+          </button>
           <button id="begin-workout" class="primary-button begin-workout" type="button">
             <span class="forward-arrow" aria-hidden="true"></span>
           </button>
@@ -412,6 +415,16 @@
         </div>
       </section>
     </main>
+    <dialog id="end-session-dialog" class="end-session-dialog" aria-labelledby="end-session-title" aria-describedby="end-session-description">
+      <form method="dialog">
+        <h2 id="end-session-title">End session?</h2>
+        <p id="end-session-description">End this session? Completed work stays in your history.</p>
+        <div class="end-session-dialog-actions">
+          <button value="cancel" autofocus>Cancel</button>
+          <button value="end" class="primary-button">End session</button>
+        </div>
+      </form>
+    </dialog>
     <div id="status" class="visually-hidden" aria-live="polite"></div>
     <script src="./light-cadence.js"></script>
     <script src="./instant-controls.js"></script>

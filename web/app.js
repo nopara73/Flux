@@ -206,17 +206,9 @@ async function bootstrap() {
       throw new Error("Catalog does not satisfy workout invariants.");
     }
     session = new WorkoutSession(exercises, loadState());
-    session.initialize();
+    session.restoreAfterReopen();
     const pendingRestGroup = session.getPendingRestGroup();
     const pendingMovementGroup = session.getPendingMovementGroup();
-    if (
-      !session.state.workoutCompleted &&
-      session.state.activeWorkoutMinutes !== 0 &&
-      !pendingRestGroup &&
-      !pendingMovementGroup
-    ) {
-      session.finishInterruptedWorkout();
-    }
     persistState();
     if (!startupSelectionChanged) {
       selectedMinutes = session.state.lastWorkoutMinutes;
@@ -236,6 +228,9 @@ async function bootstrap() {
     } else if (pendingMovementGroup) {
       cancelQueuedWorkoutStart();
       restorePendingMovement();
+    } else if (session.state.activeWorkoutMinutes !== 0) {
+      cancelQueuedWorkoutStart();
+      showNextExercise();
     } else {
       showDuration({ preserveSelection: startupSelectionChanged });
     }
@@ -248,6 +243,16 @@ async function bootstrap() {
 }
 
 function bindEvents() {
+  document.getElementById("end-session").addEventListener("click", () => {
+    if (activeWorkoutSetup && !elements.beginWorkout.disabled) {
+      const dialog = document.getElementById("end-session-dialog");
+      dialog.returnValue = "cancel";
+      dialog.showModal();
+    }
+  });
+  document.getElementById("end-session-dialog").addEventListener("close", (event) => {
+    if (event.target.returnValue === "end") endActiveWorkout();
+  });
   if (startupControls) {
     startupControls.connect({
       selectionChanged(nextSelection, userInitiated) {
@@ -457,6 +462,8 @@ function selectDurationByIndex(index, userInitiated) {
 
 function renderDuration(minutes, userInitiated) {
   const previousMinutes = selectedMinutes;
+  if (activeWorkoutSetup && session)
+    minutes = Math.max(minutes, session.getMinimumActiveWorkoutMinutes());
   selectedMinutes = minutes;
   const index = SUPPORTED_MINUTES.indexOf(minutes);
   const progress = `${(index / (SUPPORTED_MINUTES.length - 1)) * 100}%`;
@@ -470,7 +477,8 @@ function renderDuration(minutes, userInitiated) {
     "aria-valuetext",
     `${minutes} minutes. Options: 3, 5, 7, 10, 15, 20, 30, 45, 60, and 90 minutes`,
   );
-  elements.durationDecrease.disabled = index === 0;
+  elements.durationDecrease.disabled = activeWorkoutSetup && session
+    ? minutes <= session.getMinimumActiveWorkoutMinutes() : index === 0;
   elements.durationIncrease.disabled = index === SUPPORTED_MINUTES.length - 1;
   elements.beginWorkout.setAttribute("aria-label", `Start a ${minutes} minute workout`);
 
@@ -858,18 +866,47 @@ function showActiveWorkoutSetup() {
   renderDuration(selectedMinutes, false);
   renderWorkoutModifiers();
   startupControls?.setSelection(selectedMinutes, selectedModifiers);
-  startupControls?.setActiveWorkoutSetup(true);
+  startupControls?.setActiveWorkoutSetup(true, session.getMinimumActiveWorkoutMinutes());
   elements.durationScreen.classList.add("active-workout-setup");
   if (!startupControls) {
-    elements.durationDecrease.disabled = true;
-    elements.durationIncrease.disabled = true;
-    elements.durationRange.disabled = true;
+    elements.durationDecrease.disabled = selectedMinutes <= session.getMinimumActiveWorkoutMinutes();
+    elements.durationIncrease.disabled = selectedMinutes === SUPPORTED_MINUTES.at(-1);
+    elements.durationRange.disabled = false;
     elements.beginWorkout.setAttribute("aria-label", "Resume workout");
   }
   elements.beginWorkout.disabled = false;
   startupControls?.markReady();
   showScreen("duration");
   queueWorkoutPreparation();
+}
+
+function endActiveWorkout() {
+  if (!activeWorkoutSetup || elements.beginWorkout.disabled) return;
+  elements.beginWorkout.disabled = true;
+  const button = document.getElementById("end-session");
+  button.disabled = true;
+  cancelWorkoutPreparation();
+  const state = cloneWorkoutState(session.state);
+  try {
+    const next = new WorkoutSession(exerciseCatalog, state);
+    next.endActiveWorkout();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(next.state));
+    session = next;
+    activeWorkoutSetup = false;
+    workoutSetupCurrentGroupId = null;
+    workoutSetupShouldResume = false;
+    elements.durationScreen.classList.remove("active-workout-setup");
+    startupControls?.setActiveWorkoutSetup(false);
+    stopRuntimeTimers();
+    cancelQueuedWorkoutStart();
+    showDuration();
+  } catch (error) {
+    console.error(error);
+    elements.status.textContent = "Could not end the session. Your progress is safe.";
+  } finally {
+    elements.beginWorkout.disabled = false;
+    button.disabled = false;
+  }
 }
 
 function restoreWorkoutAfterSetup() {
@@ -914,8 +951,7 @@ function queueWorkoutPreparation(
   const currentWorkoutGroupId = workoutSetupCurrentGroupId;
   if (!session || !exerciseCatalog ||
       (isReconfiguration
-        ? !currentWorkoutGroupId ||
-          session.state.activeWorkoutMinutes !== minutes
+        ? !currentWorkoutGroupId || session.state.activeWorkoutMinutes === 0
         : session.state.activeWorkoutMinutes !== 0)) {
     return null;
   }
@@ -977,6 +1013,7 @@ function queueWorkoutPreparation(
             modifiers,
             currentWorkoutGroupId,
           );
+          preparedSession.resizeActiveWorkout(minutes);
         } else {
           preparedSession.prepareWorkout(minutes, modifiers);
         }
@@ -1114,15 +1151,22 @@ async function startWorkout() {
     if (!prepared) {
       throw new Error("The selected workout could not be prepared.");
     }
+    if (minutes !== selectedMinutes || modifiers !== selectedModifiers ||
+        isReconfiguration !== activeWorkoutSetup || currentWorkoutGroupId !== workoutSetupCurrentGroupId) {
+      elements.beginWorkout.disabled = false;
+      return;
+    }
     cancelWorkoutPreparation();
-    session = new WorkoutSession(exerciseCatalog, prepared.state);
+    const nextSession = new WorkoutSession(exerciseCatalog, prepared.state);
     if (prepared.isReconfiguration) {
-      persistState();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(nextSession.state));
+      session = nextSession;
       restoreWorkoutAfterSetup();
       return;
     }
-    session.activatePreparedWorkout();
-    persistState();
+    nextSession.activatePreparedWorkout();
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(nextSession.state));
+    session = nextSession;
     showNextExercise();
     performance.mark?.("flux-workout-visible");
     performance.measure?.(

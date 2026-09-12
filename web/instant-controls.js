@@ -59,6 +59,7 @@
   let handlers = null;
   let feedbackTimer = null;
   let activeWorkoutSetup = false;
+  let minimumActiveMinutes = 3;
 
   elements.decrease.addEventListener("click", () => stepDuration(-1));
   elements.increase.addEventListener("click", () => stepDuration(1));
@@ -145,8 +146,9 @@
       recoveryLightMode = next;
       renderModifiers();
     },
-    setActiveWorkoutSetup(enabled) {
+    setActiveWorkoutSetup(enabled, minimumMinutes = 3) {
       activeWorkoutSetup = enabled === true;
+      minimumActiveMinutes = activeWorkoutSetup ? minimumMinutes : 3;
       document.getElementById("duration-screen")?.classList.toggle(
         "active-workout-setup",
         activeWorkoutSetup,
@@ -244,9 +246,6 @@
 
 
   function stepDuration(direction) {
-    if (activeWorkoutSetup) {
-      return;
-    }
     const index = durationOptions.indexOf(selectedMinutes);
     selectDurationByIndex(Math.max(
       0,
@@ -255,11 +254,10 @@
   }
 
   function selectDurationByIndex(index) {
-    if (activeWorkoutSetup) {
-      return;
-    }
+    index = Math.max(index, durationOptions.indexOf(minimumActiveMinutes));
     const minutes = durationOptions[index];
     if (minutes === undefined || minutes === selectedMinutes) {
+      renderDuration();
       return;
     }
     selectedMinutes = minutes;
@@ -289,10 +287,10 @@
       "aria-valuetext",
       `${selectedMinutes} minutes. Options: ${durationOptions.join(", ")} minutes`,
     );
-    elements.decrease.disabled = activeWorkoutSetup || index === 0;
-    elements.increase.disabled = activeWorkoutSetup ||
+    elements.decrease.disabled = selectedMinutes <= minimumActiveMinutes;
+    elements.increase.disabled =
       index === durationOptions.length - 1;
-    elements.range.disabled = activeWorkoutSetup;
+    elements.range.disabled = false;
     elements.begin.setAttribute(
       "aria-label",
       activeWorkoutSetup
